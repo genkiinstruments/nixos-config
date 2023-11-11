@@ -1,7 +1,9 @@
 { config, inputs, pkgs, ... }:
 
-let user = "olafur";
-    keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ]; in
+let
+  user = "olafur";
+  keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ];
+in
 {
   imports = [
     ./disk-config.nix
@@ -34,7 +36,7 @@ let user = "olafur";
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-   };
+  };
 
   # Manages keys and such
   programs.gnupg.agent.enable = true;
@@ -169,8 +171,8 @@ let user = "olafur";
         "class_g = 'i3lock'"
       ];
       round-borders = 3;
-      round-borders-exclude = [];
-      round-borders-rule = [];
+      round-borders-exclude = [ ];
+      round-borders-rule = [ ];
       shadow = true;
       shadow-radius = 8;
       shadow-opacity = 0.4;
@@ -238,7 +240,7 @@ let user = "olafur";
       "wheel" # Enable ‘sudo’ for the user.
       "docker"
     ];
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
     openssh.authorizedKeys.keys = keys;
   };
 
@@ -252,9 +254,9 @@ let user = "olafur";
     enable = true;
     extraRules = [{
       commands = [
-       {
-         command = "${pkgs.systemd}/bin/reboot";
-         options = [ "NOPASSWD" ];
+        {
+          command = "${pkgs.systemd}/bin/reboot";
+          options = [ "NOPASSWD" ];
         }
       ];
       groups = [ "wheel" ];
@@ -265,7 +267,7 @@ let user = "olafur";
   services.openssh.enable = true;
 
   # My shell
-  programs.zsh.enable = true;
+  programs.fish.enable = true;
 
   # My editor runs as a daemon
   # @todo: submit startupTimeout option PR to nixpkgs

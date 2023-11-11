@@ -1,66 +1,130 @@
 { config, pkgs, lib, ... }:
 
-let name = "Ólafur Bjarki Bogason";
-    user = "olafur";
-    email = "olafur@genkiinstruments.com"; in
+let
+  name = "Ólafur Bjarki Bogason";
+  user = "olafur";
+  email = "olafur@genkiinstruments.com";
+in
 {
   # Shared shell configuration
-  zsh.enable = true;
-  zsh.autocd = false;
-  zsh.cdpath = [ "~/.local/share/src" ];
-  zsh.plugins = [
-    {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-    }
-    {
-        name = "powerlevel10k-config";
-        src = lib.cleanSource ./config;
-        file = "p10k.zsh";
-    }
-  ];
-  zsh.initExtraFirst = ''
-    if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
-      . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
-      . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
-    fi
+  fish.enable = true;
+  fish.autocd = false;
+  fish.cdpath = [ "~/.local/share/src" ];
+  fish.initExtraFirst = ''
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    # eval /opt/miniconda3/bin/conda "shell.fish" hook $argv | source
+    # <<< conda initialize <<<
 
-    # Define variables for directories
-    export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
-    export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
-    export PATH=$HOME/.local/share/bin:$PATH
-    export PNPM_HOME=~/.pnpm-packages
+    # fish_add_path /opt/homebrew/bin
+    set -g fish_greeting
 
-    # Remove history data we don't want to see
-    export HISTIGNORE="pwd:ls:cd"
 
-    # Ripgrep alias
-    alias search=rg -p --glob '!node_modules/*'  $@
+    # TokyoNight Color Palette
+    set -l foreground c8d3f5
+    set -l selection 2d3f76
+    set -l comment 636da6
+    set -l red ff757f
+    set -l orange ff966c
+    set -l yellow ffc777
+    set -l green c3e88d
+    set -l purple fca7ea
+    set -l cyan 86e1fc
+    set -l pink c099ff
 
-    # Emacs is my editor
-    export ALTERNATE_EDITOR=""
-    export EDITOR="emacsclient -t"
-    export VISUAL="emacsclient -c -a emacs"
+    # Syntax Highlighting Colors
+    set -g fish_color_normal $foreground
+    set -g fish_color_command $cyan
+    set -g fish_color_keyword $pink
+    set -g fish_color_quote $yellow
+    set -g fish_color_redirection $foreground
+    set -g fish_color_end $orange
+    set -g fish_color_error $red
+    set -g fish_color_param $purple
+    set -g fish_color_comment $comment
+    set -g fish_color_selection --background=$selection
+    set -g fish_color_search_match --background=$selection
+    set -g fish_color_operator $green
+    set -g fish_color_escape $pink
+    set -g fish_color_autosuggestion $comment
 
-    e() {
-        emacsclient -t "$@"
-    }
+    # Completion Pager Colors
+    set -g fish_pager_color_progress $comment
+    set -g fish_pager_color_prefix $cyan
+    set -g fish_pager_color_completion $foreground
+    set -g fish_pager_color_description $comment
+    set -g fish_pager_color_selected_background --background=$selection
 
-    # nix shortcuts
-    shell() {
-        nix-shell '<nixpkgs>' -A "$1"
-    }
+    function v
+        nvim
+    end
 
-    # pnpm is a javascript package manager
-    alias pn=pnpm
-    alias px=pnpx
+    function ya
+        set tmp (mktemp -t "yazi-cwd.XXXXX")
+        yazi --cwd-file="$tmp"
+        if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
+            cd -- "$cwd"
+        end
+        rm -f -- "$tmp"
+    end
 
-    # Use difftastic, syntax-aware diffing
-    alias diff=difft
+    set -Ua PATH $HOME/gs-venv/bin
+    set -Ua PATH $HOME/.emacs.d/bin
 
-    # Always color ls and group directories
-    alias ls='ls --color=auto'
+    set -x PNPM_HOME /Users/olafur/Library/pnpm
+    set -Ua PATH $PNPM_HOME
+
+    set -x NOTION_TOKEN secret_Yc7GzmUIFdqBHEEMYSBTdj3Rs9emdVKGVNVkuzLjyZG
+    set -x OPENAI_API_KEY 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
+
+    set -x DOCKER_HOST unix:///$HOME/.docker/run/docker.sock
+
+    # bun
+    set -x BUN_INSTALL "$HOME/.bun"
+    set -Ua PATH $BUN_INSTALL/bin
+
+    # NIX
+    set -Ua PATH /nix/var/nix/profiles/default/bin
+
+    set -Ua PATH $HOME/bin /usr/local/bin / /Applications/ARM/bin /nix/var/nix/profiles/default/bin
+
+    set NIX_BIN_PREFIX /nix/store/5k5lh64fn1l936jn3rqx95c1w5rnnnkp-nix-2.17.0/bin/
+
+    if status is-interactive
+        atuin init fish | source
+        starship init fish | source
+        zoxide init fish | source
+        # direnv hook fish | source
+
+        eval (zellij setup --generate-auto-start fish | string collect)
+
+        # fish_vi_key_bindings
+    end
+
+    # Only run this in interactive shells
+    if status is-interactive
+
+        # I'm trying to grow a neckbeard
+        # fish_vi_key_bindings
+        # Set the cursor shapes for the different vi modes.
+        set fish_cursor_default block blink
+        set fish_cursor_insert line blink
+        set fish_cursor_replace_one underscore blink
+        set fish_cursor_visual block
+
+        function fish_user_key_bindings
+            # Execute this once per mode that emacs bindings should be used in
+            fish_default_key_bindings -M insert
+            fish_vi_key_bindings --no-erase insert
+        end
+    end
+
+    set -x PNPM_HOME /Users/olafur/Library/pnpm
+    set -x PATH $PNPM_HOME $PATH
+
+    # bun
+    set --export BUN_INSTALL "$HOME/.bun"
+    set --export PATH $BUN_INSTALL/bin $PATH
   '';
 
   git = {
@@ -73,8 +137,8 @@ let name = "Ólafur Bjarki Bogason";
     };
     extraConfig = {
       init.defaultBranch = "main";
-      core = { 
-	    editor = "vim";
+      core = {
+        editor = "vim";
         autocrlf = "input";
       };
       pull.rebase = true;
@@ -189,8 +253,8 @@ let name = "Ólafur Bjarki Bogason";
 
       let g:airline_theme='bubblegum'
       let g:airline_powerline_fonts = 1
-      '';
-     };
+    '';
+  };
 
   alacritty = {
     enable = true;
@@ -287,7 +351,7 @@ let name = "Ólafur Bjarki Bogason";
       {
         plugin = power-theme;
         extraConfig = ''
-           set -g @tmux_power_theme 'gold'
+          set -g @tmux_power_theme 'gold'
         '';
       }
       {
@@ -358,6 +422,6 @@ let name = "Ólafur Bjarki Bogason";
       bind-key -T copy-mode-vi 'C-k' select-pane -U
       bind-key -T copy-mode-vi 'C-l' select-pane -R
       bind-key -T copy-mode-vi 'C-\' select-pane -l
-      '';
-    };
+    '';
+  };
 }

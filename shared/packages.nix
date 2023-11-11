@@ -7,6 +7,7 @@ with pkgs; [
   aspell
   aspellDicts.en
   bash-completion
+  zellij
   bat
   btop
   coreutils
@@ -46,7 +47,7 @@ with pkgs; [
   tflint
 
   # Media-related packages
-  emacs-all-the-icons-fonts
+  # emacs-all-the-icons-fonts
   dejavu_fonts
   ffmpeg
   fd
@@ -69,7 +70,8 @@ with pkgs; [
   gh
 
   # Text and terminal utilities
-  htop
+  neovim
+  btop
   hunspell
   iftop
   jetbrains-mono
@@ -79,7 +81,7 @@ with pkgs; [
   tmux
   unrar
   unzip
-  zsh-powerlevel10k
+  # zsh-powerlevel10k
 
   # Python packages
   python39

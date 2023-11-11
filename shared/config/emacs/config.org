@@ -933,7 +933,7 @@ This is what makes emacs possible for me. All evil mode packages and related con
     :commands vterm
     :config
       (setq term-prompt-regexp "^[^#$%>\n]*[#$%>] *")
-      (setq vterm-shell "zsh")
+      (setq vterm-shell "fish")
       (setq vterm-max-scrollback 10000))
 #+END_SRC
 
