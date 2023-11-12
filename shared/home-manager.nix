@@ -70,7 +70,7 @@ in
     zoxide init fish | source
     # direnv hook fish | source
 
-    eval (zellij setup --generate-auto-start fish | string collect)
+    # eval (zellij setup --generate-auto-start fish | string collect)
 
     # I'm growing a neckbeard: Set the cursor shapes for the different vi modes.
     set fish_cursor_default block blink
