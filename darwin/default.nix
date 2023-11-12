@@ -36,8 +36,6 @@ let user = "olafur"; in
   # Load configuration that is shared across systems
   environment.systemPackages = (import ../shared/packages.nix { inherit pkgs; });
 
-  
-
   # Enable fonts dir
   fonts.fontDir.enable = true;
 
@@ -86,7 +84,7 @@ let user = "olafur"; in
         # Set the default shell as fish for the user
         sudo chsh -s ${lib.getBin pkgs.fish}/bin/fish "${user}"
       '';
-
+  };
     # see https://github.com/LnL7/nix-darwin/issues/122
     environment.etc."fish/nixos-env-preinit.fish".text = lib.mkMerge [
       (lib.mkBefore ''
@@ -104,5 +102,4 @@ let user = "olafur"; in
     end
     '')
     ];
-  };
 }
