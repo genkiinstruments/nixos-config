@@ -61,9 +61,12 @@ in
         in
         "${parsers}/parser";
 
-      # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
+      # Normal LazyVim config here, see
+      # https://github.com/LazyVim/starter/tree/main/lua
       xdg.configFile."nvim/lua".source = ../shared/config/nvim/lua;
 
+      xdg.configFile."zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
+      xdg.configFile."zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
 
       programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
