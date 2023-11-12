@@ -7,9 +7,9 @@ let
   additionalFiles = import ./files.nix { inherit config pkgs; };
 in
 {
-  # imports = [
-  #   ./dock
-  # ];
+  imports = [
+    ./dock
+  ];
 
   # It me
   users.users.${user} = {
@@ -80,10 +80,10 @@ in
     };
   };
 
-  # # Fully declarative dock using the latest from Nix Store
-  # local.dock.enable = true;
-  # local.dock.autohide = true;
-  # local.dock.orientation = "left";
+  # Fully declarative dock using the latest from Nix Store
+  local.dock.enable = true;
+  local.dock.autohide = true;
+  local.dock.orientation = "left";
   # local.dock.entries = [
   #   # { path = "/Applications/Slack.app/"; }
   #   # { path = "/System/Applications/Messages.app/"; }
