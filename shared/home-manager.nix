@@ -8,9 +8,7 @@ in
 {
   # Shared shell configuration
   fish.enable = true;
-  fish.autocd = false;
-  fish.cdpath = [ "~/.local/share/src" ];
-  fish.initExtraFirst = ''
+  fish.shellInit = ''
     # >>> conda initialize >>>
     # !! Contents within this block are managed by 'conda init' !!
     # eval /opt/miniconda3/bin/conda "shell.fish" hook $argv | source
@@ -96,7 +94,7 @@ in
         zoxide init fish | source
         # direnv hook fish | source
 
-        eval (zellij setup --generate-auto-start fish | string collect)
+        # eval (zellij setup --generate-auto-start fish | string collect)
 
         # fish_vi_key_bindings
     end
@@ -256,68 +254,20 @@ in
     '';
   };
 
-  alacritty = {
+  alacritty.enable = true;
+  
+  starship = {
     enable = true;
+    # Configuration written to ~/.config/starship.toml
     settings = {
-      cursor = {
-        style = "Block";
-      };
+      # add_newline = false;
 
-      window = {
-        opacity = 1.0;
-        padding = {
-          x = 24;
-          y = 24;
-        };
-      };
+      # character = {
+      #   success_symbol = "[➜](bold green)";
+      #   error_symbol = "[➜](bold red)";
+      # };
 
-      font = {
-        normal = {
-          family = "MesloLGS NF";
-          style = "Regular";
-        };
-        size = lib.mkMerge [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 14)
-        ];
-      };
-
-      dynamic_padding = true;
-      decorations = "full";
-      title = "Terminal";
-      class = {
-        instance = "Alacritty";
-        general = "Alacritty";
-      };
-
-      colors = {
-        primary = {
-          background = "0x1f2528";
-          foreground = "0xc0c5ce";
-        };
-
-        normal = {
-          black = "0x1f2528";
-          red = "0xec5f67";
-          green = "0x99c794";
-          yellow = "0xfac863";
-          blue = "0x6699cc";
-          magenta = "0xc594c5";
-          cyan = "0x5fb3b3";
-          white = "0xc0c5ce";
-        };
-
-        bright = {
-          black = "0x65737e";
-          red = "0xec5f67";
-          green = "0x99c794";
-          yellow = "0xfac863";
-          blue = "0x6699cc";
-          magenta = "0xc594c5";
-          cyan = "0x5fb3b3";
-          white = "0xd8dee9";
-        };
-      };
+      # package.disabled = true;
     };
   };
 

@@ -3,7 +3,8 @@
 with pkgs; [
   # General packages for development and system management
   act
-  alacritty
+  atuin
+  zoxide
   aspell
   aspellDicts.en
   bash-completion

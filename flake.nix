@@ -1,9 +1,8 @@
-
 {
   description = "Starter Configuration for NixOS and MacOS";
 
   inputs = {
-    nixpkgs.url = "github:dustinlyons/nixpkgs/master";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
 
     # My nixpkgs fork includes a feather-font package (https://github.com/dustinlyons/feather-font)
     # and a timeout setting for Emacs daemon. If you don't want to use my it, follow these steps to use the official repo instead:
@@ -48,7 +47,7 @@
     homebrew-cask = {
       url = "github:homebrew/homebrew-cask";
       flake = false;
-    }; 
+    };
     disko = {
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -62,56 +61,59 @@
       forAllLinuxSystems = f: nixpkgs.lib.genAttrs linuxSystems (system: f system);
       forAllDarwinSystems = f: nixpkgs.lib.genAttrs darwinSystems (system: f system);
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) (system: f system);
-      devShell = system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in
-      {
-        default = with pkgs; mkShell {
-          nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey ];
-          shellHook = with pkgs; ''
-            export EDITOR=vim
-          '';
+      devShell = system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = with pkgs; mkShell {
+            nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey ];
+            shellHook = with pkgs; ''
+              export EDITOR=vim
+            '';
+          };
         };
-      };
     in
     {
       devShells = forAllSystems devShell;
-      darwinConfigurations = let user = "olafur"; in {
-        macos = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = inputs;
-          modules = [
-            nix-homebrew.darwinModules.nix-homebrew
-            home-manager.darwinModules.home-manager
-            {
-              nix-homebrew = {
-                enable = true;
-                user = "${user}";
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle; 
+      darwinConfigurations = let user = "olafur"; in
+        {
+          macos = darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            specialArgs = inputs;
+            modules = [
+              nix-homebrew.darwinModules.nix-homebrew
+              home-manager.darwinModules.home-manager
+              {
+                nix-homebrew = {
+                  enable = true;
+                  user = "${user}";
+                  taps = {
+                    "homebrew/homebrew-core" = homebrew-core;
+                    "homebrew/homebrew-cask" = homebrew-cask;
+                    "homebrew/homebrew-bundle" = homebrew-bundle;
+                  };
+                  mutableTaps = false;
+                  autoMigrate = true;
                 };
-                mutableTaps = false;
-                autoMigrate = true;
-              };
-            }
-            ./darwin
-          ];
+              }
+              ./darwin
+            ];
+          };
         };
-      };
       nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
         system = system;
         specialArgs = inputs;
         modules = [
           disko.nixosModules.disko
-          home-manager.nixosModules.home-manager {
+          home-manager.nixosModules.home-manager
+          {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.${user} = import ./nixos/home-manager.nix;
           }
           ./nixos
         ];
-     });
-  };
+      });
+    };
 }
