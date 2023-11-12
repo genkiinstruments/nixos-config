@@ -8,10 +8,56 @@ in
 {
   # Shared shell configuration
   fish.enable = true;
-  fish.shellInit = ''
-  __nixos_path_fix
-    '';
-  fish.interactiveShellInit = '' 
+  plugins = [
+    {
+      name = "base16-fish";
+      src = pkgs.fetchFromGitHub {
+        owner = "tomyun";
+        repo = "base16-fish";
+        rev = "2f6dd973a9075dabccd26f1cded09508180bf5fe";
+        sha256 = "PebymhVYbL8trDVVXxCvZgc0S5VxI7I1Hv4RMSquTpA=";
+      };
+    }
+    {
+      name = "hydro";
+      src = pkgs.fetchFromGitHub {
+        owner = "jorgebucaran";
+        repo = "hydro";
+        rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
+        sha256 = "nJ8nQqaTWlISWXx5a0WeUA4+GL7Fe25658UIqKa389E=";
+      };
+    }
+    {
+      name = "done";
+      src = pkgs.fetchFromGitHub {
+        owner = "franciscolourenco";
+        repo = "done";
+        rev = "37117c3d8ed6b820f6dc647418a274ebd1281832";
+        sha256 = "cScH1NzsuQnDZq0XGiay6o073WSRIAsshkySRa/gJc0=";
+      };
+    }
+  ];
+  fish.interactiveShellInit = ''
+    atuin init fish | source
+    starship init fish | source
+    zoxide init fish | source
+    direnv hook fish | source
+
+    # eval (zellij setup --generate-auto-start fish | string collect)
+
+    # I'm growing a neckbeard: Set the cursor shapes for the different vi modes.
+    set fish_cursor_default block blink
+    set fish_cursor_insert line blink
+    set fish_cursor_replace_one underscore blink
+    set fish_cursor_visual block
+
+    function fish_user_key_bindings
+        # Execute this once per mode that emacs bindings should be used in
+        fish_default_key_bindings -M insert
+        fish_vi_key_bindings --no-erase insert
+    end
+  '';
+  fish.shellInit = '' 
     set fish_greeting # Disable greeting
 
     # TokyoNight Color Palette
@@ -41,6 +87,54 @@ in
     set -g fish_color_operator $green
     set -g fish_color_escape $pink
     set -g fish_color_autosuggestion $comment
+    
+    # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117
+        # prompt configurations
+    set -g hydro_symbol_prompt "λ"
+    if test "$TERM" = linux
+      set -g hydro_symbol_prompt ">"
+    end
+
+    # done configurations
+    set -g __done_notification_command 'notify send -t "$title" -m "$message"'
+    set -g __done_enabled 1
+    set -g __done_allow_nongraphical 1
+    set -g __done_min_cmd_duration 8000
+
+    # see https://github.com/LnL7/nix-darwin/issues/122
+    set -ga PATH ${config.xdg.configHome}/bin
+    set -ga PATH $HOME/.local/bin
+    set -ga PATH /run/wrappers/bin
+    set -ga PATH $HOME/.nix-profile/bin
+    if test $KERNEL_NAME darwin
+      set -ga PATH /opt/homebrew/opt/llvm/bin
+      set -ga PATH /opt/homebrew/bin
+      set -ga PATH /opt/homebrew/sbin
+    end
+    set -ga PATH /run/current-system/sw/bin
+    set -ga PATH /nix/var/nix/profiles/default/bin
+    macos_set_env prepend PATH /etc/paths '/etc/paths.d'
+
+
+    set -ga MANPATH $HOME/.local/share/man
+    set -ga MANPATH $HOME/.nix-profile/share/man
+    if test $KERNEL_NAME darwin
+      set -ga MANPATH /opt/homebrew/share/man
+    end
+    set -ga MANPATH /run/current-system/sw/share/man
+    set -ga MANPATH /nix/var/nix/profiles/default/share/man
+    macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
+
+    set -gp NIX_PATH nixpkgs=$HOME/.nix-defexpr/channels_root/nixpkgs
+
+    if test $KERNEL_NAME darwin
+      set -gx HOMEBREW_PREFIX /opt/homebrew
+      set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
+      set -gx HOMEBREW_REPOSITORY /opt/homebrew
+      set -gp INFOPATH /opt/homebrew/share/info
+      set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
+      set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
+    end
 
     # Completion Pager Colors
     set -g fish_pager_color_progress $comment
@@ -65,27 +159,6 @@ in
     set -Ua PATH /nix/var/nix/profiles/default/bin
 
     set -Ua PATH $HOME/bin /usr/local/bin / /Applications/ARM/bin /nix/var/nix/profiles/default/bin
-
-    set NIX_BIN_PREFIX /nix/store/5k5lh64fn1l936jn3rqx95c1w5rnnnkp-nix-2.17.0/bin/
-
-    atuin init fish | source
-    starship init fish | source
-    zoxide init fish | source
-    direnv hook fish | source
-
-    # eval (zellij setup --generate-auto-start fish | string collect)
-
-    # I'm growing a neckbeard: Set the cursor shapes for the different vi modes.
-    set fish_cursor_default block blink
-    set fish_cursor_insert line blink
-    set fish_cursor_replace_one underscore blink
-    set fish_cursor_visual block
-
-    function fish_user_key_bindings
-        # Execute this once per mode that emacs bindings should be used in
-        fish_default_key_bindings -M insert
-        fish_vi_key_bindings --no-erase insert
-    end
   '';
 
   git = {
@@ -110,10 +183,10 @@ in
   neovim = {
     enable = true;
     extraPackages = with pkgs; [
-      # LazyVim
+      LazyVim
       lua-language-server
       stylua
-      # Telescope
+      Telescope
       ripgrep
     ];
 
