@@ -8,15 +8,8 @@ in
 {
   # Shared shell configuration
   fish.enable = true;
-  fish.shellInit = ''
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    # eval /opt/miniconda3/bin/conda "shell.fish" hook $argv | source
-    # <<< conda initialize <<<
-
-    # fish_add_path /opt/homebrew/bin
-    set -g fish_greeting
-
+  fish.interactiveShellInit = '' 
+    set fish_greeting # Disable greeting
 
     # TokyoNight Color Palette
     set -l foreground c8d3f5
@@ -53,22 +46,6 @@ in
     set -g fish_pager_color_description $comment
     set -g fish_pager_color_selected_background --background=$selection
 
-    function v
-        nvim
-    end
-
-    function ya
-        set tmp (mktemp -t "yazi-cwd.XXXXX")
-        yazi --cwd-file="$tmp"
-        if set cwd (cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-            cd -- "$cwd"
-        end
-        rm -f -- "$tmp"
-    end
-
-    set -Ua PATH $HOME/gs-venv/bin
-    set -Ua PATH $HOME/.emacs.d/bin
-
     set -x PNPM_HOME /Users/olafur/Library/pnpm
     set -Ua PATH $PNPM_HOME
 
@@ -88,41 +65,24 @@ in
 
     set NIX_BIN_PREFIX /nix/store/5k5lh64fn1l936jn3rqx95c1w5rnnnkp-nix-2.17.0/bin/
 
-    if status is-interactive
-        atuin init fish | source
-        starship init fish | source
-        zoxide init fish | source
-        # direnv hook fish | source
+    atuin init fish | source
+    starship init fish | source
+    zoxide init fish | source
+    # direnv hook fish | source
 
-        # eval (zellij setup --generate-auto-start fish | string collect)
+    eval (zellij setup --generate-auto-start fish | string collect)
 
-        # fish_vi_key_bindings
+    # I'm growing a neckbeard: Set the cursor shapes for the different vi modes.
+    set fish_cursor_default block blink
+    set fish_cursor_insert line blink
+    set fish_cursor_replace_one underscore blink
+    set fish_cursor_visual block
+
+    function fish_user_key_bindings
+        # Execute this once per mode that emacs bindings should be used in
+        fish_default_key_bindings -M insert
+        fish_vi_key_bindings --no-erase insert
     end
-
-    # Only run this in interactive shells
-    if status is-interactive
-
-        # I'm trying to grow a neckbeard
-        # fish_vi_key_bindings
-        # Set the cursor shapes for the different vi modes.
-        set fish_cursor_default block blink
-        set fish_cursor_insert line blink
-        set fish_cursor_replace_one underscore blink
-        set fish_cursor_visual block
-
-        function fish_user_key_bindings
-            # Execute this once per mode that emacs bindings should be used in
-            fish_default_key_bindings -M insert
-            fish_vi_key_bindings --no-erase insert
-        end
-    end
-
-    set -x PNPM_HOME /Users/olafur/Library/pnpm
-    set -x PATH $PNPM_HOME $PATH
-
-    # bun
-    set --export BUN_INSTALL "$HOME/.bun"
-    set --export PATH $BUN_INSTALL/bin $PATH
   '';
 
   git = {
@@ -136,7 +96,7 @@ in
     extraConfig = {
       init.defaultBranch = "main";
       core = {
-        editor = "vim";
+        editor = "nvim";
         autocrlf = "input";
       };
       pull.rebase = true;
@@ -144,118 +104,214 @@ in
     };
   };
 
-  vim = {
-    enable = true;
-    plugins = with pkgs.vimPlugins; [ vim-airline vim-airline-themes vim-startify vim-tmux-navigator ];
-    settings = { ignorecase = true; };
-    extraConfig = ''
-      "" General
-      set number
-      set history=1000
-      set nocompatible
-      set modelines=0
-      set encoding=utf-8
-      set scrolloff=3
-      set showmode
-      set showcmd
-      set hidden
-      set wildmenu
-      set wildmode=list:longest
-      set cursorline
-      set ttyfast
-      set nowrap
-      set ruler
-      set backspace=indent,eol,start
-      set laststatus=2
-      set clipboard=autoselect
+  neovim = {
+    extraPackages = with pkgs; [
+      # LazyVim
+      lua-language-server
+      stylua
+      # Telescope
+      ripgrep
+    ];
 
-      " Dir stuff
-      set nobackup
-      set nowritebackup
-      set noswapfile
-      set backupdir=~/.config/vim/backups
-      set directory=~/.config/vim/swap
+    plugins = with pkgs.vimPlugins; [
+      lazy-nvim
+    ];
 
-      " Relative line numbers for easy movement
-      set relativenumber
-      set rnu
+    extraLuaConfig =
+      let
+        plugins = with pkgs.vimPlugins; [
+          # LazyVim
+          LazyVim
+          bufferline-nvim
+          cmp-buffer
+          cmp-nvim-lsp
+          cmp-path
+          cmp_luasnip
+          conform-nvim
+          dashboard-nvim
+          dressing-nvim
+          flash-nvim
+          friendly-snippets
+          gitsigns-nvim
+          indent-blankline-nvim
+          lualine-nvim
+          neo-tree-nvim
+          neoconf-nvim
+          neodev-nvim
+          noice-nvim
+          nui-nvim
+          nvim-cmp
+          nvim-lint
+          nvim-lspconfig
+          nvim-notify
+          nvim-spectre
+          nvim-treesitter
+          nvim-treesitter-context
+          nvim-treesitter-textobjects
+          nvim-ts-autotag
+          nvim-ts-context-commentstring
+          nvim-web-devicons
+          persistence-nvim
+          plenary-nvim
+          telescope-fzf-native-nvim
+          telescope-nvim
+          todo-comments-nvim
+          tokyonight-nvim
+          trouble-nvim
+          vim-illuminate
+          vim-startuptime
+          which-key-nvim
+          { name = "LuaSnip"; path = luasnip; }
+          { name = "catppuccin"; path = catppuccin-nvim; }
+          { name = "mini.ai"; path = mini-nvim; }
+          { name = "mini.bufremove"; path = mini-nvim; }
+          { name = "mini.comment"; path = mini-nvim; }
+          { name = "mini.indentscope"; path = mini-nvim; }
+          { name = "mini.pairs"; path = mini-nvim; }
+          { name = "mini.surround"; path = mini-nvim; }
+        ];
+        mkEntryFromDrv = drv:
+          if lib.isDerivation drv then
+            { name = "${lib.getName drv}"; path = drv; }
+          else
+            drv;
+        lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
+      in
+      ''
+        require("lazy").setup({
+          defaults = {
+            lazy = true,
+          },
+          dev = {
+            -- reuse files from pkgs.vimPlugins.*
+            path = "${lazyPath}",
+            patterns = { "." },
+            -- fallback to download
+            fallback = true,
+          },
+          spec = {
+            -- add LazyVim and import its plugins
+            { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+            -- import any extras modules here
+            { import = "lazyvim.plugins.extras.lang.typescript" },
+            { import = "lazyvim.plugins.extras.coding.copilot" },
+            { import = "lazyvim.plugins.extras.lang.json" },
+            { import = "lazyvim.plugins.extras.lang.python" },
+            { import = "lazyvim.plugins.extras.linting.eslint" },
+            { import = "lazyvim.plugins.extras.formatting.prettier" },
+            { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+            -- { import = "lazyvim.plugins.extras.ui.mini-animate" },
+            -- import/override with your plugins
+            { import = "plugins" },
+              },
+        })
 
-      "" Whitespace rules
-      set tabstop=8
-      set shiftwidth=2
-      set softtabstop=2
-      set expandtab
+        local function map(mode, lhs, rhs, opts)
+            local keys = require("lazy.core.handler").handlers.keys
+            ---@cast keys LazyKeysHandler
+            -- do not create the keymap if a lazy keys handler exists
+            if not keys.active[keys.parse({ lhs, mode = mode }).id] then
+                opts = opts or {}
+                opts.silent = opts.silent ~= false
+                if opts.remap and not vim.g.vscode then
+                    opts.remap = nil
+                end
+                vim.keymap.set(mode, lhs, rhs, opts)
+            end
+        end
 
-      "" Searching
-      set incsearch
-      set gdefault
-
-      "" Statusbar
-      set nocompatible " Disable vi-compatibility
-      set laststatus=2 " Always show the statusline
-      let g:airline_theme='bubblegum'
-      let g:airline_powerline_fonts = 1
-
-      "" Local keys and such
-      let mapleader=","
-      let maplocalleader=" "
-
-      "" Change cursor on mode
-      :autocmd InsertEnter * set cul
-      :autocmd InsertLeave * set nocul
-
-      "" File-type highlighting and configuration
-      syntax on
-      filetype on
-      filetype plugin on
-      filetype indent on
-
-      "" Paste from clipboard
-      nnoremap <Leader>, "+gP
-
-      "" Copy from clipboard
-      xnoremap <Leader>. "+y
-
-      "" Move cursor by display lines when wrapping
-      nnoremap j gj
-      nnoremap k gk
-
-      "" Map leader-q to quit out of window
-      nnoremap <leader>q :q<cr>
-
-      "" Move around split
-      nnoremap <C-h> <C-w>h
-      nnoremap <C-j> <C-w>j
-      nnoremap <C-k> <C-w>k
-      nnoremap <C-l> <C-w>l
-
-      "" Easier to yank entire line
-      nnoremap Y y$
-
-      "" Move buffers
-      nnoremap <tab> :bnext<cr>
-      nnoremap <S-tab> :bprev<cr>
-
-      "" Like a boss, sudo AFTER opening the file to write
-      cmap w!! w !sudo tee % >/dev/null
-
-      let g:startify_lists = [
-        \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
-        \ { 'type': 'sessions',  'header': ['   Sessions']       },
-        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      }
-        \ ]
-
-      let g:startify_bookmarks = [
-        \ '~/.local/share/src',
-        \ ]
-
-      let g:airline_theme='bubblegum'
-      let g:airline_powerline_fonts = 1
-    '';
+        map({ "n", "i", "v" }, "<A-j>", "", { desc = "Move down" })
+        map({ "n", "i", "v" }, "<A-k>", "", { desc = "Move up" })
+      '';
   };
 
-  alacritty.enable = true;
-  
+  # # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
+  # xdg.configFile."nvim/parser".source =
+  #   let
+  #     parsers = pkgs.symlinkJoin {
+  #       name = "treesitter-parsers";
+  #       paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
+  #         c
+  #         lua
+  #       ])).dependencies;
+  #     };
+  #   in
+  #   "${parsers}/parser";
+  #
+  # # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
+  # xdg.configFile."nvim/lua".source = ./lua;
+
+  alacritty = {
+    enable = true;
+    settings = {
+      cursor = {
+        style = "Block";
+      };
+
+      window = {
+        # opacity = 1.0;
+        padding = {
+          x = 0;
+          y = 0;
+        };
+      };
+
+      font = {
+        normal = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Regular";
+        };
+        size = lib.mkMerge [
+          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
+          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 16)
+        ];
+      };
+
+      dynamic_padding = true;
+      decorations = "full";
+      title = "Terminal";
+      class = {
+        instance = "Alacritty";
+        general = "Alacritty";
+      };
+
+      # TokyoNight Moon
+      colors = {
+        primary = {
+          background = "0x222436";
+          foreground = "0xc8d3f5";
+        };
+
+        normal = {
+          black = "0x1b1d2b";
+          red = "0xff757f";
+          green = "0xc3e88d";
+          yellow = "0xffc777";
+          blue = "0x82aaff";
+          magenta = "0xc099ff";
+          cyan = "0x86e1fc";
+          white = "0x828bb8";
+        };
+
+        bright = {
+          black = "0x444a73";
+          red = "0xff757f";
+          green = "0xc3e88d";
+          yellow = "0xffc777";
+          blue = "0x82aaff";
+          magenta = "0xc099ff";
+          cyan = "0x86e1fc";
+          white = "0xc8d3f5";
+        };
+      };
+    };
+  };
+
+  zellij = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
   starship = {
     enable = true;
     # Configuration written to ~/.config/starship.toml

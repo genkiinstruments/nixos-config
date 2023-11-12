@@ -7,9 +7,9 @@ let
   additionalFiles = import ./files.nix { inherit config pkgs; };
 in
 {
-  imports = [
-    ./dock
-  ];
+  # imports = [
+  #   ./dock
+  # ];
 
   # It me
   users.users.${user} = {
@@ -53,32 +53,34 @@ in
     };
   };
 
-  # Fully declarative dock using the latest from Nix Store
-  local.dock.enable = true;
-  local.dock.entries = [
-    # { path = "/Applications/Slack.app/"; }
-    # { path = "/System/Applications/Messages.app/"; }
-    # { path = "/System/Applications/Facetime.app/"; }
-    # { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
-    # { path = "/System/Applications/Music.app/"; }
-    # { path = "/System/Applications/News.app/"; }
-    { path = "/System/Applications/Photos.app/"; }
-    { path = "/Applications/Arc.app/"; }
-    # { path = "/System/Applications/Photo Booth.app/"; }
-    # { path = "/System/Applications/TV.app/"; }
-    # { path = "/Applications/Asana.app/"; }
-    # { path = "/Applications/Drafts.app/"; }
-    # { path = "/System/Applications/Home.app/"; }
-    {
-      path = "${config.users.users.${user}.home}/.local/share/";
-      section = "others";
-      options = "--sort name --view grid --display folder";
-    }
-    {
-      path = "${config.users.users.${user}.home}/.local/share/downloads";
-      section = "others";
-      options = "--sort name --view grid --display stack";
-    }
-  ];
+  # # Fully declarative dock using the latest from Nix Store
+  # local.dock.enable = true;
+  # local.dock.autohide = true;
+  # local.dock.orientation = "left";
+  # local.dock.entries = [
+  #   # { path = "/Applications/Slack.app/"; }
+  #   # { path = "/System/Applications/Messages.app/"; }
+  #   # { path = "/System/Applications/Facetime.app/"; }
+  #   # { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+  #   # { path = "/System/Applications/Music.app/"; }
+  #   # { path = "/System/Applications/News.app/"; }
+  #   { path = "/System/Applications/Photos.app/"; }
+  #   { path = "/Applications/Arc.app/"; }
+  #   # { path = "/System/Applications/Photo Booth.app/"; }
+  #   # { path = "/System/Applications/TV.app/"; }
+  #   # { path = "/Applications/Asana.app/"; }
+  #   # { path = "/Applications/Drafts.app/"; }
+  #   # { path = "/System/Applications/Home.app/"; }
+  #   {
+  #     path = "${config.users.users.${user}.home}/.local/share/";
+  #     section = "others";
+  #     options = "--sort name --view grid --display folder";
+  #   }
+  #   {
+  #     path = "${config.users.users.${user}.home}/.local/share/downloads";
+  #     section = "others";
+  #     options = "--sort name --view grid --display stack";
+  #   }
+  # ];
 
 }

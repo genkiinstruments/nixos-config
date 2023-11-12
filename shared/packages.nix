@@ -10,7 +10,6 @@ with pkgs; [
   bash-completion
   zellij
   bat
-  btop
   coreutils
   difftastic
   du-dust
@@ -48,7 +47,7 @@ with pkgs; [
   tflint
 
   # Media-related packages
-  # emacs-all-the-icons-fonts
+  emacs-all-the-icons-fonts
   dejavu_fonts
   ffmpeg
   fd
@@ -57,6 +56,7 @@ with pkgs; [
   hack-font
   noto-fonts
   noto-fonts-emoji
+  nerdfonts
   meslo-lgs-nf
 
   # Node.js development tools
@@ -78,11 +78,11 @@ with pkgs; [
   jetbrains-mono
   jq
   ripgrep
+  lazygit
   tree
   tmux
   unrar
   unzip
-  # zsh-powerlevel10k
 
   # Python packages
   python39
