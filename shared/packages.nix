@@ -47,7 +47,7 @@ with pkgs; [
   tflint
 
   # Media-related packages
-  emacs-all-the-icons-fontsu
+  # emacs-all-the-icons-fontsu
   dejavu_fonts
   ffmpeg
   fd
