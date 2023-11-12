@@ -8,6 +8,9 @@ in
 {
   # Shared shell configuration
   fish.enable = true;
+  fish.shellInit = ''
+  __nixos_path_fix
+    '';
   fish.interactiveShellInit = '' 
     set fish_greeting # Disable greeting
 
