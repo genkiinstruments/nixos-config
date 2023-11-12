@@ -45,3 +45,4 @@ projectile-bookmarks.eld
 *.o
 *.hi
 
+.DS_Store
