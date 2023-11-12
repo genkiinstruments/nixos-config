@@ -27,6 +27,7 @@
   # Productivity Tools
   # "raycast"
   # "asana"
+  "karabiner-elements"
 
   # Browsers
   # "arc"

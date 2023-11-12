@@ -68,7 +68,11 @@ in
       xdg.configFile."zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
       xdg.configFile."zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
 
-      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
+      xdg.configFile."karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+
+      programs = { } // import ../shared/home-manager.nix {
+        inherit config pkgs lib;
+      };
 
       # Marked broken Oct 20, 2022 check later to remove this
       # https://github.com/nix-community/home-manager/issues/3344
