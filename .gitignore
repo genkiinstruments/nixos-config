@@ -1,5 +1,6 @@
 # Ignore the result of nix-build
 /result
+result
 
 # Ignore result symlinks created by nix-shell
 /result-*
