@@ -105,6 +105,7 @@ in
   };
 
   neovim = {
+    enable = true;
     extraPackages = with pkgs; [
       # LazyVim
       lua-language-server
