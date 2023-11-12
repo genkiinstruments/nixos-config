@@ -86,5 +86,9 @@ let user = "olafur"; in
     #   enableKeyMapping = true;
     #   remapCapsLockToControl = true;
     # };
+    activationScripts.postActivation.text = ''
+        # Set the default shell as fish for the user
+        sudo chsh -s ${lib.getBin pkgs.fish}/bin/fish shauryasingh
+      '';
   };
 }
