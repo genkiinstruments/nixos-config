@@ -7,57 +7,58 @@ let
 in
 {
   # Shared shell configuration
-  fish.enable = true;
-  plugins = [
-    {
-      name = "base16-fish";
-      src = pkgs.fetchFromGitHub {
-        owner = "tomyun";
-        repo = "base16-fish";
-        rev = "2f6dd973a9075dabccd26f1cded09508180bf5fe";
-        sha256 = "PebymhVYbL8trDVVXxCvZgc0S5VxI7I1Hv4RMSquTpA=";
-      };
-    }
-    {
-      name = "hydro";
-      src = pkgs.fetchFromGitHub {
-        owner = "jorgebucaran";
-        repo = "hydro";
-        rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
-        sha256 = "nJ8nQqaTWlISWXx5a0WeUA4+GL7Fe25658UIqKa389E=";
-      };
-    }
-    {
-      name = "done";
-      src = pkgs.fetchFromGitHub {
-        owner = "franciscolourenco";
-        repo = "done";
-        rev = "37117c3d8ed6b820f6dc647418a274ebd1281832";
-        sha256 = "cScH1NzsuQnDZq0XGiay6o073WSRIAsshkySRa/gJc0=";
-      };
-    }
-  ];
-  fish.interactiveShellInit = ''
-    atuin init fish | source
-    starship init fish | source
-    zoxide init fish | source
-    direnv hook fish | source
+  fish = {
+    enable = true;
+    plugins = [
+      {
+        name = "base16-fish";
+        src = pkgs.fetchFromGitHub {
+          owner = "tomyun";
+          repo = "base16-fish";
+          rev = "2f6dd973a9075dabccd26f1cded09508180bf5fe";
+          sha256 = "PebymhVYbL8trDVVXxCvZgc0S5VxI7I1Hv4RMSquTpA=";
+        };
+      }
+      {
+        name = "hydro";
+        src = pkgs.fetchFromGitHub {
+          owner = "jorgebucaran";
+          repo = "hydro";
+          rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
+          sha256 = "nJ8nQqaTWlISWXx5a0WeUA4+GL7Fe25658UIqKa389E=";
+        };
+      }
+      {
+        name = "done";
+        src = pkgs.fetchFromGitHub {
+          owner = "franciscolourenco";
+          repo = "done";
+          rev = "37117c3d8ed6b820f6dc647418a274ebd1281832";
+          sha256 = "cScH1NzsuQnDZq0XGiay6o073WSRIAsshkySRa/gJc0=";
+        };
+      }
+    ];
+    interactiveShellInit = ''
+      atuin init fish | source
+      starship init fish | source
+      zoxide init fish | source
+      direnv hook fish | source
 
-    # eval (zellij setup --generate-auto-start fish | string collect)
+      # eval (zellij setup --generate-auto-start fish | string collect)
 
-    # I'm growing a neckbeard: Set the cursor shapes for the different vi modes.
-    set fish_cursor_default block blink
-    set fish_cursor_insert line blink
-    set fish_cursor_replace_one underscore blink
-    set fish_cursor_visual block
+      # I'm growing a neckbeard: Set the cursor shapes for the different vi modes.
+      set fish_cursor_default block blink
+      set fish_cursor_insert line blink
+      set fish_cursor_replace_one underscore blink
+      set fish_cursor_visual block
 
-    function fish_user_key_bindings
-        # Execute this once per mode that emacs bindings should be used in
-        fish_default_key_bindings -M insert
-        fish_vi_key_bindings --no-erase insert
-    end
-  '';
-  fish.shellInit = '' 
+      function fish_user_key_bindings
+          # Execute this once per mode that emacs bindings should be used in
+          fish_default_key_bindings -M insert
+          fish_vi_key_bindings --no-erase insert
+      end
+    '';
+    shellInit = '' 
     set fish_greeting # Disable greeting
 
     # TokyoNight Color Palette
@@ -160,6 +161,7 @@ in
 
     set -Ua PATH $HOME/bin /usr/local/bin / /Applications/ARM/bin /nix/var/nix/profiles/default/bin
   '';
+  };
 
   git = {
     enable = true;
@@ -183,10 +185,10 @@ in
   neovim = {
     enable = true;
     extraPackages = with pkgs; [
-      LazyVim
+      # LazyVim
       lua-language-server
       stylua
-      Telescope
+      # Telescope
       ripgrep
     ];
 
