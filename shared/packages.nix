@@ -2,28 +2,20 @@
 
 with pkgs; [
   # General packages for development and system management
-  neovim
   act
   atuin
   zoxide
-  aspell
-  aspellDicts.en
   bash-completion
   bat
   coreutils
-  difftastic
-  du-dust
-  git-filter-repo
-  killall
   neofetch
   openssh
-  pandoc
   sqlite
   wget
   zip
 
   # Encryption and security tools
-  _1password
+  bit
   age
   age-plugin-yubikey
   gnupg
@@ -47,20 +39,10 @@ with pkgs; [
   tflint
 
   # Media-related packages
-  # emacs-all-the-icons-fontsu
-  dejavu_fonts
   ffmpeg
   fd
-  font-awesome
-  glow
-  hack-font
-  noto-fonts
-  noto-fonts-emoji
-  nerdfonts
-  meslo-lgs-nf
 
   # Node.js development tools
-  fzf
   nodePackages.live-server
   nodePackages.nodemon
   nodePackages.prettier
@@ -69,21 +51,19 @@ with pkgs; [
 
   # Source code management, Git, GitHub tools
   gh
+  direnv
 
   # Text and terminal utilities
   btop
-  hunspell
-  iftop
   jetbrains-mono
   jq
   ripgrep
   lazygit
   tree
-  tmux
   unrar
   unzip
 
   # Python packages
-  python39
-  python39Packages.virtualenv
+  python312
+  python312Packages.virtualenv
 ]
