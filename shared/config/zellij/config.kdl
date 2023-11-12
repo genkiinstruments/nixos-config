@@ -117,12 +117,14 @@ keybinds clear-defaults=true{
     shared {
         bind "Alt 0" { NewPane; }
         bind "Alt f" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+        bind "Ctrl 0" { CloseFocus; SwitchToMode "Normal"; }
         bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
     }
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
         bind "Ctrl q" { Quit; }
         bind "Alt n" { NewPane; }
+        bind "Ctrl 1" { NewPane; }
         bind "Alt t" { NewTab; SwitchToMode "Normal"; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
         bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }

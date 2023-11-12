@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let user = "olafur"; in
 {
@@ -65,7 +65,7 @@ let user = "olafur"; in
       dock = {
         autohide = true;
         show-recents = false;
-        launchanim = true;
+        launchanim = false;
         orientation = "left";
         tilesize = 48;
       };
@@ -80,9 +80,9 @@ let user = "olafur"; in
       };
     };
 
-    keyboard = {
-      enableKeyMapping = true;
-      remapCapsLockToControl = true;
-    };
+    # keyboard = {
+    #   enableKeyMapping = true;
+    #   remapCapsLockToControl = true;
+    # };
   };
 }
