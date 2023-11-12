@@ -2,13 +2,13 @@
 
 with pkgs; [
   # General packages for development and system management
+  neovim
   act
   atuin
   zoxide
   aspell
   aspellDicts.en
   bash-completion
-  zellij
   bat
   coreutils
   difftastic
@@ -47,7 +47,7 @@ with pkgs; [
   tflint
 
   # Media-related packages
-  emacs-all-the-icons-fonts
+  emacs-all-the-icons-fontsu
   dejavu_fonts
   ffmpeg
   fd
@@ -71,7 +71,6 @@ with pkgs; [
   gh
 
   # Text and terminal utilities
-  neovim
   btop
   hunspell
   iftop

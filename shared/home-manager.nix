@@ -314,6 +314,7 @@ in
 
   starship = {
     enable = true;
+    enableFishIntegration = true;
     # Configuration written to ~/.config/starship.toml
     settings = {
       # add_newline = false;
