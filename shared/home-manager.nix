@@ -68,7 +68,7 @@ in
     atuin init fish | source
     starship init fish | source
     zoxide init fish | source
-    # direnv hook fish | source
+    direnv hook fish | source
 
     # eval (zellij setup --generate-auto-start fish | string collect)
 
