@@ -44,5 +44,6 @@ projectile-bookmarks.eld
 *.drv
 *.o
 *.hi
+.direnv
 
 .DS_Store
