@@ -1,10 +1,7 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   user = "olafur";
-  # Define the content of your file as a derivation
-  sharedFiles = import ../shared/files.nix { inherit config pkgs; };
-  additionalFiles = import ./files.nix { inherit config pkgs; };
 in
 {
   users.users.${user} = {
@@ -35,16 +32,12 @@ in
     users.${user} = { pkgs, config, lib, ... }: {
       home.enableNixpkgsReleaseCheck = false;
       home.packages = pkgs.callPackage ./packages.nix { };
-      home.file = lib.mkMerge [
-        sharedFiles
-        additionalFiles
-      ];
       home.stateVersion = "23.05";
 
       xdg.enable = true;
 
       # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-      xdg.configFile."nvim/parser".source =
+      home.file."nvim/parser".source =
         let
           parsers = pkgs.symlinkJoin {
             name = "treesitter-parsers";
@@ -57,13 +50,14 @@ in
         "${parsers}/parser";
 
       # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-      xdg.configFile."nvim/lua".source = ../shared/config/nvim/lua;
+      home.file."nvim/lua".source = ../shared/config/nvim/lua;
 
-      xdg.configFile."zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
-      xdg.configFile."zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
+      # Zellij stuff. Currently broken
+      home.file."zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
+      home.file."zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
 
       # Hyper-key config
-      xdg.configFile."karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+      home.file."karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
 
       programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
