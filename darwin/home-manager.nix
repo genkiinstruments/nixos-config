@@ -55,6 +55,7 @@ in
       # Zellij stuff. Currently broken
       home.file."zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
       home.file."zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
+      home.file."danni".text = "Danni netti";
 
       # Hyper-key config
       home.file."karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
