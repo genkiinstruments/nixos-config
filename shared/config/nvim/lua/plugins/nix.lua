@@ -8,6 +8,19 @@ return {
         end,
     },
 
+    {
+        "nvim-treesitter/nvim-treesitter",
+        dependencies = { "JoosepAlviste/nvim-ts-context-commentstring" },
+        opts = {
+            context_commentstring = {
+                config = {
+                    lua = "|| %s",
+                    nix = "# #",
+                },
+            },
+        },
+    },
+
     -- correctly setup mason lsp / dap extensions
     {
         "williamboman/mason.nvim",

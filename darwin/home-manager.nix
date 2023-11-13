@@ -50,15 +50,14 @@ in
         "${parsers}/parser";
 
       # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-      home.file."nvim/lua".source = ../shared/config/nvim/lua;
+      home.file.".config/nvim/lua".source = ../shared/config/nvim/lua;
 
       # Zellij stuff. Currently broken
-      home.file."zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
-      home.file."zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
-      home.file."danni".text = "Danni netti";
+      home.file.".config/zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
+      home.file.".config/zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
 
       # Hyper-key config
-      home.file."karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+      home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
 
       programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
