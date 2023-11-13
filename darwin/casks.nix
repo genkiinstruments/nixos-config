@@ -30,7 +30,7 @@
   "karabiner-elements"
 
   # Browsers
-  # "arc"
+  "arc"
 
   # AI
   # "diffusionbee"
