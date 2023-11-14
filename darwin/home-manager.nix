@@ -57,7 +57,7 @@ in
       home.file.".config/nvim/lua".source = ../shared/config/nvim/lua;
 
       # Zellij stuff. Currently broken
-      # home.file.".config/zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
+      home.file.".config/zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
       home.file.".config/zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
 
       # Hyper-key config
