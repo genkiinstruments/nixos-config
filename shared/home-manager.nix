@@ -441,6 +441,14 @@ in
     };
   };
 
+  zellij = {
+    enable = true;
+    enableFishIntegration = true;
+    # settings = {
+      # pane_frames = false;
+    # };
+  };
+
   starship = {
     enable = true;
     enableFishIntegration = true;
