@@ -450,16 +450,16 @@ in
       # TokyoNight Moon
       themes = {
         default = {
-          bg = "0x222436";
-          fg = "0xc8d3f5";
-          black = "0x1b1d2b";
-          red = "0xff757f";
-          green = "0xc3e88d";
-          yellow = "0xffc777";
-          blue = "0x82aaff";
-          magenta = "0xc099ff";
-          cyan = "0x86e1fc";
-          white = "0x828bb8";
+          bg = "#222436";
+          fg = "#c8d3f5";
+          black = "#1b1d2b";
+          red = "#ff757f";
+          green = "#c3e88d";
+          yellow = "#ffc777";
+          blue = "#82aaff";
+          magenta = "#c099ff";
+          cyan = "#86e1fc";
+          white = "#828bb8";
         };
       };
     };
