@@ -65,4 +65,21 @@ in
       manual.manpages.enable = false;
     };
   };
+
+  # Fully declarative dock using the latest from Nix Store
+  local.dock.enable = true;
+  local.dock.entries = [
+    { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+    {
+      path = "${config.users.users.${user}.home}/.local/share/";
+      section = "others";
+      options = "--sort name --view grid --display folder";
+    }
+    {
+      path = "${config.users.users.${user}.home}/.local/share/downloads";
+      section = "others";
+      options = "--sort name --view grid --display stack";
+    }
+  ];
+
 }
