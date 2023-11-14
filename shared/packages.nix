@@ -24,8 +24,8 @@ with pkgs; [
   yubikey-manager
 
   # Cloud-related tools and SDKs
-  docker
-  docker-compose
+  # docker
+  # docker-compose
   awscli2
   cloudflared
   flyctl
