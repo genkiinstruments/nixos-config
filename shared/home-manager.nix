@@ -460,6 +460,7 @@ in
           magenta = "#c099ff";
           cyan = "#86e1fc";
           white = "#828bb8";
+          orange = "#ff966c";
         };
       };
     };
