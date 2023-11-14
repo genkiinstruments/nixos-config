@@ -450,15 +450,15 @@ in
       default_layout = "compact";
       ui.pane_frames.hide_session_name = true;
       plugins = {
-        tab_bar = {path = "tab_bar";};
-        status_bar = {path = "status_bar";};
+        tab-bar = {path = "tab-bar";};
+        status-bar = {path = "status-bar";};
         strider = {path = "strider";};
         compact-bar = {path = "compact-bar";};
       };
 
       theme = "tokyo-night-moon";
-      tokyo-night-moon = {
-        default = {
+      themes = {
+        tokyo-night-moon = {
           bg = "#222436";
           fg = "#c8d3f5";
           black = "#1b1d2b";
