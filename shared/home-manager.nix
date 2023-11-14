@@ -448,6 +448,13 @@ in
       pane_frames = false;
       simplified_ui = true;
       default_layout = "compact";
+      ui.pane_frames.hide_session_name = true;
+      plugins = {
+        tab_bar = {path = "tab_bar";};
+        status_bar = {path = "status_bar";};
+        strider = {path = "strider";};
+        compact-bar = {path = "compact-bar";};
+      };
 
       theme = "tokyo-night-moon";
       tokyo-night-moon = {
