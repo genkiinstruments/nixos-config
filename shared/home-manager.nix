@@ -446,9 +446,11 @@ in
     enableFishIntegration = true;
     settings = {
       pane_frames = false;
+      simplified_ui = true;
+      default_layout = "compact";
 
-      # TokyoNight Moon
-      themes = {
+      theme = "tokyo-night-moon";
+      tokyo-night-moon = {
         default = {
           bg = "#222436";
           fg = "#c8d3f5";
