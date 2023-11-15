@@ -187,7 +187,12 @@ themes {
 }
 
 ui {
-  pane_frames { hide_session_name true }
+  pane_frames {
+    // Set whether the pane frames (if visible) should have rounded corners
+    rounded_corners true
+    // Hides the session name (randomly generated or otherwise) from the UI
+    hide_session_name false
+  }
 }
 
 // Choose what to do when zellij receives SIGTERM, SIGINT, SIGQUIT or SIGHUP
