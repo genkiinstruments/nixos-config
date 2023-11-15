@@ -186,7 +186,6 @@ themes {
     }
 }
 
-#      ui.pane_frames.hide_session_name = true;
 ui {
   pane_frames { hide_session_name true }
 }
