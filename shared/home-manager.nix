@@ -388,6 +388,7 @@ in
           x = 0;
           y = 0;
         };
+        option_as_alt = "Both";
       };
 
       font = {
