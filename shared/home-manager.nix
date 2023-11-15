@@ -254,6 +254,9 @@ in
       stylua
       # Telescope
       ripgrep
+
+      mason
+      mason-lspconfig
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -447,35 +450,35 @@ in
     enableFishIntegration = true;
 
 #     settings = {
-#      pane_frames = false;
-#      simplified_ui = true;
-#      default_layout = "compact";
-#      ui.pane_frames.hide_session_name = true;
-#
-#      plugins = {
-#      tab-bar = {path = "tab-bar";};
-#      status-bar = {path = "status-bar";};
-#      strider = {path = "strider";};
-#      compact-bar = {path = "compact-bar";};
-#    };
-#
-#      theme = "tokyo-night-moon";
-#      themes = {
-#        tokyo-night-moon = {
-#          bg = "#222436";
-#          fg = "#c8d3f5";
-#          black = "#1b1d2b";
-#          red = "#ff757f";
-#          green = "#c3e88d";
-#          yellow = "#ffc777";
-#          blue = "#82aaff";
-#          magenta = "#c099ff";
-#          cyan = "#86e1fc";
-#          white = "#828bb8";
-#          orange = "#ff966c";
-#        };
-#      };
-#    };
+#       pane_frames = false;
+#       simplified_ui = true;
+#       default_layout = "compact";
+#       ui.pane_frames.hide_session_name = true;
+# 
+#       plugins = {
+#       tab-bar = {path = "tab-bar";};
+#       status-bar = {path = "status-bar";};
+#       strider = {path = "strider";};
+#       compact-bar = {path = "compact-bar";};
+#     };
+# 
+#       theme = "tokyo-night-moon";
+#       themes = {
+#         tokyo-night-moon = {
+#           bg = "#222436";
+#           fg = "#c8d3f5";
+#           black = "#1b1d2b";
+#           red = "#ff757f";
+#           green = "#c3e88d";
+#           yellow = "#ffc777";
+#           blue = "#82aaff";
+#           magenta = "#c099ff";
+#           cyan = "#86e1fc";
+#           white = "#828bb8";
+#           orange = "#ff966c";
+#         };
+#       };
+#     };
   };
 
   starship = {
