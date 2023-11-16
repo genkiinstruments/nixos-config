@@ -273,11 +273,14 @@ in
       nodePackages.typescript-language-server
       nodePackages.prettier
       nodePackages.eslint
+
       nodePackages.pyright
       nodePackages.vscode-json-languageserver-bin
       ruff
       tailwindcss-language-server
       vscode-langservers-extracted
+
+      marksman
     ];
 
     plugins = with pkgs.vimPlugins; [
