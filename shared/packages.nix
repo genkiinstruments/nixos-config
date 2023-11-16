@@ -22,7 +22,7 @@ with pkgs; [
   libfido2
   pinentry
   yubikey-manager
-  bws # Bitwarden CLI
+  bitwarden-cli # Bitwarden CLI
 
   # Cloud-related tools and SDKs
   # docker
