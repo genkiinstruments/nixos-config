@@ -14,7 +14,7 @@ return {
         dependencies = {
             "simrat39/rust-tools.nvim",
             init = function()
-                require("lazyvim.util").lsp.on_attach(function(_, buffer)
+                require("lazyvim.util").on_attach(function(_, buffer)
 		  -- stylua: ignore
 		  vim.keymap.set("n", "<C-space>", "RustHoverActions", { buffer = buffer, desc = "Hover Actions (Rust)" })
                     vim.keymap.set(

@@ -8,11 +8,11 @@ return {
         end,
     },
 
-    -- correctly setup mason lsp / dap extensions
+    -- lsp / dap extensions
     {
-        "williamboman/mason.nvim",
+        "neovim/nvim-lspconfig",
         opts = function(_, opts)
-            vim.list_extend(opts.ensure_installed, { "clangd", "clang-format" })
+            vim.list_extend(opts.ensure_installed, { "clangd", "clangd-format" })
         end,
     },
 }

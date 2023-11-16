@@ -112,18 +112,18 @@ in
       home.file.".config/raycast" = { recursive = true; source = config/raycast; };
 
       # Lazyvim plugins
-      home.file.".config/nvim/lua/plugins/oli".text = "Oli minn 🫶";
-      home.file.".config/nvim/lua/plugins/c.lua".source = ../darwin/config/nvim/lua/plugins/c.lua;
-      home.file.".config/nvim/lua/plugins/eslint.lua".source = ../darwin/config/nvim/lua/plugins/eslint.lua;
-      home.file.".config/nvim/lua/plugins/neo-tree.lua".source = ../darwin/config/nvim/lua/plugins/neo-tree.lua;
-      home.file.".config/nvim/lua/plugins/nix.lua".source = ../darwin/config/nvim/lua/plugins/nix.lua;
-      home.file.".config/nvim/lua/plugins/rust.lua".source = ../darwin/config/nvim/lua/plugins/rust.lua;
-      home.file.".config/nvim/lua/plugins/sql.lua".source = ../darwin/config/nvim/lua/plugins/sql.lua;
-      home.file.".config/nvim/lua/plugins/supertab.lua".source = ../darwin/config/nvim/lua/plugins/supertab.lua;
-      home.file.".config/nvim/lua/plugins/svelte.lua".source = ../darwin/config/nvim/lua/plugins/svelte.lua;
-      home.file.".config/nvim/lua/plugins/tailwind.lua".source = ../darwin/config/nvim/lua/plugins/tailwind.lua;
-      home.file.".config/nvim/lua/plugins/telescope.lua".source = ../darwin/config/nvim/lua/plugins/telescope.lua;
-      home.file.".config/nvim/lua/plugins/treesitter.lua".source = ../darwin/config/nvim/lua/plugins/treesitter.lua;
+      # home.file.".config/nvim/lua/plugins/oli.txt".text = "Oli minn 🫶";
+      home.file.".config/nvim/lua/plugins/c.lua".source = ../shared/config/nvim/lua/plugins/c.lua;
+      home.file.".config/nvim/lua/plugins/eslint.lua".source = ../shared/config/nvim/lua/plugins/eslint.lua;
+      home.file.".config/nvim/lua/plugins/neo-tree.lua".source = ../shared/config/nvim/lua/plugins/neo-tree.lua;
+      home.file.".config/nvim/lua/plugins/nix.lua".source = ../shared/config/nvim/lua/plugins/nix.lua;
+      home.file.".config/nvim/lua/plugins/rust.lua".source = ../shared/config/nvim/lua/plugins/rust.lua;
+      home.file.".config/nvim/lua/plugins/sql.lua".source = ../shared/config/nvim/lua/plugins/sql.lua;
+      home.file.".config/nvim/lua/plugins/supertab.lua".source = ../shared/config/nvim/lua/plugins/supertab.lua;
+      home.file.".config/nvim/lua/plugins/svelte.lua".source = ../shared/config/nvim/lua/plugins/svelte.lua;
+      home.file.".config/nvim/lua/plugins/tailwind.lua".source = ../shared/config/nvim/lua/plugins/tailwind.lua;
+      home.file.".config/nvim/lua/plugins/telescope.lua".source = ../shared/config/nvim/lua/plugins/telescope.lua;
+      home.file.".config/nvim/lua/plugins/treesitter.lua".source = ../shared/config/nvim/lua/plugins/treesitter.lua;
   
       programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
