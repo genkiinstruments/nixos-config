@@ -278,7 +278,6 @@ in
       ruff
       tailwindcss-language-server
       vscode-langservers-extracted
-      vscode-extensions.vadimcn.vscode-lldb.adapter
     ];
 
     plugins = with pkgs.vimPlugins; [
