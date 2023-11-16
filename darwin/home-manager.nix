@@ -62,7 +62,9 @@ in
 
       # Hyper-key config
       home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
-
+      
+      home.file.".config/raycast" = { recursive = true; source = config/raycast; };
+  
       programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
       # Marked broken Oct 20, 2022 check later to remove this https://github.com/nix-community/home-manager/issues/3344
