@@ -11,8 +11,10 @@ return {
     -- lsp / dap extensions
     {
         "neovim/nvim-lspconfig",
-        opts = function(_, opts)
-            vim.list_extend(opts.ensure_installed, { "clangd", "clangd-format" })
-        end,
+        opts = {
+            servers = {
+                clangd = {},
+            },
+        },
     },
 }

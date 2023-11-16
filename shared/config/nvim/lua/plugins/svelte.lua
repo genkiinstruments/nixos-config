@@ -13,9 +13,9 @@ return {
         "neovim/nvim-lspconfig",
         opts = {
             servers = {
-                svelte,
-                prismals,
-                tailwindcss,
+                svelte = {},
+                prismals = {},
+                tailwindcss = {},
             },
         },
     },
