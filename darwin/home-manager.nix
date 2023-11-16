@@ -69,30 +69,19 @@ in
               vimdoc
               yaml
 
-              c
-              lua
-
               # Nix
               nix
 
               # Rust
               rust
-              toml
               kdl
 
               # Svelte
               svelte
-              prisma
               sql
 
               # Tailwind
               # TODO: tailwindcss
-
-              # Treesitter
-              regex
-              bash
-              markdown
-              markdown_inline
             ])).dependencies;
           };
         in
