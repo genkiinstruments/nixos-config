@@ -273,12 +273,16 @@ in
       nodePackages.typescript-language-server
       nodePackages.prettier
       nodePackages.eslint
+      nodePackages.pyright
+      nodePackages.vscode-json-languageserver-bin
+      ruff
       tailwindcss-language-server
       vscode-langservers-extracted
     ];
 
     plugins = with pkgs.vimPlugins; [
       lazy-nvim
+      rustaceanvim
     ];
 
     extraLuaConfig =
