@@ -46,6 +46,29 @@ in
           parsers = pkgs.symlinkJoin {
             name = "treesitter-parsers";
             paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
+              bash,
+              c,
+              diff,
+              html,
+              javascript,
+              jsdoc,
+              json,
+              jsonc,
+              lua,
+              luadoc,
+              luap,
+              markdown,
+              markdown_inline,
+              python,
+              query,
+              regex,
+              toml,
+              tsx,
+              typescript,
+              vim,
+              vimdoc,
+              yaml,
+
               c
               lua
 
@@ -85,7 +108,21 @@ in
       # Hyper-key config
       home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
       
+      # Raycast
       home.file.".config/raycast" = { recursive = true; source = config/raycast; };
+
+      # Lazyvim plugins
+      home.file."nvim/lua/plugins/c.lua".source = ./config/nvim/lua/plugins/c.lua;
+      home.file."nvim/lua/plugins/eslint.lua".source = ./config/nvim/lua/plugins/eslint.lua;
+      home.file."nvim/lua/plugins/neo-tree.lua".source = ./config/nvim/lua/plugins/neo-tree.lua;
+      home.file."nvim/lua/plugins/nix.lua".source = ./config/nvim/lua/plugins/nix.lua;
+      home.file."nvim/lua/plugins/rust.lua".source = ./config/nvim/lua/plugins/rust.lua;
+      home.file."nvim/lua/plugins/sql.lua".source = ./config/nvim/lua/plugins/sql.lua;
+      home.file."nvim/lua/plugins/supertab.lua".source = ./config/nvim/lua/plugins/supertab.lua;
+      home.file."nvim/lua/plugins/svelte.lua".source = ./config/nvim/lua/plugins/svelte.lua;
+      home.file."nvim/lua/plugins/tailwind.lua".source = ./config/nvim/lua/plugins/tailwind.lua;
+      home.file."nvim/lua/plugins/telescope.lua".source = ./config/nvim/lua/plugins/telescope.lua;
+      home.file."nvim/lua/plugins/treesitter.lua".source = ./config/nvim/lua/plugins/treesitter.lua;
   
       programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
