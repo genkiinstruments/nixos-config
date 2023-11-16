@@ -255,8 +255,24 @@ in
       # Telescope
       ripgrep
 
-      mason
-      mason-lspconfig
+      # neovim/nvim-lspconfig
+      # Nix
+      nil
+      nixpkgs-fmt
+
+      # C
+      clang-tools
+
+      # Rust
+      # TODO: rust-tools, simrat39/rust-tools.nvim
+      rust-analyzer
+
+      # Svelte
+      nodePackages.svelte-language-server
+      nodePackages.typescript-language-server
+      tailwindcss-language-server
+      nodePackages.eslint
+      vscode-langservers-extracted
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -308,7 +324,6 @@ in
           vim-startuptime
           which-key-nvim
           { name = "LuaSnip"; path = luasnip; }
-          { name = "catppuccin"; path = catppuccin-nvim; }
           { name = "mini.ai"; path = mini-nvim; }
           { name = "mini.bufremove"; path = mini-nvim; }
           { name = "mini.comment"; path = mini-nvim; }
@@ -449,36 +464,36 @@ in
     enable = true;
     enableFishIntegration = true;
 
-#     settings = {
-#       pane_frames = false;
-#       simplified_ui = true;
-#       default_layout = "compact";
-#       ui.pane_frames.hide_session_name = true;
-# 
-#       plugins = {
-#       tab-bar = {path = "tab-bar";};
-#       status-bar = {path = "status-bar";};
-#       strider = {path = "strider";};
-#       compact-bar = {path = "compact-bar";};
-#     };
-# 
-#       theme = "tokyo-night-moon";
-#       themes = {
-#         tokyo-night-moon = {
-#           bg = "#222436";
-#           fg = "#c8d3f5";
-#           black = "#1b1d2b";
-#           red = "#ff757f";
-#           green = "#c3e88d";
-#           yellow = "#ffc777";
-#           blue = "#82aaff";
-#           magenta = "#c099ff";
-#           cyan = "#86e1fc";
-#           white = "#828bb8";
-#           orange = "#ff966c";
-#         };
-#       };
-#     };
+    #     settings = {
+    #       pane_frames = false;
+    #       simplified_ui = true;
+    #       default_layout = "compact";
+    #       ui.pane_frames.hide_session_name = true;
+    # 
+    #       plugins = {
+    #       tab-bar = {path = "tab-bar";};
+    #       status-bar = {path = "status-bar";};
+    #       strider = {path = "strider";};
+    #       compact-bar = {path = "compact-bar";};
+    #     };
+    # 
+    #       theme = "tokyo-night-moon";
+    #       themes = {
+    #         tokyo-night-moon = {
+    #           bg = "#222436";
+    #           fg = "#c8d3f5";
+    #           black = "#1b1d2b";
+    #           red = "#ff757f";
+    #           green = "#c3e88d";
+    #           yellow = "#ffc777";
+    #           blue = "#82aaff";
+    #           magenta = "#c099ff";
+    #           cyan = "#86e1fc";
+    #           white = "#828bb8";
+    #           orange = "#ff966c";
+    #         };
+    #       };
+    #     };
   };
 
   starship = {

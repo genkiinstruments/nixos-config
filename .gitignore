@@ -47,3 +47,13 @@ projectile-bookmarks.eld
 .direnv
 
 .DS_Store
+
+# lazyvim
+tt.*
+.tests
+doc/tags
+debug
+.repro
+foo.*
+*.log
+data

@@ -41,13 +41,35 @@ in
       xdg.enable = true;
 
       # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-      home.file."nvim/parser".source =
+      home.file.".config/nvim/parser".source =
         let
           parsers = pkgs.symlinkJoin {
             name = "treesitter-parsers";
             paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
               c
               lua
+
+              # Nix
+              nix
+
+              # Rust
+              rust
+              toml
+              kdl
+
+              # Svelte
+              svelte
+              prisma
+              sql
+
+              # Tailwind
+              # TODO: tailwindcss
+
+              # Treesitter
+              regex
+              bash
+              markdown
+              markdown_inline
             ])).dependencies;
           };
         in
