@@ -302,6 +302,7 @@ in
           friendly-snippets
           gitsigns-nvim
           indent-blankline-nvim
+          clangd_extensions-nvim
           lualine-nvim
           neo-tree-nvim
           neoconf-nvim
@@ -364,7 +365,9 @@ in
             { import = "lazyvim.plugins.extras.coding.copilot" },
             { import = "lazyvim.plugins.extras.lang.json" },
             { import = "lazyvim.plugins.extras.lang.python" },
+            { import = "lazyvim.plugins.extras.lang.markdown" },
             { import = "lazyvim.plugins.extras.linting.eslint" },
+            { import = "lazyvim.plugins.extras.lang.clangd" },
             { import = "lazyvim.plugins.extras.formatting.prettier" },
             { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
             -- The following configs are needed for fixing lazyvim on nix
