@@ -46,28 +46,28 @@ in
           parsers = pkgs.symlinkJoin {
             name = "treesitter-parsers";
             paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
-              bash,
-              c,
-              diff,
-              html,
-              javascript,
-              jsdoc,
-              json,
-              jsonc,
-              lua,
-              luadoc,
-              luap,
-              markdown,
-              markdown_inline,
-              python,
-              query,
-              regex,
-              toml,
-              tsx,
-              typescript,
-              vim,
-              vimdoc,
-              yaml,
+              bash
+              c
+              diff
+              html
+              javascript
+              jsdoc
+              json
+              jsonc
+              lua
+              luadoc
+              luap
+              markdown
+              markdown_inline
+              python
+              query
+              regex
+              toml
+              tsx
+              typescript
+              vim
+              vimdoc
+              yaml
 
               c
               lua
