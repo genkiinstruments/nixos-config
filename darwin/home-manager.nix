@@ -101,17 +101,17 @@ in
 
       # Lazyvim plugins
       # home.file.".config/nvim/lua/plugins/oli.txt".text = "Oli minn 🫶";
-      home.file.".config/nvim/lua/plugins/c.lua".source = ../shared/config/nvim/lua/plugins/c.lua;
-      home.file.".config/nvim/lua/plugins/eslint.lua".source = ../shared/config/nvim/lua/plugins/eslint.lua;
-      home.file.".config/nvim/lua/plugins/neo-tree.lua".source = ../shared/config/nvim/lua/plugins/neo-tree.lua;
+      # home.file.".config/nvim/lua/plugins/c.lua".source = ../shared/config/nvim/lua/plugins/c.lua;
+      # home.file.".config/nvim/lua/plugins/eslint.lua".source = ../shared/config/nvim/lua/plugins/eslint.lua;
+      # home.file.".config/nvim/lua/plugins/neo-tree.lua".source = ../shared/config/nvim/lua/plugins/neo-tree.lua;
       home.file.".config/nvim/lua/plugins/nix.lua".source = ../shared/config/nvim/lua/plugins/nix.lua;
-      home.file.".config/nvim/lua/plugins/rust.lua".source = ../shared/config/nvim/lua/plugins/rust.lua;
-      home.file.".config/nvim/lua/plugins/sql.lua".source = ../shared/config/nvim/lua/plugins/sql.lua;
-      home.file.".config/nvim/lua/plugins/supertab.lua".source = ../shared/config/nvim/lua/plugins/supertab.lua;
-      home.file.".config/nvim/lua/plugins/svelte.lua".source = ../shared/config/nvim/lua/plugins/svelte.lua;
-      home.file.".config/nvim/lua/plugins/telescope.lua".source = ../shared/config/nvim/lua/plugins/telescope.lua;
-      home.file.".config/nvim/lua/plugins/treesitter.lua".source = ../shared/config/nvim/lua/plugins/treesitter.lua;
-  
+      # home.file.".config/nvim/lua/plugins/rust.lua".source = ../shared/config/nvim/lua/plugins/rust.lua;
+      # home.file.".config/nvim/lua/plugins/sql.lua".source = ../shared/config/nvim/lua/plugins/sql.lua;
+      # home.file.".config/nvim/lua/plugins/supertab.lua".source = ../shared/config/nvim/lua/plugins/supertab.lua;
+      # home.file.".config/nvim/lua/plugins/svelte.lua".source = ../shared/config/nvim/lua/plugins/svelte.lua;
+      # home.file.".config/nvim/lua/plugins/telescope.lua".source = ../shared/config/nvim/lua/plugins/telescope.lua;
+      # home.file.".config/nvim/lua/plugins/treesitter.lua".source = ../shared/config/nvim/lua/plugins/treesitter.lua;
+      #
       programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
       # Marked broken Oct 20, 2022 check later to remove this https://github.com/nix-community/home-manager/issues/3344
