@@ -22,7 +22,7 @@
 
   # Entertainment Tools
   # "steam"
-  # "vlc"
+  "vlc"
 
   # Productivity Tools
   # "raycast"

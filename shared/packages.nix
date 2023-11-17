@@ -33,7 +33,6 @@ with pkgs; [
   # Media-related packages
   ffmpeg
   fd
-  vlc
 
   # Node.js development tools
   nodePackages.live-server
