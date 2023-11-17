@@ -61,4 +61,9 @@ with pkgs; [
 
   # Packages installed using brew... doesn't look like I need them at all
   luajit
+
+  #
+  logseq
+  unar
+  transmission
 ]

@@ -18,7 +18,7 @@
 
   # Utility Tools
   # "appcleaner"
-  # "syncthing"
+  "syncthing"
 
   # Entertainment Tools
   # "steam"
@@ -34,4 +34,28 @@
 
   # AI
   # "diffusionbee"
+
+  # Music
+  "vcv-rack"
+  "ableton-live-suite"
+
+  "arc"
+  "cleanshot"
+  "daisydisk"
+  "google-chrome"
+  "jetbrains-toolbox"
+  "keycastr"
+  "keyboard-cleaner"
+  "karabiner-elements"
+  "ltspice"
+  "midi-monitor"
+  "raspberry-pi-imager"
+  "segger-jlink"
+  "screen-studio"
+  "spotify"
+  "sysex-librarian"
+  "pixelsnap"
+  "protonvpn"
+  "ilok-license-manager"
+  "nordic-nrf-command-line-tools"
 ]
