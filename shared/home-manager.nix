@@ -265,7 +265,6 @@ in
       clang-tools
 
       # Rust
-      # TODO: rust-tools, simrat39/rust-tools.nvim
       rust-analyzer
 
       # Svelte
@@ -285,12 +284,12 @@ in
 
     plugins = with pkgs.vimPlugins; [
       lazy-nvim
-      rustaceanvim
     ];
 
     extraLuaConfig =
       let
         plugins = with pkgs.vimPlugins; [
+          rustaceanvim
           # LazyVim
           LazyVim
           bufferline-nvim
@@ -402,6 +401,17 @@ in
 
         map({ "n", "i", "v" }, "<A-j>", "", { desc = "Move down" })
         map({ "n", "i", "v" }, "<A-k>", "", { desc = "Move up" })
+
+        vim.g.rustaceanvim = function()
+          return {
+            server = {
+              on_attach = function(client, bufnr)
+                lsp.on_attach(client, bufnr)
+                lsp.on_dap_attach(bufnr)
+              end,
+            },
+          }
+        end
       '';
   };
 

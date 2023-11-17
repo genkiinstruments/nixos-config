@@ -1,13 +1,12 @@
 return {
+    -- add rust to treesitter
+    {
+        "nvim-treesitter/nvim-treesitter",
+        opts = function(_, opts)
+            table.insert(opts.ensure_installed, { "rust", "toml", "kdl" })
+        end,
+    },
 
-    -- -- add rust to treesitter
-    -- {
-    --     "nvim-treesitter/nvim-treesitter",
-    --     opts = function(_, opts)
-    --         table.insert(opts.ensure_installed, { "rust", "toml", "kdl" })
-    --     end,
-    -- },
-    --
     -- -- correctly setup lspconfig for Rust 🚀
     -- {
     --     "neovim/nvim-lspconfig",
@@ -72,4 +71,9 @@ return {
     --         },
     --     },
     -- },
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^3", -- Recommended
+        ft = { "rust" },
+    },
 }
