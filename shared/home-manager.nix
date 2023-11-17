@@ -266,6 +266,8 @@ in
 
       # Rust
       rust-analyzer
+      cargo
+      graphviz
 
       # Svelte
       nodePackages.svelte-language-server
@@ -312,6 +314,7 @@ in
           noice-nvim
           nui-nvim
           nvim-cmp
+          nvim-dap # Rust
           nvim-lint
           nvim-lspconfig
           nvim-notify
@@ -402,16 +405,41 @@ in
         map({ "n", "i", "v" }, "<A-j>", "", { desc = "Move down" })
         map({ "n", "i", "v" }, "<A-k>", "", { desc = "Move up" })
 
-        vim.g.rustaceanvim = function()
-          return {
-            server = {
-              on_attach = function(client, bufnr)
-                lsp.on_attach(client, bufnr)
-                lsp.on_dap_attach(bufnr)
-              end,
+        vim.g.rustaceanvim = {
+          -- Plugin configuration
+          tools = {
+          },
+          -- LSP configuration
+          server = {
+            on_attach = function(client, bufnr)
+              -- you can also put keymaps in here
+              lsp.on_attach(client, bufnr)
+              lsp.on_dap_attach(bufnr)
+            end,
+            settings = {
+              -- rust-analyzer language server configuration
+              ["rust-analyzer"] = {
+                  cargo = {
+                      allFeatures = true,
+                  },
+                  checkOnSave = {
+                      allFeatures = true,
+                      command = "clippy",
+                      extraArgs = { "--no-deps" },
+                  },
+                  procMacro = {
+                      ignored = {
+                          ["async-trait"] = { "async_trait" },
+                          ["napi-derive"] = { "napi" },
+                          ["async-recursion"] = { "async_recursion" },
+                      },
+                  },
+              },
             },
-          }
-        end
+          },
+          -- DAP configuration
+          dap = { },
+        }
       '';
   };
 
