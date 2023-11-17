@@ -61,6 +61,7 @@ in
     shellInit = '' 
     set fish_greeting # Disable greeting
 
+    # https://github.com/folke/tokyonight.nvim/blob/main/extras/fish/tokyonight_moon.fish
     # TokyoNight Color Palette
     set -l foreground c8d3f5
     set -l selection 2d3f76
@@ -88,6 +89,13 @@ in
     set -g fish_color_operator $green
     set -g fish_color_escape $pink
     set -g fish_color_autosuggestion $comment
+
+    # Completion Pager Colors
+    set -g fish_pager_color_progress $comment
+    set -g fish_pager_color_prefix $cyan
+    set -g fish_pager_color_completion $foreground
+    set -g fish_pager_color_description $comment
+    set -g fish_pager_color_selected_background --background=$selection
     
     # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117
     # prompt configurations
@@ -200,13 +208,6 @@ in
       set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
       set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
     end
-
-    # Completion Pager Colors
-    set -g fish_pager_color_progress $comment
-    set -g fish_pager_color_prefix $cyan
-    set -g fish_pager_color_completion $foreground
-    set -g fish_pager_color_description $comment
-    set -g fish_pager_color_selected_background --background=$selection
 
     set -x PNPM_HOME /Users/olafur/Library/pnpm
     set -Ua PATH $PNPM_HOME
@@ -451,69 +452,6 @@ in
 
   alacritty = {
     enable = true;
-    settings = {
-      cursor = {
-        style = "Block";
-      };
-
-      window = {
-        # opacity = 1.0;
-        padding = {
-          x = 0;
-          y = 0;
-        };
-        option_as_alt = "Both";
-      };
-
-      font = {
-        normal = {
-          family = "JetBrainsMono Nerd Font";
-          style = "Regular";
-        };
-        size = lib.mkMerge [
-          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
-          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 16)
-        ];
-      };
-
-      dynamic_padding = true;
-      decorations = "full";
-      title = "Terminal";
-      class = {
-        instance = "Alacritty";
-        general = "Alacritty";
-      };
-
-      # TokyoNight Moon
-      colors = {
-        primary = {
-          background = "0x222436";
-          foreground = "0xc8d3f5";
-        };
-
-        normal = {
-          black = "0x1b1d2b";
-          red = "0xff757f";
-          green = "0xc3e88d";
-          yellow = "0xffc777";
-          blue = "0x82aaff";
-          magenta = "0xc099ff";
-          cyan = "0x86e1fc";
-          white = "0x828bb8";
-        };
-
-        bright = {
-          black = "0x444a73";
-          red = "0xff757f";
-          green = "0xc3e88d";
-          yellow = "0xffc777";
-          blue = "0x82aaff";
-          magenta = "0xc099ff";
-          cyan = "0x86e1fc";
-          white = "0xc8d3f5";
-        };
-      };
-    };
   };
 
   zellij = {
