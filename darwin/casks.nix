@@ -25,9 +25,9 @@
   # "vlc"
 
   # Productivity Tools
-  "raycast"
+  # "raycast"
   # "asana"
-  "karabiner-elements"
+  # "karabiner-elements"
 
   # Browsers
   # "arc"

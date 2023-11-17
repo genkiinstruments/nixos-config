@@ -18,16 +18,14 @@ in
   homebrew.enable = true;
   homebrew.casks = pkgs.callPackage ./casks.nix { };
 
-  # These app IDs are from using the mas CLI app
-  # mas = mac app store
+  # These app IDs are from using the mas (mac app store) CLI app
   # https://github.com/mas-cli/mas
   #
   # $ nix shell nixpkgs#mas
   # $ mas search <app name>
-  #
   homebrew.masApps = {
-    # "1password" = 1333542190;
-    # "wireguard" = 1451685025;
+    "Keynote" = 409183694;
+    "ColorSlurp" = 1287239339;
   };
 
   # Enable home-manager

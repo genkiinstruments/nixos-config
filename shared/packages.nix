@@ -2,7 +2,7 @@
 
 with pkgs; [
   # General packages for development and system management
-  act
+  vscode
   atuin
   zoxide
   bash-completion
@@ -15,26 +15,17 @@ with pkgs; [
   zip
 
   # Encryption and security tools
-  bit
   age
   age-plugin-yubikey
   gnupg
   libfido2
   pinentry
   yubikey-manager
-  bitwarden-cli # Bitwarden CLI
+  bitwarden-cli
 
   # Cloud-related tools and SDKs
-  # docker
-  # docker-compose
-  awscli2
   cloudflared
-  flyctl
-  google-cloud-sdk
-  go
-  gopls
   ngrok
-  ssm-session-manager-plugin
   terraform
   terraform-ls
   tflint
@@ -42,6 +33,7 @@ with pkgs; [
   # Media-related packages
   ffmpeg
   fd
+  vlc
 
   # Node.js development tools
   nodePackages.live-server
@@ -67,4 +59,9 @@ with pkgs; [
   # Python packages
   python312
   python312Packages.virtualenv
+
+  # Packages installed using brew... doesn't look like I need them at all
+  luajit
+  libtermkey
+  libvterm
 ]
