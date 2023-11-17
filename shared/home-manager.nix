@@ -266,6 +266,7 @@ in
 
       # Rust
       rust-analyzer
+      rustfmt
       cargo
       graphviz
 
