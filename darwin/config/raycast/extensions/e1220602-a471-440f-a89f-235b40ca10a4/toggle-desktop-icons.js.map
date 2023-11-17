@@ -1,7 +1,1 @@
-{
-  "version": 3,
-  "sources": ["../src/toggle-desktop-icons.tsx"],
-  "sourcesContent": ["import { closeMainWindow, open } from \"@raycast/api\";\n\nexport default async function Command() {\n  const url = \"cleanshot://toggle-desktop-icons\";\n  await closeMainWindow();\n  open(url);\n}\n"],
-  "mappings": "yaAAA,IAAAA,EAAA,GAAAC,EAAAD,EAAA,aAAAE,IAAA,eAAAC,EAAAH,GAAA,IAAAI,EAAsC,wBAEtC,eAAOF,GAAiC,CACtC,IAAMG,EAAM,mCACZ,QAAM,mBAAgB,KACtB,QAAKA,CAAG,CACV",
-  "names": ["toggle_desktop_icons_exports", "__export", "Command", "__toCommonJS", "import_api", "url"]
-}
+/nix/store/j7aqybbh2r10ycljkckj0lrb23dskwr1-home-manager-files/.config/raycast/extensions/e1220602-a471-440f-a89f-235b40ca10a4/toggle-desktop-icons.js.map
