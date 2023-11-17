@@ -292,7 +292,12 @@ in
     extraLuaConfig =
       let
         plugins = with pkgs.vimPlugins; [
-          rustaceanvim
+          # Rust
+          nvim-dap
+          crates-nvim
+          rust-tools-nvim
+          neotest-rust
+          neotest
           # LazyVim
           LazyVim
           bufferline-nvim
@@ -315,7 +320,6 @@ in
           noice-nvim
           nui-nvim
           nvim-cmp
-          nvim-dap # Rust
           nvim-lint
           nvim-lspconfig
           nvim-notify
@@ -372,6 +376,7 @@ in
             { import = "lazyvim.plugins.extras.lang.json" },
             { import = "lazyvim.plugins.extras.lang.python" },
             { import = "lazyvim.plugins.extras.lang.markdown" },
+            { import = "lazyvim.plugins.extras.lang.rust" },
             { import = "lazyvim.plugins.extras.linting.eslint" },
             { import = "lazyvim.plugins.extras.lang.clangd" },
             { import = "lazyvim.plugins.extras.formatting.prettier" },
