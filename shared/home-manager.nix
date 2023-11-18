@@ -188,7 +188,6 @@ in
     end
     macos_set_env prepend PATH /etc/paths '/etc/paths.d'
 
-
     set -ga MANPATH $HOME/.local/share/man
     set -ga MANPATH $HOME/.nix-profile/share/man
     if test $KERNEL_NAME darwin
@@ -208,23 +207,6 @@ in
       set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
       set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
     end
-
-    set -x PNPM_HOME /Users/olafur/Library/pnpm
-    set -Ua PATH $PNPM_HOME
-
-    set -x NOTION_TOKEN secret_Yc7GzmUIFdqBHEEMYSBTdj3Rs9emdVKGVNVkuzLjyZG
-    set -x OPENAI_API_KEY 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
-
-    set -x DOCKER_HOST unix:///$HOME/.docker/run/docker.sock
-
-    # bun
-    set -x BUN_INSTALL "$HOME/.bun"
-    set -Ua PATH $BUN_INSTALL/bin
-
-    # NIX
-    set -Ua PATH /nix/var/nix/profiles/default/bin
-
-    set -Ua PATH $HOME/bin /usr/local/bin / /Applications/ARM/bin /nix/var/nix/profiles/default/bin
   '';
   };
 
