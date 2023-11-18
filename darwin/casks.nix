@@ -38,7 +38,7 @@
   # Music
   # "vcv-rack"
   # "ableton-live-suite"
-  "gbevin/tools/showmidi"
+  # "gbevin/tools/showmidi"
 
   # These take a looong time to install... have to have good internet...
   # "arc"
