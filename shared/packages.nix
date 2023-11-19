@@ -34,6 +34,7 @@ with pkgs; [
   # Media-related packages
   ffmpeg
   fd
+  reaper
 
   # Node.js development tools
   nodePackages.live-server

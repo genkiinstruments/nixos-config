@@ -233,7 +233,7 @@ in
     enable = true;
     extraPackages = with pkgs; [
       # LazyVim
-      lua-language-server
+      # lua-language-server # not working atm
       stylua
 
       # Telescope
@@ -246,6 +246,8 @@ in
 
       # C
       clang-tools
+      neocmakelsp
+      vscode-extensions.ms-vscode.cmake-tools
 
       # Rust
       rust-analyzer
@@ -362,6 +364,7 @@ in
             { import = "lazyvim.plugins.extras.lang.rust" },
             { import = "lazyvim.plugins.extras.linting.eslint" },
             { import = "lazyvim.plugins.extras.lang.clangd" },
+            { import = "lazyvim.plugins.extras.lang.cmake" },
             { import = "lazyvim.plugins.extras.formatting.prettier" },
             { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
             -- The following configs are needed for fixing lazyvim on nix

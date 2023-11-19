@@ -46,6 +46,8 @@ in
             paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
               bash
               c
+              cpp
+              cmake
               diff
               html
               javascript

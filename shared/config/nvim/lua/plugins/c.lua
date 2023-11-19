@@ -4,7 +4,7 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         opts = function(_, opts)
-            vim.list_extend(opts.ensure_installed, { "c", "cpp" })
+            vim.list_extend(opts.ensure_installed, { "c", "cpp", "cmake", "cmake-language-server" })
         end,
     },
 
@@ -14,6 +14,7 @@ return {
         opts = {
             servers = {
                 clangd = {},
+                neocmake = {},
             },
         },
     },
