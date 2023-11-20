@@ -1,208 +1,59 @@
 { config, pkgs, lib, ... }:
 
-let
-  name = "Ólafur Bjarki Bogason";
-  user = "olafur";
-  email = "olafur@genkiinstruments.com";
-in
+let name = "Ólafur Bjarki Bogason";
+    user = "olafur";
+    email = "olafur@genkiinstruments.com"; in
 {
   # Shared shell configuration
-  fish = {
-    enable = true;
-    plugins = [
-      {
-        name = "base16-fish";
-        src = pkgs.fetchFromGitHub {
-          owner = "tomyun";
-          repo = "base16-fish";
-          rev = "2f6dd973a9075dabccd26f1cded09508180bf5fe";
-          sha256 = "PebymhVYbL8trDVVXxCvZgc0S5VxI7I1Hv4RMSquTpA=";
-        };
-      }
-      {
-        name = "hydro";
-        src = pkgs.fetchFromGitHub {
-          owner = "jorgebucaran";
-          repo = "hydro";
-          rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
-          sha256 = "nJ8nQqaTWlISWXx5a0WeUA4+GL7Fe25658UIqKa389E=";
-        };
-      }
-      {
-        name = "done";
-        src = pkgs.fetchFromGitHub {
-          owner = "franciscolourenco";
-          repo = "done";
-          rev = "37117c3d8ed6b820f6dc647418a274ebd1281832";
-          sha256 = "cScH1NzsuQnDZq0XGiay6o073WSRIAsshkySRa/gJc0=";
-        };
-      }
-    ];
-    interactiveShellInit = ''
-      atuin init fish | source
-      starship init fish | source
-      zoxide init fish | source
-      direnv hook fish | source
+  zsh.enable = true;
+  zsh.autocd = false;
+  zsh.plugins = [
+    {
+        name = "powerlevel10k";
+        src = pkgs.zsh-powerlevel10k;
+        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
+    }
+    {
+        name = "powerlevel10k-config";
+        src = lib.cleanSource ./config;
+        file = "p10k.zsh";
+    }
+  ];
+  zsh.initExtraFirst = ''
+    if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+      . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+      . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
+    fi
 
-      # eval (zellij setup --generate-auto-start fish | string collect)
+    # Define variables for directories
+    export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
+    export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
+    export PATH=$HOME/.local/share/bin:$PATH
+    export PNPM_HOME=~/.pnpm-packages
 
-      # I'm growing a neckbeard: Set the cursor shapes for the different vi modes.
-      set fish_cursor_default block blink
-      set fish_cursor_insert line blink
-      set fish_cursor_replace_one underscore blink
-      set fish_cursor_visual block
-    '';
-    shellInit = '' 
-    set fish_greeting # Disable greeting
+    # Remove history data we don't want to see
+    export HISTIGNORE="pwd:ls:cd"
 
-    # https://github.com/folke/tokyonight.nvim/blob/main/extras/fish/tokyonight_moon.fish
-    # TokyoNight Color Palette
-    set -l foreground c8d3f5
-    set -l selection 2d3f76
-    set -l comment 636da6
-    set -l red ff757f
-    set -l orange ff966c
-    set -l yellow ffc777
-    set -l green c3e88d
-    set -l purple fca7ea
-    set -l cyan 86e1fc
-    set -l pink c099ff
+    # Emacs is my editor
+    export ALTERNATE_EDITOR=""
+    export EDITOR="emacsclient -t"
+    export VISUAL="emacsclient -c -a emacs"
 
-    # Syntax Highlighting Colors
-    set -g fish_color_normal $foreground
-    set -g fish_color_command $cyan
-    set -g fish_color_keyword $pink
-    set -g fish_color_quote $yellow
-    set -g fish_color_redirection $foreground
-    set -g fish_color_end $orange
-    set -g fish_color_error $red
-    set -g fish_color_param $purple
-    set -g fish_color_comment $comment
-    set -g fish_color_selection --background=$selection
-    set -g fish_color_search_match --background=$selection
-    set -g fish_color_operator $green
-    set -g fish_color_escape $pink
-    set -g fish_color_autosuggestion $comment
+    e() {
+        emacsclient -t "$@"
+    }
 
-    # Completion Pager Colors
-    set -g fish_pager_color_progress $comment
-    set -g fish_pager_color_prefix $cyan
-    set -g fish_pager_color_completion $foreground
-    set -g fish_pager_color_description $comment
-    set -g fish_pager_color_selected_background --background=$selection
-    
-    # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117
-    # prompt configurations
-    set -g hydro_symbol_prompt "λ"
-    if test "$TERM" = linux
-      set -g hydro_symbol_prompt ">"
-    end
+    # nix shortcuts
+    shell() {
+        nix-shell '<nixpkgs>' -A "$1"
+    }
 
-    # done configurations
-    set -g __done_notification_command 'notify send -t "$title" -m "$message"'
-    set -g __done_enabled 1
-    set -g __done_allow_nongraphical 1
-    set -g __done_min_cmd_duration 8000
+    # Use difftastic, syntax-aware diffing
+    alias diff=difft
 
-    # see https://github.com/LnL7/nix-darwin/issues/122
-    set -ga PATH ${config.xdg.configHome}/bin
-    set -ga PATH $HOME/.local/bin
-    set -ga PATH /run/wrappers/bin
-    set -ga PATH $HOME/.nix-profile/bin
-    if test $KERNEL_NAME darwin
-      set -ga PATH /opt/homebrew/opt/llvm/bin
-      set -ga PATH /opt/homebrew/bin
-      set -ga PATH /opt/homebrew/sbin
-    end
-    set -ga PATH /run/current-system/sw/bin
-    set -ga PATH /nix/var/nix/profiles/default/bin
-
-    # Adapt construct_path from the macOS /usr/libexec/path_helper executable for
-    # fish usage;
-    #
-    # The main difference is that it allows to control how extra entries are
-    # preserved: either at the beginning of the VAR list or at the end via first
-    # argument MODE.
-    #
-    # Usage:
-    #
-    #   __fish_macos_set_env MODE VAR VAR-FILE VAR-DIR
-    #
-    #   MODE: either append or prepend
-    #
-    # Example:
-    #
-    #   __fish_macos_set_env prepend PATH /etc/paths '/etc/paths.d'
-    #
-    #   __fish_macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
-    #
-    # [1]: https://opensource.apple.com/source/shell_cmds/shell_cmds-203/path_helper/path_helper.c.auto.html .
-    #
-    function macos_set_env -d "set an environment variable like path_helper does (macOS only)"
-      # noops on other operating systems
-      if test $KERNEL_NAME darwin
-        set -l result
-        set -l entries
-
-        # echo "1. $argv[2] = $$argv[2]"
-
-        # Populate path according to config files
-        for path_file in $argv[3] $argv[4]/*
-          if [ -f $path_file ]
-            while read -l entry
-              if not contains -- $entry $result
-                test -n "$entry"
-                and set -a result $entry
-              end
-            end <$path_file
-          end
-        end
-
-        # echo "2. $argv[2] = $result"
-
-        # Merge in any existing path elements
-        set entries $$argv[2]
-        if test $argv[1] = "prepend"
-          set entries[-1..1] $entries
-        end
-        for existing_entry in $entries
-          if not contains -- $existing_entry $result
-            if test $argv[1] = "prepend"
-              set -p result $existing_entry
-            else
-              set -a result $existing_entry
-            end
-          end
-        end
-
-        # echo "3. $argv[2] = $result"
-
-        set -xg $argv[2] $result
-      end
-    end
-    macos_set_env prepend PATH /etc/paths '/etc/paths.d'
-
-    set -ga MANPATH $HOME/.local/share/man
-    set -ga MANPATH $HOME/.nix-profile/share/man
-    if test $KERNEL_NAME darwin
-      set -ga MANPATH /opt/homebrew/share/man
-    end
-    set -ga MANPATH /run/current-system/sw/share/man
-    set -ga MANPATH /nix/var/nix/profiles/default/share/man
-    macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
-
-    set -gp NIX_PATH nixpkgs=$HOME/.nix-defexpr/channels_root/nixpkgs
-
-    if test $KERNEL_NAME darwin
-      set -gx HOMEBREW_PREFIX /opt/homebrew
-      set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
-      set -gx HOMEBREW_REPOSITORY /opt/homebrew
-      set -gp INFOPATH /opt/homebrew/share/info
-      set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
-      set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
-    end
+    # Always color ls and group directories
+    alias ls='ls --color=auto'
   '';
-  };
 
   git = {
     enable = true;
@@ -214,8 +65,8 @@ in
     };
     extraConfig = {
       init.defaultBranch = "main";
-      core = {
-        editor = "nvim";
+      core = { 
+	    editor = "vim";
         autocrlf = "input";
       };
       pull.rebase = true;
@@ -223,224 +74,179 @@ in
     };
   };
 
-  neovim = {
+  vim = {
     enable = true;
-    extraPackages = with pkgs; [
-      # LazyVim
-      # lua-language-server # not working atm
-      stylua
+    plugins = with pkgs.vimPlugins; [ vim-airline vim-airline-themes vim-startify vim-tmux-navigator ];
+    settings = { ignorecase = true; };
+    extraConfig = ''
+      "" General
+      set number
+      set history=1000
+      set nocompatible
+      set modelines=0
+      set encoding=utf-8
+      set scrolloff=3
+      set showmode
+      set showcmd
+      set hidden
+      set wildmenu
+      set wildmode=list:longest
+      set cursorline
+      set ttyfast
+      set nowrap
+      set ruler
+      set backspace=indent,eol,start
+      set laststatus=2
+      set clipboard=autoselect
 
-      # Telescope
-      ripgrep
+      " Dir stuff
+      set nobackup
+      set nowritebackup
+      set noswapfile
+      set backupdir=~/.config/vim/backups
+      set directory=~/.config/vim/swap
 
-      # neovim/nvim-lspconfig
-      # Nix
-      nil
-      nixpkgs-fmt
+      " Relative line numbers for easy movement
+      set relativenumber
+      set rnu
 
-      # C
-      clang-tools
-      neocmakelsp
-      vscode-extensions.ms-vscode.cmake-tools
+      "" Whitespace rules
+      set tabstop=8
+      set shiftwidth=2
+      set softtabstop=2
+      set expandtab
 
-      # Rust
-      rust-analyzer
-      rustfmt
-      cargo
-      graphviz
+      "" Searching
+      set incsearch
+      set gdefault
 
-      # Svelte
-      nodePackages.svelte-language-server
-      nodePackages.typescript-language-server
-      nodePackages.prettier
-      nodePackages.eslint
+      "" Statusbar
+      set nocompatible " Disable vi-compatibility
+      set laststatus=2 " Always show the statusline
+      let g:airline_theme='bubblegum'
+      let g:airline_powerline_fonts = 1
 
-      nodePackages.pyright
-      nodePackages.vscode-json-languageserver-bin
-      ruff
-      tailwindcss-language-server
-      vscode-langservers-extracted
+      "" Local keys and such
+      let mapleader=","
+      let maplocalleader=" "
 
-      marksman
-    ];
+      "" Change cursor on mode
+      :autocmd InsertEnter * set cul
+      :autocmd InsertLeave * set nocul
 
-    plugins = with pkgs.vimPlugins; [
-      lazy-nvim
-    ];
+      "" File-type highlighting and configuration
+      syntax on
+      filetype on
+      filetype plugin on
+      filetype indent on
 
-    extraLuaConfig =
-      let
-        plugins = with pkgs.vimPlugins; [
-          # Rust
-          nvim-dap
-          crates-nvim
-          rust-tools-nvim
-          neotest-rust
-          neotest
-          # LazyVim
-          LazyVim
-          bufferline-nvim
-          cmp-buffer
-          cmp-nvim-lsp
-          cmp-path
-          cmp_luasnip
-          conform-nvim
-          dashboard-nvim
-          dressing-nvim
-          flash-nvim
-          friendly-snippets
-          gitsigns-nvim
-          indent-blankline-nvim
-          clangd_extensions-nvim
-          lualine-nvim
-          neo-tree-nvim
-          neoconf-nvim
-          neodev-nvim
-          noice-nvim
-          nui-nvim
-          nvim-cmp
-          nvim-lint
-          nvim-lspconfig
-          nvim-notify
-          nvim-spectre
-          nvim-treesitter
-          nvim-treesitter-context
-          nvim-treesitter-textobjects
-          nvim-ts-autotag
-          nvim-ts-context-commentstring
-          nvim-web-devicons
-          persistence-nvim
-          plenary-nvim
-          telescope-fzf-native-nvim
-          telescope-nvim
-          todo-comments-nvim
-          tokyonight-nvim
-          trouble-nvim
-          vim-illuminate
-          vim-startuptime
-          which-key-nvim
-          { name = "LuaSnip"; path = luasnip; }
-          { name = "mini.ai"; path = mini-nvim; }
-          { name = "mini.bufremove"; path = mini-nvim; }
-          { name = "mini.comment"; path = mini-nvim; }
-          { name = "mini.indentscope"; path = mini-nvim; }
-          { name = "mini.pairs"; path = mini-nvim; }
-          { name = "mini.surround"; path = mini-nvim; }
-        ];
-        mkEntryFromDrv = drv:
-          if lib.isDerivation drv then
-            { name = "${lib.getName drv}"; path = drv; }
-          else
-            drv;
-        lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
-      in
-      ''
-        require("lazy").setup({
-          defaults = {
-            lazy = true,
-          },
-          dev = {
-            -- reuse files from pkgs.vimPlugins.*
-            path = "${lazyPath}",
-            patterns = { "." },
-            -- fallback to download
-            fallback = true,
-          },
-          spec = {
-            -- add LazyVim and import its plugins
-            { "LazyVim/LazyVim", import = "lazyvim.plugins" },
-            -- import any extras modules here
-            { import = "lazyvim.plugins.extras.lang.typescript" },
-            { import = "lazyvim.plugins.extras.coding.copilot" },
-            { import = "lazyvim.plugins.extras.lang.json" },
-            { import = "lazyvim.plugins.extras.lang.python" },
-            { import = "lazyvim.plugins.extras.lang.markdown" },
-            { import = "lazyvim.plugins.extras.lang.rust" },
-            { import = "lazyvim.plugins.extras.linting.eslint" },
-            { import = "lazyvim.plugins.extras.lang.clangd" },
-            { import = "lazyvim.plugins.extras.lang.cmake" },
-            { import = "lazyvim.plugins.extras.formatting.prettier" },
-            { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-            -- The following configs are needed for fixing lazyvim on nix
-            -- force enable telescope-fzf-native.nvim
-            { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
-            -- disable mason.nvim, use programs.neovim.extraPackages
-            { "williamboman/mason-lspconfig.nvim", enabled = false },
-            { "williamboman/mason.nvim", enabled = false },
-            -- import/override with your plugins
-            { import = "plugins" },
-            -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
-            { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
-          },
-        })
+      "" Paste from clipboard
+      nnoremap <Leader>, "+gP
 
-        local function map(mode, lhs, rhs, opts)
-            local keys = require("lazy.core.handler").handlers.keys
-            ---@cast keys LazyKeysHandler
-            -- do not create the keymap if a lazy keys handler exists
-            if not keys.active[keys.parse({ lhs, mode = mode }).id] then
-                opts = opts or {}
-                opts.silent = opts.silent ~= false
-                if opts.remap and not vim.g.vscode then
-                    opts.remap = nil
-                end
-                vim.keymap.set(mode, lhs, rhs, opts)
-            end
-        end
+      "" Copy from clipboard
+      xnoremap <Leader>. "+y
 
-        map({ "n", "i", "v" }, "<A-j>", "", { desc = "Move down" })
-        map({ "n", "i", "v" }, "<A-k>", "", { desc = "Move up" })
+      "" Move cursor by display lines when wrapping
+      nnoremap j gj
+      nnoremap k gk
 
-        vim.g.rustaceanvim = {
-          -- Plugin configuration
-          tools = {
-          },
-          -- LSP configuration
-          server = {
-            on_attach = function(client, bufnr)
-              -- you can also put keymaps in here
-              lsp.on_attach(client, bufnr)
-              lsp.on_dap_attach(bufnr)
-            end,
-            settings = {
-              -- rust-analyzer language server configuration
-              ["rust-analyzer"] = {
-                  cargo = {
-                      allFeatures = true,
-                  },
-                  checkOnSave = {
-                      allFeatures = true,
-                      command = "clippy",
-                      extraArgs = { "--no-deps" },
-                  },
-                  procMacro = {
-                      ignored = {
-                          ["async-trait"] = { "async_trait" },
-                          ["napi-derive"] = { "napi" },
-                          ["async-recursion"] = { "async_recursion" },
-                      },
-                  },
-              },
-            },
-          },
-          -- DAP configuration
-          dap = { },
-        }
+      "" Map leader-q to quit out of window
+      nnoremap <leader>q :q<cr>
+
+      "" Move around split
+      nnoremap <C-h> <C-w>h
+      nnoremap <C-j> <C-w>j
+      nnoremap <C-k> <C-w>k
+      nnoremap <C-l> <C-w>l
+
+      "" Easier to yank entire line
+      nnoremap Y y$
+
+      "" Move buffers
+      nnoremap <tab> :bnext<cr>
+      nnoremap <S-tab> :bprev<cr>
+
+      "" Like a boss, sudo AFTER opening the file to write
+      cmap w!! w !sudo tee % >/dev/null
+
+      let g:startify_lists = [
+        \ { 'type': 'dir',       'header': ['   Current Directory '. getcwd()] },
+        \ { 'type': 'sessions',  'header': ['   Sessions']       },
+        \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      }
+        \ ]
+
+      let g:startify_bookmarks = [
+        \ '~/.local/share/src',
+        \ ]
+
+      let g:airline_theme='bubblegum'
+      let g:airline_powerline_fonts = 1
       '';
-  };
+     };
 
   alacritty = {
     enable = true;
-  };
+    settings = {
+      cursor = {
+        style = "Block";
+      };
 
-  zellij = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+      window = {
+        opacity = 1.0;
+        padding = {
+          x = 24;
+          y = 24;
+        };
+      };
 
-  starship = {
-    enable = true;
-    enableFishIntegration = true;
+      font = {
+        normal = {
+          family = "MesloLGS NF";
+          style = "Regular";
+        };
+        size = lib.mkMerge [
+          (lib.mkIf pkgs.stdenv.hostPlatform.isLinux 10)
+          (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin 14)
+        ];
+      };
+
+      dynamic_padding = true;
+      decorations = "full";
+      title = "Terminal";
+      class = {
+        instance = "Alacritty";
+        general = "Alacritty";
+      };
+
+      colors = {
+        primary = {
+          background = "0x1f2528";
+          foreground = "0xc0c5ce";
+        };
+
+        normal = {
+          black = "0x1f2528";
+          red = "0xec5f67";
+          green = "0x99c794";
+          yellow = "0xfac863";
+          blue = "0x6699cc";
+          magenta = "0xc594c5";
+          cyan = "0x5fb3b3";
+          white = "0xc0c5ce";
+        };
+
+        bright = {
+          black = "0x65737e";
+          red = "0xec5f67";
+          green = "0x99c794";
+          yellow = "0xfac863";
+          blue = "0x6699cc";
+          magenta = "0xc594c5";
+          cyan = "0x5fb3b3";
+          white = "0xd8dee9";
+        };
+      };
+    };
   };
 
   ssh = {
@@ -462,4 +268,88 @@ in
         '')
     ];
   };
+
+  tmux = {
+    enable = true;
+    plugins = with pkgs.tmuxPlugins; [
+      vim-tmux-navigator
+      sensible
+      yank
+      prefix-highlight
+      {
+        plugin = power-theme;
+        extraConfig = ''
+           set -g @tmux_power_theme 'gold'
+        '';
+      }
+      {
+        plugin = resurrect; # Used by tmux-continuum
+
+        # Use XDG data directory
+        # https://github.com/tmux-plugins/tmux-resurrect/issues/348
+        extraConfig = ''
+          set -g @resurrect-dir '$HOME/.cache/tmux/resurrect'
+          set -g @resurrect-capture-pane-contents 'on'
+          set -g @resurrect-pane-contents-area 'visible'
+        '';
+      }
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-restore 'on'
+          set -g @continuum-save-interval '5' # minutes
+        '';
+      }
+    ];
+    terminal = "screen-256color";
+    prefix = "C-x";
+    escapeTime = 10;
+    historyLimit = 50000;
+    extraConfig = ''
+      # Remove Vim mode delays
+      set -g focus-events on
+
+      # Enable full mouse support
+      set -g mouse on
+
+      # -----------------------------------------------------------------------------
+      # Key bindings
+      # -----------------------------------------------------------------------------
+
+      # Unbind default keys
+      unbind C-b
+      unbind '"'
+      unbind %
+
+      # Split panes, vertical or horizontal
+      bind-key x split-window -v
+      bind-key v split-window -h
+
+      # Move around panes with vim-like bindings (h,j,k,l)
+      bind-key -n M-k select-pane -U
+      bind-key -n M-h select-pane -L
+      bind-key -n M-j select-pane -D
+      bind-key -n M-l select-pane -R
+
+      # Smart pane switching with awareness of Vim splits.
+      # This is copy paste from https://github.com/christoomey/vim-tmux-navigator
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+        | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
+      bind-key -n 'C-h' if-shell "$is_vim" 'send-keys C-h'  'select-pane -L'
+      bind-key -n 'C-j' if-shell "$is_vim" 'send-keys C-j'  'select-pane -D'
+      bind-key -n 'C-k' if-shell "$is_vim" 'send-keys C-k'  'select-pane -U'
+      bind-key -n 'C-l' if-shell "$is_vim" 'send-keys C-l'  'select-pane -R'
+      tmux_version='$(tmux -V | sed -En "s/^tmux ([0-9]+(.[0-9]+)?).*/\1/p")'
+      if-shell -b '[ "$(echo "$tmux_version < 3.0" | bc)" = 1 ]' \
+        "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\'  'select-pane -l'"
+      if-shell -b '[ "$(echo "$tmux_version >= 3.0" | bc)" = 1 ]' \
+        "bind-key -n 'C-\\' if-shell \"$is_vim\" 'send-keys C-\\\\'  'select-pane -l'"
+
+      bind-key -T copy-mode-vi 'C-h' select-pane -L
+      bind-key -T copy-mode-vi 'C-j' select-pane -D
+      bind-key -T copy-mode-vi 'C-k' select-pane -U
+      bind-key -T copy-mode-vi 'C-l' select-pane -R
+      bind-key -T copy-mode-vi 'C-\' select-pane -l
+      '';
+    };
 }

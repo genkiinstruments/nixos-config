@@ -1,1 +1,0 @@
-/nix/store/j7aqybbh2r10ycljkckj0lrb23dskwr1-home-manager-files/.config/raycast/extensions/2e2cc974-8a9b-42b1-9426-33135f71e14b/index.js

@@ -5,7 +5,6 @@ let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in
 shared-packages ++ [
 
   # Security and authentication
-  _1password-gui
   yubikey-manager-qt
   yubikey-agent
   keepassxc
@@ -38,8 +37,8 @@ shared-packages ++ [
   rofi
   rofi-calc
   rnix-lsp # lsp-mode for nix
-  qmk
   postgresql
+  libtool # for Emacs vterm
 
   # Screenshot and recording tools
   flameshot
@@ -51,6 +50,7 @@ shared-packages ++ [
   tree
   unixtools.ifconfig
   unixtools.netstat
+  xclip # For the org-download package in Emacs
   xorg.xwininfo # Provides a cursor to click and learn about windows
   xorg.xrandr
 

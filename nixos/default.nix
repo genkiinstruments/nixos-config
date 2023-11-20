@@ -1,9 +1,7 @@
 { config, inputs, pkgs, ... }:
 
-let
-  user = "olafur";
-  keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ];
-in
+let user = "olafur";
+    keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOk8iAnIaa1deoc7jw8YACPNVka1ZFJxhnU4G74TmS+p" ]; in
 {
   imports = [
     ./disk-config.nix
@@ -24,9 +22,9 @@ in
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.hostName = "g"; # Define your hostname.
+  networking.hostName = "%HOST%"; # Define your hostname.
   networking.useDHCP = false;
-  networking.interfaces.eno1.useDHCP = true;
+  networking.interfaces.%INTERFACE%.useDHCP = true;
 
   # Turn on flag for proprietary software
   nix = {
@@ -36,7 +34,7 @@ in
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
-  };
+   };
 
   # Manages keys and such
   programs.gnupg.agent.enable = true;
@@ -171,8 +169,8 @@ in
         "class_g = 'i3lock'"
       ];
       round-borders = 3;
-      round-borders-exclude = [ ];
-      round-borders-rule = [ ];
+      round-borders-exclude = [];
+      round-borders-rule = [];
       shadow = true;
       shadow-radius = 8;
       shadow-opacity = 0.4;
@@ -240,7 +238,7 @@ in
       "wheel" # Enable ‘sudo’ for the user.
       "docker"
     ];
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
     openssh.authorizedKeys.keys = keys;
   };
 
@@ -254,9 +252,9 @@ in
     enable = true;
     extraRules = [{
       commands = [
-        {
-          command = "${pkgs.systemd}/bin/reboot";
-          options = [ "NOPASSWD" ];
+       {
+         command = "${pkgs.systemd}/bin/reboot";
+         options = [ "NOPASSWD" ];
         }
       ];
       groups = [ "wheel" ];
@@ -267,11 +265,21 @@ in
   services.openssh.enable = true;
 
   # My shell
-  programs.fish.enable = true;
+  programs.zsh.enable = true;
+
+  # My editor runs as a daemon
+  # @todo: submit startupTimeout option PR to nixpkgs
+  services.emacs = {
+    enable = true;
+    package = pkgs.emacs-unstable;
+    startupTimeout = "7min"; # option comes from dustinlyons/nixpkgs
+  };
 
   # @todo: submit feather-font PR to nixpkgs
   fonts.packages = with pkgs; [
     dejavu_fonts
+    emacs-all-the-icons-fonts
+    feather-font # package comes from dustinlyons/nixpkgs
     jetbrains-mono
     font-awesome
     noto-fonts

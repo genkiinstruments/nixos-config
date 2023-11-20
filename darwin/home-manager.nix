@@ -1,108 +1,59 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, home-manager, ... }:
 
 let
   user = "olafur";
+  # Define the content of your file as a derivation
+  myEmacsLauncher = pkgs.writeScript "emacs-launcher.command" ''
+    #!/bin/sh
+    emacsclient -c -n &
+  '';
+  sharedFiles = import ../shared/files.nix { inherit config pkgs; };
+  additionalFiles = import ./files.nix { inherit user config pkgs; };
 in
 {
   imports = [
-    ./dock
+   ./dock
   ];
 
+  # It me
   users.users.${user} = {
     name = "${user}";
     home = "/Users/${user}";
     isHidden = false;
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
   };
 
   homebrew.enable = true;
-  homebrew.casks = pkgs.callPackage ./casks.nix { };
+  homebrew.casks = pkgs.callPackage ./casks.nix {};
 
-  # These app IDs are from using the mas (mac app store) CLI app
+  # These app IDs are from using the mas CLI app
+  # mas = mac app store
   # https://github.com/mas-cli/mas
   #
   # $ nix shell nixpkgs#mas
   # $ mas search <app name>
+  #
   homebrew.masApps = {
-    "Keynote" = 409183694;
-    "ColorSlurp" = 1287239339;
+    "1password" = 1333542190;
+    "wireguard" = 1451685025;
   };
 
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }: {
+    users.${user} = { pkgs, config, lib, ... }:{
       home.enableNixpkgsReleaseCheck = false;
-      home.packages = pkgs.callPackage ./packages.nix { };
-      home.stateVersion = "23.05";
+      home.packages = pkgs.callPackage ./packages.nix {};
+      home.file = lib.mkMerge [
+        sharedFiles
+        additionalFiles
+        { "emacs-launcher.command".source = myEmacsLauncher; }
+      ];
+      home.stateVersion = "21.11";
+      programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
 
-      xdg.enable = true;
-
-      # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-      home.file.".config/nvim/parser".source =
-        let
-          parsers = pkgs.symlinkJoin {
-            name = "treesitter-parsers";
-            paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
-              bash
-              c
-              cpp
-              cmake
-              diff
-              html
-              javascript
-              jsdoc
-              json
-              jsonc
-              lua
-              luadoc
-              luap
-              markdown
-              markdown_inline
-              python
-              query
-              regex
-              toml
-              tsx
-              typescript
-              vim
-              vimdoc
-              yaml
-
-              # Nix
-              nix
-
-              # Rust
-              rust
-              kdl
-
-              # Svelte
-              svelte
-              sql
-
-              # Tailwind
-              # TODO: tailwindcss
-            ])).dependencies;
-          };
-        in
-        "${parsers}/parser";
-
-      # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-      home.file.".config/nvim/lua" = { recursive = true; source = ../shared/config/nvim/lua; };
-
-      home.file.".config/zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
-      home.file.".config/zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
-      home.file.".config/alacritty/alacritty.yml".source = ../shared/config/alacritty.yml;
-
-      # Hyper-key config
-      home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
-
-      # Raycast
-      home.file.".config/raycast" = { recursive = true; source = config/raycast; };
-
-      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
-
-      # Marked broken Oct 20, 2022 check later to remove this https://github.com/nix-community/home-manager/issues/3344
+      # Marked broken Oct 20, 2022 check later to remove this
+      # https://github.com/nix-community/home-manager/issues/3344
       manual.manpages.enable = false;
     };
   };
@@ -110,7 +61,20 @@ in
   # Fully declarative dock using the latest from Nix Store
   local.dock.enable = true;
   local.dock.entries = [
+    { path = "/Applications/Slack.app/"; }
+    { path = "/System/Applications/Messages.app/"; }
+    { path = "/System/Applications/Facetime.app/"; }
     { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
+    { path = "/System/Applications/Music.app/"; }
+    { path = "/System/Applications/News.app/"; }
+    { path = "/System/Applications/Photos.app/"; }
+    { path = "/System/Applications/Photo Booth.app/"; }
+    { path = "/System/Applications/TV.app/"; }
+    { path = "/System/Applications/Home.app/"; }
+    {
+      path = toString myEmacsLauncher;
+      section = "others";
+    }
     {
       path = "${config.users.users.${user}.home}/.local/share/";
       section = "others";

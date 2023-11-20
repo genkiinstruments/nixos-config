@@ -2,15 +2,18 @@
 
 with pkgs; [
   # General packages for development and system management
-  cmake
-  vscode
-  atuin
-  zoxide
+  act
+  alacritty
+  aspell
+  aspellDicts.en
   bash-completion
   bat
+  btop
   coreutils
+  killall
   neofetch
   openssh
+  pandoc
   sqlite
   wget
   zip
@@ -22,50 +25,51 @@ with pkgs; [
   libfido2
   pinentry
   yubikey-manager
-  bitwarden-cli
 
   # Cloud-related tools and SDKs
-  cloudflared
+  #
+  # docker marked broken as of Nov 15, 2023
+  # https://github.com/NixOS/nixpkgs/issues/267685
+  #
+  # docker
+  # docker-compose
+  #
+  awscli2
+  flyctl
   ngrok
-  terraform
-  terraform-ls
   tflint
 
   # Media-related packages
+  emacs-all-the-icons-fonts
+  dejavu_fonts
   ffmpeg
   fd
-  reaper
+  font-awesome
+  hack-font
+  noto-fonts
+  noto-fonts-emoji
+  meslo-lgs-nf
 
   # Node.js development tools
-  nodePackages.live-server
   nodePackages.nodemon
   nodePackages.prettier
-  nodePackages.npm
+  nodePackages.npm # globally install npm
   nodejs
 
-  # Source code management, Git, GitHub tools
-  gh
-  direnv
-
   # Text and terminal utilities
-  btop
+  htop
+  hunspell
+  iftop
   jetbrains-mono
   jq
   ripgrep
-  lazygit
   tree
+  tmux
   unrar
   unzip
+  zsh-powerlevel10k
 
   # Python packages
-  python312
-  python312Packages.virtualenv
-
-  # Packages installed using brew... doesn't look like I need them at all
-  luajit
-
-  #
-  logseq
-  unar
-  transmission
+  python39
+  python39Packages.virtualenv # globally install virtualenv
 ]
