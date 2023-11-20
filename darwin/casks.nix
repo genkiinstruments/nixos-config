@@ -60,4 +60,5 @@
   # "protonvpn"
   # "ilok-license-manager"
   # "nordic-nrf-command-line-tools"
+  "balenaetcher"
 ]
