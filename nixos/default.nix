@@ -24,9 +24,9 @@ in
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
-  networking.hostName = "%HOST%"; # Define your hostname.
+  networking.hostName = "g"; # Define your hostname.
   networking.useDHCP = false;
-  networking.interfaces.%INTERFACE%.useDHCP = true;
+  networking.interfaces.eno1.useDHCP = true;
 
   # Turn on flag for proprietary software
   nix = {
@@ -269,19 +269,9 @@ in
   # My shell
   programs.fish.enable = true;
 
-  # My editor runs as a daemon
-  # @todo: submit startupTimeout option PR to nixpkgs
-  services.emacs = {
-    enable = true;
-    package = pkgs.emacs-unstable;
-    startupTimeout = "7min"; # option comes from dustinlyons/nixpkgs
-  };
-
   # @todo: submit feather-font PR to nixpkgs
   fonts.packages = with pkgs; [
     dejavu_fonts
-    emacs-all-the-icons-fonts
-    feather-font # package comes from dustinlyons/nixpkgs
     jetbrains-mono
     font-awesome
     noto-fonts
