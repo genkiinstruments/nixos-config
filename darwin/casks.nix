@@ -2,7 +2,7 @@
 
 [
   # Development Tools
-  "homebrew/cask/docker"
+  # "homebrew/cask/docker"
   "insomnia"
   "ngrok"
   "postico"
@@ -25,7 +25,7 @@
   "vlc"
 
   # Productivity Tools
-  "raycast"
+  # "raycast"
   "asana"
 
   # Browsers

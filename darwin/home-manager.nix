@@ -34,8 +34,8 @@ in
   # $ mas search <app name>
   #
   homebrew.masApps = {
-    "1password" = 1333542190;
-    "wireguard" = 1451685025;
+#    "1password" = 1333542190;
+#    "wireguard" = 1451685025;
   };
 
   # Enable home-manager
