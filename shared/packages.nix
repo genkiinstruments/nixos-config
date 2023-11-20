@@ -68,4 +68,5 @@ with pkgs; [
   logseq
   unar
   transmission
+  usbimager # for flashing nixos
 ]
