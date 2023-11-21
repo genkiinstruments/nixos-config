@@ -233,7 +233,7 @@ in
     enable = true;
     extraPackages = with pkgs; [
       # LazyVim
-      # lua-language-server # not working atm
+      lua-language-server # not working atm
       stylua
 
       # Telescope
@@ -283,6 +283,8 @@ in
           rust-tools-nvim
           neotest-rust
           neotest
+          oil-nvim
+          nvim-web-devicons
           # LazyVim
           LazyVim
           bufferline-nvim
