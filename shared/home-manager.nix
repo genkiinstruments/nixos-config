@@ -233,7 +233,7 @@ in
     enable = true;
     extraPackages = with pkgs; [
       # LazyVim
-      # lua-language-server # not working atm
+      lua-language-server
       stylua
 
       # Telescope
@@ -433,10 +433,6 @@ in
           dap = { },
         }
       '';
-  };
-
-  alacritty = {
-    enable = true;
   };
 
   zellij = {

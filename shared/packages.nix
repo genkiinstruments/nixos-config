@@ -2,70 +2,69 @@
 
 with pkgs; [
   # General packages for development and system management
-  cmake
-  vscode
+  alacritty
   atuin
-  zoxide
   bash-completion
   bat
+  cmake
   coreutils
   neofetch
+  ninja
   openssh
   sqlite
+  transmission
+  unar
   wget
   zip
+  zoxide
 
   # Encryption and security tools
   age
   age-plugin-yubikey
+  bitwarden-cli
   gnupg
   libfido2
   pinentry
   yubikey-manager
-  bitwarden-cli
 
   # Cloud-related tools and SDKs
-  cloudflared
-  ngrok
-  terraform
-  terraform-ls
-  tflint
+  # cloudflared
+  # ngrok
+  # terraform
+  # terraform-ls
+  # tflint
 
   # Media-related packages
-  ffmpeg
-  fd
-  reaper
+  # ffmpeg
+  # fd
+  # reaper
 
   # Node.js development tools
-  nodePackages.live-server
-  nodePackages.nodemon
-  nodePackages.prettier
-  nodePackages.npm
-  nodejs
+  # nodePackages.live-server
+  # nodePackages.nodemon
+  # nodePackages.prettier
+  # nodePackages.npm
+  # nodejs
 
   # Source code management, Git, GitHub tools
-  gh
   direnv
+  gh
 
   # Text and terminal utilities
   btop
   jetbrains-mono
   jq
-  ripgrep
   lazygit
+  logseq
+  ripgrep
   tree
   unrar
   unzip
 
   # Python packages
-  python312
-  python312Packages.virtualenv
+  # python312
+  # python312Packages.virtualenv
 
   # Packages installed using brew... doesn't look like I need them at all
   luajit
-
-  #
-  logseq
-  unar
-  transmission
 ]
