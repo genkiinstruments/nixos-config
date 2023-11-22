@@ -2,10 +2,11 @@
 
 with pkgs; [
   # General packages for development and system management
-  act
   alacritty
-  aspell
-  aspellDicts.en
+  cmake
+  vscode
+  atuin
+  zoxide
   bash-completion
   bat
   btop
