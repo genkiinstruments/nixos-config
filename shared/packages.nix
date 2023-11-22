@@ -14,6 +14,7 @@ with pkgs; [
   sqlite
   transmission
   unar
+  p7zip
   wget
   zip
   zoxide
