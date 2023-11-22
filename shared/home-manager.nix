@@ -437,10 +437,6 @@ in
       '';
   };
 
-  alacritty = {
-    enable = true;
-  };
-
   zellij = {
     enable = true;
     enableFishIntegration = true;
