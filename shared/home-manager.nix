@@ -298,6 +298,8 @@ in
           clangd_extensions-nvim
           lualine-nvim
           neo-tree-nvim
+          oil-nvim
+          nvim-web-devicons
           neoconf-nvim
           neodev-nvim
           noice-nvim
