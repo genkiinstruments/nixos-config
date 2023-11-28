@@ -297,7 +297,7 @@ in
           indent-blankline-nvim
           clangd_extensions-nvim
           lualine-nvim
-          neo-tree-nvim
+          # neo-tree-nvim
           oil-nvim
           nvim-web-devicons
           neoconf-nvim
