@@ -18,6 +18,7 @@ with pkgs; [
   wget
   zip
   zoxide
+  conan
 
   # Encryption and security tools
   age
