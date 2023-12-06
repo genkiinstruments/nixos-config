@@ -1,21 +1,8 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
-
-local function map(mode, lhs, rhs, opts)
-    local keys = require("lazy.core.handler").handlers.keys
-    ---@cast keys LazyKeysHandler
-    -- do not create the keymap if a lazy keys handler exists
-    if not keys.active[keys.parse({ lhs, mode = mode }).id] then
-        opts = opts or {}
-        opts.silent = opts.silent ~= false
-        if opts.remap and not vim.g.vscode then
-            opts.remap = nil
-        end
-        vim.keymap.set(mode, lhs, rhs, opts)
-    end
-end
---
--- Move Lines
-map({ "n", "i", "v" }, "<A-j>", "", { desc = "Move down" })
-map({ "n", "i", "v" }, "<A-k>", "", { desc = "Move up" })
+-- stylua: ignore start
+vim.keymap.set({ mode = "n", expr = false, noremap = true }, "<A-j>", ":m .+1<CR>==", { desc = "Move line down" })
+vim.keymap.set({ mode = "n", expr = false, noremap = true }, "<A-k>", ":m .-2<CR>==", { desc = "Move line up" })
+vim.keymap.set( { mode = "v", expr = false, noremap = true }, "<A-j>", ":m '>+1<CR>gv=gv", { desc = "Move block of lines down" })
+vim.keymap.set( { mode = "v", expr = false, noremap = true }, "<A-k>", ":m '<-2<CR>gv=gv", { desc = "Move block of lines up" })
+vim.keymap.set( { mode = "i", expr = false, noremap = true }, "<A-j>", "<Esc>:m .+1<CR>==gi", { desc = "Move line down in insert mode" })
+vim.keymap.set( { mode = "i", expr = false, noremap = true }, "<A-k>", "<Esc>:m .-2<CR>==gi", { desc = "Move line up in insert mode" })
+-- stylua: ignore end
