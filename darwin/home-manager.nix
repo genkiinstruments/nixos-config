@@ -79,16 +79,13 @@ in
               # Svelte
               svelte
               sql
-
-              # Tailwind
-              # TODO: tailwindcss
             ])).dependencies;
           };
         in
         "${parsers}/parser";
 
       # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-      home.file.".config/nvim/lua" = { recursive = true; source = ../shared/config/nvim/lua; };
+      home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
 
       home.file.".config/zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
       home.file.".config/zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
