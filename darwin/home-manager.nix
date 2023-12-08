@@ -18,8 +18,7 @@ in
   homebrew.enable = true;
   homebrew.casks = pkgs.callPackage ./casks.nix { };
 
-  # These app IDs are from using the mas (mac app store) CLI app
-  # https://github.com/mas-cli/mas
+  # These app IDs are from using the mas (mac app store) CLI app https://github.com/mas-cli/mas
   #
   # $ nix shell nixpkgs#mas
   # $ mas search <app name>
