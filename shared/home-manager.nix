@@ -6,6 +6,160 @@ let
   email = "olafur@genkiinstruments.com";
 in
 {
+  helix = {
+    enable = true;
+    settings = {
+      theme = "tokyonight";
+
+      editor = {
+        line-number = "relative";
+        mouse = true;
+        bufferline = "multiple";
+        true-color = true;
+        color-modes = true;
+        auto-format = true;
+        auto-save = true;
+        # whitespace.render = {
+        #   space = "all";
+        #   tab = "all";
+        # };
+
+        cursor-shape = {
+          insert = "bar";
+          normal = "block";
+          select = "underline";
+        };
+
+        file-picker = {
+          hidden = false;
+        };
+
+        lsp = {
+          auto-signature-help = false;
+          display-messages = true;
+          display-inlay-hints = true;
+          # copilot-auto = true;
+        };
+
+        statusline = {
+          left = [ "mode" "spinner" "version-control" "file-name" ];
+          right = [ "file-type" "file-encoding" ];
+          mode.normal = "NORMAL";
+          mode.insert = "INSERT";
+          mode.select = "SELECT";
+        };
+
+        soft-wrap = {
+          enable = true;
+        };
+      };
+
+      keys = {
+        insert = {
+          # right = "apply_copilot_completion";
+        };
+        normal = {
+          space = {
+            e = ":write";
+            q = ":quit";
+            space = "goto_last_accessed_file";
+          };
+        };
+      };
+    };
+    languages = {
+      language-server = {
+        # copilot = {
+        #   command = "${copilot}/bin/copilot";
+        #   args = [ "--stdio" ];
+        # };
+        nu-lsp = {
+          command = "${pkgs.nushell}/bin/nu";
+          args = [ "--lsp" ];
+        };
+        rust-analyzer = {
+          config.check.command = "clippy";
+        };
+        yaml-language-server = {
+          config.yaml.format.enable = true;
+          config.yaml.validation = true;
+          config.yaml.schemas = {
+            "https://json.schemastore.org/github-workflow.json" = ".github/{actions,workflows}/*.{yml,yaml}";
+            "https://raw.githubusercontent.com/ansible-community/schemas/main/f/ansible-tasks.json" = "roles/{tasks,handlers}/*.{yml,yaml}";
+            kubernetes = "kubernetes/*.{yml,yaml}";
+          };
+        };
+      };
+      language = [
+        {
+          name = "nix";
+          formatter = { command = "alejandra"; };
+          language-servers = [ "nil" ];
+          auto-format = true;
+        }
+        {
+          name = "rust";
+          language-servers = [ "rust-analyzer" ];
+        }
+        {
+          name = "lua";
+          language-servers = [ "lua-language-server" ];
+        }
+        {
+          name = "javascript";
+          language-servers = [ "typescript-language-server" ];
+        }
+        {
+          name = "typescript";
+          language-servers = [ "typescript-language-server" ];
+        }
+        {
+          name = "bash";
+          language-servers = [ "bash-language-server" ];
+        }
+        {
+          name = "hcl";
+          language-servers = [ "terraform-ls" ];
+        }
+        {
+          name = "tfvars";
+          language-servers = [ "terraform-ls" ];
+        }
+        {
+          name = "go";
+          language-servers = [ "gopls" ];
+        }
+        {
+          name = "nu";
+          language-servers = [ "nu-lsp" ];
+        }
+        {
+          name = "css";
+          language-servers = [ "vscode-css-language-server" ];
+        }
+        {
+          name = "html";
+          language-servers = [ "vscode-html-language-server" ];
+        }
+        {
+          name = "nickel";
+          language-servers = [ ];
+        }
+        {
+          name = "yaml";
+          language-servers = [ "yaml-language-server" ];
+        }
+        {
+          name = "toml";
+          language-servers = [ "taplo" ];
+        }
+        {
+          name = "just";
+          language-servers = [ ];
+        }
+      ];
+    };
+  };
   # Shared shell configuration
   fish = {
     enable = true;
