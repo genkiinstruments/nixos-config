@@ -381,6 +381,11 @@ in
     };
   };
 
+  yazi = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
   neovim = {
     enable = true;
     extraPackages = with pkgs; [
