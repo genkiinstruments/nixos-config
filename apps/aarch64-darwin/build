@@ -11,17 +11,10 @@ SYSTEM="darwinConfigurations.$FLAKE.system"
 
 export NIXPKGS_ALLOW_UNFREE=1
 
-# Navigate to the directory of this script
-cd $(dirname $(readlink -f $0))
-cd ..
-
 echo "${GREEN}Starting build...${NC}"
 nix --experimental-features 'nix-command flakes' build .#$SYSTEM $@
-
-echo "${GREEN}Switching to new generation...${NC}"
-./result/sw/bin/darwin-rebuild switch --flake .#$FLAKE $@
 
 echo "${GREEN}Cleaning up...${NC}"
 unlink ./result
 
-echo "${GREEN}Done${NC}"
+echo "${GREEN}Switch to new generation complete!${NC}"

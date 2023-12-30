@@ -287,7 +287,7 @@ let
     text = ''
       #!/bin/sh
 
-      configDir="~/.local/share/src/nixos-config/nixos/config/rofi"
+      configDir="${xdg_configHome}/rofi"
       uptime=$(uptime -p | sed -e 's/up //g')
       rofi_command="rofi -no-config -theme $configDir/powermenu.rasi"
 
