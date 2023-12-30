@@ -1,7 +1,6 @@
-{ agenix, config, pkgs, ... }:
+{ agenix, lib, config, pkgs, ... }:
 
 let user = "olafur"; in
-
 {
 
   imports = [
@@ -37,25 +36,13 @@ let user = "olafur"; in
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = [
     # emacs-unstable
     agenix.packages."${pkgs.system}".default
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   # Enable fonts dir
   fonts.fontDir.enable = true;
-
-  launchd.user.agents.emacs.path = [ config.environment.systemPath ];
-  launchd.user.agents.emacs.serviceConfig = {
-    KeepAlive = true;
-    ProgramArguments = [
-      "/bin/sh"
-      "-c"
-      "/bin/wait4path ${pkgs.emacs}/bin/emacs && exec ${pkgs.emacs}/bin/emacs --fg-daemon"
-    ];
-    StandardErrorPath = "/tmp/emacs.err.log";
-    StandardOutPath = "/tmp/emacs.out.log";
-  };
 
   system = {
     stateVersion = 4;
@@ -98,5 +85,14 @@ let user = "olafur"; in
       enableKeyMapping = true;
       remapCapsLockToControl = true;
     };
+
+    activationScripts.postActivation.text = ''
+      # Set the default shell as fish for the user
+      sudo chsh -s ${lib.getBin pkgs.fish}/bin/fish "${user}"
+      
+      # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+      defaults write -g InitialKeyRepeat -int 10 
+      defaults write -g KeyRepeat -int 1
+    '';
   };
 }
