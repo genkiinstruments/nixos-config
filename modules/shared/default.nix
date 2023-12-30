@@ -7,6 +7,10 @@ _:
       allowBroken = true;
       allowInsecure = false;
       allowUnsupportedSystem = true;
+
+      permittedInsecurePackages = [
+        "electron-25.9.0"
+      ];
     };
 
     overlays =
