@@ -1,4 +1,4 @@
-{ agenix, lib, config, pkgs, ... }:
+{ agenix, lib, pkgs, ... }:
 
 let user = "olafur"; in
 {
@@ -64,7 +64,7 @@ let user = "olafur"; in
       };
 
       dock = {
-        autohide = false;
+        autohide = true;
         show-recents = false;
         launchanim = true;
         orientation = "bottom";
