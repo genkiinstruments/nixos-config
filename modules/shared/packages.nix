@@ -20,6 +20,34 @@ with pkgs; [
   zoxide
   conan
 
+  # some other lsp related packages / dev tools
+  shellcheck
+  lldb
+  gopls
+  rust-analyzer
+  clang-tools
+  nodejs
+  guile
+  nim
+  zig
+  texlab
+  zls
+  jre8
+  gcc
+  uncrustify
+  black
+  alejandra
+  gawk
+  haskellPackages.haskell-language-server
+  java-language-server
+  kotlin-language-server
+  nodePackages.vls
+  nodePackages.jsonlint
+  nodePackages.yarn
+  nodePackages.vscode-langservers-extracted
+  cargo
+
+
   # Encryption and security tools
   age
   age-plugin-yubikey
