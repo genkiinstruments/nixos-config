@@ -193,7 +193,13 @@ in
       }
     ];
     interactiveShellInit = ''
+      set -gx ATUIN_NOBIND "true"
       atuin init fish | source
+
+      # bind to ctrl-p in normal and insert mode, add any other bindings you want here too
+      bind \cp _atuin_search
+      bind -M insert \cp _atuin_search
+
       starship init fish | source
       zoxide init fish | source
       direnv hook fish | source
