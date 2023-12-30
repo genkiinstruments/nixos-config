@@ -192,7 +192,7 @@ in
         };
       }
     ];
-    interactiveShellInit = ''
+    interactiveShellInit = /* bash */ ''
       set -gx ATUIN_NOBIND "true"
       atuin init fish | source
 
@@ -218,7 +218,7 @@ in
       set fish_cursor_replace_one underscore blink
       set fish_cursor_visual      block
     '';
-    shellInit = '' 
+    shellInit = /* bash */ '' 
     set fish_greeting # Disable greeting
 
     # https://github.com/folke/tokyonight.nvim/blob/main/extras/fish/tokyonight_moon.fish
@@ -506,7 +506,7 @@ in
             drv;
         lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
       in
-      ''
+        /* lua */ ''
         require("lazy").setup({
           defaults = {
             lazy = true,
