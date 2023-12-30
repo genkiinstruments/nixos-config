@@ -537,6 +537,9 @@ in
             { "nvim-treesitter/nvim-treesitter", opts = { ensure_installed = {} } },
           },
         })
+
+        -- disable swap files
+        vim.opt.swapfile = false
       '';
   };
 
