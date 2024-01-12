@@ -41,6 +41,7 @@ in
           # copilot-auto = true;
         };
 
+        indent-guides.render = true;
 
         statusline = {
           left = [ "mode" "spinner" "version-control" "file-name" ];
