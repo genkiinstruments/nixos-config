@@ -22,6 +22,7 @@ with pkgs; [
 
   # some other lsp related packages / dev tools
   shellcheck
+  shfmt
   lldb
   gopls
   rust-analyzer
