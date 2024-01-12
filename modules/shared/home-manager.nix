@@ -41,6 +41,7 @@ in
           # copilot-auto = true;
         };
 
+
         statusline = {
           left = [ "mode" "spinner" "version-control" "file-name" ];
           right = [ "file-type" "file-encoding" ];
@@ -482,6 +483,8 @@ in
           rust-tools-nvim
           neotest-rust
           neotest
+          conjure
+          cmp-conjure
           # LazyVim
           LazyVim
           bufferline-nvim
