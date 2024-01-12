@@ -25,7 +25,9 @@ with pkgs; [
   lldb
   gopls
   rust-analyzer
-  clang-tools
+  mdl
+  markdownlint-cli
+  # clang-tools
   nodejs
   guile
   nim
@@ -33,10 +35,14 @@ with pkgs; [
   texlab
   zls
   jre8
-  gcc
+  # gcc
   uncrustify
   black
   alejandra
+  marksman
+  taplo
+  yaml-language-server
+  python311Packages.python-lsp-server # TODO: pylsp plugins
   gawk
   haskellPackages.haskell-language-server
   java-language-server
