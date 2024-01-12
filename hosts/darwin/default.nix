@@ -66,7 +66,8 @@ let user = "olafur"; in
       dock = {
         autohide = true;
         show-recents = false;
-        tilesize = 24;
+        tilesize = 72;
+        orientation = "left";
       };
 
       finder = {
