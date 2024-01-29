@@ -469,6 +469,7 @@ in
       vscode-langservers-extracted
 
       marksman
+      shellcheck
     ];
 
     plugins = with pkgs.vimPlugins; [
