@@ -313,11 +313,6 @@ in
     set -ga PATH $HOME/.local/bin
     set -ga PATH /run/wrappers/bin
     set -ga PATH $HOME/.nix-profile/bin
-    if test $KERNEL_NAME darwin
-      set -ga PATH /opt/homebrew/opt/llvm/bin
-      set -ga PATH /opt/homebrew/bin
-      set -ga PATH /opt/homebrew/sbin
-    end
     set -ga PATH /run/current-system/sw/bin
     set -ga PATH /nix/var/nix/profiles/default/bin
 
@@ -396,14 +391,11 @@ in
     macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
 
     set -gp NIX_PATH nixpkgs=$HOME/.nix-defexpr/channels_root/nixpkgs
-
     if test $KERNEL_NAME darwin
       set -gx HOMEBREW_PREFIX /opt/homebrew
       set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
       set -gx HOMEBREW_REPOSITORY /opt/homebrew
       set -gp INFOPATH /opt/homebrew/share/info
-      set -gx LDFLAGS "-L/opt/homebrew/opt/llvm/lib"
-      set -gx CPPFLAGS "-I/opt/homebrew/opt/llvm/include"
     end
   '';
   };
