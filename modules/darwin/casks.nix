@@ -2,7 +2,7 @@ _:
 
 [
   # Development Tools
-  # "homebrew/cask/docker"
+  # "docker"
   # "insomnia"
   # "ngrok"
   # "postico"
