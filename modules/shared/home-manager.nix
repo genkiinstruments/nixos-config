@@ -450,6 +450,10 @@ in
       cargo
       graphviz
 
+      ruff
+      ruff-lsp
+
+
       # Svelte
       nodePackages.svelte-language-server
       nodePackages.typescript-language-server
@@ -458,7 +462,6 @@ in
 
       nodePackages.pyright
       nodePackages.vscode-json-languageserver-bin
-      ruff
       tailwindcss-language-server
       vscode-langservers-extracted
 
