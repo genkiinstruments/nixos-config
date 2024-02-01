@@ -88,7 +88,7 @@ in
 
       home.file.".config/zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
       home.file.".config/zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
-      home.file.".config/alacritty/alacritty.yml".source = ../shared/config/alacritty.yml;
+      home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
 
       # Hyper-key config
       home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
