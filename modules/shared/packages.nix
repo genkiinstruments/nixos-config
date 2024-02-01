@@ -17,8 +17,12 @@ with pkgs; [
   p7zip
   wget
   zip
-  zoxide
+  zoxide # z
   conan
+  docker
+  parallel
+  moonlight-qt
+  magic-wormhole-rs
 
   # some other lsp related packages / dev tools
   shellcheck
@@ -53,6 +57,7 @@ with pkgs; [
   nodePackages.yarn
   nodePackages.vscode-langservers-extracted
   cargo
+  rclone
 
 
   # Encryption and security tools
