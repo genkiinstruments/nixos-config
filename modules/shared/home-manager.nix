@@ -253,6 +253,8 @@ in
       set fish_cursor_insert      line       blink
       set fish_cursor_replace_one underscore blink
       set fish_cursor_visual      block
+
+      alias l="ls -altrh"
     '';
     shellInit = /* bash */ '' 
     set fish_greeting # Disable greeting
