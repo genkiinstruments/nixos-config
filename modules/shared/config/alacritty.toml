@@ -30,12 +30,14 @@ yellow = "0xffc777"
 background = "0x222436"
 foreground = "0xc8d3f5"
 
-[cursor.style]
+[cursor]
 blink_interval = 500
-blinking = "Always"
-shape = "Beam"
 thickness = 0.15
 unfocused_hollow = true
+
+[cursor.style]
+blinking = "Always"
+shape = "Beam"
 
 [cursor.vi_mode_style]
 shape = "Block"
