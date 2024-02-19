@@ -255,6 +255,9 @@ in
       set fish_cursor_visual      block
 
       alias l="ls -altrh"
+
+      # To back up previous home manager configurations
+      set -Ux HOME_MANAGER_BACKUP_EXT ~/.nix-bak
     '';
     shellInit = /* bash */ '' 
     set fish_greeting # Disable greeting
