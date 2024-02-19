@@ -506,6 +506,8 @@ in
           neodev-nvim
           noice-nvim
           nui-nvim
+          telekasten-nvim
+          calendar-vim
           nvim-cmp
           nvim-lint
           nvim-lspconfig
