@@ -18,6 +18,7 @@ vim.keymap.set("n", "<leader>zn", "<cmd>Telekasten new_note<CR>")
 vim.keymap.set("n", "<leader>zc", "<cmd>Telekasten show_calendar<CR>")
 vim.keymap.set("n", "<leader>zb", "<cmd>Telekasten show_backlinks<CR>")
 vim.keymap.set("n", "<leader>zI", "<cmd>Telekasten insert_img_link<CR>")
+vim.keymap.set("n", "<leader>zt", "<cmd>Telekasten toggle_todo<CR>")
 
 -- Call insert link automatically when we start typing a link
 vim.keymap.set("i", "[[", "<cmd>Telekasten insert_link<CR>")
