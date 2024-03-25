@@ -122,6 +122,7 @@ keybinds clear-defaults=true{
     shared_except "locked" {
         bind "Alt g" { SwitchToMode "Locked"; }
         bind "Alt a" { ToggleFocusFullscreen; }
+        bind "Alt s" { EditScrollback; SwitchToMode "Normal"; }
         bind "Ctrl q" { Quit; }
         bind "Alt n" { NewPane; }
         bind "Alt t" { NewTab; SwitchToMode "Normal"; }
