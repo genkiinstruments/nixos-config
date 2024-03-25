@@ -23,6 +23,7 @@ with pkgs; [
   parallel
   moonlight-qt
   magic-wormhole-rs
+  tldr
 
   # some other lsp related packages / dev tools
   shellcheck
