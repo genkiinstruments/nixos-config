@@ -200,7 +200,8 @@ plugins {
 //         orange 255 158 100
 // }
 //}
-theme "tokyo-night-storm"
+// theme "tokyo-night-storm"
+theme "catppuccin-mocha"
 
 ui {
   pane_frames {
