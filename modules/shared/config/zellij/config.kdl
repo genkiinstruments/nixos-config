@@ -172,20 +172,20 @@ plugins {
 }
 
 // Tokyo Night Moon
-themes {
-    default {
-        fg "#C8D3F5"
-        bg "#222436"
-        black "#1B1D2B"
-        red "#FF757F"
-        green "#C3E88D"
-        yellow "#999999"
-        blue "#82AAFF"
-        magenta "#C099FF"
-        cyan "#86E1FC"
-        white "#828BB8"
-        orange "#FF966C"
-    }
+//themes {
+//    default {
+//        fg "#C8D3F5"
+//        bg "#222436"
+//        black "#1B1D2B"
+//        red "#FF757F"
+//        green "#C3E88D"
+//        yellow "#999999"
+//        blue "#82AAFF"
+//        magenta "#C099FF"
+//        cyan "#86E1FC"
+//        white "#828BB8"
+//        orange "#FF966C"
+//    }
 //     default {
 //         fg 169 177 214
 //         bg 26 27 38
@@ -199,7 +199,8 @@ themes {
 //         white 192 202 245
 //         orange 255 158 100
 // }
-}
+//}
+theme "tokyo-night-storm"
 
 ui {
   pane_frames {
