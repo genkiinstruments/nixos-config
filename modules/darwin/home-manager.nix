@@ -85,9 +85,7 @@ in
 
       # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
       home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
-
-      home.file.".config/zellij/config.kdl".source = ../shared/config/zellij/config.kdl;
-      home.file.".config/zellij/layouts/default.kdl".source = ../shared/config/zellij/layouts/default.kdl;
+      home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
       home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
 
       # Hyper-key config
