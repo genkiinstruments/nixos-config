@@ -316,7 +316,6 @@ in
           neodev-nvim
           noice-nvim
           nui-nvim
-          telekasten-nvim
           calendar-vim
           nvim-cmp
           nvim-lint
@@ -420,10 +419,6 @@ in
 
         -- don't show tabs
         vim.cmd [[ set showtabline=0 ]]
-
-        require('telekasten').setup({
-          home = vim.fn.expand("~/zettelkasten"), -- Put the name of your notes directory here
-        })
       '';
   };
 
