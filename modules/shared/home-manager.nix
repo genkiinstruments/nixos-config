@@ -409,6 +409,14 @@ in
         vim.opt.swapfile = false
         vim.cmd.colorscheme "catppuccin-mocha"
 
+        -- Disable syntax highlighting for .fish files
+        vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+          pattern = "/private/tmp/**/*.fish",
+          callback = function()
+            vim.opt_local.syntax = "OFF"
+          end,
+        })
+
         require('telekasten').setup({
           home = vim.fn.expand("~/zettelkasten"), -- Put the name of your notes directory here
         })
