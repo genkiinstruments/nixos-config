@@ -298,7 +298,6 @@ in
           cmp-conjure
           # LazyVim
           LazyVim
-          bufferline-nvim
           cmp-buffer
           cmp-nvim-lsp
           cmp-path
