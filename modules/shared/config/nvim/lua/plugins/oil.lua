@@ -12,6 +12,11 @@ return {
                 "<cmd>Oil<cr>",
                 { desc = "Open parent directory" },
             },
+            {
+                "_",
+                "<cmd>Oil .<cr>",
+                { desc = "Open nvim root directory" },
+            },
         },
         opts = {
             columns = {
