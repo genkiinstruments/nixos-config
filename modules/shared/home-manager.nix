@@ -388,6 +388,7 @@ in
             { "williamboman/mason-lspconfig.nvim", enabled = false },
             { "williamboman/mason.nvim", enabled = false },
             { "nvim-neo-tree/neo-tree.nvim", enabled = false },
+            { "akinsho/bufferline.nvim", enabled = false },
             -- import/override with your plugins
             { import = "plugins" },
             -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
