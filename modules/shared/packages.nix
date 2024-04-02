@@ -49,6 +49,7 @@ with pkgs; [
   nodePackages.vscode-langservers-extracted
   cargo
   rclone
+  eza
 
   # Encryption and security tools
   age
