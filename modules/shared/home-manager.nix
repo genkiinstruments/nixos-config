@@ -313,8 +313,8 @@ in
           indent-blankline-nvim
           clangd_extensions-nvim
           lualine-nvim
-          neo-tree-nvim
-          nvim-web-devicons
+          # neo-tree-nvim
+          oil-nvim
           neoconf-nvim
           neodev-nvim
           noice-nvim
