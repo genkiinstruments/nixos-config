@@ -23,4 +23,6 @@ vim.keymap.set("n", "<leader>zt", "<cmd>Telekasten toggle_todo<CR>")
 -- Call insert link automatically when we start typing a link
 vim.keymap.set("i", "[[", "<cmd>Telekasten insert_link<CR>")
 
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
 -- stylua: ignore end
