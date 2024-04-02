@@ -260,8 +260,11 @@ in
       # Rust
       rust-analyzer
       rustfmt
+      rustaceanvim
       cargo
+      rustc
       graphviz
+      lldb
 
       # Python
       ruff

@@ -73,6 +73,8 @@ in
 
               # Rust
               rust
+              ron
+              toml
               kdl
 
               # Svelte
