@@ -405,8 +405,10 @@ in
           end
         })
 
-        -- disable swap files
+        -- Disable swap files
         vim.opt.swapfile = false
+
+        -- Set colorscheme
         vim.cmd.colorscheme "catppuccin-mocha"
 
         -- Disable syntax highlighting for .fish files
@@ -417,7 +419,7 @@ in
           end,
         })
 
-        -- don't show tabs
+        -- Don't show tabs
         vim.cmd [[ set showtabline=0 ]]
       '';
   };
