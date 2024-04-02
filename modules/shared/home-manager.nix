@@ -50,6 +50,7 @@ in
 
       starship init fish | source
       zoxide init fish | source
+      set -gx DIRENV_LOG_FORMAT ""
       direnv hook fish | source
 
       # eval (zellij setup --generate-auto-start fish | string collect)
@@ -69,6 +70,7 @@ in
       # To back up previous home manager configurations
       set -Ux HOME_MANAGER_BACKUP_EXT ~/.nix-bak
     '';
+
     shellInit = /* bash */ '' 
     set fish_greeting # Disable greeting
 
