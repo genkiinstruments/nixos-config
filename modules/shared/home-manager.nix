@@ -248,6 +248,10 @@ in
       nil
       nixpkgs-fmt
 
+      # zig
+      zig
+      zls
+
       # C
       clang-tools
       neocmakelsp
