@@ -260,7 +260,6 @@ in
       # Rust
       rust-analyzer
       rustfmt
-      rustaceanvim
       cargo
       rustc
       graphviz
@@ -296,7 +295,7 @@ in
           crates-nvim
           rust-tools-nvim
           neotest-rust
-          neotest
+          rustaceanvim
 
           # Clojure
           conjure
