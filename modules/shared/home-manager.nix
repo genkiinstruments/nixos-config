@@ -263,6 +263,7 @@ in
       cargo
       graphviz
 
+      # Python
       ruff
       ruff-lsp
 
@@ -271,7 +272,6 @@ in
       nodePackages.typescript-language-server
       nodePackages.prettier
       nodePackages.eslint
-
       nodePackages.pyright
       nodePackages.vscode-json-languageserver-bin
       tailwindcss-language-server
@@ -294,8 +294,11 @@ in
           rust-tools-nvim
           neotest-rust
           neotest
+
+          # Clojure
           conjure
           cmp-conjure
+
           # LazyVim
           LazyVim
           cmp-buffer
