@@ -53,8 +53,6 @@ in
       set -gx DIRENV_LOG_FORMAT ""
       direnv hook fish | source
 
-      # eval (zellij setup --generate-auto-start fish | string collect)
-
       function fish_user_key_bindings
         fish_vi_key_bindings
       end
