@@ -24,6 +24,7 @@ with pkgs; [
   moonlight-qt
   magic-wormhole-rs
   tldr
+  zig # for vscode
 
   # some other lsp related packages / dev tools
   shellcheck
@@ -33,23 +34,12 @@ with pkgs; [
   rust-analyzer
   mdl
   markdownlint-cli
-  # clang-tools
   nodejs
-  guile
-  nim
-  zig
-  texlab
-  zls
-  jre8
-  # gcc
-  uncrustify
   black
   alejandra
   marksman
   taplo
   yaml-language-server
-  python311Packages.python-lsp-server # TODO: pylsp plugins
-  gawk
   haskellPackages.haskell-language-server
   java-language-server
   kotlin-language-server
@@ -59,7 +49,6 @@ with pkgs; [
   nodePackages.vscode-langservers-extracted
   cargo
   rclone
-
 
   # Encryption and security tools
   age
