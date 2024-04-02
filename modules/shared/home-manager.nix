@@ -266,7 +266,6 @@ in
       ruff
       ruff-lsp
 
-
       # Svelte
       nodePackages.svelte-language-server
       nodePackages.typescript-language-server
@@ -416,6 +415,9 @@ in
             vim.opt_local.syntax = "OFF"
           end,
         })
+
+        -- don't show tabs
+        vim.cmd [[ set showtabline=0 ]]
 
         require('telekasten').setup({
           home = vim.fn.expand("~/zettelkasten"), -- Put the name of your notes directory here
