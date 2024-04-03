@@ -280,6 +280,7 @@ in
       tailwindcss-language-server
       vscode-langservers-extracted
 
+      # Other
       marksman
       shellcheck
     ];
