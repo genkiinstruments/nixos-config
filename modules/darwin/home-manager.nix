@@ -89,6 +89,7 @@ in
       home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
       home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
       home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
+      home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
 
       # Hyper-key config
       home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
