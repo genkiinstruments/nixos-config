@@ -78,7 +78,6 @@ with pkgs; [
   # nodejs
 
   # Source code management, Git, GitHub tools
-  direnv
   gh
 
   # Text and terminal utilities

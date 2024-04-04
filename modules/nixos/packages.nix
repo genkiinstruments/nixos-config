@@ -33,7 +33,6 @@ shared-packages ++ [
   # tdesktop # telegram desktop
 
   # Testing and development tools
-  direnv
   rofi
   rofi-calc
   postgresql

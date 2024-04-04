@@ -13,6 +13,14 @@ in
       exit_mode = "return-query";
     };
   };
+  zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+  direnv = {
+    enable = true;
+    nix-direnv.enable = true; # Adds FishIntegration automatically
+  };
   fish = {
     enable = true;
     plugins = [
@@ -54,7 +62,6 @@ in
       starship init fish | source
       zoxide init fish | source
       set -gx DIRENV_LOG_FORMAT ""
-      direnv hook fish | source
 
       function fish_user_key_bindings
         fish_vi_key_bindings
@@ -89,7 +96,7 @@ in
     set -g __done_allow_nongraphical 1
     set -g __done_min_cmd_duration 8000
 
-    # see https://github.com/LnL7/nix-darwin/issues/122
+    # see hhttps://github.com/LnL7/nix-darwin/issues/122ttps://github.com/LnL7/nix-darwin/issues/122
     set -ga PATH ${config.xdg.configHome}/bin
     set -ga PATH $HOME/.local/bin
     set -ga PATH /run/wrappers/bin
