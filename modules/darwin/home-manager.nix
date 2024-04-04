@@ -90,6 +90,10 @@ in
       home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
       home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
       home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
+      home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
+        sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
+      };
 
       # Hyper-key config
       home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
