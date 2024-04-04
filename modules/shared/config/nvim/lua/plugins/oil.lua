@@ -34,6 +34,13 @@ return {
                     winblend = 0,
                 },
             },
+            prompt_save_on_select_new_entry = false,
+            default_file_explorer = true,
+            keymaps = {
+                ["<ESC>"] = "actions.close",
+                ["q"] = "actions.close",
+                ["<bs>"] = "actions.parent",
+            },
         },
     },
 }

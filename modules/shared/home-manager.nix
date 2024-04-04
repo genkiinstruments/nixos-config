@@ -390,7 +390,6 @@ in
             -- The following configs are needed for fixing lazyvim on nix
             -- force enable telescope-fzf-native.nvim
             { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
-            { "stevearc/oil.nvim", enabled = true },
             -- disable mason.nvim, use programs.neovim.extraPackages
             { "williamboman/mason-lspconfig.nvim", enabled = false },
             { "williamboman/mason.nvim", enabled = false },
