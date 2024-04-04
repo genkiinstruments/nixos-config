@@ -16,5 +16,5 @@ keymap("n", "<C-/>", lazyterm, { desc = "Terminal (root dir)" })
 keymap("t", "<C-/>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 
 -- Unmap keymaps that move lines
-vim.keymap.del({ "n", "i", "v", "t" }, "<A-j>")
-vim.keymap.del({ "n", "i", "v", "t" }, "<A-k>")
+vim.keymap.del({ "n", "i", "v" }, "<A-j>")
+vim.keymap.del({ "n", "i", "v" }, "<A-k>")
