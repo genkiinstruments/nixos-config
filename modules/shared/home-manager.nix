@@ -13,7 +13,6 @@ in
       exit_mode = "return-query";
     };
   };
-  # Shared shell configuration
   fish = {
     enable = true;
     plugins = [
@@ -78,8 +77,7 @@ in
     set fish_greeting # Disable greeting
     fish_config theme choose "Catppuccin Mocha"
     
-    # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117
-    # prompt configurations
+    # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117 prompt configurations
     set -g hydro_symbol_prompt "λ"
     if test "$TERM" = linux
       set -g hydro_symbol_prompt ">"
