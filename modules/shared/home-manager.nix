@@ -60,7 +60,6 @@ in
       bind -M insert \cr _atuin_search
 
       starship init fish | source
-      zoxide init fish | source
       set -gx DIRENV_LOG_FORMAT ""
 
       function fish_user_key_bindings

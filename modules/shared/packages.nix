@@ -16,7 +16,6 @@ with pkgs; [
   p7zip
   wget
   zip
-  zoxide # z
   conan
   docker
   parallel
