@@ -7,15 +7,14 @@ return {
             require("oil").setup()
         end,
         keys = {
-            -- TODO: Figure out how to make the floating window close on `q`
             {
                 "-",
-                "<cmd>Oil --float<cr>",
+                "<cmd>Oil<cr>",
                 { desc = "Open parent directory" },
             },
             {
                 "_",
-                "<cmd>Oil --float .<cr>",
+                "<cmd>Oil .<cr>",
                 { desc = "Open nvim root directory" },
             },
         },
