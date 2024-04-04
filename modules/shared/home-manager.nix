@@ -6,6 +6,13 @@ let
   email = "olafur@genkiinstruments.com";
 in
 {
+  atuin = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      exit_mode = "return-query";
+    };
+  };
   # Shared shell configuration
   fish = {
     enable = true;

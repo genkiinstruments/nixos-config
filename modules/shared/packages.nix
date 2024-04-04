@@ -3,7 +3,6 @@
 with pkgs; [
   # General packages for development and system management
   alacritty
-  atuin
   bash-completion
   bat
   cmake
