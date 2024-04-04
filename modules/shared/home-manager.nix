@@ -244,6 +244,9 @@ in
       # Telescope
       ripgrep
 
+      # nvim spectre
+      gnused
+
       # neovim/nvim-lspconfig
       # Nix
       nil
