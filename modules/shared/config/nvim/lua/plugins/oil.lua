@@ -8,6 +8,11 @@ return {
             { desc = "Open parent directory" },
         },
         {
+            "<leader>e",
+            "<cmd>Oil --float<cr>",
+            { desc = "Open parent directory" },
+        },
+        {
             "_",
             "<cmd>Oil --float .<cr>",
             { desc = "Open nvim root directory" },
