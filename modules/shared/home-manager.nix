@@ -11,6 +11,10 @@ in
     enableFishIntegration = true;
     settings = {
       exit_mode = "return-query";
+      enter_accept = true;
+      ctrl_n_shortcuts = true;
+      keymap_mode = "auto";
+      prefers_reduced_motion = true;
     };
   };
   zoxide = {
