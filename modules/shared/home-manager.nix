@@ -226,8 +226,8 @@ in
       # Telescope
       ripgrep
 
-      # nvim spectre
-      gnused
+      # workaround for nvim-spectre... >:(
+      (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
 
       # neovim/nvim-lspconfig
       # Nix
