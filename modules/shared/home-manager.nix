@@ -392,7 +392,7 @@ in
 
         -- Disable syntax highlighting for .fish files
         vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-          pattern = "/private/tmp/**/*.fish",
+          pattern = "*.fish",
           callback = function()
             vim.opt_local.syntax = "OFF"
           end,
