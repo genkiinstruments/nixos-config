@@ -21,3 +21,8 @@ keymap("t", "<C-þ>", "<cmd>close<cr>", { desc = "Hide Terminal" })
 -- Unmap keymaps that move lines
 vim.keymap.del({ "n", "i", "v" }, "<A-j>")
 vim.keymap.del({ "n", "i", "v" }, "<A-k>")
+
+-- Don't want navigation in terminal-mode
+for _, val in pairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>" }) do
+    vim.keymap.del("t", val)
+end
