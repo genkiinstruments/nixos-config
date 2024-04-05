@@ -1,10 +1,6 @@
 return {
     "stevearc/oil.nvim",
     dependencies = { "nvim-tree/nvim-web-devicons" },
-    cmd = "Oil",
-    config = function()
-        require("oil").setup()
-    end,
     keys = {
         {
             "-",
@@ -22,15 +18,34 @@ return {
             "icon",
             { "mtime", highlight = "Comment", format = "%T %y-%m-%d" },
         },
-        skip_confirm_for_simple_edits = true,
-        view_options = {
-            show_hidden = true,
-        },
         float = {
-            padding = 3,
+            padding = 2,
+            max_width = 155,
+            max_height = 32,
+            border = "rounded",
             win_options = {
                 winblend = 0,
             },
+            preview = {
+                max_width = 0.9,
+                min_width = { 40, 0.4 },
+                width = nil,
+                max_height = 0.9,
+                min_height = { 5, 0.1 },
+                height = nil,
+                border = "rounded",
+                win_options = {
+                    winblend = 0,
+                },
+                update_on_cursor_moved = true,
+            },
+            override = function(conf)
+                return conf
+            end,
+        },
+        skip_confirm_for_simple_edits = true,
+        view_options = {
+            show_hidden = true,
         },
         prompt_save_on_select_new_entry = false,
         default_file_explorer = true,
@@ -48,7 +63,7 @@ return {
             ["r"] = "actions.refresh",
             ["<BS>"] = "actions.parent",
             ["h"] = "actions.parent",
-            -- ["_"] = "actions.open_cwd",
+            --t ["_"] = "actions.open_cwd",
             ["~"] = "actions.open_cwd",
             ["`"] = "actions.cd",
             ["cd"] = "actions.tcd",
