@@ -6,8 +6,7 @@ let
 in
 {
   imports = [
-    ../../modules/nixos/secrets.nix
-    ../../modules/nixos/disk-config.nix
+    ../../modules/gdrn/configuration.nix
     ../../modules/shared
     ../../modules/shared/cachix
     agenix.nixosModules.default
