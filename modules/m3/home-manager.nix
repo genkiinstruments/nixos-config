@@ -39,10 +39,11 @@ in
 
       # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
       home.file.".config/nvim/parser".source =
+        with pkgs;
         let
-          parsers = pkgs.symlinkJoin {
+          parsers = symlinkJoin {
             name = "treesitter-parsers";
-            paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
+            paths = (vimPlugins.nvim-treesitter.withPlugins (p: with p; [
               bash
               c
               cpp
