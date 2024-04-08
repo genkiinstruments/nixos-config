@@ -48,7 +48,7 @@
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
+          echo "Running ${scriptName} for ${system}-${host}"
           exec ${self}/apps/${system}/${host}/${scriptName}
         '')}/bin/${scriptName}";
       };
