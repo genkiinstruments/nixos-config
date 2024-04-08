@@ -1,11 +1,11 @@
 { agenix, lib, pkgs, ... }:
 
-let user = "olafur"; in
+let user = "genki"; in
 {
 
   imports = [
-    ../../modules/darwin/secrets.nix
-    ../../modules/darwin/home-manager.nix
+    ../../modules/gkr/secrets.nix
+    ../../modules/gkr/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
     agenix.darwinModules.default
