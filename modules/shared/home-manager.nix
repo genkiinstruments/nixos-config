@@ -62,7 +62,7 @@ in
       bind -M insert \cp _atuin_search
       bind \cr _atuin_search
       bind -M insert \cr _atuin_search
-      bind --erase -all /
+      bind --erase --all /
 
       set -gx DIRENV_LOG_FORMAT ""
 
@@ -448,4 +448,5 @@ in
         '')
     ];
   };
+
 }
