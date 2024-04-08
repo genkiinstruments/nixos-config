@@ -43,20 +43,21 @@
             '';
           };
         };
-      mkApp = scriptName: system: {
+      mkApp = scriptName: host: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
           echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
+          exec ${self}/apps/${system}/${host}/${scriptName}
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
-        "build-switch" = mkApp "build-switch" system;
+        "build-switch-gdrn" = mkApp "build-switch" "gdrn" system;
       };
       mkDarwinApps = system: {
-        "build-switch" = mkApp "build-switch" system;
+        "build-switch-m3" = mkApp "build-switch" "m3" system;
+        "build-switch-gkr" = mkApp "build-switch" "gkr" system;
       };
     in
     {
