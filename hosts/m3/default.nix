@@ -4,7 +4,6 @@ let user = "olafur"; in
 {
 
   imports = [
-    ../../modules/m3/secrets.nix
     ../../modules/m3/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
