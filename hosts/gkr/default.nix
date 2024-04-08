@@ -4,7 +4,6 @@ let user = "genki"; in
 {
 
   imports = [
-    ../../modules/gkr/secrets.nix
     ../../modules/gkr/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
