@@ -2,7 +2,6 @@
   description = "Nix runs my 🌍🌎🌏";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -28,7 +27,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko } @inputs:
     let
       user = "olafur";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
@@ -37,7 +36,7 @@
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in {
           default = with pkgs; mkShell {
-            nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey ];
+            nativeBuildInputs = with pkgs; [ bashInteractive git ];
             shellHook = ''
               export EDITOR=nvim
             '';
@@ -48,7 +47,7 @@
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}-${host}"
+          echo "Running ${scriptName} for ${system}"
           exec ${self}/apps/${system}/${host}/${scriptName}
         '')}/bin/${scriptName}";
       };

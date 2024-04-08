@@ -7,7 +7,6 @@ let user = "genki"; in
     ../../modules/gkr/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
-    agenix.darwinModules.default
   ];
 
   # Auto upgrade nix package and the daemon service.
@@ -35,10 +34,7 @@ let user = "genki"; in
   system.checks.verifyNixPath = false;
 
   # Load configuration that is shared across systems
-  environment.systemPackages = [
-    # emacs-unstable
-    agenix.packages."${pkgs.system}".default
-  ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment.systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   # Enable fonts dir
   fonts.fontDir.enable = true;
