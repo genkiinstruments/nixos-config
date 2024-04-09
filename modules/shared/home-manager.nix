@@ -403,7 +403,7 @@ in
         vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
           pattern = "*.fish",
           callback = function()
-            vim.opt_local.syntax = "OFF"
+            vim.cmd("syntax off")
           end,
         })
 
