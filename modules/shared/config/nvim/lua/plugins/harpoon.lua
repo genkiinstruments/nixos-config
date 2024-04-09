@@ -4,7 +4,8 @@ return {
 		-- stylua: ignore
 		keys = {
 			{ '<leader>ua', 'ga', desc = 'Show character under cursor' },
-			{ 'ga', function() require('harpoon'):list():append() end, desc = 'Add location' },
+			{ 'ga', function() require('harpoon'):list():add() end, desc = 'Add location' },
+			{ '<header>H', function() require('harpoon'):list():add() end, desc = 'Add location' },
 			{ '<C-n>', function() require('harpoon'):list():next() end, desc = 'Next location' },
 			{ '<C-p>', function() require('harpoon'):list():prev() end, desc = 'Previous location' },
 			{ '<leader>mr', function() require('harpoon'):list():remove() end, desc = 'Remove location' },
