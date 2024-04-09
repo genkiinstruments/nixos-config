@@ -1,3 +1,21 @@
+local function toggle_telescope(harpoon_files)
+    local file_paths = {}
+    for _, item in ipairs(harpoon_files.items) do
+        table.insert(file_paths, item.value)
+    end
+    local conf = require("telescope.config").values
+    require("telescope.pickers")
+        .new({}, {
+            prompt_title = "Harpoon",
+            finder = require("telescope.finders").new_table({
+                results = file_paths,
+            }),
+            previewer = conf.file_previewer({}),
+            sorter = conf.generic_sorter({}),
+        })
+        :find()
+end
+
 return {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
@@ -5,7 +23,7 @@ return {
 		-- stylua: ignore
 		keys = {
 			{ '<leader>ua', 'ga', desc = 'Show character under cursor' },
-			{ '<header>a', function() require('harpoon'):list():add() end, desc = 'Add location' },
+			{ '<leader>a', function() require('harpoon'):list():add() end, desc = 'Add location' },
 			{ '<C-n>', function() require('harpoon'):list():next() end, desc = 'Next location' },
 			{ '<C-p>', function() require('harpoon'):list():prev() end, desc = 'Previous location' },
 			{ '<leader>mr', function() require('harpoon'):list():remove() end, desc = 'Remove location' },
@@ -13,6 +31,8 @@ return {
 			{ '<leader>2', function() require('harpoon'):list():select(2) end, desc = 'Harpoon select 2' },
 			{ '<leader>3', function() require('harpoon'):list():select(3) end, desc = 'Harpoon select 3' },
 			{ '<leader>4', function() require('harpoon'):list():select(4) end, desc = 'Harpoon select 4' },
-			{ '<leader>5', function() require('harpoon'):list():select(5) end, desc = 'Harpoon select 5' }
+			{ '<leader>5', function() require('harpoon'):list():select(5) end, desc = 'Harpoon select 5' },
+      { "<C-e>", function() toggle_telescope(require("harpoon"):list()) end, desc = "Open harpoon window"},
+      { "<leader>l", function() toggle_telescope(require("harpoon"):list()) end, desc = "Open harpoon window"}
   },
 }

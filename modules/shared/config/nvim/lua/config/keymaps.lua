@@ -26,24 +26,3 @@ vim.keymap.del({ "n", "i", "v" }, "<A-k>")
 for _, val in pairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>" }) do
     vim.keymap.del("t", val)
 end
-
-local function toggle_telescope(harpoon_files)
-    local file_paths = {}
-    for _, item in ipairs(harpoon_files.items) do
-        table.insert(file_paths, item.value)
-    end
-    local conf = require("telescope.config").values
-    require("telescope.pickers")
-        .new({}, {
-            prompt_title = "Harpoon",
-            finder = require("telescope.finders").new_table({
-                results = file_paths,
-            }),
-            previewer = conf.file_previewer({}),
-            sorter = conf.generic_sorter({}),
-        })
-        :find()
-end
-
--- stylua: ignore
-vim.keymap.set("n", "<C-e>", function() toggle_telescope(require("harpoon"):list()) end, { desc = "Open harpoon window" })
