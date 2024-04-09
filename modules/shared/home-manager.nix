@@ -328,6 +328,7 @@ in
           vim-illuminate
           vim-startuptime
           which-key-nvim
+          harpoon2
           { name = "LuaSnip"; path = luasnip; }
           { name = "mini.ai"; path = mini-nvim; }
           { name = "mini.bufremove"; path = mini-nvim; }
