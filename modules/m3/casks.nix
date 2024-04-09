@@ -18,6 +18,7 @@ _:
 
   # Utility Tools
   # "appcleaner"
+  "shortcat"
 
   # Entertainment Tools
   # "steam"
