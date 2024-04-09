@@ -23,22 +23,6 @@ return {
                 end,
                 desc = "Harpoon Quick Menu",
             },
-            {
-                "<C-S-P>",
-                function()
-                    local harpoon = require("harpoon")
-                    harpoon:list():prev()
-                end,
-                desc = "Toggle previous buffer stored within Harpoon list",
-            },
-            {
-                "<C-S-N>",
-                function()
-                    local harpoon = require("harpoon")
-                    harpoon:list():next()
-                end,
-                desc = "Toggle next buffer stored within Harpoon list",
-            },
         }
 
         for i = 1, 5 do

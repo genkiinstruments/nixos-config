@@ -26,3 +26,12 @@ vim.keymap.del({ "n", "i", "v" }, "<A-k>")
 for _, val in pairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>" }) do
     vim.keymap.del("t", val)
 end
+
+-- Toggle previous & next buffers stored within Harpoon list
+local harpoon = require("harpoon")
+vim.keymap.set("n", "<C-S-P>", function()
+    harpoon:list():prev()
+end)
+vim.keymap.set("n", "<C-S-N>", function()
+    harpoon:list():next()
+end)
