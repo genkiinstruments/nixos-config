@@ -1,8 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, name, email, ... }:
 
-let
-  user = "olafur";
-in
 {
   imports = [
     ./dock
@@ -98,7 +95,7 @@ in
       # Hyper-key config
       home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
 
-      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
+      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib user name email; };
     };
   };
 

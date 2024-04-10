@@ -1,10 +1,5 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, name, user, email, ... }:
 
-let
-  name = "Ólafur Bjarki Bogason";
-  user = "olafur";
-  email = "olafur@genkiinstruments.com";
-in
 {
   atuin = {
     enable = true;
