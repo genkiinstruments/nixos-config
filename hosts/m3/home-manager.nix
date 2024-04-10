@@ -71,17 +71,11 @@
               vim
               vimdoc
               yaml
-
-              # Nix
               nix
-
-              # Rust
               rust
               ron
               toml
               kdl
-
-              # Svelte
               svelte
               sql
             ])).dependencies;
