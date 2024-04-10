@@ -1,10 +1,10 @@
-{  lib, pkgs, ... }:
+{ agenix, lib, pkgs, ... }:
 
-let user = "olafur"; in
+let user = "genki"; in
 {
 
   imports = [
-    ../../modules/m3/home-manager.nix
+    ../../modules/gkr/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];
