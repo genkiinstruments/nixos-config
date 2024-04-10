@@ -14,11 +14,7 @@
 
   homebrew = {
     enable = true;
-    casks = [
-      "shortcat"
-      "raycast"
-      "arc"
-    ];
+    casks = [ "shortcat" "raycast" "arc" ];
     # These app IDs are from using the mas (mac app store) CLI app https://github.com/mas-cli/mas
     #
     # $ nix shell nixpkgs#mas
