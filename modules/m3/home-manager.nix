@@ -33,8 +33,6 @@
       home.packages = pkgs.callPackage ./packages.nix { };
       home.stateVersion = "23.05";
 
-      xdg.enable = true;
-
       # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
       home.file.".config/nvim/parser".source =
         with pkgs;
