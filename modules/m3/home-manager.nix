@@ -1,10 +1,6 @@
 { config, pkgs, user, name, email, ... }:
 
 {
-  imports = [
-    ./dock
-  ];
-
   users.users.${user} = {
     name = "${user}";
     home = "/Users/${user}";
@@ -23,10 +19,8 @@
     };
   };
 
-  # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-
     users.${user} = { pkgs, config, lib, ... }:
       {
         home.enableNixpkgsReleaseCheck = false;
@@ -36,6 +30,8 @@
   };
 
   # Fully declarative dock using the latest from Nix Store
+  imports = [ ./dock ];
+
   local.dock.enable = true;
   local.dock.entries = [
     { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
@@ -50,5 +46,4 @@
       options = "--sort name --view grid --display stack";
     }
   ];
-
 }
