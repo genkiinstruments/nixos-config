@@ -10,6 +10,7 @@
     home = "/Users/${user}";
     isHidden = false;
     shell = pkgs.fish;
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ1uxevLNJOPIPRMh9G9fFSqLtYjK5R7+nRdtsas2KwX" ];
   };
 
   homebrew = {
