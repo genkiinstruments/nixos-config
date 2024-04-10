@@ -92,7 +92,7 @@
     set -g __done_allow_nongraphical 1
     set -g __done_min_cmd_duration 8000
 
-    # see hhttps://github.com/LnL7/nix-darwin/issues/122ttps://github.com/LnL7/nix-darwin/issues/122
+    # see https://github.com/LnL7/nix-darwin/issues/122
     set -ga PATH ${config.xdg.configHome}/bin
     set -ga PATH $HOME/.local/bin
     set -ga PATH /run/wrappers/bin
@@ -496,7 +496,4 @@
     url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
     sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
   };
-
-  # Hyper-key config
-  home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
 }

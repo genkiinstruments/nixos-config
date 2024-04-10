@@ -22,11 +22,22 @@
   home-manager = {
     useGlobalPkgs = true;
     users.${user} = { pkgs, config, lib, ... }:
+      let
+        shared = (import ../shared/home-manager.nix { inherit config pkgs lib user name email; });
+      in
       {
-        home.enableNixpkgsReleaseCheck = false;
-        home.stateVersion = "23.05";
-        home.packages = with pkgs; let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in shared-packages ++ [ dockutil ];
-      } // (import ../shared/home-manager.nix { inherit config pkgs lib user name email; });
+        home = {
+          enableNixpkgsReleaseCheck = false;
+          stateVersion = "23.05";
+          packages = with pkgs; let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in shared-packages ++ [ dockutil ];
+
+          # Hyper-key config
+          file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+
+        } // shared.home;
+
+        inherit (shared) programs;
+      };
   };
 
   # Fully declarative dock using the latest from Nix Store
