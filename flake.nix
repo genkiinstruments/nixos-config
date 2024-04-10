@@ -52,11 +52,11 @@
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
-        "build-switch-gdrn" = mkApp "build-switch" "gdrn" system;
+        "gdrn" = mkApp "build-switch" "gdrn" system;
       };
       mkDarwinApps = system: {
-        "build-switch-m3" = mkApp "build-switch" "m3" system;
-        "build-switch-gkr" = mkApp "build-switch" "gkr" system;
+        "m3" = mkApp "build-switch" "m3" system;
+        "gkr" = mkApp "build-switch" "gkr" system;
       };
     in
     {
