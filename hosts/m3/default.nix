@@ -1,12 +1,13 @@
-{  lib, pkgs, ... }:
+{ lib, pkgs, user, name, email, ... }@inputs:
 
-let user = "olafur"; in
 {
-
   imports = [
     ../../modules/m3/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
+    {
+      _module.args = { inherit inputs; };
+    }
   ];
 
   # Auto upgrade nix package and the daemon service.

@@ -1,8 +1,5 @@
-{ config, pkgs, ... }:
+{ config, pkgs, user, name, email, ... }@inputs:
 
-let
-  user = "olafur";
-in
 {
   imports = [
     ./dock
@@ -30,6 +27,7 @@ in
       "Keynote" = 409183694;
       "ColorSlurp" = 1287239339;
     };
+    onActivation.cleanup = "zap";
   };
 
   # Enable home-manager
@@ -104,7 +102,7 @@ in
       # Hyper-key config
       home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
 
-      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
+      programs = { } // (import ../shared/home-manager.nix { inherit inputs; });
     };
   };
 
