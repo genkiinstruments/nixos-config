@@ -15,11 +15,8 @@
   homebrew = {
     enable = true;
     casks = [ "shortcat" "raycast" "arc" ];
-    # These app IDs are from using the mas (mac app store) CLI app https://github.com/mas-cli/mas
-    #
-    # $ nix shell nixpkgs#mas
-    # $ mas search <app name>
     masApps = {
+      # `nix run nixpkgs#mas -- search <app name>`
       "Keynote" = 409183694;
       "ColorSlurp" = 1287239339;
     };
@@ -28,69 +25,13 @@
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }: {
-      home.enableNixpkgsReleaseCheck = false;
-      home.packages = pkgs.callPackage ./packages.nix { };
-      home.stateVersion = "23.05";
 
-      # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-      home.file.".config/nvim/parser".source =
-        with pkgs;
-        let
-          parsers = symlinkJoin {
-            name = "treesitter-parsers";
-            paths = (vimPlugins.nvim-treesitter.withPlugins (p: with p; [
-              bash
-              c
-              cpp
-              cmake
-              diff
-              html
-              javascript
-              jsdoc
-              json
-              jsonc
-              lua
-              luadoc
-              luap
-              markdown
-              markdown_inline
-              python
-              query
-              regex
-              toml
-              tsx
-              typescript
-              vim
-              vimdoc
-              yaml
-              nix
-              rust
-              ron
-              toml
-              kdl
-              svelte
-              sql
-            ])).dependencies;
-          };
-        in
-        "${parsers}/parser";
-
-      # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-      home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
-      home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
-      home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
-      home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
-      home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
-        sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
+    users.${user} = { pkgs, config, lib, ... }:
+      (import ../shared/home-manager.nix { inherit config pkgs lib user name email; }) // {
+        home.enableNixpkgsReleaseCheck = false;
+        home.packages = with pkgs; let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in shared-packages ++ [ dockutil ];
+        home.stateVersion = "23.05";
       };
-
-      # Hyper-key config
-      home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
-
-      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib user name email; };
-    };
   };
 
   # Fully declarative dock using the latest from Nix Store
