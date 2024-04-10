@@ -28,11 +28,11 @@
     useGlobalPkgs = true;
 
     users.${user} = { pkgs, config, lib, ... }:
-      (import ../shared/home-manager.nix { inherit config pkgs lib user name email; }) // {
+      {
         home.enableNixpkgsReleaseCheck = false;
-        home.packages = with pkgs; let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in shared-packages ++ [ dockutil ];
         home.stateVersion = "23.05";
-      };
+        home.packages = with pkgs; let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in shared-packages ++ [ dockutil ];
+      } // (import ../shared/home-manager.nix { inherit config pkgs lib user name email; });
   };
 
   # Fully declarative dock using the latest from Nix Store
