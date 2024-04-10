@@ -1,8 +1,6 @@
-{  lib, pkgs, ... }:
+{ lib, pkgs, user, ... }:
 
-let user = "olafur"; in
 {
-
   imports = [
     ../../modules/m3/home-manager.nix
     ../../modules/shared

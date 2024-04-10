@@ -63,52 +63,59 @@
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = {
-        m3 = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = inputs;
-          modules = [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
+      darwinConfigurations =
+        let
+          name = "Ólafur Bjarki Bogason";
+          user = "olafur";
+          email = "olafur@genkiinstruments.com";
+        in
+        {
+          m3 = darwin.lib.darwinSystem
             {
-              nix-homebrew = {
-                enable = true;
-                user = "olafur";
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
+              system = "aarch64-darwin";
+              specialArgs = { inherit inputs user name email; };
+              modules = [
+                home-manager.darwinModules.home-manager
+                nix-homebrew.darwinModules.nix-homebrew
+                {
+                  nix-homebrew = {
+                    enable = true;
+                    inherit user;
+                    taps = {
+                      "homebrew/homebrew-core" = homebrew-core;
+                      "homebrew/homebrew-cask" = homebrew-cask;
+                      "homebrew/homebrew-bundle" = homebrew-bundle;
+                    };
+                    mutableTaps = false;
+                    autoMigrate = true;
+                  };
+                }
+                ./hosts/m3
+              ];
+            };
+          gkr = darwin.lib.darwinSystem {
+            system = "aarch64-darwin";
+            specialArgs = inputs;
+            modules = [
+              home-manager.darwinModules.home-manager
+              nix-homebrew.darwinModules.nix-homebrew
+              {
+                nix-homebrew = {
+                  enable = true;
+                  user = "genki";
+                  taps = {
+                    "homebrew/homebrew-core" = homebrew-core;
+                    "homebrew/homebrew-cask" = homebrew-cask;
+                    "homebrew/homebrew-bundle" = homebrew-bundle;
+                  };
+                  mutableTaps = false;
+                  autoMigrate = true;
                 };
-                mutableTaps = false;
-                autoMigrate = true;
-              };
-            }
-            ./hosts/m3
-          ];
+              }
+              ./hosts/gkr
+            ];
+          };
         };
-        gkr = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = inputs;
-          modules = [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                user = "genki";
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                };
-                mutableTaps = false;
-                autoMigrate = true;
-              };
-            }
-            ./hosts/gkr
-          ];
-        };
-      };
 
       nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
         inherit system;
