@@ -88,6 +88,8 @@ shape = "Block"
 
 [font]
 size = 20
+
+[font.normal]
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
