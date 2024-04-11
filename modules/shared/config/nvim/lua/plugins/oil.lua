@@ -57,7 +57,7 @@ return {
         use_default_keymaps = false,
         keymaps = {
             ["<ESC>"] = "actions.close",
-            ["q"] = "<leader>wd",
+            ["q"] = "actions.close",
             ["?"] = "actions.show_help",
             ["<CR>"] = "actions.select",
             ["l"] = "actions.select",
