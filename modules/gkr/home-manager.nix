@@ -6,6 +6,7 @@ in
 {
   imports = [
     ./dock
+    ../shared/home-manager.nix
   ];
 
   users.users.${user} = {
@@ -38,73 +39,8 @@ in
     useGlobalPkgs = true;
     users.${user} = { pkgs, config, lib, ... }: {
       home.enableNixpkgsReleaseCheck = false;
-      home.packages = pkgs.callPackage ./packages.nix { };
       home.stateVersion = "23.05";
-
       xdg.enable = true;
-
-      # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-      home.file.".config/nvim/parser".source =
-        let
-          parsers = pkgs.symlinkJoin {
-            name = "treesitter-parsers";
-            paths = (pkgs.vimPlugins.nvim-treesitter.withPlugins (plugins: with plugins; [
-              bash
-              c
-              cpp
-              cmake
-              diff
-              html
-              javascript
-              jsdoc
-              json
-              jsonc
-              lua
-              luadoc
-              luap
-              markdown
-              markdown_inline
-              python
-              query
-              regex
-              toml
-              tsx
-              typescript
-              vim
-              vimdoc
-              yaml
-
-              # Nix
-              nix
-
-              # Rust
-              rust
-              ron
-              toml
-              kdl
-
-              # Svelte
-              svelte
-              sql
-            ])).dependencies;
-          };
-        in
-        "${parsers}/parser";
-
-      # Normal LazyVim config here, see https://github.com/LazyVim/starter/tree/main/lua
-      home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
-      home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
-      home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
-      home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
-      home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
-        sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
-      };
-
-      # Hyper-key config
-      home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
-
-      programs = { } // import ../shared/home-manager.nix { inherit config pkgs lib; };
     };
   };
 

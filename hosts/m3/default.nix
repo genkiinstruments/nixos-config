@@ -31,9 +31,6 @@
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 
-  # Load configuration that is shared across systems
-  environment.systemPackages = (import ../../modules/shared/packages.nix { inherit pkgs; });
-
   # Enable fonts dir
   fonts.fontDir.enable = true;
 
