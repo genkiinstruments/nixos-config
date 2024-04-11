@@ -248,6 +248,7 @@
             rustc
             graphviz
             lldb
+            taplo # toml language server 
 
             # Python
             ruff
