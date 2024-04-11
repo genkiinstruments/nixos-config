@@ -91,49 +91,24 @@
                   ./hosts/m3
                 ];
               };
-          gkr = darwin.lib.darwinSystem {
-            system = "aarch64-darwin";
-            specialArgs = inputs;
-            modules = [
-              home-manager.darwinModules.home-manager
-              nix-homebrew.darwinModules.nix-homebrew
-              {
-                nix-homebrew = {
-                  enable = true;
-                  user = "genki";
-                  taps = {
-                    "homebrew/homebrew-core" = homebrew-core;
-                    "homebrew/homebrew-cask" = homebrew-cask;
-                    "homebrew/homebrew-bundle" = homebrew-bundle;
-                  };
-                  mutableTaps = false;
-                  autoMigrate = true;
-                };
-              }
-              ./hosts/gkr
-            ];
-          };
         };
 
-      nixosConfigurations =
-        let
-          user = "olafur";
-        in
-        nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = inputs;
-          modules = [
-            disko.nixosModules.disko
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.${user} = import ./modules/gdrn/home-manager.nix;
-              };
-            }
-            ./hosts/gdrn
-          ];
-        });
+      nixosConfigurations = {
+        gdrn =
+          let
+            name = "Ólafur Bjarki Bogason";
+            user = "genki";
+            email = "olafur@genkiinstruments.com";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = { inherit inputs user name email; };
+            modules = [
+              disko.nixosModules.disko
+              home-manager.nixosModules.home-manager
+              ./hosts/gdrn
+            ];
+          };
+      };
     };
 }
