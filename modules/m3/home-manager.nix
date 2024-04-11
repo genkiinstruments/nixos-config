@@ -1,7 +1,10 @@
 { config, pkgs, user, ... }:
 
 {
-  imports = [ ./dock ../shared/home-manager.nix ];
+  imports = [ 
+  ./dock 
+  ../shared/home-manager.nix 
+  ];
 
   users.users.${user} = {
     name = "${user}";
