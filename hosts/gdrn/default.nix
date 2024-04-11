@@ -7,9 +7,9 @@
 {
   imports =
     [
-      ./hardware-configuration.nix
-      ./common.nix
-      ../../modules/shared/home-manager.nix
+      ../../modules/gdrn/home-manager.nix
+      ../../modules/shared
+      ../../modules/shared/cachix
     ];
 
   # Bootloader.
