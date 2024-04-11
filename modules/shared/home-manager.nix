@@ -283,6 +283,9 @@
                 neotest-rust
                 rustaceanvim
 
+                copilot-lua
+                copilot-cmp
+
                 # Clojure
                 conjure
                 cmp-conjure
