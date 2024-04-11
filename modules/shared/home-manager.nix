@@ -266,6 +266,7 @@
             # Other
             marksman
             shellcheck
+            markdownlint-cli
           ];
 
           plugins = with pkgs.vimPlugins; [
