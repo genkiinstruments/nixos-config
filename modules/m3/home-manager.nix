@@ -1,6 +1,8 @@
-{ config, pkgs, user, name, email, ... }:
+{ config, pkgs, user, ... }:
 
 {
+  imports = [ ./dock ../shared/home-manager.nix ];
+
   users.users.${user} = {
     name = "${user}";
     home = "/Users/${user}";
@@ -21,28 +23,18 @@
 
   home-manager = {
     useGlobalPkgs = true;
-    users.${user} = { pkgs, config, lib, ... }:
-      let
-        shared = (import ../shared/home-manager.nix { inherit config pkgs lib user name email; });
-      in
+    users.${user} = { ... }:
       {
-        home = {
-          enableNixpkgsReleaseCheck = false;
-          stateVersion = "23.05";
-          packages = with pkgs; let shared-packages = import ../shared/packages.nix { inherit pkgs; }; in shared-packages ++ [ dockutil ];
+        home.enableNixpkgsReleaseCheck = false;
+        home.stateVersion = "23.05";
 
-          # Hyper-key config
-          file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+        home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json; # Hyper-key config
 
-        } // shared.home;
-
-        inherit (shared) programs;
+        xdg.enable = true; # Needed for fish interactiveShellInit hack
       };
   };
 
   # Fully declarative dock using the latest from Nix Store
-  imports = [ ./dock ];
-
   local.dock.enable = true;
   local.dock.entries = [
     { path = "${pkgs.alacritty}/Applications/Alacritty.app/"; }
