@@ -263,7 +263,7 @@
             tailwindcss-language-server
             vscode-langservers-extracted
 
-            node # needed to copilot
+            nodePackages_latest.nodejs # needed for copilot
 
             # Other
             marksman
