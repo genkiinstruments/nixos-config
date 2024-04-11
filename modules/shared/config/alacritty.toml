@@ -87,8 +87,6 @@ shape = "Beam"
 shape = "Block"
 
 [font]
-
-[font.normal]
 size = 20
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
@@ -106,6 +104,4 @@ x = 0
 y = 0
 
 [keyboard]
-bindings = [
-  { key = "Slash", mods = "Control", chars = "\u001f" },
-]
+bindings = [ { key = "Slash", mods = "Control", chars = "\u001f" } ]
