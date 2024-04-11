@@ -53,7 +53,6 @@
       };
       mkDarwinApps = system: {
         "m3" = mkApp "build-switch" "m3" system;
-        "gkr" = mkApp "build-switch" "gkr" system;
       };
     in
     {
