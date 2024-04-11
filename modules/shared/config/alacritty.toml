@@ -87,9 +87,9 @@ shape = "Beam"
 shape = "Block"
 
 [font]
-size = 16
 
 [font.normal]
+size = 20
 family = "JetBrainsMono Nerd Font"
 style = "Regular"
 
