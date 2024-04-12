@@ -116,6 +116,7 @@
             specialArgs = { inherit inputs user host name email; };
             modules = [
               nixos-hardware.nixosModules.raspberry-pi-4
+              home-manager.nixosModules.home-manager
               "${nixpkgs}/nixos/modules/profiles/minimal.nix"
               ./hosts/nix-deployment/configuration.nix
             ];
