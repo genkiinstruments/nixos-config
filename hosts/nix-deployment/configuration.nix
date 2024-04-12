@@ -13,12 +13,7 @@
     # ./examples/vaultwarden.nix
     # ./examples/led.nix
   ];
-  environment.systemPackages = with pkgs; [
-    vim
-    git
-    qrencode
-    procps
-  ];
+  environment.systemPackages = with pkgs; [ procps ]; # I don´t know why this is needed?
   services.openssh.enable = true;
   systemd.services.display-manager.restartIfChanged = lib.mkForce true;
   users = {
