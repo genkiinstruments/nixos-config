@@ -6,8 +6,9 @@
     ../shared/home-manager.nix
   ];
 
-  # nix-darwin specific configuration, we don't want to hide the user
+  # nix-darwin specific configuration, e.g., we don't want to hide the user
   users.users.${user}.isHidden = false;
+  users.users.${user}.home = "/Users/${user}";
 
   homebrew = {
     enable = true;
