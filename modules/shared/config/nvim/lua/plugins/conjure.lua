@@ -1,7 +1,6 @@
 return {
     "Olical/conjure",
     ft = { "python" }, -- etc
-    -- [Optional] cmp-conjure for cmp
     dependencies = {
         {
             "PaterJason/cmp-conjure",
