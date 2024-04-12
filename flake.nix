@@ -7,6 +7,10 @@
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware = {
+      url = "github:nixos/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
     };
@@ -23,7 +27,7 @@
       flake = false;
     };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-hardware } @inputs:
     let
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
@@ -51,7 +55,7 @@
         "m3" = mkApp "build-switch" "m3" system;
       };
     in
-    {
+    rec {
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
@@ -103,6 +107,35 @@
               ./hosts/gdrn
             ];
           };
+        nix-deployment =
+          let
+            name = "Ólafur Bjarki Bogason";
+            user = "genki";
+            email = "olafur@genkiinstruments.com";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "aarch64-linux";
+            specialArgs = { inherit inputs user name email; };
+            modules = [
+              nixos-hardware.nixosModules.raspberry-pi-4
+              "${nixpkgs}/nixos/modules/profiles/minimal.nix"
+              ./hosts/nix-deployment/configuration.nix
+            ];
+          };
       };
+
+      images = {
+        nix-deployment = (self.nixosConfigurations.nix-deployment.extendModules {
+          modules = [
+            "${nixpkgs}/nixos/modules/installer/sd-card/sd-image-aarch64.nix"
+            {
+              disabledModules = [ "profiles/base.nix" ];
+              sdImage.compressImage = false;
+            }
+          ];
+        }).config.system.build.sdImage;
+      };
+      packages.x86_64-linux.nix-deployment-image = images.nix-deployment;
+      packages.aarch64-linux.nix-deployment-image = images.nix-deployment;
     };
 }
