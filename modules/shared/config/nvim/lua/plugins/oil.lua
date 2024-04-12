@@ -4,17 +4,17 @@ return {
     keys = {
         {
             "-",
-            "<cmd>Oil --float<cr>",
+            "<cmd>Oil<cr>",
             { desc = "Open parent directory" },
         },
         {
             "<leader>e",
-            "<cmd>Oil --float<cr>",
-            { desc = "Open parent directory" },
+            "<cmd>Oil .<cr>",
+            { desc = "Open nvim root directory" },
         },
         {
             "_",
-            "<cmd>Oil --float .<cr>",
+            "<cmd>Oil .<cr>",
             { desc = "Open nvim root directory" },
         },
     },
@@ -53,7 +53,6 @@ return {
             show_hidden = true,
         },
         prompt_save_on_select_new_entry = false,
-        default_file_explorer = true,
         use_default_keymaps = false,
         keymaps = {
             ["<ESC>"] = "actions.close",
@@ -68,7 +67,7 @@ return {
             ["<BS>"] = "actions.parent",
             ["h"] = "actions.parent",
             ["~"] = "actions.open_cwd",
-            ["`"] = "actions.tcd",
+            ["`"] = "actions.cd",
             ["."] = "actions.toggle_hidden",
         },
     },
