@@ -137,4 +137,3 @@
       packages.aarch64-linux.nix-deployment-image = images.nix-deployment;
     };
 }
-}
