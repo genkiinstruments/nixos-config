@@ -1,14 +1,10 @@
-{ agenix, lib, pkgs, ... }:
+{ lib, pkgs, user, ... }:
 
-let user = "olafur"; in
 {
-
   imports = [
-    ../../modules/darwin/secrets.nix
-    ../../modules/darwin/home-manager.nix
+    ../../modules/m3/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
-    agenix.darwinModules.default
   ];
 
   # Auto upgrade nix package and the daemon service.
@@ -34,12 +30,6 @@ let user = "olafur"; in
 
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
-
-  # Load configuration that is shared across systems
-  environment.systemPackages = [
-    # emacs-unstable
-    agenix.packages."${pkgs.system}".default
-  ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   # Enable fonts dir
   fonts.fontDir.enable = true;

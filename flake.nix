@@ -1,8 +1,7 @@
 {
-  description = "Starter Configuration for MacOS and NixOS";
+  description = "Nix runs my 🌍🌎🌏";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -23,101 +22,87 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    # secrets = {
-    #   url = "git+ssh://git@github.com/dustinlyons/nix-secrets.git";
-    #   flake = false;
-    # };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, agenix } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs } @inputs:
     let
-      user = "olafur";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in {
           default = with pkgs; mkShell {
-            nativeBuildInputs = with pkgs; [ bashInteractive git age age-plugin-yubikey ];
-            shellHook = ''
-              export EDITOR=nvim
-            '';
+            nativeBuildInputs = [ bashInteractive git ];
+            shellHook = ''export EDITOR=nvim'';
           };
         };
-      mkApp = scriptName: system: {
+      mkApp = scriptName: host: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
           echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${scriptName}
+          exec ${self}/apps/${system}/${host}/${scriptName}
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
-        "apply" = mkApp "apply" system;
-        "build-switch" = mkApp "build-switch" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
-        "install" = mkApp "install" system;
-        "install-with-secrets" = mkApp "install-with-secrets" system;
+        "gdrn" = mkApp "build-switch" "gdrn" system;
       };
       mkDarwinApps = system: {
-        "apply" = mkApp "apply" system;
-        "build" = mkApp "build" system;
-        "build-switch" = mkApp "build-switch" system;
-        "copy-keys" = mkApp "copy-keys" system;
-        "create-keys" = mkApp "create-keys" system;
-        "check-keys" = mkApp "check-keys" system;
+        "m3" = mkApp "build-switch" "m3" system;
       };
     in
     {
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = let user = "olafur"; in {
-        macos = darwin.lib.darwinSystem {
-          system = "aarch64-darwin";
-          specialArgs = inputs;
-          modules = [
-            home-manager.darwinModules.home-manager
-            nix-homebrew.darwinModules.nix-homebrew
-            {
-              nix-homebrew = {
-                enable = true;
-                user = "${user}";
-                taps = {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                };
-                mutableTaps = false;
-                autoMigrate = true;
+      darwinConfigurations =
+        {
+          m3 =
+            let
+              name = "Ólafur Bjarki Bogason";
+              user = "olafur";
+              email = "olafur@genkiinstruments.com";
+            in
+            darwin.lib.darwinSystem
+              {
+                system = "aarch64-darwin";
+                specialArgs = { inherit inputs user name email; };
+                modules = [
+                  home-manager.darwinModules.home-manager
+                  nix-homebrew.darwinModules.nix-homebrew
+                  {
+                    nix-homebrew = {
+                      enable = true;
+                      inherit user;
+                      taps = {
+                        "homebrew/homebrew-core" = homebrew-core;
+                        "homebrew/homebrew-cask" = homebrew-cask;
+                        "homebrew/homebrew-bundle" = homebrew-bundle;
+                      };
+                      mutableTaps = false;
+                      autoMigrate = true;
+                    };
+                  }
+                  ./hosts/m3
+                ];
               };
-            }
-            ./hosts/darwin
-          ];
         };
-      };
 
-      nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = inputs;
-        modules = [
-          disko.nixosModules.disko
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.${user} = import ./modules/nixos/home-manager.nix;
-            };
-          }
-          ./hosts/nixos
-        ];
-      });
+      nixosConfigurations = {
+        gdrn =
+          let
+            name = "Ólafur Bjarki Bogason";
+            user = "genki";
+            email = "olafur@genkiinstruments.com";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = { inherit inputs user name email; };
+            modules = [
+              home-manager.nixosModules.home-manager
+              ./hosts/gdrn
+            ];
+          };
+      };
     };
 }
