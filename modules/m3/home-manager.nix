@@ -7,8 +7,10 @@
   ];
 
   # nix-darwin specific configuration, e.g., we don't want to hide the user
-  users.users.${user}.isHidden = false;
-  users.users.${user}.home = "/Users/${user}";
+  users.users.${user} = {
+    isHidden = false;
+    home = "/Users/${user}";
+  };
 
   homebrew = {
     enable = true;
