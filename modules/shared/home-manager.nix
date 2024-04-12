@@ -26,6 +26,11 @@
           enable = true;
         };
 
+        lazygit = {
+          enable = true;
+          settings.gui.skipDiscardChangeWarning = true;
+        };
+
         atuin = {
           enable = true;
           enableFishIntegration = true;
@@ -237,7 +242,6 @@
           defaultEditor = true;
           extraPackages = with pkgs; [
             # LazyVim
-            lazygit
             lua-language-server
             stylua
 
