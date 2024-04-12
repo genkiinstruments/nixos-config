@@ -108,11 +108,12 @@
           let
             name = "Ólafur Bjarki Bogason";
             user = "genki";
+            host = "nix-deployment";
             email = "olafur@genkiinstruments.com";
           in
           nixpkgs.lib.nixosSystem {
             system = "aarch64-linux";
-            specialArgs = { inherit inputs user name email; };
+            specialArgs = { inherit inputs user host name email; };
             modules = [
               nixos-hardware.nixosModules.raspberry-pi-4
               "${nixpkgs}/nixos/modules/profiles/minimal.nix"
@@ -135,4 +136,5 @@
       packages.x86_64-linux.nix-deployment-image = images.nix-deployment;
       packages.aarch64-linux.nix-deployment-image = images.nix-deployment;
     };
+}
 }
