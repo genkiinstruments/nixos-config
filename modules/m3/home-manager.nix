@@ -1,18 +1,13 @@
 { config, pkgs, user, ... }:
 
 {
-  imports = [ 
-  ./dock 
-  ../shared/home-manager.nix 
+  imports = [
+    ./dock
+    ../shared/home-manager.nix
   ];
 
-  users.users.${user} = {
-    name = "${user}";
-    home = "/Users/${user}";
-    isHidden = false;
-    shell = pkgs.fish;
-    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ1uxevLNJOPIPRMh9G9fFSqLtYjK5R7+nRdtsas2KwX" ];
-  };
+  # nix-darwin specific configuration, we don't want to hide the user
+  users.users.${user}.ishidden = false;
 
   homebrew = {
     enable = true;
@@ -24,18 +19,10 @@
     };
   };
 
-  home-manager = {
-    useGlobalPkgs = true;
-    users.${user} = { ... }:
-      {
-        home.enableNixpkgsReleaseCheck = false;
-        home.stateVersion = "23.05";
-
-        home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json; # Hyper-key config
-
-        xdg.enable = true; # Needed for fish interactiveShellInit hack
-      };
-  };
+  home-manager.users.${user} = { ... }:
+    {
+      home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json; # Hyper-key config
+    };
 
   # Fully declarative dock using the latest from Nix Store
   local.dock.enable = true;
