@@ -33,9 +33,9 @@
   '';
 
   networking = {
+    hostName = "${host}";
     firewall.enable = true;
     networkmanager.enable = lib.mkForce false;
-    networking.hostName = "${host}";
     interfaces."wlan0".useDHCP = true;
   };
 }
