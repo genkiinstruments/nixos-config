@@ -539,7 +539,11 @@
         bitwarden-cli
         gh
         btop
-        jetbrains-mono
       ];
     };
+
+  fonts.fontDir.enable = true;
+  fonts.fonts = [
+    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+  ];
 }
