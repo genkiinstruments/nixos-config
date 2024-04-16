@@ -93,11 +93,12 @@
               name = "Genki";
               user = "genki";
               email = "olafur@genkiinstruments.com";
+              host = "gkr";
             in
             darwin.lib.darwinSystem
               {
                 system = "aarch64-darwin";
-                specialArgs = { inherit inputs user name email; };
+                specialArgs = { inherit inputs user name email host; };
                 modules = [
                   home-manager.darwinModules.home-manager
                   nix-homebrew.darwinModules.nix-homebrew
