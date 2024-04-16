@@ -27,7 +27,7 @@
     # ephemeral = true;
     replace = true;
     tokenFile = "/Users/genki/github-access-token";
-    url = "https://github.com/genkiinstruments/software";
+    url = "https://github.com/genkiinstruments";
     extraLabels = [ "mac-self-hosted" ];
     extraPackages = with pkgs; [
       cachix
@@ -41,7 +41,12 @@
         mkdir -p $out/bin
         ln -s ${lib.getExe gnutar} $out/bin/gtar
       '')
-      rclone python3 pandoc gh ninja cmake
+      rclone
+      python3
+      pandoc
+      gh
+      ninja
+      cmake
       python312Packages.intelhex
     ];
   };
