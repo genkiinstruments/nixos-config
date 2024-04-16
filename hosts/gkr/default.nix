@@ -46,7 +46,7 @@
     enable = true;
     replace = true;
 
-    tokenFile = "/Users/github-runner/github-access-token";
+    tokenFile = "/Users/Shared/token";
     url = "https://github.com/genkiinstruments";
 
     extraLabels = [ "mac-self-hosted" ];
