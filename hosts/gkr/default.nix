@@ -41,6 +41,8 @@
         mkdir -p $out/bin
         ln -s ${lib.getExe gnutar} $out/bin/gtar
       '')
+      rclone python3 pandoc gh ninja cmake
+      python312Packages.intelhex
     ];
   };
 
