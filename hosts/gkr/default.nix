@@ -70,6 +70,10 @@
       cmake
       python312Packages.intelhex
     ];
+    extraEnvironment = {
+      # NOTE: Make use of Apple clang.. I know this is not the best way to do it, but it works for now....
+      PATH = "/run/wrappers/bin /usr/local/bin /System/Cryptexes/App/usr/bin /usr/bin /bin /usr/sbin /sbin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin";
+    };
   };
 
   # Turn off NIX_PATH warnings now that we're using flakes
