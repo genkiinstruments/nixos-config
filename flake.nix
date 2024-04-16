@@ -42,7 +42,7 @@
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
           echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${host}/${scriptName}
+          HOST="${host}" ${self}/apps/${system}/${scriptName}
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
@@ -50,6 +50,7 @@
       };
       mkDarwinApps = system: {
         "m3" = mkApp "build-switch" "m3" system;
+        "gkr" = mkApp "build-switch" "gkr" system;
       };
     in
     rec {
