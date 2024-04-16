@@ -45,7 +45,6 @@
   services.github-runners.${host} = {
     enable = true;
     replace = true;
-    user = "github-runner";
 
     tokenFile = "/Users/genki/github-access-token";
     url = "https://github.com/genkiinstruments";
