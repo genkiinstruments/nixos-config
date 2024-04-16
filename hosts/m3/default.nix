@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ../../modules/m3/home-manager.nix
+    ../../modules/darwin/home-manager.nix
     ../../modules/shared
     ../../modules/shared/cachix
   ];

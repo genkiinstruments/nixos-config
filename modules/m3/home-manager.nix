@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./dock
+    ../darwin/dock
     ../shared/home-manager.nix
   ];
 
@@ -24,7 +24,7 @@
 
   home-manager.users.${user} = { ... }:
     {
-      home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json; # Hyper-key config
+      home.file.".config/karabiner/karabiner.json".source = ../darwin/config/karabiner/karabiner.json; # Hyper-key config
     };
 
   # Fully declarative dock using the latest from Nix Store
