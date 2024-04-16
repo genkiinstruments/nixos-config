@@ -457,72 +457,73 @@
             scan_timeout = 3;
           };
         };
-
-        # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-        home.file.".config/nvim/parser".source =
-          with pkgs;
-          let
-            parsers = symlinkJoin {
-              name = "treesitter-parsers";
-              paths = (vimPlugins.nvim-treesitter.withPlugins (p: with p; [
-                bash
-                c
-                cpp
-                cmake
-                diff
-                html
-                javascript
-                jsdoc
-                json
-                jsonc
-                lua
-                luadoc
-                luap
-                markdown
-                markdown_inline
-                python
-                query
-                regex
-                toml
-                tsx
-                typescript
-                vim
-                vimdoc
-                yaml
-                nix
-                rust
-                ron
-                kdl
-                svelte
-                sql
-              ])).dependencies;
-            };
-          in
-          "${parsers}/parser";
-        home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
-
-        home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
-        home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
-        home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
-        home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
-          url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
-          sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
-        };
-        home.packages = with pkgs; [
-          neofetch
-          wget
-          zip
-          moonlight-qt
-          magic-wormhole-rs
-          tldr
-          bitwarden-cli
-          gh
-          btop
-        ];
       };
 
-      fonts.fontDir.enable = true;
-      fonts.fonts = [
-        (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
+      home.file.".config/nvim/parser".source =
+        with pkgs;
+        let
+          parsers = symlinkJoin {
+            name = "treesitter-parsers";
+            paths = (vimPlugins.nvim-treesitter.withPlugins (p: with p; [
+              bash
+              c
+              cpp
+              cmake
+              diff
+              html
+              javascript
+              jsdoc
+              json
+              jsonc
+              lua
+              luadoc
+              luap
+              markdown
+              markdown_inline
+              python
+              query
+              regex
+              toml
+              tsx
+              typescript
+              vim
+              vimdoc
+              yaml
+              nix
+              rust
+              ron
+              kdl
+              svelte
+              sql
+            ])).dependencies;
+          };
+        in
+        "${parsers}/parser";
+      home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
+
+      home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
+      home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
+      home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
+      home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
+        url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
+        sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
+      };
+      home.packages = with pkgs; [
+        neofetch
+        wget
+        zip
+        moonlight-qt
+        magic-wormhole-rs
+        tldr
+        bitwarden-cli
+        gh
+        btop
       ];
-    }
+    };
+
+  fonts.fontDir.enable = true;
+  fonts.fonts = [
+    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+  ];
+}
