@@ -87,6 +87,35 @@
                   ./hosts/m3
                 ];
               };
+          gkr =
+            let
+              name = "Genki";
+              user = "genki";
+              email = "olafur@genkiinstruments.com";
+            in
+            darwin.lib.darwinSystem
+              {
+                system = "aarch64-darwin";
+                specialArgs = { inherit inputs user name email; };
+                modules = [
+                  home-manager.darwinModules.home-manager
+                  nix-homebrew.darwinModules.nix-homebrew
+                  {
+                    nix-homebrew = {
+                      enable = true;
+                      inherit user;
+                      taps = {
+                        "homebrew/homebrew-core" = homebrew-core;
+                        "homebrew/homebrew-cask" = homebrew-cask;
+                        "homebrew/homebrew-bundle" = homebrew-bundle;
+                      };
+                      mutableTaps = false;
+                      autoMigrate = true;
+                    };
+                  }
+                  ./hosts/gkr
+                ];
+              };
         };
 
       nixosConfigurations = {
