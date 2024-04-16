@@ -25,7 +25,7 @@
   services.github-runners.${host} = {
     enable = true;
     # ephemeral = true;
-    replace = true;
+    # replace = true;
     tokenFile = "/Users/genki/github-access-token";
     url = "https://github.com/genkiinstruments/software";
     extraLabels = [ "mac-self-hosted" ];
