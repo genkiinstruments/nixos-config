@@ -29,7 +29,19 @@
     tokenFile = "/Users/genki/github-access-token";
     url = "https://github.com/genkiinstruments/software";
     extraLabels = [ "mac-self-hosted" ];
-    extraPackages = with pkgs; [ cachix ];
+    extraPackages = with pkgs; [
+      cachix
+      nix # Need to use nix inside our actions
+      # Stuff present in github action runners
+      coreutils
+      which
+      jq
+      # https://github.com/actions/upload-pages-artifact/blob/56afc609e74202658d3ffba0e8f6dda462b719fa/action.yml#L40
+      (runCommandNoCC "gtar" { } ''
+        mkdir -p $out/bin
+        ln -s ${lib.getExe gnutar} $out/bin/gtar
+      '')
+    ];
   };
 
   # Turn off NIX_PATH warnings now that we're using flakes
