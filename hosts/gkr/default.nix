@@ -41,7 +41,6 @@
       ];
     };
   };
-  nix.settings.trusted-users = [  ];
 
   services.github-runners.${host} = {
     enable = true;
