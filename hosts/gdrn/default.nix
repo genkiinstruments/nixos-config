@@ -8,7 +8,7 @@
   imports =
     [
       ./hardware-configuration.nix
-      ../../modules/gdrn/home-manager.nix
+      ../../modules/shared/home-manager.nix
       ../../modules/shared
       ../../modules/shared/cachix
     ];

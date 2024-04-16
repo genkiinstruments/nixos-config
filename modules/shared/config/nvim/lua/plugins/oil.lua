@@ -4,17 +4,17 @@ return {
     keys = {
         {
             "-",
-            "<cmd>Oil --float<cr>",
+            "<cmd>Oil<cr>",
             { desc = "Open parent directory" },
         },
         {
             "<leader>e",
-            "<cmd>Oil --float<cr>",
-            { desc = "Open parent directory" },
+            "<cmd>Oil .<cr>",
+            { desc = "Open nvim root directory" },
         },
         {
             "_",
-            "<cmd>Oil --float .<cr>",
+            "<cmd>Oil .<cr>",
             { desc = "Open nvim root directory" },
         },
     },
@@ -52,8 +52,9 @@ return {
         view_options = {
             show_hidden = true,
         },
+        default_file_explorer = false, -- Need to integrate well with telescope (otherwise it'll be a pain to use and cwd all the time)
+        delete_to_trash = true,
         prompt_save_on_select_new_entry = false,
-        default_file_explorer = true,
         use_default_keymaps = false,
         keymaps = {
             ["<ESC>"] = "actions.close",
@@ -68,7 +69,7 @@ return {
             ["<BS>"] = "actions.parent",
             ["h"] = "actions.parent",
             ["~"] = "actions.open_cwd",
-            ["`"] = "actions.tcd",
+            ["`"] = "actions.cd",
             ["."] = "actions.toggle_hidden",
         },
     },
