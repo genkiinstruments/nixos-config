@@ -27,7 +27,6 @@
     knownUsers = [ "github-runner" ];
     forceRecreate = true;
     users.github-runner = {
-      uid = 1009;
       description = "GitHub Runner";
       home = "/Users/github-runner";
       createHome = true;
