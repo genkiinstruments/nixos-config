@@ -12,7 +12,7 @@
 
   # Setup user, packages, programs
   nix = {
-    settings.trusted-users = [ "@admin" "${user}" ];
+    settings.trusted-users = [ "@admin" "${user}" "github-runner" ];
 
     gc = {
       user = "root";
@@ -22,12 +22,35 @@
     };
   };
 
+  # Github runner CI
+  users = {
+    knownUsers = [ "github-runner" ];
+    forceRecreate = true;
+    users.github-runner = {
+      uid = 1009;
+      description = "GitHub Runner";
+      home = "/Users/github-runner";
+      createHome = true;
+      shell = pkgs.bashInteractive;
+      # NOTE: Go to macOS Remote-Login settings and allow all users to ssh.
+      openssh.authorizedKeys.keys = [
+        # github-runner VM's /etc/ssh/ssh_host_ed25519_key.pub
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqWL96+z6Wk2IgF6XRyoZAVUXmCmP8I78dUpA4Qy4bh genki@gdrn"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ1uxevLNJOPIPRMh9G9fFSqLtYjK5R7+nRdtsas2KwX olafur@M3.localdomain"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINksz7jbqMHoWlBebyPwMW8uvsgp2fhmRVDwR+Am5LQm genki@gkr"
+      ];
+    };
+  };
+  nix.settings.trusted-users = [  ];
+
   services.github-runners.${host} = {
     enable = true;
-    # ephemeral = true;
     replace = true;
+    user = "github-runner";
+
     tokenFile = "/Users/genki/github-access-token";
     url = "https://github.com/genkiinstruments";
+
     extraLabels = [ "mac-self-hosted" ];
     extraPackages = with pkgs; [
       cachix
