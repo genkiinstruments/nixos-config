@@ -27,58 +27,14 @@
     };
   };
 
-  # Github runner CI
-  users = {
-    knownUsers = [ "github-runner" ];
-    forceRecreate = true;
-    users.github-runner = {
-      uid = 1009;
-      description = "GitHub Runner";
-      home = "/Users/github-runner";
-      createHome = true;
-      shell = pkgs.bashInteractive;
-      # NOTE: Go to macOS Remote-Login settings and allow all users to ssh.
-      openssh.authorizedKeys.keys = [
-        # github-runner VM's /etc/ssh/ssh_host_ed25519_key.pub
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqWL96+z6Wk2IgF6XRyoZAVUXmCmP8I78dUpA4Qy4bh genki@gdrn"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ1uxevLNJOPIPRMh9G9fFSqLtYjK5R7+nRdtsas2KwX olafur@M3.localdomain"
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINksz7jbqMHoWlBebyPwMW8uvsgp2fhmRVDwR+Am5LQm genki@gkr"
-      ];
-    };
-  };
-
-  services.github-runners.${host} = {
-    enable = true;
-    replace = true;
-
-    tokenFile = "/Users/Shared/token";
-    url = "https://github.com/genkiinstruments";
-
-    extraLabels = [ "mac-self-hosted" ];
-    extraPackages = with pkgs; [
-      cachix
-      nix # Need to use nix inside our actions
-      # Stuff present in github action runners
-      coreutils
-      which
-      jq
-      # https://github.com/actions/upload-pages-artifact/blob/56afc609e74202658d3ffba0e8f6dda462b719fa/action.yml#L40
-      (runCommandNoCC "gtar" { } ''
-        mkdir -p $out/bin
-        ln -s ${lib.getExe gnutar} $out/bin/gtar
-      '')
-      rclone
-      python3
-      pandoc
-      gh
-      ninja
-      cmake
-      python312Packages.intelhex
+  launchd.daemons.github-runner.serviceConfig = {
+    ProgramArguments = [
+      "/bin/bash"
+      "-c"
+      "/Users/genki/actions-runner/run.sh" # TODO: This file could be tracked by nix..
     ];
-    extraEnvironment = {
-      # NOTE: Make use of Apple clang.. I know this is not the best way to do it, but it works for now....
-      PATH = "/run/wrappers/bin /usr/local/bin /System/Cryptexes/App/usr/bin /usr/bin /bin /usr/sbin /sbin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin /var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin";
-    };
+    RunAtLoad = true;
+    KeepAlive = true;
   };
 
   # Turn off NIX_PATH warnings now that we're using flakes
