@@ -527,9 +527,10 @@
 
   fonts = {
     fontDir.enable = pkgs.stdenv.isDarwin;
-    ${if pkgs.stdenv.isDarwin then "fonts" else "packages"} =
+    ${if pkgs.stdenv.isDarwin then "fonts" else "packages"} = [
       (pkgs.nerdfonts.override {
         fonts = [ "JetBrainsMono" ];
-      });
+      })
+    ];
   };
 }
