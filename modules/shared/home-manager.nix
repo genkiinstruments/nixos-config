@@ -525,8 +525,11 @@
       ];
     };
 
-  fonts.fontDir.enable = true;
-  fonts.fonts = [
-    (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-  ];
+  fonts = {
+    fontDir.enable = pkgs.stdenv.isDarwin;
+    ${if pkgs.stdenv.isDarwin then "fonts" else "packages"} =
+      (pkgs.nerdfonts.override {
+        fonts = [ "JetBrainsMono" ];
+      });
+  };
 }
