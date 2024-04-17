@@ -10,6 +10,11 @@
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
+  # Enable tailscale. We manually authenticate when we want with
+  # "sudo tailscale up". If you don't use tailscale, you should comment
+  # out or delete all of this.
+  services.tailscale.enable = true;
+
   # Setup user, packages, programs
   nix = {
     settings.trusted-users = [ "@admin" "${user}" "github-runner" ];
