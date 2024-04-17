@@ -42,7 +42,7 @@
           #!/usr/bin/env bash
           PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
           echo "Running ${scriptName} for ${system}"
-          exec ${self}/apps/${system}/${host}/${scriptName}
+          HOST="${host}" ${self}/apps/${system}/${scriptName}
         '')}/bin/${scriptName}";
       };
       mkLinuxApps = system: {
@@ -50,6 +50,7 @@
       };
       mkDarwinApps = system: {
         "m3" = mkApp "build-switch" "m3" system;
+        "gkr" = mkApp "build-switch" "gkr" system;
       };
     in
     rec {
@@ -85,6 +86,36 @@
                     };
                   }
                   ./hosts/m3
+                ];
+              };
+          gkr =
+            let
+              name = "Genki";
+              user = "genki";
+              email = "olafur@genkiinstruments.com";
+              host = "gkr";
+            in
+            darwin.lib.darwinSystem
+              {
+                system = "aarch64-darwin";
+                specialArgs = { inherit inputs user name email host; };
+                modules = [
+                  home-manager.darwinModules.home-manager
+                  nix-homebrew.darwinModules.nix-homebrew
+                  {
+                    nix-homebrew = {
+                      enable = true;
+                      inherit user;
+                      taps = {
+                        "homebrew/homebrew-core" = homebrew-core;
+                        "homebrew/homebrew-cask" = homebrew-cask;
+                        "homebrew/homebrew-bundle" = homebrew-bundle;
+                      };
+                      mutableTaps = false;
+                      autoMigrate = true;
+                    };
+                  }
+                  ./hosts/gkr
                 ];
               };
         };
