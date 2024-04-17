@@ -1,4 +1,4 @@
-{ lib, pkgs, user, host, ... }:
+{ lib, pkgs, user, ... }:
 
 {
   imports = [
@@ -27,14 +27,14 @@
     };
   };
 
-  launchd.daemons.github-runner.serviceConfig = {
-    ProgramArguments = [
-      "/bin/bash"
-      "-c"
-      "/Users/genki/actions-runner/run.sh" # TODO: This file could be tracked by nix..
-    ];
-    RunAtLoad = true;
-    KeepAlive = true;
+  launchd.daemons.github-runner-gkr = {
+    command = "/Users/genki/actions-runner/run.sh";
+    serviceConfig = {
+      KeepAlive = true;
+      RunAtLoad = true;
+      StandardOutPath = "/var/log/github-runner-gkr.log";
+      StandardErrorPath = "/var/log/github-runner-gkr.log";
+    };
   };
 
   # Turn off NIX_PATH warnings now that we're using flakes
