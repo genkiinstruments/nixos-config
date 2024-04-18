@@ -52,7 +52,7 @@ return {
         view_options = {
             show_hidden = true,
         },
-        default_file_explorer = false, -- Need to integrate well with telescope (otherwise it'll be a pain to use and cwd all the time)
+        default_file_explorer = false, -- Need to integrate well with telescope (otherwise it'll be a pain to use)
         delete_to_trash = true,
         prompt_save_on_select_new_entry = false,
         use_default_keymaps = false,
@@ -61,13 +61,11 @@ return {
             ["q"] = "actions.close",
             ["?"] = "actions.show_help",
             ["<CR>"] = "actions.select",
-            ["l"] = "actions.select",
             ["<C-v>"] = "actions.select_vsplit",
-            ["<C-s>"] = "actions.select_split",
+            ["<C-x>"] = "actions.select_split",
             ["K"] = "actions.preview",
             ["r"] = "actions.refresh",
             ["<BS>"] = "actions.parent",
-            ["h"] = "actions.parent",
             ["~"] = "actions.open_cwd",
             ["`"] = "actions.cd",
             ["."] = "actions.toggle_hidden",
