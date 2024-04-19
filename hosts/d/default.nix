@@ -23,11 +23,6 @@
     };
   };
 
-  home-manager.users.${user} = { ... }:
-    {
-      home.file.".config/karabiner/karabiner.json".source = ./karabiner.json;
-    };
-
   users.users.${user} = {
     name = "${user}";
     shell = pkgs.fish;
@@ -529,6 +524,7 @@
         url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
         sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
       };
+      home.file.".config/karabiner/karabiner.json".source = ./karabiner.json;
 
       # NOTE: Use this to add packages available everywhere on your system
       home.packages = with pkgs; [
