@@ -1,6 +1,15 @@
-{ pkgs, lib, name, user, email, ... }:
+{ lib, pkgs, user, email, ... }:
+
 {
+  imports = [
+    ../../modules/shared
+    ../../modules/shared/cachix
+  ];
+
+  # nix-darwin specific configuration, e.g., we don't want to hide the user
   users.users.${user} = {
+    isHidden = false;
+    home = "/Users/${user}";
     name = "${user}";
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
@@ -8,30 +17,35 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ1uxevLNJOPIPRMh9G9fFSqLtYjK5R7+nRdtsas2KwX olafur@M3.localdomain"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINksz7jbqMHoWlBebyPwMW8uvsgp2fhmRVDwR+Am5LQm genki@gkr.localdomain"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbdC7LjlCTSRadDqz5UIeCBsvekpoN2vMXUrl8R58Vf daniel@genkiinstruments.com"
-
     ];
+  };
+
+  homebrew = {
+    enable = true;
+    casks = [ "raycast" "arc" ];
+    masApps = {
+      # `nix run nixpkgs#mas -- search <app name>`
+      "Keynote" = 409183694;
+    };
   };
 
   # Since we're using fish as our shell
   programs.fish.enable = true;
 
-  home-manager.useGlobalPkgs = true;
-
   home-manager.users.${user} = { ... }:
     {
       home.enableNixpkgsReleaseCheck = false;
       home.stateVersion = "23.05";
+
       xdg.enable = true; # Needed for fish interactiveShellInit hack
       programs = {
         alacritty = {
           enable = true;
         };
-
         lazygit = {
           enable = true;
           settings.gui.skipDiscardChangeWarning = true;
         };
-
         atuin = {
           enable = true;
           enableFishIntegration = true;
@@ -219,8 +233,8 @@
         git = {
           enable = true;
           ignores = [ "*.swp" ];
-          userName = name;
-          userEmail = email;
+          userName = "${user}";
+          userEmail = "${email}";
           lfs = {
             enable = true;
           };
@@ -233,11 +247,6 @@
             pull.rebase = true;
             rebase.autoStash = true;
           };
-        };
-
-        yazi = {
-          enable = true;
-          enableFishIntegration = true;
         };
 
         neovim = {
@@ -503,15 +512,16 @@
           };
         in
         "${parsers}/parser";
-      home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
+      home.file.".config/nvim" = { recursive = true; source = ../../modules/shared/config/nvim; };
 
-      home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
-      home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
-      home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
+      home.file.".config/alacritty/alacritty.toml".source = ../../modules/shared/config/alacritty.toml;
       home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
         sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
       };
+      home.file.".config/karabiner/karabiner.json".source = ./karabiner.json;
+
+      # NOTE: Use this to add packages available everywhere on your system
       home.packages = with pkgs; [
         neofetch
         wget
@@ -526,11 +536,89 @@
     };
 
   fonts = {
-    fontDir.enable = pkgs.stdenv.isDarwin;
     ${if pkgs.stdenv.isDarwin then "fonts" else "packages"} = [
       (pkgs.nerdfonts.override {
         fonts = [ "JetBrainsMono" ];
       })
     ];
+  };
+
+  home-manager.useGlobalPkgs = true;
+
+  # Auto upgrade nix package and the daemon service.
+  services.nix-daemon.enable = true;
+
+  # Enable tailscale. We manually authenticate when we want with
+  # "sudo tailscale up". If you don't use tailscale, you should comment
+  # out or delete all of this.
+  services.tailscale.enable = true;
+
+  # Setup user, packages, programs
+  nix = {
+    settings.trusted-users = [ "@admin" "${user}" ];
+
+    gc = {
+      user = "root";
+      automatic = true;
+      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      options = "--delete-older-than 30d";
+    };
+  };
+
+  # Turn off NIX_PATH warnings now that we're using flakes
+  system.checks.verifyNixPath = false;
+
+  # Enable fonts dir
+  fonts.fontDir.enable = true;
+
+  system = {
+    stateVersion = 4;
+
+    defaults = {
+      NSGlobalDomain = {
+        AppleShowAllExtensions = true;
+        ApplePressAndHoldEnabled = false;
+
+        # 120, 90, 60, 30, 12, 6, 2
+        KeyRepeat = 2;
+
+        # 120, 94, 68, 35, 25, 15
+        InitialKeyRepeat = 15;
+
+        "com.apple.mouse.tapBehavior" = 1;
+        "com.apple.sound.beep.volume" = 0.0;
+        "com.apple.sound.beep.feedback" = 0;
+      };
+
+      dock = {
+        autohide = true;
+        show-recents = false;
+        tilesize = 72;
+        orientation = "left";
+      };
+
+      finder = {
+        _FXShowPosixPathInTitle = false;
+      };
+
+      trackpad = {
+        Clicking = true;
+        TrackpadThreeFingerDrag = true;
+      };
+    };
+
+    keyboard = {
+      enableKeyMapping = true;
+      remapCapsLockToControl = true;
+    };
+
+    activationScripts.postActivation.text = ''
+      # Set the default shell as fish for the user
+      sudo chsh -s ${lib.getBin pkgs.fish}/bin/fish "${user}"
+      
+      # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+      defaults write -g InitialKeyRepeat -int 10 
+      defaults write -g KeyRepeat -int 1
+    '';
   };
 }
