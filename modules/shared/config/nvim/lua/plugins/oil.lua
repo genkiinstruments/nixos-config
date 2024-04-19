@@ -64,7 +64,7 @@ return {
             ["<C-v>"] = "actions.select_vsplit",
             ["<C-x>"] = "actions.select_split",
             ["K"] = "actions.preview",
-            ["r"] = "actions.refresh",
+            ["<C-r>"] = "actions.refresh",
             ["<BS>"] = "actions.parent",
             ["~"] = "actions.open_cwd",
             ["`"] = "actions.cd",
