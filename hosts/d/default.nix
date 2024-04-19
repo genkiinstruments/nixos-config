@@ -11,19 +11,6 @@
   users.users.${user} = {
     isHidden = false;
     home = "/Users/${user}";
-  };
-
-  homebrew = {
-    enable = true;
-    casks = [ "raycast" "arc" ];
-    masApps = {
-      # `nix run nixpkgs#mas -- search <app name>`
-      "Keynote" = 409183694;
-      # "ColorSlurp" = 1287239339;
-    };
-  };
-
-  users.users.${user} = {
     name = "${user}";
     shell = pkgs.fish;
     openssh.authorizedKeys.keys = [
@@ -32,6 +19,15 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINksz7jbqMHoWlBebyPwMW8uvsgp2fhmRVDwR+Am5LQm genki@gkr.localdomain"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbdC7LjlCTSRadDqz5UIeCBsvekpoN2vMXUrl8R58Vf daniel@genkiinstruments.com"
     ];
+  };
+
+  homebrew = {
+    enable = true;
+    casks = [ "raycast" "arc" ];
+    masApps = {
+      # `nix run nixpkgs#mas -- search <app name>`
+      "Keynote" = 409183694;
+    };
   };
 
   # Since we're using fish as our shell
