@@ -4,7 +4,6 @@
   imports = [
     ../../modules/shared
     ../../modules/shared/cachix
-    ../../modules/darwin/home-manager.nix
   ];
 
   # nix-darwin specific configuration, e.g., we don't want to hide the user
