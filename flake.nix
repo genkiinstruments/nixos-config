@@ -50,6 +50,7 @@
       };
       mkDarwinApps = system: {
         "m3" = mkApp "build-switch" "m3" system;
+        "d" = mkApp "build-switch" "d" system;
         "gkr" = mkApp "build-switch" "gkr" system;
       };
     in
@@ -116,6 +117,36 @@
                     };
                   }
                   ./hosts/gkr
+                ];
+              };
+          d =
+            let
+              name = "Daniel Gretarsson";
+              user = "genki";
+              email = "daniel@genkiinstruments.com";
+              host = "d";
+            in
+            darwin.lib.darwinSystem
+              {
+                system = "aarch64-darwin";
+                specialArgs = { inherit inputs user name email host; };
+                modules = [
+                  home-manager.darwinModules.home-manager
+                  nix-homebrew.darwinModules.nix-homebrew
+                  {
+                    nix-homebrew = {
+                      enable = true;
+                      inherit user;
+                      taps = {
+                        "homebrew/homebrew-core" = homebrew-core;
+                        "homebrew/homebrew-cask" = homebrew-cask;
+                        "homebrew/homebrew-bundle" = homebrew-bundle;
+                      };
+                      mutableTaps = false;
+                      autoMigrate = true;
+                    };
+                  }
+                  ./hosts/d
                 ];
               };
         };
