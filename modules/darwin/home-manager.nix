@@ -1,10 +1,9 @@
-{ config, pkgs, user, inputs, ... }:
+{ config, pkgs, user, ... }:
 
 {
   imports = [
     ../darwin/dock
     ../shared/home-manager.nix
-    inputs.nix-index-database.hmModules.nix-index
   ];
 
   # nix-darwin specific configuration, e.g., we don't want to hide the user
