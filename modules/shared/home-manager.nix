@@ -22,10 +22,16 @@
       home.enableNixpkgsReleaseCheck = false;
       home.stateVersion = "23.05";
       xdg.enable = true; # Needed for fish interactiveShellInit hack
+
       programs = {
         alacritty = {
           enable = true;
         };
+        nix-index = {
+          enable = true;
+          enableFishIntegration = true;
+        };
+        nix-index-database.comma.enable = true;
 
         lazygit = {
           enable = true;
