@@ -1,4 +1,4 @@
-{ pkgs, lib, name, user, email, ... }:
+{ pkgs, lib, inputs, name, user, email, ... }:
 {
   users.users.${user} = {
     name = "${user}";
@@ -21,6 +21,10 @@
     {
       home.enableNixpkgsReleaseCheck = false;
       home.stateVersion = "23.05";
+      imports = [
+        inputs.nix-index-database.hmModules.nix-index
+      ];
+
       xdg.enable = true; # Needed for fish interactiveShellInit hack
 
       programs = {
