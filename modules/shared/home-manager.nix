@@ -210,7 +210,6 @@
     set -ga MANPATH /nix/var/nix/profiles/default/share/man
     macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
 
-    set -gp NIX_PATH nixpkgs=$HOME/.nix-defexpr/channels_root/nixpkgs
     if test $KERNEL_NAME darwin
       set -gx HOMEBREW_PREFIX /opt/homebrew
       set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
