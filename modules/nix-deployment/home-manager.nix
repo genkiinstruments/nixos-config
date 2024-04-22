@@ -20,6 +20,8 @@
 
   home-manager = {
     useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "hm-backup";
     users.${user} = { ... }:
       {
         home.enableNixpkgsReleaseCheck = false;
