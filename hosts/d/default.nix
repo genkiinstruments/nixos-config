@@ -543,6 +543,8 @@
   };
 
   home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = "hm-backup";
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
