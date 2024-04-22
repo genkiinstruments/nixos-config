@@ -27,6 +27,10 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # TODO: Do we need all these interfaces to WoL?
+  networking.interfaces.enp11s0.wakeOnLan.enable = true;
+  networking.interfaces.enp10s0.wakeOnLan.enable = true;
+
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
 
