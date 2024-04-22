@@ -28,8 +28,8 @@
   networking.networkmanager.enable = true;
 
   # TODO: Do we need all these interfaces to WoL?
-  networking.interfaces.enp11s0.wakeOnLan.enable = true;
-  networking.interfaces.enp10s0.wakeOnLan.enable = true;
+  networking.interfaces.enp11s0.wakeOnLan.enable = true; # 74:56:3c:3d:d8:82 1Gbps
+  networking.interfaces.enp10s0.wakeOnLan.enable = true; # 98:b7:85:1e:f6:4f 10Gbps
 
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
