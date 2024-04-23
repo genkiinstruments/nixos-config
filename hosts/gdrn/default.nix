@@ -97,6 +97,8 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 
+  nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
