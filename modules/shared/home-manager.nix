@@ -544,6 +544,7 @@
         bitwarden-cli
         gh
         btop
+        cachix
       ];
     };
 
