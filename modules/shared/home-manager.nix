@@ -546,6 +546,7 @@
         gh
         btop
         cachix
+        xsel # for lazygit copy/paste stuff to clipboard
       ];
     };
 
