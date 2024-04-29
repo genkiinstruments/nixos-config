@@ -19,6 +19,7 @@
       # `nix run nixpkgs#mas -- search <app name>`
       "Keynote" = 409183694;
       "ColorSlurp" = 1287239339;
+      "Numbers" = 409203825;
     };
   };
 
