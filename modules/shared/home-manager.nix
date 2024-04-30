@@ -121,6 +121,9 @@
             bind \cr _atuin_search
             bind -M insert \cr _atuin_search
 
+            # Use Ctrl-f to complete a suggestion in vi mode
+            bind -M insert \cf accept-autosuggestion
+
             set -gx DIRENV_LOG_FORMAT ""
 
             function fish_user_key_bindings
