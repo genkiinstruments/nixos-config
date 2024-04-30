@@ -42,6 +42,12 @@
       xdg.enable = true; # Needed for fish interactiveShellInit hack
 
       programs = {
+        eza = {
+          enable = true;
+          enableFishIntegration = true;
+          icons = true;
+          git = true;
+        };
         alacritty = {
           enable = true;
         };
@@ -124,7 +130,6 @@
             set fish_cursor_replace_one underscore blink
             set fish_cursor_visual      block
 
-            alias l="eza -l -g -a --sort=modified --git --icons"
             alias n="nvim"
 
             # To back up previous home manager configurations
@@ -546,7 +551,6 @@
         gh
         btop
         cachix
-        eza # for ls
         xsel # for lazygit copy/paste stuff to clipboard
       ];
     };
