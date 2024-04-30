@@ -82,6 +82,9 @@
         };
         fish = {
           enable = true;
+          shellAliases = {
+            n = "nvim";
+          };
           plugins = [
             {
               name = "base16-fish";
@@ -129,8 +132,6 @@
             set fish_cursor_insert      line       blink
             set fish_cursor_replace_one underscore blink
             set fish_cursor_visual      block
-
-            alias n="nvim"
 
             # To back up previous home manager configurations
             set -Ux HOME_MANAGER_BACKUP_EXT ~/.nix-bak
