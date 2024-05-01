@@ -106,14 +106,16 @@ in
     # Adds headers Host, X-Real-IP, X-Forwarded-For (and others)
     recommendedProxySettings = true;
     # TODO The guide has a separate location set up for /api/websocket, but this appears unnecessary?
-    "joip.lan" = {
-      locations."/" = {
-        proxyPass = "http://localhost:${builtins.toString ha-port}";
-        extraConfig = ''
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection "upgrade";
-        '';
+    virtualHosts = {
+      "joip.lan" = {
+        locations."/" = {
+          proxyPass = "http://localhost:${builtins.toString ha-port}";
+          extraConfig = ''
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+          '';
+        };
       };
     };
   };
