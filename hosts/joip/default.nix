@@ -64,6 +64,7 @@ in
 
   services.home-assistant = {
     enable = true;
+    openFirewall = true;
 
     extraComponents = [
       "apple_tv"
@@ -89,20 +90,6 @@ in
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/
       default_config = { };
-      zeroconf = { };
-      homekit = {
-        port = homekit-tcp-port;
-        filter = {
-          exclude_entity_globs = [ "automation.*" ];
-          include_domains = [ "light" ];
-        };
-      };
-      http = {
-        server_host = "0.0.0.0";
-        server_port = 8123;
-        use_x_forwarded_for = true;
-        trusted_proxies = [ "127.0.0.1" ];
-      };
     };
   };
 
