@@ -1,4 +1,10 @@
 { pkgs, user, ... }:
+let
+  homekit-tcp-port = 21063; # Freely choosable
+  homekit-udp-port = 5353; # Hardcoded by apple, I think
+  nginx-port = 80;
+  ha-port = 8123;
+in
 {
   imports =
     [
@@ -54,8 +60,6 @@
 
   services.openssh.enable = true;
 
-  networking.firewall.allowedTCPPorts = [ 8080 ];
-
   services.tailscale.enable = true;
 
   services.home-assistant = {
@@ -79,19 +83,45 @@
       "weather"
       "wled"
       "xiaomi_miio"
+      "gtts"
     ];
+    extraPackages = python3Packages: with python3Packages; [ pip gtts ];
     config = {
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/
       default_config = { };
+      homekit = {
+        port = homekit-tcp-port;
+        filter = {
+          exclude_entity_globs = [ "automation.*" ];
+        };
+      };
+    };
+  };
+  services.nginx = {
+    enable = true;
+    defaultListen = [
+      { addr = "0.0.0.0"; port = nginx-port; }
+    ];
+    # Adds headers Host, X-Real-IP, X-Forwarded-For (and others)
+    recommendedProxySettings = true;
+    # TODO The guide has a separate location set up for /api/websocket, but this appears unnecessary?
+    "joip.lan" = {
+      locations."/" = {
+        proxyPass = "http://localhost:${builtins.toString ha-port}";
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "upgrade";
+        '';
+      };
     };
   };
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall = {
+    allowedTCPPorts = [ homekit-tcp-port nginx-port ha-port ];
+    allowedUDPPorts = [ homekit-udp-port ];
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
