@@ -205,7 +205,7 @@
               nixos-hardware.nixosModules.intel-nuc-8i7beh
               home-manager.nixosModules.home-manager
               disko.nixosModules.disko
-              ./hosts/joip/configuration.nix
+              ./hosts/joip
             ];
           };
       };
