@@ -111,10 +111,7 @@ in
     reflector = true;
   };
 
-  networking.firewall = {
-    allowedTCPPorts = [ homekit-tcp-port nginx-port ha-port 80 ];
-    allowedUDPPorts = [ homekit-udp-port ];
-  };
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
