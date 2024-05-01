@@ -115,7 +115,7 @@ in
     # TODO The guide has a separate location set up for /api/websocket, but this appears unnecessary?
     virtualHosts."joip.lan" = {
       forceSSL = true;
-      enableACME = true;
+      # enableACME = true;
       locations."/" = {
         proxyPass = "http://127.0.0.1:${builtins.toString ha-port}";
         extraConfig = ''
@@ -129,6 +129,10 @@ in
         '';
       };
     };
+  };
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "olafur@genkiinstruments.com";
   };
 
   services.avahi = {
