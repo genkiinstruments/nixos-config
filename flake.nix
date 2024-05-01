@@ -27,8 +27,12 @@
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-hardware, nix-index-database } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko } @inputs:
     let
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
@@ -185,6 +189,23 @@
               home-manager.nixosModules.home-manager
               "${nixpkgs}/nixos/modules/profiles/minimal.nix"
               ./hosts/nix-deployment/configuration.nix
+            ];
+          };
+        joip =
+          let
+            name = "Ólafur Bjarki Bogason";
+            user = "olafur";
+            host = "joip";
+            email = "olafur@genkiinstruments.com";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            specialArgs = { inherit inputs user host name email; };
+            modules = [
+              nixos-hardware.nixosModules.intel-nuc-8i7beh
+              home-manager.nixosModules.home-manager
+              disko.nixosModules.disko
+              ./hosts/joip/configuration.nix
             ];
           };
       };
