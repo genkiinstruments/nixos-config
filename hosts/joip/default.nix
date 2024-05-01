@@ -83,9 +83,8 @@ in
       "weather"
       "wled"
       "xiaomi_miio"
-      "gtts"
     ];
-    extraPackages = python3Packages: with python3Packages; [ pip gtts ];
+    extraPackages = python3Packages: with python3Packages; [ pip gtts dateutil aiohomekit pyatv getmac async-upnp-client ];
     config = {
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/
