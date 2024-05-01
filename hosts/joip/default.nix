@@ -89,11 +89,19 @@ in
       # Includes dependencies for a basic setup
       # https://www.home-assistant.io/integrations/default_config/
       default_config = { };
+      zeroconf = { };
       homekit = {
         port = homekit-tcp-port;
         filter = {
           exclude_entity_globs = [ "automation.*" ];
+          include_domains = [ "light" ];
         };
+      };
+      http = {
+        server_host = "0.0.0.0";
+        server_port = 8123;
+        use_x_forwarded_for = true;
+        trusted_proxies = [ "127.0.0.1" ];
       };
     };
   };
@@ -105,22 +113,31 @@ in
     # Adds headers Host, X-Real-IP, X-Forwarded-For (and others)
     recommendedProxySettings = true;
     # TODO The guide has a separate location set up for /api/websocket, but this appears unnecessary?
-    virtualHosts = {
-      "joip.lan" = {
-        locations."/" = {
-          proxyPass = "http://localhost:${builtins.toString ha-port}";
-          extraConfig = ''
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection "upgrade";
-          '';
-        };
+    virtualHosts."joip.lan" = {
+      forceSSL = true;
+      enableACME = true;
+      locations."/" = {
+        proxyPass = "http://127.0.0.1:${builtins.toString ha-port}";
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_redirect http:// https://;
+          proxy_set_header Host $host;
+          proxy_set_header Upgrade $http_upgrade;
+          proxy_set_header Connection "Upgrade";
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_buffering off;
+        '';
       };
     };
   };
 
+  services.avahi = {
+    enable = true;
+    reflector = true;
+  };
+
   networking.firewall = {
-    allowedTCPPorts = [ homekit-tcp-port nginx-port ha-port ];
+    allowedTCPPorts = [ homekit-tcp-port nginx-port ha-port 80 ];
     allowedUDPPorts = [ homekit-udp-port ];
   };
 
