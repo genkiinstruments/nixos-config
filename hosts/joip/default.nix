@@ -45,46 +45,10 @@
     LC_TIME = "is_IS.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable te GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-
-  # System is a server, don't let it sleep
-  services.xserver.displayManager.gdm.autoSuspend = false;
-  services.xserver.displayManager.gdm.settings = {
-    "org/gnome/settings-daemon/plugins/power" = {
-      sleep-inactive-ac-timeout = 0;
-      sleep-inactive-battery-timeout = 0;
-    };
-  };
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
   systemd.targets.hibernate.enable = false;
   systemd.targets.hybrid-sleep.enable = false;
-
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
-  };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
-  # Enable sound with pipewire.
-  sound.enable = true;
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
@@ -102,16 +66,12 @@
   # Place GitHub Access token under ~/.config/nix/nix.conf: access-tokens = github.com=***censored***
   nix.settings.experimental-features = lib.mkDefault "nix-command flakes";
 
-  virtualisation.docker.enable = true;
-  virtualisation.multipass.enable = true;
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 8080 ];
 
   # Enable tailscale. We manually authenticate when we want with "sudo tailscale up". 
-  # If you don't use tailscale, you should comment out or delete all of this.
   services.tailscale.enable = true;
 
   # Open ports in the firewall.
