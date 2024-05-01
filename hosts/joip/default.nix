@@ -1,4 +1,4 @@
-{ pkgs, lib, user, ... }:
+{ pkgs, user, ... }:
 {
   imports =
     [
@@ -9,7 +9,6 @@
       ../../modules/shared/cachix
     ];
 
-  # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -20,19 +19,12 @@
 
   networking.hostName = "joip"; # Define your hostname.
 
-  # Enable networking
   networking.networkmanager.enable = true;
-
-  # TODO: Do we need all these interfaces to WoL?
-  networking.interfaces.enp11s0.wakeOnLan.enable = true; # 74:56:3c:3d:d8:82 1Gbps
-  networking.interfaces.enp10s0.wakeOnLan.enable = true; # 98:b7:85:1e:f6:4f 10Gbps
 
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
 
-  # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
-
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "is_IS.UTF-8";
     LC_IDENTIFICATION = "is_IS.UTF-8";
@@ -60,19 +52,39 @@
 
   nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Place GitHub Access token under ~/.config/nix/nix.conf: access-tokens = github.com=***censored***
-  nix.settings.experimental-features = lib.mkDefault "nix-command flakes";
-
-  # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
   networking.firewall.allowedTCPPorts = [ 8080 ];
 
-  # Enable tailscale. We manually authenticate when we want with "sudo tailscale up". 
   services.tailscale.enable = true;
+
+  services.home-assistant = {
+    enable = true;
+
+    extraComponents = [
+      "apple_tv"
+      "default_config"
+      "denonavr"
+      "esphome"
+      "homekit"
+      "homekit_controller"
+      "ipp"
+      "lovelace"
+      "media_player"
+      "mjpeg"
+      "mqtt"
+      "prusalink"
+      "spotify"
+      "vacuum"
+      "weather"
+      "wled"
+      "xiaomi_miio"
+    ];
+
+    customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
+      mini-media-player
+    ];
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
