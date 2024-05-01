@@ -91,6 +91,7 @@
     isNormalUser = true;
     description = "${user}";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
+    hashedPassword = "$y$j9T$EIhzkT6pSVKuf79oPtE670$0PIzTEEUhafRQPEfJTdgX99VxefWrT.5I7BQJqDpAT/";
   };
 
   nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
