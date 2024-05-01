@@ -80,6 +80,30 @@
       "wled"
       "xiaomi_miio"
     ];
+    config = {
+      homeassistant = {
+        name = "Home";
+        latitude = "!secret latitude";
+        longitude = "!secret longitude";
+        elevation = 42;
+        unit_system = "metric";
+        country = "IS";
+        temperature_unit = "C";
+        internal_url = "http://joip:8123";
+        media_dirs.media = "/media";
+        allowlist_external_dirs = [ "/tmp" "/media" ];
+      };
+      default_config = { };
+      http = {
+        use_x_forwarded_for = true;
+        trusted_proxies = [ "::1" ];
+      };
+      "automation editor" = "!include automations.yaml";
+      "scene editor" = "!include scenes.yaml";
+      "script editor" = "!include scripts.yaml";
+      recorder.purge_keep_days = 60;
+      conversation = { intents = { }; };
+    };
 
     customLovelaceModules = with pkgs.home-assistant-custom-lovelace-modules; [
       mini-media-player
