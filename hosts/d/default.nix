@@ -275,19 +275,6 @@
             neocmakelsp
             vscode-extensions.ms-vscode.cmake-tools
 
-            # Rust
-            rust-analyzer
-            rustfmt
-            cargo
-            rustc
-            graphviz
-            lldb
-            taplo # toml language server 
-
-            # Python
-            ruff
-            ruff-lsp
-
             # Svelte
             nodePackages.svelte-language-server
             nodePackages.typescript-language-server
