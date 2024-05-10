@@ -94,7 +94,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "${user}";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "plugdev" ];
   };
 
   nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
