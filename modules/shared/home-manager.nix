@@ -324,6 +324,8 @@
 
             nodePackages_latest.nodejs # needed for copilot
 
+            elixir-ls
+
             # Other
             marksman
             shellcheck
@@ -350,6 +352,9 @@
                 # Clojure
                 conjure
                 cmp-conjure
+
+                # elixir
+                neotest-elixir
 
                 # LazyVim
                 LazyVim
@@ -432,6 +437,7 @@
                   { import = "lazyvim.plugins.extras.lang.markdown" },
                   { import = "lazyvim.plugins.extras.lang.rust" },
                   { import = "lazyvim.plugins.extras.linting.eslint" },
+                  { import = "lazyvim.plugins.extras.lang.elixir" },
                   -- { import = "lazyvim.plugins.extras.lang.clangd" },
                   -- { import = "lazyvim.plugins.extras.lang.cmake" },
                   { import = "lazyvim.plugins.extras.formatting.prettier" },
@@ -531,6 +537,9 @@
               kdl
               svelte
               sql
+              elixir
+              heex
+              eex
             ])).dependencies;
           };
         in
