@@ -365,6 +365,7 @@
                 cmp-nvim-lsp
                 cmp-path
                 cmp_luasnip
+                luasnip
                 conform-nvim
                 dashboard-nvim
                 dressing-nvim
