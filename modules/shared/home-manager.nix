@@ -476,10 +476,6 @@
               -- Disable swap files
               vim.opt.swapfile = false
 
-              -- Disable autochdir
-              -- Neovim has an ﻿autochdir option that, when enabled, automatically sets the working directory to the directory of the file that is currently being edited.
-              vim.opt.autochdir = false
-
               -- Set colorscheme
               vim.cmd.colorscheme "catppuccin-mocha"
 
