@@ -365,7 +365,7 @@
                 cmp-nvim-lsp
                 cmp-path
                 cmp_luasnip
-                luasnip
+                # luasnip
                 conform-nvim
                 dashboard-nvim
                 dressing-nvim
@@ -403,7 +403,7 @@
                 vim-startuptime
                 which-key-nvim
                 harpoon2
-                { name = "LuaSnip"; path = luasnip; }
+                # { name = "LuaSnip"; path = luasnip; }
                 { name = "mini.ai"; path = mini-nvim; }
                 { name = "mini.misc"; path = mini-nvim; }
                 { name = "mini.bufremove"; path = mini-nvim; }
@@ -447,6 +447,7 @@
                   { import = "lazyvim.plugins.extras.coding.mini-surround" },
                   { import = "lazyvim.plugins.extras.editor.mini-diff" },
                   { import = "lazyvim.plugins.extras.editor.mini-move" },
+                  -- { import = "lazyvim.plugins.extras.coding.luasnip" },
                   -- { import = "lazyvim.plugins.extras.lang.clangd" },
                   -- { import = "lazyvim.plugins.extras.lang.cmake" },
                   { import = "lazyvim.plugins.extras.formatting.prettier" },
