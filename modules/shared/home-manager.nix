@@ -367,7 +367,8 @@
                 dressing-nvim
                 flash-nvim
                 friendly-snippets
-                nvim-snippets
+                # TODO: Add once it's in nixpkgs
+                # nvim-snippets
                 gitsigns-nvim
                 indent-blankline-nvim
                 clangd_extensions-nvim
