@@ -32,7 +32,7 @@ return {
 			{ '<leader>3', function() require('harpoon'):list():select(3) end, desc = 'Harpoon select 3' },
 			{ '<leader>4', function() require('harpoon'):list():select(4) end, desc = 'Harpoon select 4' },
 			{ '<leader>5', function() require('harpoon'):list():select(5) end, desc = 'Harpoon select 5' },
-      { "<C-e>", function() toggle_telescope(require("harpoon"):list()) end, desc = "Open harpoon window"},
-      { "<leader>h", function() toggle_telescope(require("harpoon"):list()) end, desc = "Open harpoon window"}
+      { '<leader>e', function() toggle_telescope(require("harpoon"):list()) end, desc = "Open harpoon window"},
+      { '<leader>h', function() toggle_telescope(require("harpoon"):list()) end, desc = "Open harpoon window"}
   },
 }
