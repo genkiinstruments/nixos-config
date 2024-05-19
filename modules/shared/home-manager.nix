@@ -401,7 +401,7 @@
                 vim-startuptime
                 which-key-nvim
                 headlines-nvim
-                markdown-preview
+                markdown-preview-nvim
                 harpoon2
                 { name = "mini.ai"; path = mini-nvim; }
                 { name = "mini.misc"; path = mini-nvim; }
