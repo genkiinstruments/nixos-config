@@ -575,6 +575,7 @@
         ripgrep
         fd
         xsel # for lazygit copy/paste stuff to clipboard
+        lemonade # for copy/paste on gdrn
       ];
     };
 
