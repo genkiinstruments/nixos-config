@@ -358,6 +358,7 @@
                 # elixir
                 neotest-elixir
                 neotest
+                elixir-tools-nvim
 
                 # LazyVim
                 LazyVim
@@ -443,7 +444,6 @@
                   { import = "lazyvim.plugins.extras.lang.markdown" },
                   { import = "lazyvim.plugins.extras.lang.rust" },
                   { import = "lazyvim.plugins.extras.linting.eslint" },
-                  { import = "lazyvim.plugins.extras.lang.elixir" },
                   { import = "lazyvim.plugins.extras.coding.mini-ai" },
                   { import = "lazyvim.plugins.extras.coding.mini-surround" },
                   { import = "lazyvim.plugins.extras.editor.mini-diff" },
