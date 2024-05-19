@@ -12,3 +12,5 @@ end
 for _, val in pairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>" }) do
     vim.keymap.del("t", val)
 end
+
+vim.keymap.del{'n', 'i', 'v'}, "<C-/>")
