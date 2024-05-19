@@ -327,7 +327,6 @@
 
             elixir-ls
 
-
             # Other
             marksman
             shellcheck
@@ -358,6 +357,7 @@
 
                 # elixir
                 neotest-elixir
+                neotest
 
                 # LazyVim
                 LazyVim
@@ -391,6 +391,7 @@
                 nvim-treesitter-textobjects
                 nvim-ts-autotag
                 nvim-ts-context-commentstring
+                null-ls-nvim
                 nvim-web-devicons
                 persistence-nvim
                 plenary-nvim
@@ -447,6 +448,7 @@
                   { import = "lazyvim.plugins.extras.coding.mini-surround" },
                   { import = "lazyvim.plugins.extras.editor.mini-diff" },
                   { import = "lazyvim.plugins.extras.editor.mini-move" },
+                  { import = "lazyvim.plugins.extras.lsp.none-ls" },
                   -- { import = "lazyvim.plugins.extras.coding.luasnip" },
                   -- { import = "lazyvim.plugins.extras.lang.clangd" },
                   -- { import = "lazyvim.plugins.extras.lang.cmake" },
