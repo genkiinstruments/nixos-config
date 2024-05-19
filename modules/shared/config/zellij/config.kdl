@@ -95,7 +95,7 @@ keybinds clear-defaults=true{
         bind "d" { Detach; }
     }
     shared {
-        bind "Alt f" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+        bind "Ctrl /" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "Alt x" { CloseFocus; SwitchToMode "Normal"; }
     }
     shared_except "locked" {
