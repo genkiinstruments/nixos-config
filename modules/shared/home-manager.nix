@@ -367,6 +367,7 @@
                 dressing-nvim
                 flash-nvim
                 friendly-snippets
+                nvim-snippets
                 gitsigns-nvim
                 indent-blankline-nvim
                 clangd_extensions-nvim
