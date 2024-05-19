@@ -102,7 +102,6 @@ keybinds clear-defaults=true{
         bind "Alt g" { SwitchToMode "Locked"; }
         bind "Alt a" { ToggleFocusFullscreen; }
         bind "Alt s" { EditScrollback; SwitchToMode "Normal"; }
-        bind "Ctrl q" { Quit; }
         bind "Alt n" { NewPane; }
         bind "Alt t" { NewTab; SwitchToMode "Normal"; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
