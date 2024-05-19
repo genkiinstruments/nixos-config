@@ -282,6 +282,7 @@
 
             # Telescope
             ripgrep
+            fd
 
             # workaround for nvim-spectre...
             (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
@@ -326,9 +327,11 @@
 
             elixir-ls
 
+
             # Other
             marksman
             shellcheck
+            shfmt
             markdownlint-cli
           ];
 
@@ -401,6 +404,7 @@
                 harpoon2
                 { name = "LuaSnip"; path = luasnip; }
                 { name = "mini.ai"; path = mini-nvim; }
+                { name = "mini.misc"; path = mini-nvim; }
                 { name = "mini.bufremove"; path = mini-nvim; }
                 { name = "mini.comment"; path = mini-nvim; }
                 { name = "mini.indentscope"; path = mini-nvim; }
@@ -438,6 +442,10 @@
                   { import = "lazyvim.plugins.extras.lang.rust" },
                   { import = "lazyvim.plugins.extras.linting.eslint" },
                   { import = "lazyvim.plugins.extras.lang.elixir" },
+                  { import = "lazyvim.plugins.extras.editor.mini-ai" },
+                  { import = "lazyvim.plugins.extras.editor.mini-surround" },
+                  { import = "lazyvim.plugins.extras.editor.mini-diff" },
+                  { import = "lazyvim.plugins.extras.editor.mini-move" },
                   -- { import = "lazyvim.plugins.extras.lang.clangd" },
                   -- { import = "lazyvim.plugins.extras.lang.cmake" },
                   { import = "lazyvim.plugins.extras.formatting.prettier" },
