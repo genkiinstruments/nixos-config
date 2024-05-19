@@ -532,7 +532,7 @@
               luadoc
               luap
               markdown
-              markdown_inline
+              markdown-inline
               python
               query
               regex
