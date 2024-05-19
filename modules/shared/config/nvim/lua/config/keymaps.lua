@@ -17,3 +17,4 @@ end
 keymap("n", "<c-k>", vim.cmd.cprev, { desc = "Previous Quickfix" })
 keymap("n", "<c-j>", vim.cmd.cnext, { desc = "Next Quickfix" })
 
+keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
