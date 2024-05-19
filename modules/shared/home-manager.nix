@@ -305,9 +305,10 @@
             rustfmt
             cargo
             rustc
+            clippy
             graphviz
             lldb
-            taplo # toml language server 
+            taplo
 
             # Python
             ruff
@@ -542,9 +543,11 @@
               vimdoc
               yaml
               nix
+
               rust
               ron
               kdl
+
               svelte
               sql
               elixir
