@@ -465,14 +465,6 @@
                 },
               })
 
-              -- Note: This is a workaround due to a bug I don't know where is, either in mini-comment of the kdl treesitter spec?
-              vim.api.nvim_create_autocmd("FileType", {
-                pattern = "kdl",
-                callback = function()
-                  vim.bo.commentstring = "//%s"
-                end
-              })
-
               -- Disable swap files
               vim.opt.swapfile = false
 
