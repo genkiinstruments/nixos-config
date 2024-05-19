@@ -399,7 +399,8 @@
                 vim-illuminate
                 vim-startuptime
                 which-key-nvim
-                vim-markdown
+                headlines-nvim
+                markdown-preview
                 harpoon2
                 { name = "mini.ai"; path = mini-nvim; }
                 { name = "mini.misc"; path = mini-nvim; }
