@@ -324,6 +324,7 @@
             tailwindcss-language-server
             vscode-langservers-extracted
 
+            elixir
             elixir-ls
 
             # Other
