@@ -52,10 +52,10 @@ return {
         view_options = {
             show_hidden = true,
         },
-        default_file_explorer = false, -- Need to integrate well with telescope (otherwise it'll be a pain to use)
         delete_to_trash = true,
         prompt_save_on_select_new_entry = false,
         use_default_keymaps = false,
+        experimental_watch_for_changes = true,
         keymaps = {
             ["<ESC>"] = "actions.close",
             ["q"] = "actions.close",
@@ -68,7 +68,6 @@ return {
             ["<BS>"] = "actions.parent",
             ["~"] = "actions.open_cwd",
             ["`"] = "actions.cd",
-            ["."] = "actions.toggle_hidden",
         },
     },
 }
