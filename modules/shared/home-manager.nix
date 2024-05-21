@@ -570,6 +570,8 @@
         gh
         btop
         cachix
+        ripgrep
+        fd
         xsel # for lazygit copy/paste stuff to clipboard
       ];
     };
