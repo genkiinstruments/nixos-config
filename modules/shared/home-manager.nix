@@ -404,6 +404,7 @@
                 headlines-nvim
                 markdown-preview-nvim
                 undotree
+                cloak-nvim
                 harpoon2
                 { name = "mini.ai"; path = mini-nvim; }
                 { name = "mini.misc"; path = mini-nvim; }
