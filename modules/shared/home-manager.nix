@@ -297,7 +297,10 @@
             zls
 
             # C
-            clang-tools
+            clang-tools_18
+            cppcheck
+            include-what-you-use
+            cmake-language-server
             neocmakelsp
             vscode-extensions.ms-vscode.cmake-tools
 
