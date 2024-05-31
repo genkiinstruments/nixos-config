@@ -54,6 +54,9 @@
             keymap_mode = "auto";
             prefers_reduced_motion = true;
             enter_accept = true;
+            show_help = false;
+            # TODO: Unfortunately not working ATM: https://forum.atuin.sh/t/help-with-macos-ctrl-n-key-shortcuts/271
+            # ctrl_n_shortcuts = true;
           };
         };
         zoxide = {
