@@ -407,6 +407,7 @@
                 undotree
                 cloak-nvim
                 harpoon2
+                codeium-nvim
                 { name = "mini.ai"; path = mini-nvim; }
                 { name = "mini.misc"; path = mini-nvim; }
                 { name = "mini.bufremove"; path = mini-nvim; }
@@ -451,6 +452,7 @@
                   { import = "lazyvim.plugins.extras.lsp.none-ls" },
                   -- { import = "lazyvim.plugins.extras.lang.clangd" },
                   -- { import = "lazyvim.plugins.extras.lang.cmake" },
+                  { import = "lazyvim.plugins.extras.coding.codeium" },
                   { import = "lazyvim.plugins.extras.formatting.prettier" },
                   { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
                   -- The following configs are needed for fixing lazyvim on nix
