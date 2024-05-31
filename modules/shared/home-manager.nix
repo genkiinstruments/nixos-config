@@ -275,6 +275,7 @@
         neovim = {
           enable = true;
           defaultEditor = true;
+          withPython3 = false;
           extraPackages = with pkgs; [
             # LazyVim
             lua-language-server
