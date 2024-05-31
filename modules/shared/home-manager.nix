@@ -445,7 +445,6 @@
                   { import = "lazyvim.plugins.extras.lang.markdown" },
                   { import = "lazyvim.plugins.extras.lang.rust" },
                   { import = "lazyvim.plugins.extras.linting.eslint" },
-                  { import = "lazyvim.plugins.extras.coding.mini-ai" },
                   { import = "lazyvim.plugins.extras.coding.mini-surround" },
                   { import = "lazyvim.plugins.extras.editor.mini-diff" },
                   { import = "lazyvim.plugins.extras.editor.mini-move" },
