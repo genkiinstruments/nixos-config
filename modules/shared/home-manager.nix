@@ -478,19 +478,6 @@
               -- Type :LazyRoot in the directory you're in and that will show you the root_dir that will be used for the root_dir search commands. The reason you're experiencing this behavior is because your subdirectories contain some kind of root_dir pattern for the LSP server attached to the buffer.
               vim.g.root_spec = { "cwd" }
 
-              -- copy/paste from ssh connections
-              vim.g.clipboard = {
-                name = 'OSC 52',
-                copy = {
-                  ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
-                  ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
-                },
-                paste = {
-                  ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
-                  ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
-                },
-              }
-
               -- Set colorscheme
               vim.cmd.colorscheme "catppuccin-mocha"
 
