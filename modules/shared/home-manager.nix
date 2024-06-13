@@ -436,7 +436,6 @@
                   { import = "lazyvim.plugins.extras.lsp.none-ls" },
                   { import = "lazyvim.plugins.extras.coding.codeium" },
                   { import = "lazyvim.plugins.extras.lang.clangd" },
-                  { import = "lazyvim.plugins.extras.lang.cmake" },
                   { import = "lazyvim.plugins.extras.formatting.prettier" },
                   { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
                   -- The following configs are needed for fixing lazyvim on nix
