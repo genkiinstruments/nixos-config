@@ -66,11 +66,14 @@
         direnv = {
           enable = true;
           nix-direnv.enable = true; # Adds FishIntegration automatically
+          config.warn_timeout = "30m";
         };
         fish = {
           enable = true;
           shellAliases = {
             n = "nvim";
+            da = "direnv allow";
+            dr = "direnv reload";
             ga = "git add";
             gc = "git commit";
             gco = "git checkout";
