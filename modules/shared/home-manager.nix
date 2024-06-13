@@ -252,8 +252,8 @@
             nixpkgs-fmt
 
             # zig
-            zig
-            zls
+            # zig
+            # zls
 
             # C
             clang-tools_18
