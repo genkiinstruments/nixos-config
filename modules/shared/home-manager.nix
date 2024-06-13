@@ -12,20 +12,7 @@
   };
 
   # Since we're using fish as our shell
-  programs.fish = {
-    enable = true;
-    shellAliases = {
-      ga = "git add";
-      gc = "git commit";
-      gco = "git checkout";
-      gcp = "git cherry-pick";
-      gdiff = "git diff";
-      gl = "git pull";
-      gp = "git push";
-      gs = "git status";
-      gt = "git tag";
-    };
-  };
+  programs.fish.enable = true;
 
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
@@ -84,36 +71,16 @@
           enable = true;
           shellAliases = {
             n = "nvim";
+            ga = "git add";
+            gc = "git commit";
+            gco = "git checkout";
+            gcp = "git cherry-pick";
+            gdiff = "git diff";
+            gl = "git pull";
+            gp = "git push";
+            gs = "git status";
+            gt = "git tag";
           };
-          plugins = [
-            {
-              name = "base16-fish";
-              src = pkgs.fetchFromGitHub {
-                owner = "tomyun";
-                repo = "base16-fish";
-                rev = "2f6dd973a9075dabccd26f1cded09508180bf5fe";
-                sha256 = "PebymhVYbL8trDVVXxCvZgc0S5VxI7I1Hv4RMSquTpA=";
-              };
-            }
-            {
-              name = "hydro";
-              src = pkgs.fetchFromGitHub {
-                owner = "jorgebucaran";
-                repo = "hydro";
-                rev = "a5877e9ef76b3e915c06143630bffc5ddeaba2a1";
-                sha256 = "nJ8nQqaTWlISWXx5a0WeUA4+GL7Fe25658UIqKa389E=";
-              };
-            }
-            {
-              name = "done";
-              src = pkgs.fetchFromGitHub {
-                owner = "franciscolourenco";
-                repo = "done";
-                rev = "37117c3d8ed6b820f6dc647418a274ebd1281832";
-                sha256 = "cScH1NzsuQnDZq0XGiay6o073WSRIAsshkySRa/gJc0=";
-              };
-            }
-          ];
           interactiveShellInit = /* bash */ ''
             # bind to ctrl-p in normal and insert mode, add any other bindings you want here too
             bind \cp _atuin_search
@@ -145,17 +112,6 @@
     fish_config theme choose "Catppuccin Mocha"
     
     # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117 prompt configurations
-    set -g hydro_symbol_prompt "λ"
-    if test "$TERM" = linux
-      set -g hydro_symbol_prompt ">"
-    end
-
-    # done configurations
-    set -g __done_notification_command 'notify send -t "$title" -m "$message"'
-    set -g __done_enabled 1
-    set -g __done_allow_nongraphical 1
-    set -g __done_min_cmd_duration 8000
-
     # see https://github.com/LnL7/nix-darwin/issues/122
     set -ga PATH $HOME/.local/bin
     set -ga PATH /run/wrappers/bin
