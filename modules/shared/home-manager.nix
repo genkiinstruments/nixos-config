@@ -297,9 +297,7 @@
             markdownlint-cli
           ];
 
-          plugins = with pkgs.vimPlugins; [
-            lazy-nvim
-          ];
+          plugins = [ pkgs.vimPlugins.lazy-nvim ];
 
           extraLuaConfig =
             let
@@ -318,7 +316,11 @@
                 # elixir
                 neotest-elixir
                 neotest
+                neotest-plenary
                 elixir-tools-nvim
+
+                # Python
+                neotest-python
 
                 # LazyVim
                 LazyVim
@@ -337,6 +339,7 @@
                 lualine-nvim
                 oil-nvim
                 neoconf-nvim
+                nvim-nio
                 neodev-nvim
                 noice-nvim
                 nui-nvim
@@ -383,6 +386,17 @@
                 else
                   drv;
               lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
+              pythonPlusDot = pkgs.runCommandCC "python-plus-dot"
+                {
+                  pname = "python-plus-dot";
+                  executable = true;
+                  preferLocalBuild = true;
+                  nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+                } ''
+                makeBinaryWrapper ${pkgs.coreutils}/bin/env $out \
+                  --add-flags python \
+                  --prefix PYTHONPATH : .
+              '';
             in
               /* lua */ ''
               require("lazy").setup({
@@ -400,9 +414,19 @@
                   -- add LazyVim and import its plugins
                   { "LazyVim/LazyVim", import = "lazyvim.plugins" },
                   -- import any extras modules here
+                  { import = "lazyvim.plugins.extras.test.core" },
                   { import = "lazyvim.plugins.extras.lang.typescript" },
                   { import = "lazyvim.plugins.extras.lang.json" },
-                  { import = "lazyvim.plugins.extras.lang.python" },
+                  { import = "lazyvim.plugins.extras.lang.python",
+                    opts = {
+                      adapters = {
+                        ["neotest-python"] = {
+                          -- Here you can specify the settings for the adapter, i.e.
+                          runner = "pytest",
+                          python = "${pythonPlusDot}",
+                        },
+                      },
+                    } },
                   { import = "lazyvim.plugins.extras.lang.markdown" },
                   { import = "lazyvim.plugins.extras.lang.rust" },
                   { import = "lazyvim.plugins.extras.linting.eslint" },
@@ -501,6 +525,8 @@
               vimdoc
               yaml
               nix
+              ninja
+              rst
 
               rust
               ron
