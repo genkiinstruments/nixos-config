@@ -276,13 +276,13 @@
             # Python
             ruff
             ruff-lsp
+            pyright
 
             # Svelte
-            nodePackages.svelte-language-server
+            svelte-language-server
             nodePackages.typescript-language-server
             nodePackages.prettier
             nodePackages.eslint
-            nodePackages.pyright
             nodePackages.vscode-json-languageserver-bin
             tailwindcss-language-server
             vscode-langservers-extracted
