@@ -21,6 +21,8 @@ return {
     opts = {
         columns = {
             "icon",
+            "permissions",
+            "size",
             { "mtime", highlight = "Comment", format = "%T %y-%m-%d" },
         },
         float = {
@@ -56,6 +58,7 @@ return {
         prompt_save_on_select_new_entry = false,
         use_default_keymaps = false,
         experimental_watch_for_changes = true,
+        default_file_explorer = true,
         keymaps = {
             ["<ESC>"] = "actions.close",
             ["q"] = "actions.close",
