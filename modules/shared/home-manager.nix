@@ -322,6 +322,8 @@
                 # Python
                 neotest-python
 
+                neotest-zig
+
                 # LazyVim
                 LazyVim
                 cmp-buffer
@@ -536,6 +538,8 @@
               nix
               ninja
               rst
+
+              zig
 
               rust
               ron
