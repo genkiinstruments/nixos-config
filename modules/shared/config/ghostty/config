@@ -2,7 +2,6 @@ theme = catppuccin-mocha
 macos-option-as-alt = true
 
 font-family        = "JetBrainsMono Nerd Font Mono"
-
 font-size = 16
 font-thicken = true
 
@@ -10,7 +9,7 @@ font-thicken = true
 # background-blur-radius = 30
 # unfocused-split-opacity = 0.90
 
-minimum-contrast = 1.0
+# minimum-contrast = 1.0
 
 # Leading
 # adjust-cell-height = 10%
@@ -19,20 +18,17 @@ minimum-contrast = 1.0
 # adjust-underline-thickness = -50%
 # adjust-underline-position = 25%
 
-macos-option-as-alt     = true
-
 # visible-menu
-macos-non-native-fullscreen = visible-menu
+# macos-non-native-fullscreen = visible-menu
 
-window-theme = "dark"
-window-decoration       = false
+# window-theme = "dark"
+# window-decoration       = false
 window-colorspace = display-p3
 window-vsync = true
-window-padding-x = 10
-window-padding-y = 10
+window-padding-x = 0
+window-padding-y = 0
 window-padding-balance = true
 window-save-state = always
-window-decoration = false
 
 shell-integration = fish
 
@@ -100,3 +96,27 @@ font-codepoint-map = U+e300-U+e3eb=Symbols Nerd Font Mono
 
 # Misc Code Point Fixes
 font-codepoint-map = U+21B5,U+25B8,U+2605,U+2630,U+2632,U+2714,U+E0A3,U+E615,U+E62B=Symbols Nerd Font Mono
+
+# Keybinds
+# \x02 is ctrl+b (default tmux prefix)
+# \x01 is ctrl+a (common alternative tmux prefix)
+# \x00 is ctrl+space (common alternative tmux prefix)
+# https://unicodelookup.com/#%20Letter%20K/1
+keybind = cmd+B=text:\x02\x42
+keybind = cmd+K=text:\x02\x4B
+keybind = cmd+a=text:\x02\x61
+keybind = cmd+k=text:\x02\x4B
+keybind = cmd+z=text:\x02\x7A
+keybind = cmd+G=text:\x02\x47
+keybind = cmd+b=text:\x02\x62
+keybind = cmd+d=text:\x02\x64
+keybind = cmd+D=text:\x02\x44
+keybind = cmd+e=text:\x02\x65
+keybind = cmd+g=text:\x02\x67
+keybind = cmd+j=text:\x02\x6A
+keybind = cmd+r=text:\x02\x72
+keybind = cmd+x=text:\x02\x78
+keybind = cmd+z=text:\x02\x7A
+
+keybind = cmd+%=text:\x02\x25
+keybind = cmd+"=text:\x02\x22
