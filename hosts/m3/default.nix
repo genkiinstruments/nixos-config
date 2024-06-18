@@ -30,9 +30,6 @@
   # Turn off NIX_PATH warnings now that we're using flakes
   system.checks.verifyNixPath = false;
 
-  # Enable fonts dir
-  fonts.fontDir.enable = true;
-
   system = {
     stateVersion = 4;
 
