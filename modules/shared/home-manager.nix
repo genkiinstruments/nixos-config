@@ -361,7 +361,7 @@
                 nvim-web-devicons
                 persistence-nvim
                 plenary-nvim
-                telescope-fzf-native-nvim
+                telescope-zf-native-nvim
                 telescope-nvim
                 todo-comments-nvim
                 catppuccin-nvim
@@ -453,7 +453,7 @@
                   { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
                   -- The following configs are needed for fixing lazyvim on nix
                   -- force enable telescope-fzf-native.nvim
-                  { "nvim-telescope/telescope-fzf-native.nvim", enabled = true },
+                  { "nvim-telescope/telescope-zf-native.nvim", enabled = true },
                   -- disable mason.nvim, use programs.neovim.extraPackages
                   { "williamboman/mason-lspconfig.nvim", enabled = false },
                   { "williamboman/mason.nvim", enabled = false },
