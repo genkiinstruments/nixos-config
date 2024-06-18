@@ -490,6 +490,21 @@
 
               -- Don't show tabs
               vim.cmd [[ set showtabline=0 ]]
+
+              -- https://github.com/nvim-telescope/telescope.nvim/issues/855
+              require("telescope").setup{
+                pickers = {
+                  find_files = {
+                    find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
+                  },
+                  grep_string = {
+                    additional_args = {"--hidden"}
+                  },
+                  live_grep = {
+                    additional_args = {"--hidden"}
+                  },
+                },
+              }
             '';
         };
 
