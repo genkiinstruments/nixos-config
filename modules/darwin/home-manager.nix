@@ -14,7 +14,7 @@
 
   homebrew = {
     enable = true;
-    casks = [ "shortcat" "raycast" "arc" ];
+    casks = [ "shortcat" "raycast" "arc" "bitwarden" ];
     masApps = {
       # `nix run nixpkgs#mas -- search <app name>`
       "Keynote" = 409183694;
