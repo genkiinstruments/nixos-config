@@ -323,6 +323,7 @@
                 neotest-python
 
                 neotest-zig
+                vim-tmux-navigator
 
                 # LazyVim
                 LazyVim
@@ -488,9 +489,18 @@
             '';
         };
 
-        zellij = {
+        tmux = {
           enable = true;
-          enableFishIntegration = true;
+          plugins = with pkgs.tmuxPlugins; [
+            vim-tmux-navigator
+            yank
+            fzf-tmux-url
+            catppuccin
+          ];
+          sensibleOnTop = true;
+          clock24 = true;
+          terminal = "xterm-256color";
+          extraConfig = (builtins.readFile ./config/tmux.conf);
         };
 
         starship = {
@@ -557,7 +567,6 @@
       home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
 
       home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
-      home.file.".config/zellij" = { recursive = true; source = ../shared/config/zellij; };
       home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
       home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
         url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
@@ -572,6 +581,14 @@
         tldr
         bitwarden-cli
         gh
+
+        #for sesh
+        gh-dash
+        sesh
+        fzf
+        # zf
+        gum
+
         btop
         cachix
         ripgrep
