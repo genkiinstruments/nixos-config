@@ -598,7 +598,6 @@
         moonlight-qt
         magic-wormhole-rs
         tldr
-        bitwarden-cli
         gh
 
         #for sesh
