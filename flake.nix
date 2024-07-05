@@ -3,6 +3,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     srvos.url = "github:nix-community/srvos";
+    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -32,8 +33,9 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    catppuccin.url = "github:catppuccin/nix";
   };
-  outputs = { self, srvos, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko } @inputs:
+  outputs = { self, srvos, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixpkgs-stable, nixos-hardware, nix-index-database, disko, catppuccin } @inputs:
     let
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
@@ -73,9 +75,12 @@
               email = "olafur@genkiinstruments.com";
             in
             darwin.lib.darwinSystem
-              {
+              rec {
                 system = "aarch64-darwin";
-                specialArgs = { inherit inputs user name email; };
+                specialArgs = {
+                  inherit inputs user name email;
+                  pkgs-stable = import nixpkgs-stable { inherit system; config.allowUnfree = true; };
+                };
                 modules = [
                   home-manager.darwinModules.home-manager
                   nix-homebrew.darwinModules.nix-homebrew
