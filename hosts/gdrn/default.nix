@@ -22,14 +22,45 @@
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # No mutable users by default
+  users.mutableUsers = false;
+
+  systemd = {
+    # For more detail, see:
+    #   https://0pointer.de/blog/projects/watchdog.html
+    watchdog = {
+      # systemd will send a signal to the hardware watchdog at half
+      # the interval defined here, so every 10s.
+      # If the hardware watchdog does not get a signal for 20s,
+      # it will forcefully reboot the system.
+      runtimeTime = "20s";
+      # Forcefully reboot if the final stage of the reboot
+      # hangs without progress for more than 30s.
+      # For more info, see:
+      #   https://utcc.utoronto.ca/~cks/space/blog/linux/SystemdShutdownWatchdog
+      rebootTime = "30s";
+    };
+
+    sleep.extraConfig = ''
+      AllowSuspend=no
+      AllowHibernation=no
+    '';
+    targets.sleep.enable = false;
+    targets.suspend.enable = false;
+    targets.hibernate.enable = false;
+    targets.hybrid-sleep.enable = false;
+  };
+
+  # use TCP BBR has significantly increased throughput and reduced latency for connections
+  boot.kernel.sysctl = {
+    "net.core.default_qdisc" = "fq";
+    "net.ipv4.tcp_congestion_control" = "bbr";
+  };
+
   networking.hostName = "gdrn"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  # TODO: Do we need all these interfaces to WoL?
-  networking.interfaces.enp11s0.wakeOnLan.enable = true; # 74:56:3c:3d:d8:82 1Gbps
-  networking.interfaces.enp10s0.wakeOnLan.enable = true; # 98:b7:85:1e:f6:4f 10Gbps
 
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
@@ -63,10 +94,6 @@
       sleep-inactive-battery-timeout = 0;
     };
   };
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
 
   services.xserver.desktopManager.gnome.enable = true;
 
@@ -75,9 +102,6 @@
     layout = "us";
     variant = "";
   };
-
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -94,7 +118,7 @@
   users.users.${user} = {
     isNormalUser = true;
     description = "${user}";
-    extraGroups = [ "networkmanager" "wheel" "docker" "plugdev" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
   };
 
   nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
@@ -109,12 +133,26 @@
   virtualisation.multipass.enable = true;
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings.X11Forwarding = false;
+    settings.KbdInteractiveAuthentication = false;
+    settings.PasswordAuthentication = false;
+    settings.UseDns = false;
+    # unbind gnupg sockets if they exists
+    settings.StreamLocalBindUnlink = true;
 
-  networking.firewall.allowedTCPPorts = [ 8080 ];
+    # Use key exchange algorithms recommended by `nixpkgs#ssh-audit`
+    settings.KexAlgorithms = [
+      "curve25519-sha256"
+      "curve25519-sha256@libssh.org"
+      "diffie-hellman-group16-sha512"
+      "diffie-hellman-group18-sha512"
+      "sntrup761x25519-sha512@openssh.com"
+    ];
+  };
 
   # Enable tailscale. We manually authenticate when we want with "sudo tailscale up". 
-  # If you don't use tailscale, you should comment out or delete all of this.
   services.tailscale.enable = true;
 
   # Open ports in the firewall.
