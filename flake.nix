@@ -172,16 +172,20 @@
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = { inherit inputs user name email; };
-            modules = [
-              srvos.nixosModules.common
-              srvos.nixosModules.mixins-systemd-boot
-              srvos.nixosModules.mixins-terminfo
-              srvos.nixosModules.mixins-nix-experimental
-              srvos.nixosModules.mixins-trusted-nix-caches
-              disko.nixosModules.disko
-              home-manager.nixosModules.home-manager
-              ./hosts/gdrn
-            ];
+            modules = [{
+              imports = [
+                srvos.nixosModules.common
+                srvos.nixosModules.mixins-systemd-boot
+                srvos.nixosModules.mixins-terminfo
+                srvos.nixosModules.mixins-nix-experimental
+                srvos.nixosModules.mixins-trusted-nix-caches
+                disko.nixosModules.disko
+                home-manager.nixosModules.home-manager
+                ./hosts/gdrn
+              ];
+              networking.hostName = "gdrn";
+            }];
+          };
           };
         nix-deployment =
           let

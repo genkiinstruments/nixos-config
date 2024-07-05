@@ -50,8 +50,6 @@
     "net.ipv4.tcp_congestion_control" = "bbr";
   };
 
-  networking.hostName = "gdrn"; # Define your hostname.
-
   # Enable networking
   networking.networkmanager.enable = true;
 
