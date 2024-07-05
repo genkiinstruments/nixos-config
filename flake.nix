@@ -186,6 +186,41 @@
               networking.hostName = "gdrn";
             }];
           };
+        biggimaus =
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [{
+              imports = [
+                srvos.nixosModules.server
+                srvos.nixosModules.mixins-systemd-boot
+                srvos.nixosModules.mixins-terminfo
+                srvos.nixosModules.mixins-nix-experimental
+                srvos.nixosModules.mixins-trusted-nix-caches
+                disko.nixosModules.disko
+                home-manager.nixosModules.home-manager
+                ./hosts/biggimaus/disko-config.nix
+              ];
+              boot = {
+                loader.systemd-boot.enable = true;
+                loader.efi.canTouchEfiVariables = true;
+                binfmt.emulatedSystems = [ "aarch64-linux" ];
+                initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+                initrd.kernelModules = [ ];
+                kernelModules = [ "kvm-intel" ];
+                extraModulePackages = [ ];
+              };
+              networking.hostName = "biggimaus";
+              networking.hostId = "deadbeef";
+              disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
+              users.users.genki = {
+                isNormalUser = true;
+                openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ1uxevLNJOPIPRMh9G9fFSqLtYjK5R7+nRdtsas2KwX olafur@M3.localdomain" ];
+                extraGroups = [ "networkmanager" "wheel" ];
+                initialHashedPassword = "";
+              };
+              system.stateVersion = "23.05";
+              networking.useDHCP = true;
+            }];
           };
         nix-deployment =
           let
