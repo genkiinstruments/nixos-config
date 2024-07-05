@@ -1,7 +1,7 @@
 theme = catppuccin-mocha
 macos-option-as-alt = true
 
-font-family        = "JetBrainsMono Nerd Font Mono"
+font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 16
 font-thicken = true
 
@@ -102,21 +102,22 @@ font-codepoint-map = U+21B5,U+25B8,U+2605,U+2630,U+2632,U+2714,U+E0A3,U+E615,U+E
 # \x01 is ctrl+a (common alternative tmux prefix)
 # \x00 is ctrl+space (common alternative tmux prefix)
 # https://unicodelookup.com/#%20Letter%20K/1
-keybind = cmd+B=text:\x02\x42
-keybind = cmd+K=text:\x02\x4B
+keybind = cmd+shift+b=text:\x02\x42
+keybind = cmd+shift+d=text:\x02\x44
+keybind = cmd+shift+g=text:\x02\x47
+keybind = cmd+shift+r=text:\x02\x52
+
+keybind = cmd+shift+5=text:\x02\x25
+keybind = cmd+shift+'=text:\x02\x22
+
 keybind = cmd+a=text:\x02\x61
-keybind = cmd+k=text:\x02\x4B
-keybind = cmd+z=text:\x02\x7A
-keybind = cmd+G=text:\x02\x47
 keybind = cmd+b=text:\x02\x62
 keybind = cmd+d=text:\x02\x64
-keybind = cmd+D=text:\x02\x44
 keybind = cmd+e=text:\x02\x65
 keybind = cmd+g=text:\x02\x67
 keybind = cmd+j=text:\x02\x6A
+keybind = cmd+k=text:\x02\x6B
 keybind = cmd+r=text:\x02\x72
 keybind = cmd+x=text:\x02\x78
+keybind = cmd+y=text:\x02\x79
 keybind = cmd+z=text:\x02\x7A
-
-keybind = cmd+%=text:\x02\x25
-keybind = cmd+"=text:\x02\x22
