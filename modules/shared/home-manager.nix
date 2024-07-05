@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, name, user, email, ... }:
+{ pkgs, pkgs-stable, lib, inputs, name, user, email, ... }:
 {
   users.users.${user} = {
     name = "${user}";
@@ -18,13 +18,20 @@
   home-manager.useUserPackages = true;
   home-manager.backupFileExtension = "hm-backup";
 
+
   home-manager.users.${user} = { ... }:
     {
-      home.enableNixpkgsReleaseCheck = false;
-      home.stateVersion = "23.05";
       imports = [
         inputs.nix-index-database.hmModules.nix-index
+        inputs.catppuccin.homeManagerModules.catppuccin
       ];
+      catppuccin = {
+        enable = true;
+        flavor = "mocha";
+      };
+
+      home.enableNixpkgsReleaseCheck = false;
+      home.stateVersion = "23.05";
 
       xdg.enable = true; # Needed for fish interactiveShellInit hack
 
@@ -37,6 +44,37 @@
         };
         alacritty = {
           enable = true;
+          settings = {
+            cursor = {
+              blink_interval = 500;
+              thickness = 0.15;
+              unfocused_hollow = true;
+              style = {
+                blinking = "Always";
+                shape = "Beam";
+              };
+            };
+            font = {
+              size = 16;
+              normal.family = "JetBrainsMono Nerd Font";
+              normal.style = "Regular";
+            };
+            selection.save_to_clipboard = true;
+            window = {
+              decorations = "full";
+              dynamic_padding = true;
+              option_as_alt = "Both";
+              padding = {
+                x = 0;
+                y = 0;
+              };
+            };
+            keyboard.bindings = [{
+              key = "Slash";
+              mods = "Control";
+              chars = "\u001f";
+            }];
+          };
         };
         nix-index = {
           enable = true;
@@ -46,9 +84,33 @@
 
         lazygit = {
           enable = true;
-          settings.gui.skipDiscardChangeWarning = true;
+          settings = {
+            git = {
+              paging = {
+                colorArg = "always";
+                pager = "diff-so-fancy";
+              };
+            };
+            gui = {
+              language = "en";
+              mouseEvents = false;
+              sidePanelWidth = 0.3;
+              mainPanelSplitMode = "flexible";
+              showFileTree = true;
+              nerdFontsVersion = "3";
+              commitHashLength = 6;
+              showDivergenceFromBaseBranch = "arrowAndNumber";
+              skipDiscardChangeWarning = true;
+            };
+            quitOnTopLevelReturn = true;
+            disableStartupPopups = true;
+            promptToReturnFromSubprocess = false;
+            os = {
+              edit = "nvim-remote";
+              editAtLine = "{{editor}} +{{line}} {{filename}}";
+            };
+          };
         };
-
         atuin = {
           enable = true;
           enableFishIntegration = true;
@@ -110,99 +172,99 @@
             set -Ux HOME_MANAGER_BACKUP_EXT ~/.nix-bak
           '';
 
-          shellInit = /* bash */ '' 
-    set fish_greeting # Disable greeting
-    fish_config theme choose "Catppuccin Mocha"
-    
-    # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117 prompt configurations
-    # see https://github.com/LnL7/nix-darwin/issues/122
-    set -ga PATH $HOME/.local/bin
-    set -ga PATH /run/wrappers/bin
-    set -ga PATH $HOME/.nix-profile/bin
-    set -ga PATH /run/current-system/sw/bin
-    set -ga PATH /nix/var/nix/profiles/default/bin
+          shellInit = /* bash */'' 
+            set fish_greeting # Disable greeting
+            # fish_config theme choose "Catppuccin Mocha"
+            
+            # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117 prompt configurations
+            # see https://github.com/LnL7/nix-darwin/issues/122
+            set -ga PATH $HOME/.local/bin
+            set -ga PATH /run/wrappers/bin
+            set -ga PATH $HOME/.nix-profile/bin
+            set -ga PATH /run/current-system/sw/bin
+            set -ga PATH /nix/var/nix/profiles/default/bin
 
-    # Adapt construct_path from the macOS /usr/libexec/path_helper executable for
-    # fish usage;
-    #
-    # The main difference is that it allows to control how extra entries are
-    # preserved: either at the beginning of the VAR list or at the end via first
-    # argument MODE.
-    #
-    # Usage:
-    #
-    #   __fish_macos_set_env MODE VAR VAR-FILE VAR-DIR
-    #
-    #   MODE: either append or prepend
-    #
-    # Example:
-    #
-    #   __fish_macos_set_env prepend PATH /etc/paths '/etc/paths.d'
-    #
-    #   __fish_macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
-    #
-    # [1]: https://opensource.apple.com/source/shell_cmds/shell_cmds-203/path_helper/path_helper.c.auto.html .
-    #
-    function macos_set_env -d "set an environment variable like path_helper does (macOS only)"
-      # noops on other operating systems
-      if test $KERNEL_NAME darwin
-        set -l result
-        set -l entries
+            # Adapt construct_path from the macOS /usr/libexec/path_helper executable for
+            # fish usage;
+            #
+            # The main difference is that it allows to control how extra entries are
+            # preserved: either at the beginning of the VAR list or at the end via first
+            # argument MODE.
+            #
+            # Usage:
+            #
+            #   __fish_macos_set_env MODE VAR VAR-FILE VAR-DIR
+            #
+            #   MODE: either append or prepend
+            #
+            # Example:
+            #
+            #   __fish_macos_set_env prepend PATH /etc/paths '/etc/paths.d'
+            #
+            #   __fish_macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
+            #
+            # [1]: https://opensource.apple.com/source/shell_cmds/shell_cmds-203/path_helper/path_helper.c.auto.html .
+            #
+            function macos_set_env -d "set an environment variable like path_helper does (macOS only)"
+              # noops on other operating systems
+              if test $KERNEL_NAME darwin
+                set -l result
+                set -l entries
 
-        # echo "1. $argv[2] = $$argv[2]"
+                # echo "1. $argv[2] = $$argv[2]"
 
-        # Populate path according to config files
-        for path_file in $argv[3] $argv[4]/*
-          if [ -f $path_file ]
-            while read -l entry
-              if not contains -- $entry $result
-                test -n "$entry"
-                and set -a result $entry
+                # Populate path according to config files
+                for path_file in $argv[3] $argv[4]/*
+                  if [ -f $path_file ]
+                    while read -l entry
+                      if not contains -- $entry $result
+                        test -n "$entry"
+                        and set -a result $entry
+                      end
+                    end <$path_file
+                  end
+                end
+
+                # echo "2. $argv[2] = $result"
+
+                # Merge in any existing path elements
+                set entries $$argv[2]
+                if test $argv[1] = "prepend"
+                  set entries[-1..1] $entries
+                end
+                for existing_entry in $entries
+                  if not contains -- $existing_entry $result
+                    if test $argv[1] = "prepend"
+                      set -p result $existing_entry
+                    else
+                      set -a result $existing_entry
+                    end
+                  end
+                end
+
+                # echo "3. $argv[2] = $result"
+
+                set -xg $argv[2] $result
               end
-            end <$path_file
-          end
-        end
-
-        # echo "2. $argv[2] = $result"
-
-        # Merge in any existing path elements
-        set entries $$argv[2]
-        if test $argv[1] = "prepend"
-          set entries[-1..1] $entries
-        end
-        for existing_entry in $entries
-          if not contains -- $existing_entry $result
-            if test $argv[1] = "prepend"
-              set -p result $existing_entry
-            else
-              set -a result $existing_entry
             end
-          end
-        end
+            macos_set_env prepend PATH /etc/paths '/etc/paths.d'
 
-        # echo "3. $argv[2] = $result"
+            set -ga MANPATH $HOME/.local/share/man
+            set -ga MANPATH $HOME/.nix-profile/share/man
+            if test $KERNEL_NAME darwin
+              set -ga MANPATH /opt/homebrew/share/man
+            end
+            set -ga MANPATH /run/current-system/sw/share/man
+            set -ga MANPATH /nix/var/nix/profiles/default/share/man
+            macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
 
-        set -xg $argv[2] $result
-      end
-    end
-    macos_set_env prepend PATH /etc/paths '/etc/paths.d'
-
-    set -ga MANPATH $HOME/.local/share/man
-    set -ga MANPATH $HOME/.nix-profile/share/man
-    if test $KERNEL_NAME darwin
-      set -ga MANPATH /opt/homebrew/share/man
-    end
-    set -ga MANPATH /run/current-system/sw/share/man
-    set -ga MANPATH /nix/var/nix/profiles/default/share/man
-    macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
-
-    if test $KERNEL_NAME darwin
-      set -gx HOMEBREW_PREFIX /opt/homebrew
-      set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
-      set -gx HOMEBREW_REPOSITORY /opt/homebrew
-      set -gp INFOPATH /opt/homebrew/share/info
-    end
-  '';
+            if test $KERNEL_NAME darwin
+              set -gx HOMEBREW_PREFIX /opt/homebrew
+              set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
+              set -gx HOMEBREW_REPOSITORY /opt/homebrew
+              set -gp INFOPATH /opt/homebrew/share/info
+            end
+          '';
         };
 
         ssh.enable = true;
@@ -231,6 +293,32 @@
           enableFishIntegration = true;
         };
 
+        helix = {
+          enable = true;
+          extraPackages = with pkgs; [ marksman markdown-oxide ];
+          settings = {
+            editor = {
+              line-number = "relative";
+              cursorline = true;
+              color-modes = true;
+              lsp.display-messages = true;
+              cursor-shape = {
+                insert = "bar";
+                normal = "block";
+                select = "underline";
+              };
+              indent-guides.render = true;
+            };
+            keys.normal = {
+              space = {
+                space = "file_picker";
+                w = ":w";
+                q = ":q";
+              };
+              esc = [ "collapse_selection" "keep_primary_selection" ];
+            };
+          };
+        };
         neovim = {
           enable = true;
           defaultEditor = true;
@@ -291,8 +379,7 @@
             elixir-ls
 
             # Other
-            marksman
-            shellcheck
+            # marksman
             shfmt
             markdownlint-cli
           ];
@@ -371,6 +458,7 @@
                 which-key-nvim
                 headlines-nvim
                 markdown-preview-nvim
+                markdown-nvim
                 undotree
                 cloak-nvim
                 harpoon2
@@ -439,7 +527,7 @@
                         },
                       },
                     } },
-                  { import = "lazyvim.plugins.extras.lang.markdown" },
+                  -- { import = "lazyvim.plugins.extras.lang.markdown" },
                   { import = "lazyvim.plugins.extras.lang.rust" },
                   { import = "lazyvim.plugins.extras.linting.eslint" },
                   { import = "lazyvim.plugins.extras.coding.mini-surround" },
@@ -512,11 +600,9 @@
             vim-tmux-navigator
             yank
             fzf-tmux-url
-            catppuccin
+            # catppuccin
           ];
           sensibleOnTop = true;
-          clock24 = true;
-          terminal = "xterm-256color";
           extraConfig = (builtins.readFile ./config/tmux.conf);
         };
 
@@ -535,60 +621,56 @@
       home.file.".config/nvim/parser".source =
         with pkgs;
         let
-          parsers = symlinkJoin {
-            name = "treesitter-parsers";
-            paths = (vimPlugins.nvim-treesitter.withPlugins (p: with p; [
-              bash
-              c
-              cpp
-              cmake
-              diff
-              html
-              javascript
-              jsdoc
-              json
-              jsonc
-              lua
-              luadoc
-              luap
-              markdown
-              markdown-inline
-              python
-              query
-              regex
-              toml
-              tsx
-              typescript
-              vim
-              vimdoc
-              yaml
-              nix
-              ninja
-              rst
+          parsers = symlinkJoin
+            {
+              name = "treesitter-parsers";
+              paths = (vimPlugins.nvim-treesitter.withPlugins (p: with p; [
+                bash
+                c
+                cpp
+                cmake
+                diff
+                html
+                javascript
+                jsdoc
+                json
+                jsonc
+                lua
+                luadoc
+                luap
+                markdown
+                markdown-inline
+                python
+                query
+                regex
+                toml
+                tsx
+                typescript
+                vim
+                vimdoc
+                yaml
+                nix
+                ninja
+                rst
 
-              zig
+                zig
 
-              rust
-              ron
-              kdl
+                rust
+                ron
+                kdl
 
-              svelte
-              sql
-              elixir
-              heex
-              eex
-            ])).dependencies;
-          };
+                svelte
+                sql
+                elixir
+                heex
+                eex
+              ])).dependencies;
+            };
         in
         "${parsers}/parser";
       home.file.".config/nvim" = { recursive = true; source = ../shared/config/nvim; };
 
-      home.file.".config/alacritty/alacritty.toml".source = ../shared/config/alacritty.toml;
       home.file.".config/ghostty/config".source = ../shared/config/ghostty/config;
-      home.file.".config/fish/themes/Catppuccin Mocha.theme".source = pkgs.fetchurl {
-        url = "https://raw.githubusercontent.com/catppuccin/fish/main/themes/Catppuccin%20Mocha.theme";
-        sha256 = "MlI9Bg4z6uGWnuKQcZoSxPEsat9vfi5O1NkeYFaEb2I=";
-      };
       home.packages = with pkgs; [
         neofetch
         wget
@@ -597,12 +679,14 @@
         magic-wormhole-rs
         tldr
         gh
+        # TODO: Is this still needed? Was broken on unstable 2024-06-21.
+        pkgs-stable.bitwarden-cli
+        nb
 
-        #for sesh
+        # for sesh
         gh-dash
         sesh
         fzf
-        # zf
         gum
 
         btop
