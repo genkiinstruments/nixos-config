@@ -693,8 +693,6 @@
       ];
     };
 
-  # Removing this causes issues with eza/
-  fonts.fontDir.enable = true;
   fonts.packages = [
     (pkgs.nerdfonts.override {
       fonts = [ "JetBrainsMono" ];
