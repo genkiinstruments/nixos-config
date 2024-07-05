@@ -3,6 +3,9 @@ local keymap = vim.keymap.set
 keymap("n", "<C-c>", "<cmd>q<cr>", { noremap = true })
 keymap("n", "<C-x>", "<cmd>x<cr>", { noremap = true })
 
+-- Search and replace
+keymap("n", "<leader>r", ":%s/<<C-r><C-w>>//g<Left><Left>")
+
 -- Unmap keymaps that move lines
 for _, val in pairs({ "<A-j>", "<A-k>" }) do
     vim.keymap.del({ "n", "i", "v" }, val)

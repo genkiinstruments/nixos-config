@@ -2,6 +2,7 @@
   description = "Nix runs my 🌍🌎🌏";
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    srvos.url = "github:nix-community/srvos";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -32,7 +33,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko } @inputs:
+  outputs = { self, srvos, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko } @inputs:
     let
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" ];
@@ -40,7 +41,7 @@
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in {
           default = with pkgs; mkShell {
-            nativeBuildInputs = [ bashInteractive git ];
+            nativeBuildInputs = [ bashInteractive git nixos-anywhere ];
             shellHook = ''export EDITOR=nvim'';
           };
         };
@@ -53,9 +54,6 @@
           HOST="${host}" ${self}/apps/${system}/${scriptName}
         '')}/bin/${scriptName}";
       };
-      mkLinuxApps = system: {
-        "gdrn" = mkApp "build-switch" "gdrn" system;
-      };
       mkDarwinApps = system: {
         "m3" = mkApp "build-switch" "m3" system;
         "d" = mkApp "build-switch" "d" system;
@@ -64,7 +62,7 @@
     in
     rec {
       devShells = forAllSystems devShell;
-      apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+      apps = nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
       darwinConfigurations =
         {
@@ -170,6 +168,12 @@
             system = "x86_64-linux";
             specialArgs = { inherit inputs user name email; };
             modules = [
+              srvos.nixosModules.common
+              srvos.nixosModules.mixins-systemd-boot
+              srvos.nixosModules.mixins-terminfo
+              srvos.nixosModules.mixins-nix-experimental
+              srvos.nixosModules.mixins-trusted-nix-caches
+              disko.nixosModules.disko
               home-manager.nixosModules.home-manager
               ./hosts/gdrn
             ];
