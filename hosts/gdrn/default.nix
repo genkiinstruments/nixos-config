@@ -2,28 +2,21 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, user, ... }:
+{ lib, user, ... }:
 
 {
   imports =
     [
-      ./hardware-configuration.nix
+      ./disko-config.nix
       ../../modules/shared/home-manager.nix
       ../../modules/shared
       ../../modules/shared/cachix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";
 
   # Emulate arm64 binaries
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # No mutable users by default
-  users.mutableUsers = false;
 
   systemd = {
     # For more detail, see:
@@ -114,7 +107,6 @@
     pulse.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.${user} = {
     isNormalUser = true;
     description = "${user}";
@@ -154,6 +146,14 @@
 
   # Enable tailscale. We manually authenticate when we want with "sudo tailscale up". 
   services.tailscale.enable = true;
+
+  security.sudo.wheelNeedsPassword = false;
+  # Only allow members of the wheel group to execute sudo by setting the executable’s permissions accordingly. This prevents users that are not members of wheel from exploiting vulnerabilities in sudo such as CVE-2021-3156.
+  security.sudo.execWheelOnly = true;
+  # Don't lecture the user. Less mutable state.
+  security.sudo.extraConfig = ''
+    Defaults lecture = never
+  '';
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
