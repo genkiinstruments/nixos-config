@@ -211,6 +211,7 @@
               };
               networking.hostName = "biggimaus";
               networking.hostId = "deadbeef";
+              services.tailscale.enable = true;
               disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
               users.users.genki = {
                 isNormalUser = true;
