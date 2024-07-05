@@ -21,7 +21,7 @@
     };
   };
 
-  home-manager.users.${user} = { ... }:
+  home-manager.users.${user} = { pkgs, ... }:
     {
       home.file.".config/karabiner/karabiner.json".source = ../darwin/config/karabiner/karabiner.json; # Hyper-key config
     };
