@@ -10,7 +10,6 @@
       ./disko-config.nix
       ../../modules/shared/home-manager.nix
       ../../modules/shared
-      ../../modules/shared/cachix
     ];
 
   disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";

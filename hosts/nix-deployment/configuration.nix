@@ -4,7 +4,6 @@
     ./base.nix
     ./zram.nix
     ../../modules/shared
-    ../../modules/shared/cachix
     ../../modules/shared/home-manager.nix
     # ./yggdrasil.nix
     # ./motd.nix

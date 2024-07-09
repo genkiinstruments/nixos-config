@@ -3,7 +3,6 @@
 {
   imports = [
     ../../modules/shared
-    ../../modules/shared/cachix
   ];
 
   # nix-darwin specific configuration, e.g., we don't want to hide the user
