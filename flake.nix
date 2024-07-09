@@ -47,20 +47,6 @@
             shellHook = ''export EDITOR=nvim'';
           };
         };
-      mkApp = scriptName: host: system: {
-        type = "app";
-        program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
-          #!/usr/bin/env bash
-          PATH=${nixpkgs.legacyPackages.${system}.git}/bin:$PATH
-          echo "Running ${scriptName} for ${system}"
-          HOST="${host}" ${self}/apps/${system}/${scriptName}
-        '')}/bin/${scriptName}";
-      };
-      mkDarwinApps = system: {
-        "m3" = mkApp "build-switch" "m3" system;
-        "d" = mkApp "build-switch" "d" system;
-        "gkr" = mkApp "build-switch" "gkr" system;
-      };
     in
     rec {
       devShells = forAllSystems devShell;
