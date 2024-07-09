@@ -12,7 +12,6 @@ in
       ./hardware-configuration.nix
       ../../modules/shared/home-manager.nix
       ../../modules/shared
-      ../../modules/shared/cachix
     ];
 
   boot.loader.systemd-boot.enable = true;
