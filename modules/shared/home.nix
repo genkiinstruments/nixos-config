@@ -591,8 +591,8 @@
     in
     "${parsers}/parser";
 
-  xdg.configFile."nvim" = { recursive = true; source = config.lib.file.mkOutOfStoreSymlink ../shared/config/nvim; };
-  xdg.configFile."ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../shared/config/ghostty/config;
+  xdg.configFile."nvim" = { recursive = true; source = ../shared/config/nvim; };
+  xdg.configFile."ghostty/config".source = ../shared/config/ghostty/config;
   home.packages = with pkgs; [
     wget
     zip
