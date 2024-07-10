@@ -482,7 +482,7 @@
               { "williamboman/mason.nvim", enabled = false },
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
               { "akinsho/bufferline.nvim", enabled = false },
-              -- { "preservim/vim-markdown", ft = { "markdown" } },
+              { "preservim/vim-markdown", ft = { "markdown" } },
               -- import/override with your plugins
               { import = "plugins" },
               -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
