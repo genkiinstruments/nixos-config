@@ -41,10 +41,6 @@
         quitOnTopLevelReturn = true;
         disableStartupPopups = true;
         promptToReturnFromSubprocess = false;
-        # os = {
-        #   edit = "nvim-remote";
-        #   editAtLine = "{{editor}} +{{line}} {{filename}}";
-        # };
       };
     };
     atuin = {
