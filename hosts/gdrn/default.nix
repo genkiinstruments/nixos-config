@@ -13,8 +13,15 @@
 
   disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";
 
-  # Emulate arm64 binaries
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-amd" ];
+  boot.extraModulePackages = [ ];
+
+  networking.useDHCP = lib.mkDefault true;
+
 
   systemd = {
     # For more detail, see:
