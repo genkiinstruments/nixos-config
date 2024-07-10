@@ -176,7 +176,9 @@
                 isNormalUser = true;
                 description = "${userName}";
                 extraGroups = [ "networkmanager" "wheel" "docker" ];
+                openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
               };
+              users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
               networking.hostName = "gdrn";
               networking.hostId = "deadbeef";
               home-manager.useGlobalPkgs = true;
@@ -229,7 +231,6 @@
                 isNormalUser = true;
                 openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
                 extraGroups = [ "networkmanager" "wheel" ];
-                initialHashedPassword = "";
               };
               users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
               system.stateVersion = "23.05";
