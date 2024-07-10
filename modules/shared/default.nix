@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   nixpkgs = {
     config = {
@@ -22,6 +22,8 @@
     package = pkgs.nixVersions.latest;
 
     settings = {
+      experimental-features = lib.mkDefault "nix-command flakes";
+
       substituters = [
         "https://genki.cachix.org"
         "https://nix-community.cachix.org"
