@@ -598,12 +598,10 @@
   home.file.".config/nvim" = { recursive = true; source = config.lib.file.mkOutOfStoreSymlink ../shared/config/nvim; };
   home.file.".config/ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../shared/config/ghostty/config;
   home.packages = with pkgs; [
-    neofetch
     wget
     zip
     moonlight-qt
     magic-wormhole-rs
-    tldr
     gh
     nb
 
