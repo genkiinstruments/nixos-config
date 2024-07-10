@@ -27,8 +27,6 @@
         flake-registry = ${empty_registry}
         builders-use-substitutes = true
       '';
-    registry.nixpkgs.flake = inputs.nixpkgs;
-    nixPath = [ "nixpkgs=${inputs.nixpkgs}" ];
 
     settings = {
       substituters = [
