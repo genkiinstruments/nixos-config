@@ -593,7 +593,7 @@
           ])).dependencies;
         };
     in
-    config.lib.file.mkOutOfStoreSymlink "${parsers}/parser";
+    "${parsers}/parser";
 
   home.file.".config/nvim" = { recursive = true; source = config.lib.file.mkOutOfStoreSymlink ../shared/config/nvim; };
   home.file.".config/ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../shared/config/ghostty/config;
