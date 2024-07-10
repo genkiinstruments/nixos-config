@@ -353,7 +353,6 @@
             vim-markdown-toc
             vim-markdown
             conform-nvim
-            telekasten-nvim
 
             # LazyVim
             LazyVim
@@ -479,7 +478,6 @@
               -- The following configs are needed for fixing lazyvim on nix
               -- force enable telescope-fzf-native.nvim
               -- { "nvim-telescope/telescope-zf-native.nvim", enabled = true },
-              { 'renerocksai/telekasten.nvim', dependencies = {'nvim-telescope/telescope.nvim'} },
               -- disable mason.nvim, use programs.neovim.extraPackages
               { "williamboman/mason-lspconfig.nvim", enabled = false },
               { "williamboman/mason.nvim", enabled = false },
@@ -528,9 +526,6 @@
               },
             },
           }
-          require('telekasten').setup({
-            home = vim.fn.expand("~/.nb/home")
-          })
         '';
     };
 
