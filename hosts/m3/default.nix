@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ../../modules/darwin/home-manager.nix
     ../../modules/shared
   ];
 
