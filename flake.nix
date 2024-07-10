@@ -83,6 +83,7 @@
                   imports = [
                     # TODO: openssh.authorizedKeys.keyFiles has been deprecated in nix-darwin
                     # srvos.darwinModules.common
+                    srvos.nixosModules.mixins-nix-experimental
                     home-manager.darwinModules.home-manager
                     my-nix-homebrew
                     ./modules/shared
