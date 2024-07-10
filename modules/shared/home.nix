@@ -341,7 +341,9 @@
             markdown-preview-nvim
             markdown-nvim
             vim-markdown-toc
+            vim-markdown
             conform-nvim
+            telekasten-nvim
 
             # LazyVim
             LazyVim
@@ -454,7 +456,7 @@
                     },
                   },
                 } },
-              { import = "lazyvim.plugins.extras.lang.markdown" },
+              -- { import = "lazyvim.plugins.extras.lang.markdown" },
               { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.linting.eslint" },
               { import = "lazyvim.plugins.extras.coding.mini-surround" },
@@ -467,11 +469,13 @@
               -- The following configs are needed for fixing lazyvim on nix
               -- force enable telescope-fzf-native.nvim
               -- { "nvim-telescope/telescope-zf-native.nvim", enabled = true },
+              { 'renerocksai/telekasten.nvim', dependencies = {'nvim-telescope/telescope.nvim'} },
               -- disable mason.nvim, use programs.neovim.extraPackages
               { "williamboman/mason-lspconfig.nvim", enabled = false },
               { "williamboman/mason.nvim", enabled = false },
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
               { "akinsho/bufferline.nvim", enabled = false },
+              -- { "preservim/vim-markdown", ft = { "markdown" } },
               -- import/override with your plugins
               { import = "plugins" },
               -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
@@ -514,6 +518,9 @@
               },
             },
           }
+          require('telekasten').setup({
+            home = vim.fn.expand("~/.nb/home")
+          })
         '';
     };
 
