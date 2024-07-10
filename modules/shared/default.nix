@@ -35,6 +35,7 @@
     };
 
     settings = {
+      trusted-users = [ "root" "@wheel" ];
       substituters = [
         "https://genki.cachix.org"
         "https://nix-community.cachix.org"
