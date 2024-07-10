@@ -465,7 +465,6 @@
                     },
                   },
                 } },
-              -- { import = "lazyvim.plugins.extras.lang.markdown" },
               { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.linting.eslint" },
               { import = "lazyvim.plugins.extras.coding.mini-surround" },

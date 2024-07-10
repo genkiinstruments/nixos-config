@@ -1,16 +1,8 @@
--- return {
---     "neovim/nvim-lspconfig",
---     opts = {
---         servers = {
---             marksman = {},
---         },
---     },
--- }
---
 return {
-    "tadmccorkle/markdown.nvim",
-    ft = "markdown", -- or 'event = "VeryLazy"'
+    "neovim/nvim-lspconfig",
     opts = {
-        -- configuration here or empty for defaults
+        servers = {
+            marksman = {},
+        },
     },
 }
