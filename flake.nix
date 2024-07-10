@@ -79,44 +79,42 @@
               rec {
                 system = "aarch64-darwin";
                 specialArgs.pkgs-stable = import nixpkgs-stable { inherit system; config.allowUnfree = true; };
-                modules = [
-                  srvos.darwinModules.common
-                  home-manager.darwinModules.home-manager
-                  {
-                    home-manager.useGlobalPkgs = true;
-                    home-manager.useUserPackages = true;
-                    home-manager.backupFileExtension = "backup";
-                    home-manager.users.${user} = { config, ... }:
-                      {
-                        imports = [
-                          nix-index-database.hmModules.nix-index
-                          catppuccin.homeManagerModules.catppuccin
-                          ./modules/shared/home.nix
-                        ];
-                        catppuccin = {
-                          enable = true;
-                          flavor = "mocha";
-                        };
-                        programs.git = { inherit userEmail userName; };
-                        home.file.".config/karabiner/karabiner.json".source = config.lib.file.mkOutOfStoreSymlink ./modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
+                modules = [{
+                  imports = [
+                    # TODO: openssh.authorizedKeys.keyFiles has been deprecated in nix-darwin
+                    # srvos.darwinModules.common
+                    home-manager.darwinModules.home-manager
+                    my-nix-homebrew
+                    ./modules/shared
+                    ./hosts/m3
+                  ];
+                  home-manager.useGlobalPkgs = true;
+                  home-manager.useUserPackages = true;
+                  home-manager.backupFileExtension = "backup";
+                  home-manager.users.${user} = { config, ... }:
+                    {
+                      imports = [
+                        nix-index-database.hmModules.nix-index
+                        catppuccin.homeManagerModules.catppuccin
+                        ./modules/shared/home.nix
+                      ];
+                      catppuccin = {
+                        enable = true;
+                        flavor = "mocha";
                       };
-                  }
-                  {
-                    users.users.${user} = { pkgs, ... }: {
-                      shell = "/run/current-system/sw/bin/fish";
-                      isHidden = false;
-                      home = "/Users/${user}";
+                      programs.git = { inherit userEmail userName; };
+                      home.file.".config/karabiner/karabiner.json".source = config.lib.file.mkOutOfStoreSymlink ./modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
                     };
-                  }
-                  {
-                    nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
-                    programs.fish.enable = true;
-                  }
-                  my-nix-homebrew
-                  ./modules/shared
-                  ./hosts/m3
-                ];
+                  users.users.${user} = { pkgs, ... }: {
+                    shell = "/run/current-system/sw/bin/fish";
+                    isHidden = false;
+                    home = "/Users/${user}";
+                  };
+                  nix.settings.trusted-users = [ "root" "@wheel" "${user}" ]; # Otherwise we get comlaints
+                  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
+                }];
               };
+
           gkr =
             let
               name = "Genki";
@@ -156,26 +154,48 @@
       nixosConfigurations = {
         gdrn =
           let
-            name = "Ólafur Bjarki Bogason";
             user = "genki";
+            userName = "Ólafur Bjarki Bogason";
             userEmail = "olafur@genkiinstruments.com";
           in
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            specialArgs = { inherit user name userEmail; };
             modules = [{
               imports = [
-                srvos.nixosModules.common
+                srvos.nixosModules.server
                 srvos.nixosModules.mixins-systemd-boot
                 srvos.nixosModules.mixins-terminfo
                 srvos.nixosModules.mixins-nix-experimental
                 srvos.nixosModules.mixins-trusted-nix-caches
                 disko.nixosModules.disko
                 home-manager.nixosModules.home-manager
+                ./modules/shared
                 ./hosts/gdrn
               ];
+              users.users.${user} = {
+                isNormalUser = true;
+                description = "${userName}";
+                extraGroups = [ "networkmanager" "wheel" "docker" ];
+              };
               networking.hostName = "gdrn";
               networking.hostId = "deadbeef";
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              home-manager.users.${user} = { config, ... }:
+                {
+                  imports = [
+                    nix-index-database.hmModules.nix-index
+                    catppuccin.homeManagerModules.catppuccin
+                    ./modules/shared/home.nix
+                  ];
+                  catppuccin = {
+                    enable = true;
+                    flavor = "mocha";
+                  };
+                  programs.git = { inherit userEmail userName; };
+                };
+              programs.fish.enable = true;
             }];
           };
         biggimaus =
