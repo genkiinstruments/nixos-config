@@ -305,11 +305,11 @@
         elixir-ls
 
         # Other
-        # marksman
+        marksman
         shfmt
-        markdownlint-cli
+        markdownlint-cli2
 
-        neovim-remote
+        markdown-oxide
       ];
 
       plugins = [ pkgs.vimPlugins.lazy-nvim ];
@@ -340,12 +340,18 @@
             neotest-zig
             vim-tmux-navigator
 
+            # Markdown
+            headlines-nvim
+            markdown-preview-nvim
+            markdown-nvim
+            vim-markdown-toc
+            conform-nvim
+
             # LazyVim
             LazyVim
             cmp-buffer
             cmp-nvim-lsp
             cmp-path
-            conform-nvim
             dashboard-nvim
             dressing-nvim
             flash-nvim
@@ -384,9 +390,6 @@
             vim-illuminate
             vim-startuptime
             which-key-nvim
-            headlines-nvim
-            markdown-preview-nvim
-            markdown-nvim
             undotree
             cloak-nvim
             harpoon2
@@ -440,7 +443,7 @@
             },
             spec = {
               -- add LazyVim and import its plugins
-              { "LazyVim/LazyVim", import = "lazyvim.plugins" },
+              { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { rocks = { enabled = false; } } },
               -- import any extras modules here
               { import = "lazyvim.plugins.extras.test.core" },
               { import = "lazyvim.plugins.extras.lang.typescript" },
@@ -455,7 +458,7 @@
                     },
                   },
                 } },
-              -- { import = "lazyvim.plugins.extras.lang.markdown" },
+              { import = "lazyvim.plugins.extras.lang.markdown" },
               { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.linting.eslint" },
               { import = "lazyvim.plugins.extras.coding.mini-surround" },
@@ -476,11 +479,7 @@
               -- import/override with your plugins
               { import = "plugins" },
               -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
-              { "nvim-treesitter/nvim-treesitter",
-                opts = function(_, opts)
-                  opts.ensure_installed = {}
-                end,
-              },
+              { "nvim-treesitter/nvim-treesitter", opts = function(_, opts) opts.ensure_installed = {} end, },
             },
           })
 
