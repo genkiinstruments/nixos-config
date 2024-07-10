@@ -106,7 +106,6 @@
                       shell = "/run/current-system/sw/bin/fish";
                       isHidden = false;
                       home = "/Users/${user}";
-                      openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
                     };
                   }
                   {
