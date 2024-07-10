@@ -1,32 +1,20 @@
-{ lib, pkgs, user, ... }:
-
-{
-  imports = [
-    ../../modules/shared
-  ];
-
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
-
-  # Enable tailscale. We manually authenticate when we want with
-  # "sudo tailscale up". If you don't use tailscale, you should comment
-  # out or delete all of this.
+_: {
+  # Enable tailscale. We manually authenticate when we want with `tailscale up`
   services.tailscale.enable = true;
 
-  # Setup user, packages, programs
-  nix = {
-    settings.trusted-users = [ "@admin" "${user}" ];
+  # Auto upgrade nix package and the daemon service (multi-user install, aborting activation
+  services.nix-daemon.enable = true;
 
-    gc = {
-      user = "root";
-      automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
-      options = "--delete-older-than 30d";
+  homebrew = {
+    enable = true;
+    casks = [ "shortcat" "raycast" "arc" "karabiner-elements" ];
+    masApps = {
+      # `nix run nixpkgs#mas -- search <app name>`
+      "Keynote" = 409183694;
+      "ColorSlurp" = 1287239339;
+      "Numbers" = 409203825;
     };
   };
-
-  # Turn off NIX_PATH warnings now that we're using flakes
-  system.checks.verifyNixPath = false;
 
   system = {
     stateVersion = 4;
@@ -35,12 +23,6 @@
       NSGlobalDomain = {
         AppleShowAllExtensions = true;
         ApplePressAndHoldEnabled = false;
-
-        # 120, 90, 60, 30, 12, 6, 2
-        KeyRepeat = 2;
-
-        # 120, 94, 68, 35, 25, 15
-        InitialKeyRepeat = 15;
 
         "com.apple.mouse.tapBehavior" = 1;
         "com.apple.sound.beep.volume" = 0.0;
@@ -64,17 +46,9 @@
       };
     };
 
-    keyboard = {
-      enableKeyMapping = true;
-      remapCapsLockToControl = true;
-    };
-
     activationScripts.postActivation.text = ''
-      # Set the default shell as fish for the user
-      sudo chsh -s ${lib.getBin pkgs.fish}/bin/fish "${user}"
-      
       # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-      defaults write -g InitialKeyRepeat -int 10 
+      defaults write -g InitialKeyRepeat -int 10
       defaults write -g KeyRepeat -int 1
     '';
   };
