@@ -540,7 +540,7 @@
   };
 
   # https://github.com/nvim-treesitter/nvim-treesitter#i-get-query-error-invalid-node-type-at-position
-  home.file.".config/nvim/parser".source =
+  xdg.configFile."nvim/parser".source =
     with pkgs;
     let
       parsers = symlinkJoin
@@ -591,8 +591,8 @@
     in
     "${parsers}/parser";
 
-  home.file.".config/nvim" = { recursive = true; source = config.lib.file.mkOutOfStoreSymlink ../shared/config/nvim; };
-  home.file.".config/ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../shared/config/ghostty/config;
+  xdg.configFile."nvim" = { recursive = true; source = config.lib.file.mkOutOfStoreSymlink ../shared/config/nvim; };
+  xdg.configFile."ghostty/config".source = config.lib.file.mkOutOfStoreSymlink ../shared/config/ghostty/config;
   home.packages = with pkgs; [
     wget
     zip
