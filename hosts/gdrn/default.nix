@@ -8,7 +8,6 @@
   imports =
     [
       ./disko-config.nix
-      ../../modules/shared/home-manager.nix
       ../../modules/shared
     ];
 

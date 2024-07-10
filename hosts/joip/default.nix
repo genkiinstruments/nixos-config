@@ -10,7 +10,6 @@ in
     [
       ./disk-config.nix
       ./hardware-configuration.nix
-      ../../modules/shared/home-manager.nix
       ../../modules/shared
     ];
 

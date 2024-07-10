@@ -1,9 +1,6 @@
 { pkgs, user, ... }:
 
 {
-  imports = [
-    ../shared/home-manager.nix
-  ];
 
   users.users.${user} = {
     shell = "/run/current-system/sw/bin/fish";
