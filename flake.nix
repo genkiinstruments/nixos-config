@@ -209,23 +209,6 @@
               networking.useDHCP = true;
             }];
           };
-        nix-deployment =
-          let
-            name = "Ólafur Bjarki Bogason";
-            user = "genki";
-            host = "nix-deployment";
-            email = "olafur@genkiinstruments.com";
-          in
-          nixpkgs.lib.nixosSystem {
-            system = "aarch64-linux";
-            specialArgs = { inherit inputs user host name email; };
-            modules = [
-              nixos-hardware.nixosModules.raspberry-pi-4
-              home-manager.nixosModules.home-manager
-              "${nixpkgs}/nixos/modules/profiles/minimal.nix"
-              ./hosts/nix-deployment/configuration.nix
-            ];
-          };
         joip =
           let
             name = "Ólafur Bjarki Bogason";
