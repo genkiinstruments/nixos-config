@@ -354,6 +354,9 @@
             vim-markdown
             conform-nvim
 
+            zen-mode-nvim
+            twilight-nvim
+
             # LazyVim
             LazyVim
             cmp-buffer
@@ -465,6 +468,7 @@
                     },
                   },
                 } },
+                -- Lua
               { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.linting.eslint" },
               { import = "lazyvim.plugins.extras.coding.mini-surround" },
