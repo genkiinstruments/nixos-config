@@ -253,6 +253,7 @@
                     flavor = "mocha";
                   };
                   programs.git = { inherit userEmail userName; };
+                  programs.atuin.daemon.enabled = true; # https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
                 };
               programs.fish.enable = true; # Otherwise our shell won't be installed correctly
               services.tailscale.enable = true;
