@@ -212,29 +212,30 @@
                 srvos.nixosModules.mixins-trusted-nix-caches
                 disko.nixosModules.disko
                 home-manager.nixosModules.home-manager
+                ./modules/shared
                 ./hosts/biggimaus/disko-config.nix
               ];
+              disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
               boot = {
                 loader.systemd-boot.enable = true;
                 loader.efi.canTouchEfiVariables = true;
                 binfmt.emulatedSystems = [ "aarch64-linux" ];
                 initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-                initrd.kernelModules = [ ];
                 kernelModules = [ "kvm-intel" ];
-                extraModulePackages = [ ];
               };
               networking.hostName = "biggimaus";
               networking.hostId = "deadbeef";
-              services.tailscale.enable = true;
-              disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
+              networking.useDHCP = true;
               users.users.genki = {
                 isNormalUser = true;
+                shell = "/run/current-system/sw/bin/fish";
                 openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
-                extraGroups = [ "networkmanager" "wheel" ];
+                extraGroups = [ "wheel" ];
               };
               users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+              programs.fish.enable = true; # Otherwise our shell won't be installed correctly
+              services.tailscale.enable = true;
               system.stateVersion = "23.05";
-              networking.useDHCP = true;
             }];
           };
         joip =
