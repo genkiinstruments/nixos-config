@@ -201,6 +201,11 @@
             }];
           };
         biggimaus =
+          let
+            user = "genki";
+            userName = "Ólafur Bjarki Bogason";
+            userEmail = "olafur@genkiinstruments.com";
+          in
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [{
@@ -226,13 +231,29 @@
               networking.hostName = "biggimaus";
               networking.hostId = "deadbeef";
               networking.useDHCP = true;
-              users.users.genki = {
+              users.users.${user} = {
                 isNormalUser = true;
                 shell = "/run/current-system/sw/bin/fish";
                 openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
                 extraGroups = [ "wheel" ];
               };
               users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              home-manager.users.${user} = { config, ... }:
+                {
+                  imports = [
+                    nix-index-database.hmModules.nix-index
+                    catppuccin.homeManagerModules.catppuccin
+                    ./modules/shared/home.nix
+                  ];
+                  catppuccin = {
+                    enable = true;
+                    flavor = "mocha";
+                  };
+                  programs.git = { inherit userEmail userName; };
+                };
               programs.fish.enable = true; # Otherwise our shell won't be installed correctly
               services.tailscale.enable = true;
               system.stateVersion = "23.05";
