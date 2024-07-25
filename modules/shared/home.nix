@@ -208,14 +208,7 @@
           '';
     };
 
-    ssh = {
-      enable = true;
-      compression = true;
-      serverAliveInterval = 60;
-      controlMaster = "auto";
-      controlPersist = "10m";
-      controlPath = "~/.ssh/control-%C";
-    };
+    ssh.enable = true;
 
     git = {
       enable = true;
