@@ -104,6 +104,15 @@
                         flavor = "mocha";
                       };
                       programs.git = { inherit userEmail userName; };
+                      programs.ssh = {
+                        matchBlocks = {
+                          "github.com" = {
+                            user = "git";
+                            identityFile = "~/.ssh/id_ed25519_sk";
+                            identitiesOnly = true;
+                          };
+                        };
+                      };
                       home.file.".config/karabiner/karabiner.json".source = config.lib.file.mkOutOfStoreSymlink ./modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
                     };
                   users.users.${user} = { pkgs, ... }: {
