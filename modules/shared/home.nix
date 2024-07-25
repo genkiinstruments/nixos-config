@@ -549,21 +549,6 @@
           -- Don't show tabs
           vim.cmd [[ set showtabline=0 ]]
 
-          -- https://github.com/nvim-telescope/telescope.nvim/issues/855
-          require("telescope").setup{
-            pickers = {
-              find_files = {
-                find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
-              },
-              grep_string = {
-                additional_args = {'!.git', "--hidden"}
-              },
-              live_grep = {
-                additional_args = {'!.git', "--hidden"}
-              },
-            },
-          }
-
 
           --- TODO: Make it work with visual mode too 😇
           function toggle_markdown_todo()
