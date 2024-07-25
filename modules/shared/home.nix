@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, ... }:
 {
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
@@ -208,11 +208,24 @@
           '';
     };
 
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      compression = true;
+      serverAliveInterval = 60;
+      controlMaster = "auto";
+      controlPersist = "10m";
+      controlPath = "~/.ssh/control-%C";
+      matchBlocks = {
+        "github.com" = {
+          user = "git";
+          identityFile = "~/.ssh/id_ed25519_sk";
+          identitiesOnly = true;
+        };
+      };
+    };
 
     git = {
       enable = true;
-      ignores = [ "*.swp" ];
       lfs.enable = true;
       extraConfig = {
         init.defaultBranch = "main";
@@ -222,7 +235,26 @@
         };
         pull.rebase = true;
         rebase.autoStash = true;
+        url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
       };
+      ignores = [
+        # direnv
+        ".direnv"
+        ".envrc"
+
+        # nix
+        "result"
+        "result-*"
+
+        # vim
+        ".*.swp"
+
+        # VSCode
+        ".vscode"
+
+        # Work notes
+        "WORK.md"
+      ];
     };
 
     yazi = {
@@ -486,7 +518,7 @@
               { "williamboman/mason.nvim", enabled = false },
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
               { "akinsho/bufferline.nvim", enabled = false },
-              { "preservim/vim-markdown", ft = { "markdown" } },
+              -- { "preservim/vim-markdown", ft = { "markdown" } },
               -- import/override with your plugins
               { import = "plugins" },
               -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
@@ -503,6 +535,8 @@
 
           -- Set colorscheme
           vim.cmd.colorscheme "catppuccin-mocha"
+
+          vim.opt.spell = false
 
           -- Disable syntax highlighting for .fish files
           vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
@@ -522,13 +556,50 @@
                 find_command = { 'rg', '--files', '--iglob', '!.git', '--hidden' },
               },
               grep_string = {
-                additional_args = {"--hidden"}
+                additional_args = {'!.git', "--hidden"}
               },
               live_grep = {
-                additional_args = {"--hidden"}
+                additional_args = {'!.git', "--hidden"}
               },
             },
           }
+
+
+          --- TODO: Make it work with visual mode too 😇
+          function toggle_markdown_todo()
+            -- Get the current line and cursor position
+            local line = vim.api.nvim_get_current_line()
+            local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+            
+            -- Check if the line is empty or has only whitespace
+            if line:match("^%s*$") then
+              -- If the line is empty or only whitespace, add "- [ ] "
+              line = "- [ ] "
+              vim.cmd('startinsert!')
+            elseif line:match("^%s*- %[ %]") then
+              -- Change unchecked to checked
+              line = line:gsub("^(%s*)- %[ %]", "%1- [x]")
+            elseif line:match("^%s*- %[x%]") then
+              -- Change checked to unchecked
+              line = line:gsub("^(%s*)- %[x%]", "%1- [ ]")
+            elseif not line:match("^%s*-") then
+              -- If there's no bullet point, prepend "- [ ] "
+              line = "- [ ] " .. line
+              vim.cmd('startinsert!')
+            else
+              -- If it's a bullet point without checkbox, add checkbox
+              line = line:gsub("^(%s*-)", "%1 [ ]")
+              vim.cmd('startinsert!')
+            end
+            
+            -- Set the modified line back
+            vim.api.nvim_set_current_line(line)
+            
+            -- Move the cursor to the end of the line
+            vim.api.nvim_win_set_cursor(0, {row, #line})
+          end
+
+          vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggle_markdown_todo()<CR>', { noremap = true, silent = true })
         '';
     };
 
@@ -613,6 +684,8 @@
     zip
     moonlight-qt
     magic-wormhole-rs
+    neofetch
+    bitwarden-cli
     gh
     nb
 
