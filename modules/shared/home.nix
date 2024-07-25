@@ -215,16 +215,6 @@
       controlMaster = "auto";
       controlPersist = "10m";
       controlPath = "~/.ssh/control-%C";
-      matchBlocks = {
-        "github.com" = {
-          user = "git";
-          identityFile = "~/.ssh/id_ed25519_sk";
-          identitiesOnly = true;
-        };
-        "gdrn" = {
-          forwardAgent = true;
-        };
-      };
     };
 
     git = {
