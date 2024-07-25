@@ -41,7 +41,7 @@
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in {
           default = with pkgs; mkShell {
-            nativeBuildInputs = [ bashInteractive git nixos-anywhere ];
+            buildInputs = [ bashInteractive git nixos-anywhere age age-plugin-yubikey ];
             shellHook = ''export EDITOR=nvim'';
           };
         };
