@@ -74,10 +74,11 @@
               user = "olafur";
               userName = "Ólafur Bjarki Bogason";
               userEmail = "olafur@genkiinstruments.com";
+              system = "aarch64-darwin";
             in
             darwin.lib.darwinSystem
               rec {
-                system = "aarch64-darwin";
+                inherit system;
                 specialArgs.pkgs-stable = import nixpkgs-stable { inherit system; config.allowUnfree = true; };
                 modules = [{
                   imports = [
@@ -110,7 +111,8 @@
                     isHidden = false;
                     home = "/Users/${user}";
                   };
-                  nix.settings.trusted-users = [ "root" "@wheel" "${user}" ]; # Otherwise we get comlaints
+                  environment.systemPackages = with nixpkgs.legacyPackages.${system}; [ openssh ]; # needed for fido2 support
+                  nix.settings.trusted-users = [ "root" "@wheel" "${user}" ]; # Otherwise we get complaints
                   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
                 }];
               };
