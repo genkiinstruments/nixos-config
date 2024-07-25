@@ -221,6 +221,9 @@
           identityFile = "~/.ssh/id_ed25519_sk";
           identitiesOnly = true;
         };
+        "gdrn" = {
+          forwardAgent = true;
+        };
       };
     };
 
