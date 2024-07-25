@@ -185,6 +185,7 @@
               ];
               users.users.${user} = {
                 isNormalUser = true;
+                shell = "/run/current-system/sw/bin/fish";
                 description = "${userName}";
                 extraGroups = [ "networkmanager" "wheel" "docker" ];
                 openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
