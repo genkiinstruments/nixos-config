@@ -210,6 +210,7 @@
                   programs.git = { inherit userEmail userName; };
                 };
               programs.fish.enable = true;
+              services.openssh.extraConfig = ''AllowAgentForwarding yes'';
             }];
           };
         biggimaus =
