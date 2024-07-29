@@ -295,10 +295,7 @@
                 };
               programs.fish.enable = true; # Otherwise our shell won't be installed correctly
               services.tailscale.enable = true;
-              programs.ssh = {
-                enable = true;
-                startAgent = true;
-              };
+              programs.ssh.startAgent = true;
               system.stateVersion = "23.05";
             }];
           };
