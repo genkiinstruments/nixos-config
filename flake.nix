@@ -226,7 +226,7 @@
                 home-manager.nixosModules.home-manager
                 ./modules/shared
               ];
-              disko.devices = {
+              config.disko.devices = {
                 disk = {
                   main = {
                     device = "/dev/disk/by-id/ata-SanDisk_SD8SN8U512G1002_175124804870";
