@@ -225,7 +225,6 @@
               imports = [
                 home-manager.nixosModules.home-manager
                 ./modules/shared
-                ./hosts/biggimaus/disk-config.nix
               ];
               disko.devices = {
                 disk = {
