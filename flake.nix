@@ -297,6 +297,7 @@
               services.tailscale.enable = true;
               services.openssh.enable = true;
               programs.ssh.startAgent = true;
+              programs.ssh.askPassword = true;
               system.stateVersion = "23.05";
             }];
           };
