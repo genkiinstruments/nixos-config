@@ -40,7 +40,7 @@
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in {
           default = with pkgs; mkShell {
-            buildInputs = [ bashInteractive git nixos-anywhere age age-plugin-yubikey ];
+            buildInputs = [ bashInteractive git nixos-anywhere age age-plugin-yubikey ] ++ lib.optional stdenv.isDarwin [ darwin.packages.${system}.darwin-rebuild ];
             shellHook = ''export EDITOR=nvim'';
           };
         };
