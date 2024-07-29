@@ -110,6 +110,7 @@
                             identitiesOnly = true;
                           };
                         };
+                        extraConfig = "SetEnv TERM=xterm-256color";
                       };
                       home.file.".config/karabiner/karabiner.json".source = config.lib.file.mkOutOfStoreSymlink ./modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
                     };
