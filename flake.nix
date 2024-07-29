@@ -121,6 +121,7 @@
                   };
                   environment.systemPackages = with nixpkgs.legacyPackages.${system}; [ openssh ]; # needed for fido2 support
                   environment.variables.SSH_ASKPASS = "/usr/local/bin/ssh-askpass"; # TODO: Bring to nixpkgs https://github.com/theseal/ssh-askpass
+                  environment.variables.DISPLAY = ":0";
                   nix.settings.trusted-users = [ "root" "@wheel" "${user}" ]; # Otherwise we get complaints
                   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
                 }];
