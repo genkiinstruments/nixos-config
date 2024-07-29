@@ -3,7 +3,6 @@
   inputs = {
     srvos.url = "github:nix-community/srvos";
     nixpkgs.follows = "srvos/nixpkgs"; # use the version of nixpkgs that has been tested with SrvOS
-    nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-24.05";
     home-manager.url = "github:nix-community/home-manager";
     darwin = {
       url = "github:LnL7/nix-darwin/master";
@@ -35,7 +34,7 @@
     };
     catppuccin.url = "github:catppuccin/nix";
   };
-  outputs = { self, srvos, darwin, nix-homebrew, home-manager, nixpkgs, nixpkgs-stable, nixos-hardware, nix-index-database, disko, catppuccin, ... } @inputs:
+  outputs = { self, srvos, darwin, nix-homebrew, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko, catppuccin, ... } @inputs:
     let
       forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ] f;
       devShell = system:
@@ -79,7 +78,6 @@
             darwin.lib.darwinSystem
               rec {
                 inherit system;
-                specialArgs.pkgs-stable = import nixpkgs-stable { inherit system; config.allowUnfree = true; };
                 modules = [{
                   imports = [
                     # TODO: openssh.authorizedKeys.keyFiles has been deprecated in nix-darwin
