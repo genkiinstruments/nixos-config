@@ -192,6 +192,7 @@
               };
               users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
               networking.hostName = "gdrn";
+              # TODO: Remove me, I'm just a measly comment...
               networking.hostId = "deadbeef";
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -211,6 +212,7 @@
                 };
               programs.fish.enable = true;
               services.openssh.extraConfig = ''AllowAgentForwarding yes'';
+              programs.ssh.startAgent = true;
             }];
           };
         kroli =
