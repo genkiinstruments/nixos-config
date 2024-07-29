@@ -273,6 +273,7 @@
                 isNormalUser = true;
                 shell = "/run/current-system/sw/bin/fish";
                 openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+                hashedPassword = "";
                 extraGroups = [ "wheel" ];
               };
               users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
@@ -295,6 +296,7 @@
                 };
               programs.fish.enable = true; # Otherwise our shell won't be installed correctly
               services.tailscale.enable = true;
+              services.openssh.enable = true;
               programs.ssh.startAgent = true;
               system.stateVersion = "23.05";
             }];
