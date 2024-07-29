@@ -213,6 +213,62 @@
               services.openssh.extraConfig = ''AllowAgentForwarding yes'';
             }];
           };
+        kroli =
+          let
+            user = "genki";
+            userName = "Ólafur Bjarki Bogason";
+            userEmail = "olafur@genkiinstruments.com";
+          in
+          nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+            modules = [{
+              imports = [
+                home-manager.nixosModules.home-manager
+                ./modules/shared
+                ./hosts/biggimaus/disk-config.nix
+              ];
+              disko.devices.disk.main.device = "/dev/disk/by-id/ata-SanDisk_SD8SN8U512G1002_175124804870";
+              boot = {
+                loader.systemd-boot.enable = true;
+                loader.efi.canTouchEfiVariables = true;
+                initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+                kernelModules = [ "kvm-intel" ];
+              };
+              networking.hostName = "kroli";
+              networking.useDHCP = true;
+              users.users.${user} = {
+                isNormalUser = true;
+                shell = "/run/current-system/sw/bin/fish";
+                openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+                extraGroups = [ "wheel" ];
+              };
+              users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              home-manager.users.${user} = { config, ... }:
+                {
+                  imports = [
+                    nix-index-database.hmModules.nix-index
+                    catppuccin.homeManagerModules.catppuccin
+                    ./modules/shared/home.nix
+                  ];
+                  catppuccin = {
+                    enable = true;
+                    flavor = "mocha";
+                  };
+                  programs.git = { inherit userEmail userName; };
+                  programs.atuin.settings.daemon.enabled = true; # https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
+                };
+              programs.fish.enable = true; # Otherwise our shell won't be installed correctly
+              services.tailscale.enable = true;
+              programs.ssh = {
+                enable = true;
+                startAgent = true;
+              };
+              system.stateVersion = "23.05";
+            }];
+          };
         biggimaus =
           let
             user = "genki";
