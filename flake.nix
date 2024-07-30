@@ -387,8 +387,8 @@
               programs.fish.enable = true; # Otherwise our shell won't be installed correctly
               services.tailscale.enable = true;
               services.openssh.enable = true;
+              services.openssh.extraConfig = ''AllowAgentForwarding yes'';
               programs.ssh.startAgent = true;
-              programs.ssh.askPassword = true;
               system.stateVersion = "23.05";
             }];
           };
