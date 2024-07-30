@@ -112,6 +112,7 @@
                         };
                         forwardAgent = true;
                         addKeysToAgent = "yes";
+                        serverAliveInterval = 300;
                         extraConfig = "SetEnv TERM=xterm-256color";
                       };
                       programs.fish.interactiveShellInit = ''
