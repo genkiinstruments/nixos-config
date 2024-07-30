@@ -3,14 +3,19 @@
   inputs = {
     srvos.url = "github:nix-community/srvos";
     nixpkgs.follows = "srvos/nixpkgs"; # use the version of nixpkgs that has been tested with SrvOS
-    home-manager.url = "github:nix-community/home-manager";
-    darwin = {
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nix-darwin = {
       url = "github:LnL7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nix-homebrew = {
       url = "github:zhaofengli-wip/nix-homebrew";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nix-darwin.follows = "nix-darwin";
     };
     homebrew-bundle = {
       url = "github:homebrew/homebrew-bundle";
@@ -34,13 +39,13 @@
     };
     catppuccin.url = "github:catppuccin/nix";
   };
-  outputs = { self, srvos, darwin, nix-homebrew, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko, catppuccin, ... } @inputs:
+  outputs = { self, srvos, nix-darwin, nix-homebrew, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko, catppuccin, ... } @inputs:
     let
       forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ] f;
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in {
           default = with pkgs; mkShell {
-            buildInputs = [ bashInteractive git nixos-anywhere age age-plugin-yubikey ] ++ lib.optional stdenv.isDarwin [ darwin.packages.${system}.darwin-rebuild ];
+            buildInputs = [ bashInteractive git nixos-anywhere age age-plugin-yubikey ] ++ lib.optional stdenv.isDarwin [ nix-darwin.packages.${system}.darwin-rebuild ];
             shellHook = ''export EDITOR=nvim'';
           };
         };
@@ -75,7 +80,7 @@
               userEmail = "olafur@genkiinstruments.com";
               system = "aarch64-darwin";
             in
-            darwin.lib.darwinSystem
+            nix-darwin.lib.darwinSystem
               rec {
                 inherit system;
                 modules = [{
@@ -180,7 +185,7 @@
               userEmail = "olafur@genkiinstruments.com";
               host = "gkr";
             in
-            darwin.lib.darwinSystem
+            nix-darwin.lib.darwinSystem
               {
                 system = "aarch64-darwin";
                 specialArgs = { inherit inputs user name userEmail host; };
@@ -197,7 +202,7 @@
               userEmail = "daniel@genkiinstruments.com";
               host = "d";
             in
-            darwin.lib.darwinSystem
+            nix-darwin.lib.darwinSystem
               {
                 system = "aarch64-darwin";
                 specialArgs = { inherit inputs user name userEmail host; };
