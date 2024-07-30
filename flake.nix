@@ -110,6 +110,8 @@
                             identitiesOnly = true;
                           };
                         };
+                        forwardAgent = true;
+                        addKeysToAgent = "yes";
                         extraConfig = "SetEnv TERM=xterm-256color";
                       };
                       programs.fish.interactiveShellInit = ''
