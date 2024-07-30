@@ -276,9 +276,12 @@
                 shell = "/run/current-system/sw/bin/fish";
                 openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
                 extraGroups = [ "wheel" ];
+                hashedPassword = "";
               };
               users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+              users.users.root.hashedPassword = "";
               security.sudo.execWheelOnly = true;
+              security.sudo.wheelNeedsPassword = false;
               security.sudo.extraConfig = ''Defaults lecture = never'';
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
@@ -364,9 +367,12 @@
                 shell = "/run/current-system/sw/bin/fish";
                 openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
                 extraGroups = [ "wheel" ];
+                hashedPassword = "";
               };
               users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+              users.users.root.hashedPassword = "";
               security.sudo.execWheelOnly = true;
+              security.sudo.wheelNeedsPassword = false;
               security.sudo.extraConfig = ''Defaults lecture = never'';
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
