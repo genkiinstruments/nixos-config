@@ -1,10 +1,4 @@
-{ pkgs, user, ... }:
-let
-  homekit-tcp-port = 21063; # Freely choosable
-  homekit-udp-port = 5353; # Hardcoded by apple, I think
-  nginx-port = 80;
-  ha-port = 8123;
-in
+{ pkgs, user, lib, ... }:
 {
   imports =
     [
@@ -56,9 +50,15 @@ in
 
   nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    openFirewall = true;
+    settings = {
+      PasswordAuthentication = false;
+    };
+  };
 
-  services.tailscale.enable = true;
+  programs.ssh.startAgent = true;
 
   services.home-assistant = {
     enable = true;
@@ -66,27 +66,41 @@ in
 
     extraComponents = [
       "apple_tv"
+      "brother"
       "default_config"
       "denonavr"
       "esphome"
       "homekit"
       "homekit_controller"
+      "icloud"
       "ipp"
+      "jellyfin"
       "lovelace"
       "media_player"
+      "met"
       "mjpeg"
       "mqtt"
+      "otbr"
       "prusalink"
+      "radarr"
+      "ring"
+      "roomba"
+      "snmp"
+      "sonarr"
+      "sonos"
       "spotify"
+      "unifi"
+      "unifiprotect"
+      "upnp"
       "vacuum"
       "weather"
+      "webostv"
       "wled"
       "xiaomi_miio"
     ];
     extraPackages = python3Packages: with python3Packages; [ pip gtts dateutil aiohomekit pyatv getmac async-upnp-client ];
     config = {
-      # Includes dependencies for a basic setup
-      # https://www.home-assistant.io/integrations/default_config/
+      # Includes dependencies for a basic setup: https://www.home-assistant.io/integrations/default_config/
       default_config = { };
     };
   };
@@ -96,7 +110,73 @@ in
     reflector = true;
   };
 
-  networking.firewall.enable = false;
+  services = {
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    radarr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    sabnzbd = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    sonarr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    prowlarr = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    caddy = {
+      enable = true;
+      virtualHosts."jellyfin.tail01dbd.ts.net".extraConfig = ''
+        reverse_proxy http://localhost:8096
+      '';
+      virtualHosts."radarr.tail01dbd.ts.net".extraConfig = ''
+        reverse_proxy http://localhost:7878
+      '';
+      virtualHosts."sabnzbd.tail01dbd.ts.net".extraConfig = ''
+        reverse_proxy http://localhost:8080
+      '';
+      virtualHosts."sonarr.tail01dbd.ts.net".extraConfig = ''
+        reverse_proxy http://localhost:8989
+      '';
+      virtualHosts."prowlarr.tail01dbd.ts.net".extraConfig = ''
+        reverse_proxy http://localhost:9696
+      '';
+    };
+
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+      useRoutingFeatures = "both";
+      permitCertUid = "caddy";
+    };
+
+    resolved.enable = true;
+  };
+
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "ve-+" ];
+    externalInterface = "eno1";
+  };
+
+  networking.firewall = {
+    enable = false;
+    trustedInterfaces = [ "tailscale0" ];
+  };
+
+  networking.useHostResolvConf = lib.mkForce false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
