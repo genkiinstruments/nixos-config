@@ -77,6 +77,7 @@
         gp = "git push";
         gs = "git status";
         gt = "git tag";
+        c = "clear";
       };
       interactiveShellInit = ''
         # bind to ctrl-p in normal and insert mode, add any other bindings you want here too
