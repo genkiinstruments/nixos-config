@@ -6,6 +6,8 @@
       ./hardware-configuration.nix
       ../../modules/shared
       ../../modules/shared/servarr
+      ../../modules/shared/homepage
+      ../../modules/shared/tailscale.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
