@@ -8,7 +8,6 @@
       ../../modules/shared/servarr
       ../../modules/shared/homepage
       ../../modules/shared/tailscale.nix
-      ../../modules/shared/cloudflare.nix
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -19,8 +18,6 @@
   networking.useDHCP = lib.mkDefault true;
 
   networking.networkmanager.enable = true;
-
-  services.cloudflare = true;
 
   services.openssh.openFirewall = true;
   programs.ssh.startAgent = true;

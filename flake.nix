@@ -108,7 +108,7 @@
                         file = "${secrets}/my-secret.age";
                         mode = "644";
                         owner = "${user}";
-                        group = "users";
+                        group = "staff";
                       };
                     };
                   };
@@ -540,7 +540,7 @@
           in
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
-            specialArgs = { inherit inputs user host name userEmail; };
+            specialArgs = { inherit inputs user host name userEmail secrets; };
             modules = [{
               imports = [
                 srvos.nixosModules.server
@@ -558,7 +558,13 @@
                     file = "${secrets}/my-secret.age";
                     mode = "644";
                     owner = "${user}";
-                    group = "staff";
+                    group = "users";
+                  };
+                  cloudflare-api = {
+                    file = "${secrets}/cloudflare-api.age";
+                    owner = "caddy";
+                    group = "caddy";
+                    mode = "600";
                   };
                 };
               };

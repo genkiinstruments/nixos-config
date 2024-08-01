@@ -1,5 +1,6 @@
 { lib
 , addresses
+, pkgs
 , ...
 }:
 {
@@ -42,7 +43,8 @@
 
             caddy = {
               enable = true;
-              virtualHosts."${name}.tailnet-d5da.ts.net".extraConfig = ''
+              package = pkgs.callPackage ../custom-caddy.nix { };
+              virtualHosts."${name}.tail01dbd.ts.net".extraConfig = ''
                 reverse_proxy http://localhost:${builtins.elemAt addressParts 1}
               '';
             };
