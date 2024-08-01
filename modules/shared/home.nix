@@ -368,7 +368,6 @@
             vim-tmux-navigator
 
             # Markdown
-            headlines-nvim
             markdown-preview-nvim
             markdown-nvim
             vim-markdown-toc
@@ -395,7 +394,7 @@
             oil-nvim
             neoconf-nvim
             nvim-nio
-            neodev-nvim
+            lazydev-nvim
             noice-nvim
             nui-nvim
             calendar-vim
@@ -403,7 +402,7 @@
             nvim-lint
             nvim-lspconfig
             nvim-notify
-            nvim-spectre
+            grug-far-nvim
             nvim-treesitter
             nvim-treesitter-context
             nvim-treesitter-textobjects
@@ -499,6 +498,7 @@
               { import = "lazyvim.plugins.extras.lang.clangd" },
               { import = "lazyvim.plugins.extras.formatting.prettier" },
               { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+              { import = "lazyvim.plugins.extras.lang.markdown" },
               -- The following configs are needed for fixing lazyvim on nix
               -- force enable telescope-fzf-native.nvim
               -- { "nvim-telescope/telescope-zf-native.nvim", enabled = true },
