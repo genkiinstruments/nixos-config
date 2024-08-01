@@ -514,18 +514,49 @@
           let
             name = "Ólafur Bjarki Bogason";
             user = "olafur";
+            userName = user;
             host = "joip";
             userEmail = "olafur@genkiinstruments.com";
           in
           nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             specialArgs = { inherit inputs user host name userEmail; };
-            modules = [
-              nixos-hardware.nixosModules.intel-nuc-8i7beh
-              home-manager.nixosModules.home-manager
-              disko.nixosModules.disko
-              ./hosts/joip
-            ];
+            modules = [{
+              imports = [
+                srvos.nixosModules.server
+                nixos-hardware.nixosModules.intel-nuc-8i7beh
+                home-manager.nixosModules.home-manager
+                disko.nixosModules.disko
+                ./hosts/joip
+              ];
+              users.users.${user} = {
+                isNormalUser = true;
+                shell = "/run/current-system/sw/bin/fish";
+                openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+                extraGroups = [ "wheel" ];
+              };
+              users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
+              nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
+              networking.hostName = "joip";
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.backupFileExtension = "backup";
+              home-manager.users.${user} = { config, ... }:
+                {
+                  imports = [
+                    nix-index-database.hmModules.nix-index
+                    catppuccin.homeManagerModules.catppuccin
+                    ./modules/shared/home.nix
+                  ];
+                  catppuccin = {
+                    enable = true;
+                    flavor = "mocha";
+                  };
+                  programs.git = { inherit userEmail userName; };
+                };
+              programs.fish.enable = true; # Otherwise our shell won't be installed correctly
+              system.stateVersion = "23.05";
+            }];
           };
       };
     };

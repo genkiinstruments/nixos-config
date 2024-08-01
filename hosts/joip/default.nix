@@ -1,4 +1,4 @@
-{ pkgs, user, lib, ... }:
+{ pkgs, lib, ... }:
 {
   imports =
     [
@@ -10,54 +10,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Emulate arm64 binaries
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  networking.hostName = "joip"; # Define your hostname.
+  networking.useDHCP = lib.mkDefault true;
 
   networking.networkmanager.enable = true;
 
-  # Set your time zone.
-  time.timeZone = "Atlantic/Reykjavik";
-
-  i18n.defaultLocale = "en_US.UTF-8";
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "is_IS.UTF-8";
-    LC_IDENTIFICATION = "is_IS.UTF-8";
-    LC_MEASUREMENT = "is_IS.UTF-8";
-    LC_MONETARY = "is_IS.UTF-8";
-    LC_NAME = "is_IS.UTF-8";
-    LC_NUMERIC = "is_IS.UTF-8";
-    LC_PAPER = "is_IS.UTF-8";
-    LC_TELEPHONE = "is_IS.UTF-8";
-    LC_TIME = "is_IS.UTF-8";
-  };
-
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.${user} = {
-    isNormalUser = true;
-    description = "${user}";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
-    hashedPassword = "$y$j9T$EIhzkT6pSVKuf79oPtE670$0PIzTEEUhafRQPEfJTdgX99VxefWrT.5I7BQJqDpAT/";
-  };
-
-  nix.settings.trusted-users = [ "root" "@wheel" "${user}" ];
-
-  services.openssh = {
-    enable = true;
-    openFirewall = true;
-    settings = {
-      PasswordAuthentication = false;
-    };
-  };
-
+  services.openssh.openFirewall = true;
   programs.ssh.startAgent = true;
 
   services.home-assistant = {
@@ -108,6 +67,7 @@
   services.avahi = {
     enable = true;
     reflector = true;
+    openFirewall = true;
   };
 
   services = {
@@ -171,12 +131,40 @@
     externalInterface = "eno1";
   };
 
-  networking.firewall = {
-    enable = false;
-    trustedInterfaces = [ "tailscale0" ];
-  };
-
   networking.useHostResolvConf = lib.mkForce false;
+  networking.firewall = {
+    enable = true;
+    trustedInterfaces = [ "tailscale0" ];
+    allowedTCPPorts = [
+      80
+      443
+      1400
+      5580
+      8123
+      21063
+      21064
+      51827
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+    ];
+    allowedUDPPorts = [
+      1900
+      5353
+      5683
+      21324
+      111
+      2049
+      4000
+      4001
+      4002
+      20048
+    ];
+
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
