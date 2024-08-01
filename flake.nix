@@ -108,7 +108,7 @@
                         file = "${secrets}/my-secret.age";
                         mode = "644";
                         owner = "${user}";
-                        group = "staff";
+                        group = "users";
                       };
                     };
                   };
