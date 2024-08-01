@@ -1,12 +1,6 @@
-{ pkgs
-, ...
-}:
+_:
 {
-  disabledModules = [ "services/misc/homepage-dashboard.nix" ];
-  imports = [
-    "${pkgs}/nixos/modules/services/misc/homepage-dashboard.nix"
-    ./joip.nix
-  ];
+  imports = [ ./joip.nix ];
 
   services.homepage-dashboard = {
     enable = true;
