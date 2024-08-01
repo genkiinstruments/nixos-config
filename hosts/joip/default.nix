@@ -105,7 +105,6 @@
       4002
       20048
     ];
-
   };
 
   # This value determines the NixOS release from which the default
