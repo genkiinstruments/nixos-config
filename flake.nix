@@ -38,8 +38,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     catppuccin.url = "github:catppuccin/nix";
+    agenix.url = "github:ryantm/agenix";
+    secrets = {
+      url = "git+ssh://git@github.com/multivac61/nix-secrets.git";
+      flake = false;
+    };
   };
-  outputs = { self, srvos, nix-darwin, nix-homebrew, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko, catppuccin, ... } @inputs:
+  outputs = { self, srvos, nix-darwin, nix-homebrew, home-manager, nixpkgs, nixos-hardware, nix-index-database, disko, catppuccin, secrets, agenix, ... } @inputs:
     let
       forAllSystems = f: nixpkgs.lib.genAttrs [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ] f;
       devShell = system:
@@ -89,9 +94,24 @@
                     # srvos.darwinModules.common
                     home-manager.darwinModules.home-manager
                     my-nix-homebrew
+                    agenix.darwinModules.default
                     ./modules/shared
                     ./hosts/m3
                   ];
+                  age = {
+                    identityPaths = [ "/Users/${user}/.ssh/id_ed25519" ];
+
+                    secrets = {
+                      "my-secret" = {
+                        symlink = true;
+                        path = "/Users/${user}/Desktop/my-secret";
+                        file = "${secrets}/my-secret.age";
+                        mode = "644";
+                        owner = "${user}";
+                        group = "staff";
+                      };
+                    };
+                  };
                   home-manager.useGlobalPkgs = true;
                   home-manager.useUserPackages = true;
                   home-manager.backupFileExtension = "backup";
@@ -527,8 +547,21 @@
                 nixos-hardware.nixosModules.intel-nuc-8i7beh
                 home-manager.nixosModules.home-manager
                 disko.nixosModules.disko
+                agenix.nixosModules.default
                 ./hosts/joip
               ];
+              age = {
+                secrets = {
+                  "my-secret" = {
+                    symlink = true;
+                    path = "/home/olafur/my-secret";
+                    file = "${secrets}/my-secret.age";
+                    mode = "644";
+                    owner = "${user}";
+                    group = "staff";
+                  };
+                };
+              };
               users.users.${user} = {
                 isNormalUser = true;
                 shell = "/run/current-system/sw/bin/fish";
