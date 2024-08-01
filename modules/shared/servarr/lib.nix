@@ -1,5 +1,4 @@
-{ pkgs
-, lib
+{ lib
 , addresses
 , ...
 }:
@@ -21,7 +20,6 @@
           isReadOnly = false;
         };
       };
-      nixpkgs = pkgs.unstable.path;
       config =
         { config, lib, ... }:
         {
