@@ -5,6 +5,7 @@
       ./disk-config.nix
       ./hardware-configuration.nix
       ../../modules/shared
+      ../../modules/shared/servarr
     ];
 
   boot.loader.systemd-boot.enable = true;
@@ -68,67 +69,6 @@
     enable = true;
     reflector = true;
     openFirewall = true;
-  };
-
-  services = {
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-    };
-
-    radarr = {
-      enable = true;
-      openFirewall = true;
-    };
-
-    sabnzbd = {
-      enable = true;
-      openFirewall = true;
-    };
-
-    sonarr = {
-      enable = true;
-      openFirewall = true;
-    };
-
-    prowlarr = {
-      enable = true;
-      openFirewall = true;
-    };
-
-    caddy = {
-      enable = true;
-      virtualHosts."jellyfin.tail01dbd.ts.net".extraConfig = ''
-        reverse_proxy http://localhost:8096
-      '';
-      virtualHosts."radarr.tail01dbd.ts.net".extraConfig = ''
-        reverse_proxy http://localhost:7878
-      '';
-      virtualHosts."sabnzbd.tail01dbd.ts.net".extraConfig = ''
-        reverse_proxy http://localhost:8080
-      '';
-      virtualHosts."sonarr.tail01dbd.ts.net".extraConfig = ''
-        reverse_proxy http://localhost:8989
-      '';
-      virtualHosts."prowlarr.tail01dbd.ts.net".extraConfig = ''
-        reverse_proxy http://localhost:9696
-      '';
-    };
-
-    tailscale = {
-      enable = true;
-      openFirewall = true;
-      useRoutingFeatures = "both";
-      permitCertUid = "caddy";
-    };
-
-    resolved.enable = true;
-  };
-
-  networking.nat = {
-    enable = true;
-    internalInterfaces = [ "ve-+" ];
-    externalInterface = "eno1";
   };
 
   networking.useHostResolvConf = lib.mkForce false;
