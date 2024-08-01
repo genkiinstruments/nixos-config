@@ -1,11 +1,10 @@
 { pkgs
-, inputs
 , ...
 }:
 {
   disabledModules = [ "services/misc/homepage-dashboard.nix" ];
   imports = [
-    "${inputs.unstable}/nixos/modules/services/misc/homepage-dashboard.nix"
+    "${pkgs}/nixos/modules/services/misc/homepage-dashboard.nix"
     ./joip.nix
   ];
 
