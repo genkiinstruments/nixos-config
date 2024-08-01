@@ -468,7 +468,7 @@
                 disko.nixosModules.disko
                 home-manager.nixosModules.home-manager
                 ./modules/shared
-                ./hosts/biggimaus
+                ./modules/shared/atuind.nix
                 ./hosts/biggimaus/disko-config.nix
               ];
               disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";

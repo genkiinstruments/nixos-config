@@ -51,7 +51,6 @@
         keymap_mode = "auto";
         prefers_reduced_motion = true;
         enter_accept = true;
-        daemon.enabled = true; # https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
       };
     };
     zoxide = {
