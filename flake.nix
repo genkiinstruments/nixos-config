@@ -303,7 +303,7 @@
               disko.devices = {
                 disk = {
                   main = {
-                    device = "/dev/disk/by-id/ata-TOSHIBA_KSG60ZMV256G_M.2_2280_256GB_583B83NWK5S";
+                    device = "/dev/disk/by-id/ata-TOSHIBA_KSG60ZMV256G_M.2_2280_256GB_583B83NWK5SP";
                     type = "disk";
                     content = {
                       type = "gpt";
