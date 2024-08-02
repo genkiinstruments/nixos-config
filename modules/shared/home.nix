@@ -105,108 +105,108 @@
         set -Ux HOME_MANAGER_BACKUP_EXT ~/.nix-bak
       '';
 
-      shellInit = '' 
-            set fish_greeting # Disable greeting
-            
-            # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117 prompt configurations
-            # see https://github.com/LnL7/nix-darwin/issues/122
-            set -ga PATH $HOME/.local/bin
-            set -ga PATH /run/wrappers/bin
-            set -ga PATH $HOME/.nix-profile/bin
-            set -ga PATH /run/current-system/sw/bin
-            set -ga PATH /nix/var/nix/profiles/default/bin
+      shellInit = ''
+        set fish_greeting # Disable greeting
 
-            # Adapt construct_path from the macOS /usr/libexec/path_helper executable for
-            # fish usage;
-            #
-            # The main difference is that it allows to control how extra entries are
-            # preserved: either at the beginning of the VAR list or at the end via first
-            # argument MODE.
-            #
-            # Usage:
-            #
-            #   __fish_macos_set_env MODE VAR VAR-FILE VAR-DIR
-            #
-            #   MODE: either append or prepend
-            #
-            # Example:
-            #
-            #   __fish_macos_set_env prepend PATH /etc/paths '/etc/paths.d'
-            #
-            #   __fish_macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
-            #
-            # [1]: https://opensource.apple.com/source/shell_cmds/shell_cmds-203/path_helper/path_helper.c.auto.html .
-            #
-            function macos_set_env -d "set an environment variable like path_helper does (macOS only)"
-              # noops on other operating systems
-              if test $KERNEL_NAME darwin
-                set -l result
-                set -l entries
+        # https://github.com/d12frosted/environment/blob/78486b74756142524a4ccd913c85e3889a138e10/nix/home.nix#L117 prompt configurations
+        # see https://github.com/LnL7/nix-darwin/issues/122
+        set -ga PATH $HOME/.local/bin
+        set -ga PATH /run/wrappers/bin
+        set -ga PATH $HOME/.nix-profile/bin
+        set -ga PATH /run/current-system/sw/bin
+        set -ga PATH /nix/var/nix/profiles/default/bin
 
-                # echo "1. $argv[2] = $$argv[2]"
+        # Adapt construct_path from the macOS /usr/libexec/path_helper executable for
+        # fish usage;
+        #
+        # The main difference is that it allows to control how extra entries are
+        # preserved: either at the beginning of the VAR list or at the end via first
+        # argument MODE.
+        #
+        # Usage:
+        #
+        #   __fish_macos_set_env MODE VAR VAR-FILE VAR-DIR
+        #
+        #   MODE: either append or prepend
+        #
+        # Example:
+        #
+        #   __fish_macos_set_env prepend PATH /etc/paths '/etc/paths.d'
+        #
+        #   __fish_macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
+        #
+        # [1]: https://opensource.apple.com/source/shell_cmds/shell_cmds-203/path_helper/path_helper.c.auto.html .
+        #
+        function macos_set_env -d "set an environment variable like path_helper does (macOS only)"
+          # noops on other operating systems
+          if test $KERNEL_NAME darwin
+            set -l result
+            set -l entries
 
-                # Populate path according to config files
-                for path_file in $argv[3] $argv[4]/*
-                  if [ -f $path_file ]
-                    while read -l entry
-                      if not contains -- $entry $result
-                        test -n "$entry"
-                        and set -a result $entry
-                      end
-                    end <$path_file
+            # echo "1. $argv[2] = $$argv[2]"
+
+            # Populate path according to config files
+            for path_file in $argv[3] $argv[4]/*
+              if [ -f $path_file ]
+                while read -l entry
+                  if not contains -- $entry $result
+                    test -n "$entry"
+                    and set -a result $entry
                   end
-                end
-
-                # echo "2. $argv[2] = $result"
-
-                # Merge in any existing path elements
-                set entries $$argv[2]
-                if test $argv[1] = "prepend"
-                  set entries[-1..1] $entries
-                end
-                for existing_entry in $entries
-                  if not contains -- $existing_entry $result
-                    if test $argv[1] = "prepend"
-                      set -p result $existing_entry
-                    else
-                      set -a result $existing_entry
-                    end
-                  end
-                end
-
-                # echo "3. $argv[2] = $result"
-
-                set -xg $argv[2] $result
+                end <$path_file
               end
             end
-            macos_set_env prepend PATH /etc/paths '/etc/paths.d'
 
-            set -ga MANPATH $HOME/.local/share/man
-            set -ga MANPATH $HOME/.nix-profile/share/man
-            if test $KERNEL_NAME darwin
-              set -ga MANPATH /opt/homebrew/share/man
-            end
-            set -ga MANPATH /run/current-system/sw/share/man
-            set -ga MANPATH /nix/var/nix/profiles/default/share/man
-            macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
+            # echo "2. $argv[2] = $result"
 
-            if test $KERNEL_NAME darwin
-              set -gx HOMEBREW_PREFIX /opt/homebrew
-              set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
-              set -gx HOMEBREW_REPOSITORY /opt/homebrew
-              set -gp INFOPATH /opt/homebrew/share/info
+            # Merge in any existing path elements
+            set entries $$argv[2]
+            if test $argv[1] = "prepend"
+              set entries[-1..1] $entries
+            end
+            for existing_entry in $entries
+              if not contains -- $existing_entry $result
+                if test $argv[1] = "prepend"
+                  set -p result $existing_entry
+                else
+                  set -a result $existing_entry
+                end
+              end
             end
 
-            #-------------------------------------------------------------------------------
-            # Ghostty Shell Integration
-            #-------------------------------------------------------------------------------
-            # Ghostty supports auto-injection but Nix-darwin hard overwrites XDG_DATA_DIRS
-            # which make it so that we can't use the auto-injection. We have to source
-            # manually.
-            if set -q GHOSTTY_RESOURCES_DIR
-                source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
-            end
-          '';
+            # echo "3. $argv[2] = $result"
+
+            set -xg $argv[2] $result
+          end
+        end
+        macos_set_env prepend PATH /etc/paths '/etc/paths.d'
+
+        set -ga MANPATH $HOME/.local/share/man
+        set -ga MANPATH $HOME/.nix-profile/share/man
+        if test $KERNEL_NAME darwin
+          set -ga MANPATH /opt/homebrew/share/man
+        end
+        set -ga MANPATH /run/current-system/sw/share/man
+        set -ga MANPATH /nix/var/nix/profiles/default/share/man
+        macos_set_env append MANPATH /etc/manpaths '/etc/manpaths.d'
+
+        if test $KERNEL_NAME darwin
+          set -gx HOMEBREW_PREFIX /opt/homebrew
+          set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
+          set -gx HOMEBREW_REPOSITORY /opt/homebrew
+          set -gp INFOPATH /opt/homebrew/share/info
+        end
+
+        #-------------------------------------------------------------------------------
+        # Ghostty Shell Integration
+        #-------------------------------------------------------------------------------
+        # Ghostty supports auto-injection but Nix-darwin hard overwrites XDG_DATA_DIRS
+        # which make it so that we can't use the auto-injection. We have to source
+        # manually.
+        if set -q GHOSTTY_RESOURCES_DIR
+            source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
+        end
+      '';
     };
 
     ssh.enable = true;
@@ -253,7 +253,10 @@
 
     helix = {
       enable = true;
-      extraPackages = with pkgs; [ marksman markdown-oxide ];
+      extraPackages = with pkgs; [
+        marksman
+        markdown-oxide
+      ];
       settings = {
         editor = {
           line-number = "relative";
@@ -273,7 +276,10 @@
             w = ":w";
             q = ":q";
           };
-          esc = [ "collapse_selection" "keep_primary_selection" ];
+          esc = [
+            "collapse_selection"
+            "keep_primary_selection"
+          ];
         };
       };
     };
@@ -295,7 +301,7 @@
 
         # Nix
         nil
-        nixpkgs-fmt
+        nixfmt-rfc-style
 
         # C
         clang-tools_18
@@ -369,7 +375,6 @@
 
             # Markdown
             markdown-preview-nvim
-            markdown-nvim
             vim-markdown-toc
             vim-markdown
             conform-nvim
@@ -386,6 +391,7 @@
             dressing-nvim
             flash-nvim
             friendly-snippets
+            nvim-snippets
             gitsigns-nvim
             indent-blankline-nvim
             clangd_extensions-nvim
@@ -394,6 +400,7 @@
             oil-nvim
             neoconf-nvim
             nvim-nio
+            none-ls-nvim
             lazydev-nvim
             noice-nvim
             nui-nvim
@@ -406,8 +413,16 @@
             nvim-treesitter
             nvim-treesitter-context
             nvim-treesitter-textobjects
+            telescope-frecency-nvim
             nvim-ts-autotag
             nvim-ts-context-commentstring
+            ts-comments-nvim
+            {
+              name = "catppuccin";
+              path = catppuccin-nvim;
+            }
+            tokyonight-nvim
+            telescope-fzf-native-nvim
             null-ls-nvim
             nvim-web-devicons
             persistence-nvim
@@ -415,7 +430,6 @@
             telescope-zf-native-nvim
             telescope-nvim
             todo-comments-nvim
-            catppuccin-nvim
             trouble-nvim
             vim-illuminate
             vim-startuptime
@@ -423,43 +437,62 @@
             undotree
             cloak-nvim
             harpoon2
-            { name = "mini.ai"; path = mini-nvim; }
-            { name = "mini.misc"; path = mini-nvim; }
-            { name = "mini.bufremove"; path = mini-nvim; }
-            { name = "mini.comment"; path = mini-nvim; }
-            { name = "mini.indentscope"; path = mini-nvim; }
-            { name = "mini.pairs"; path = mini-nvim; }
-            { name = "mini.surround"; path = mini-nvim; }
+            SchemaStore-nvim
+            {
+              name = "mini.ai";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.misc";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.bufremove";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.comment";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.indentscope";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.pairs";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.surround";
+              path = mini-nvim;
+            }
           ];
-          mkEntryFromDrv = drv:
+          mkEntryFromDrv =
+            drv:
             if lib.isDerivation drv then
-              { name = "${lib.getName drv}"; path = drv; }
+              {
+                name = "${lib.getName drv}";
+                path = drv;
+              }
             else
               drv;
           lazyPath = pkgs.linkFarm "lazy-plugins" (builtins.map mkEntryFromDrv plugins);
-          pythonPlusDot = pkgs.runCommandCC "python-plus-dot"
-            {
-              pname = "python-plus-dot";
-              executable = true;
-              preferLocalBuild = true;
-              nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-            } ''
-            makeBinaryWrapper ${pkgs.coreutils}/bin/env $out \
-              --add-flags python \
-              --prefix PYTHONPATH : .
-          '';
+          pythonPlusDot =
+            pkgs.runCommandCC "python-plus-dot"
+              {
+                pname = "python-plus-dot";
+                executable = true;
+                preferLocalBuild = true;
+                nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+              }
+              ''
+                makeBinaryWrapper ${pkgs.coreutils}/bin/env $out \
+                  --add-flags python \
+                  --prefix PYTHONPATH : .
+              '';
         in
-          /* lua */ ''
-          vim.api.nvim_create_autocmd("VimEnter", {
-            callback = vim.schedule_wrap(function(data)
-              vim.print(vim.fn.isdirectory(data.file))
-              if data.file == "" or vim.fn.isdirectory(data.file) ~= 0 then
-                vim.print(data.file)
-                require("oil").open()
-              end
-            end),
-          })
-
+        # lua
+        ''
           require("lazy").setup({
             defaults = {
               lazy = true,
@@ -473,7 +506,7 @@
             },
             spec = {
               -- add LazyVim and import its plugins
-              { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { rocks = { enabled = false; } } },
+              { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "catppuccin-mocha"}},
               -- import any extras modules here
               { import = "lazyvim.plugins.extras.test.core" },
               { import = "lazyvim.plugins.extras.lang.typescript" },
@@ -496,12 +529,19 @@
               { import = "lazyvim.plugins.extras.editor.mini-move" },
               { import = "lazyvim.plugins.extras.lsp.none-ls" },
               { import = "lazyvim.plugins.extras.lang.clangd" },
+              { import = "lazyvim.plugins.extras.lang.nix" },
               { import = "lazyvim.plugins.extras.formatting.prettier" },
               { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
               { import = "lazyvim.plugins.extras.lang.markdown" },
               -- The following configs are needed for fixing lazyvim on nix
               -- force enable telescope-fzf-native.nvim
               -- { "nvim-telescope/telescope-zf-native.nvim", enabled = true },
+              {
+                "nvim-telescope/telescope-frecency.nvim",
+                config = function()
+                  require("telescope").load_extension "frecency"
+                end,
+              },
               -- disable mason.nvim, use programs.neovim.extraPackages
               { "williamboman/mason-lspconfig.nvim", enabled = false },
               { "williamboman/mason.nvim", enabled = false },
@@ -522,9 +562,6 @@
           -- Type :LazyRoot in the directory you're in and that will show you the root_dir that will be used for the root_dir search commands. The reason you're experiencing this behavior is because your subdirectories contain some kind of root_dir pattern for the LSP server attached to the buffer.
           vim.g.root_spec = { "cwd" }
 
-          -- Set colorscheme
-          vim.cmd.colorscheme "catppuccin-mocha"
-
           vim.opt.spell = false
 
           -- Disable syntax highlighting for .fish files
@@ -537,7 +574,6 @@
 
           -- Don't show tabs
           vim.cmd [[ set showtabline=0 ]]
-
 
           --- TODO: Make it work with visual mode too 😇
           function toggle_markdown_todo()
@@ -603,55 +639,60 @@
   xdg.configFile."nvim/parser".source =
     with pkgs;
     let
-      parsers = symlinkJoin
-        {
-          name = "treesitter-parsers";
-          paths = (vimPlugins.nvim-treesitter.withPlugins (p: with p; [
-            bash
-            c
-            cpp
-            cmake
-            diff
-            html
-            javascript
-            jsdoc
-            json
-            jsonc
-            lua
-            luadoc
-            luap
-            markdown
-            markdown-inline
-            python
-            query
-            regex
-            toml
-            tsx
-            typescript
-            vim
-            vimdoc
-            yaml
-            nix
-            ninja
-            rst
+      parsers = symlinkJoin {
+        name = "treesitter-parsers";
+        paths =
+          (vimPlugins.nvim-treesitter.withPlugins (
+            p: with p; [
+              bash
+              c
+              cpp
+              cmake
+              diff
+              html
+              javascript
+              jsdoc
+              json
+              jsonc
+              lua
+              luadoc
+              luap
+              markdown
+              markdown-inline
+              python
+              query
+              regex
+              toml
+              tsx
+              typescript
+              vim
+              vimdoc
+              yaml
+              nix
+              ninja
+              rst
 
-            zig
+              zig
 
-            rust
-            ron
-            kdl
+              rust
+              ron
+              kdl
 
-            svelte
-            sql
-            elixir
-            heex
-            eex
-          ])).dependencies;
-        };
+              svelte
+              sql
+              elixir
+              heex
+              eex
+            ]
+          )).dependencies;
+      };
     in
     "${parsers}/parser";
 
-  xdg.configFile."nvim" = { recursive = true; source = ../shared/config/nvim; };
+  xdg.configFile."nvim" = {
+    recursive = true;
+    source = ../shared/config/nvim;
+  };
   xdg.configFile."ghostty/config".source = ../shared/config/ghostty/config;
   home.file.".hushlogin".text = "";
   home.packages = with pkgs; [
