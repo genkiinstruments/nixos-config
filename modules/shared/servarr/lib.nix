@@ -1,6 +1,5 @@
 { lib
 , addresses
-, pkgs
 , ...
 }:
 {
