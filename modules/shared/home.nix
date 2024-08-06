@@ -527,6 +527,7 @@
               { import = "lazyvim.plugins.extras.coding.mini-surround" },
               { import = "lazyvim.plugins.extras.editor.mini-diff" },
               { import = "lazyvim.plugins.extras.editor.mini-move" },
+              { import = "lazyvim.plugins.extras.editor.telescope" },
               { import = "lazyvim.plugins.extras.lsp.none-ls" },
               { import = "lazyvim.plugins.extras.lang.clangd" },
               { import = "lazyvim.plugins.extras.lang.nix" },
