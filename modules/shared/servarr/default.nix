@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, ... }:
 let
   addresses = {
     prowlarr = "192.168.100.11:9696";
@@ -25,25 +25,6 @@ in
     sabnzbd = libx.mkAppContainer { name = "sabnzbd"; };
     sonarr = libx.mkAppContainer { name = "sonarr"; };
     plex = libx.mkAppContainer { name = "plex"; };
-  };
-
-  systemd.services.caddy.serviceConfig.EnvironmentFile = config.age.secrets.cloudflare-api.path;
-
-  services.caddy = {
-    enable = true;
-    package = pkgs.callPackage ../custom-caddy.nix { };
-    virtualHosts."jellyfin.tail01dbd.ts.net".extraConfig = ''
-      tls { 
-        dns cloudflare {$CLOUDFLARE_API_TOKEN}
-      }
-      reverse_proxy http://192.168.100.15:8096
-    '';
-    virtualHosts."bingo.tail01dbd.ts.net".extraConfig = ''
-      tls { 
-        dns cloudflare {$CLOUDFLARE_API_TOKEN}
-      }
-      reverse_proxy http://localhost:8123
-    '';
   };
 
 }

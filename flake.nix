@@ -560,12 +560,6 @@
                     owner = "${user}";
                     group = "users";
                   };
-                  cloudflare-api = {
-                    file = "${secrets}/cloudflare-api.age";
-                    owner = "caddy";
-                    group = "caddy";
-                    mode = "600";
-                  };
                 };
               };
               users.users.${user} = {
