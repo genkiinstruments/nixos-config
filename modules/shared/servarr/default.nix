@@ -20,7 +20,10 @@ in
 
   containers = {
     jellyfin = libx.mkAppContainer { name = "jellyfin"; };
-    prowlarr = libx.mkAppContainer { name = "prowlarr"; };
+    prowlarr = libx.mkAppContainer {
+      name = "prowlarr";
+      addToUsersGroup = false;
+    };
     radarr = libx.mkAppContainer { name = "radarr"; };
     sabnzbd = libx.mkAppContainer { name = "sabnzbd"; };
     sonarr = libx.mkAppContainer { name = "sonarr"; };
