@@ -66,6 +66,18 @@
             };
           }
           {
+            Bazarr = {
+              icon = "bazarr.png";
+              href = "{{HOMEPAGE_VAR_BAZARR_URL}}/";
+              description = "subtitles management";
+              widget = {
+                type = "bazarr";
+                url = "{{HOMEPAGE_VAR_BAZARR_URL}}";
+                key = "{{HOMEPAGE_VAR_BAZARR_API_KEY}}";
+              };
+            };
+          }
+          {
             Prowlarr = {
               icon = "prowlarr.png";
               href = "{{HOMEPAGE_VAR_PROWLARR_URL}}";
