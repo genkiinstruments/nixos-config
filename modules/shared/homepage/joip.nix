@@ -103,42 +103,9 @@
           }
         ];
       }
-      {
-        infra = [
-          {
-            Files = {
-              description = "file manager";
-              icon = "files.png";
-              href = "https://files.jnsgr.uk";
-            };
-          }
-          {
-            "Syncthing (thor)" = {
-              description = "syncthing ui for thor";
-              icon = "syncthing.png";
-              href = "https://thor.sync.jnsgr.uk";
-            };
-          }
-          {
-            "Syncthing (kara)" = {
-              description = "syncthing ui for kara";
-              icon = "syncthing.png";
-              href = "https://kara.sync.jnsgr.uk";
-            };
-          }
-          {
-            "Syncthing (freyja)" = {
-              description = "syncthing ui for freyja";
-              icon = "syncthing.png";
-              href = "https://freyja.sync.jnsgr.uk";
-            };
-          }
-        ];
-      }
     ];
     settings = {
       title = "joip homepage";
-      # favicon = "https://jnsgr.uk/favicon.ico";
       headerStyle = "clean";
       layout = {
         media = {
