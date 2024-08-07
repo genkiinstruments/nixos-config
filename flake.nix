@@ -668,6 +668,12 @@
                       owner = "${user}";
                       group = "users";
                     };
+                    dashboard-env = {
+                      file = "${secrets}/homepage-dashboard-env.age";
+                      owner = "root";
+                      group = "users";
+                      mode = "400";
+                    };
                   };
                 };
                 users.users.${user} = {
