@@ -1,14 +1,13 @@
 { pkgs, lib, ... }:
 {
-  imports =
-    [
-      ./disk-config.nix
-      ./hardware-configuration.nix
-      ../../modules/shared
-      ../../modules/shared/servarr
-      ../../modules/shared/homepage
-      ../../modules/shared/tailscale.nix
-    ];
+  imports = [
+    ./disk-config.nix
+    ./hardware-configuration.nix
+    ../../modules/shared
+    ../../modules/shared/servarr
+    ../../modules/shared/homepage
+    ../../modules/shared/tailscale.nix
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -60,7 +59,16 @@
       "wled"
       "xiaomi_miio"
     ];
-    extraPackages = python3Packages: with python3Packages; [ pip gtts dateutil aiohomekit pyatv getmac async-upnp-client ];
+    extraPackages =
+      python3Packages: with python3Packages; [
+        pip
+        gtts
+        dateutil
+        aiohomekit
+        pyatv
+        getmac
+        async-upnp-client
+      ];
     config = {
       # Includes dependencies for a basic setup: https://www.home-assistant.io/integrations/default_config/
       default_config = { };
