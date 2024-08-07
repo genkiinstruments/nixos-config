@@ -7,6 +7,7 @@ let
     radarr = "192.168.100.14:7878";
     jellyfin = "192.168.100.15:8096";
     plex = "192.168.100.16:32400";
+    bazarr = "192.168.100.17:6767";
   };
 
   libx = import ./lib.nix { inherit pkgs lib addresses; };
@@ -28,6 +29,7 @@ in
     sabnzbd = libx.mkAppContainer { name = "sabnzbd"; };
     sonarr = libx.mkAppContainer { name = "sonarr"; };
     plex = libx.mkAppContainer { name = "plex"; };
+    bazarr = libx.mkAppContainer { name = "bazarr"; };
   };
 
 }
