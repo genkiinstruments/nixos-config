@@ -1,10 +1,10 @@
-{ lib
-, addresses
-, ...
-}:
+{ lib, addresses, ... }:
 {
   mkAppContainer =
-    { name }:
+    {
+      name,
+      addToUsersGroup ? true,
+    }:
     let
       addressParts = lib.strings.splitString ":" addresses."${name}";
     in
@@ -35,10 +35,18 @@
           };
 
           services = {
-            "${name}" = {
-              enable = true;
-              openFirewall = true;
-            };
+            "${name}" =
+              if addToUsersGroup then
+                {
+                  enable = true;
+                  openFirewall = true;
+                  group = "users";
+                }
+              else
+                {
+                  enable = true;
+                  openFirewall = true;
+                };
 
             caddy = {
               enable = true;
