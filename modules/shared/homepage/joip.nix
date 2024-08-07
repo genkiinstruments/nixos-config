@@ -140,7 +140,7 @@
       }
       {
         openmeteo = {
-          label = "Bristol";
+          label = "Reykjavik";
           timezone = "Europe/London";
           latitude = "{{HOMEPAGE_VAR_LATITUDE}}";
           longitude = "{{HOMEPAGE_VAR_LONGITUDE}}";
