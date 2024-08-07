@@ -670,9 +670,9 @@
                     };
                     dashboard-env = {
                       file = "${secrets}/homepage-dashboard-env.age";
-                      owner = "root";
+                      owner = "${user}";
                       group = "users";
-                      mode = "400";
+                      mode = "644";
                     };
                   };
                 };
