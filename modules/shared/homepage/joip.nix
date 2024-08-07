@@ -1,6 +1,16 @@
-_:
+{ self, config }:
 {
+  age.secrets = {
+    dashboard-env = {
+      file = "${self}/secrets/homepage-dashboard-env.age";
+      owner = "root";
+      group = "users";
+      mode = "400";
+    };
+  };
+
   services.homepage-dashboard = {
+    environmentFile = config.age.secrets.dashboard-env.path;
     bookmarks = [
       {
         dev = [
@@ -31,60 +41,60 @@ _:
           {
             Jellyfin = {
               icon = "jellyfin.png";
-              href = "{{HOMEPAGE_VAR_JELLYFIN_URL}}";
+              href = "{{JELLYFIN_URL}}";
               description = "media management";
               widget = {
                 type = "jellyfin";
-                url = "{{HOMEPAGE_VAR_JELLYFIN_URL}}";
-                key = "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}";
+                url = "{{JELLYFIN_URL}}";
+                key = "{{JELLYFIN_API_KEY}}";
               };
             };
           }
           {
             Radarr = {
               icon = "radarr.png";
-              href = "{{HOMEPAGE_VAR_RADARR_URL}}";
+              href = "{{RADARR_URL}}";
               description = "film management";
               widget = {
                 type = "radarr";
-                url = "{{HOMEPAGE_VAR_RADARR_URL}}";
-                key = "{{HOMEPAGE_VAR_RADARR_API_KEY}}";
+                url = "{{RADARR_URL}}";
+                key = "{{RADARR_API_KEY}}";
               };
             };
           }
           {
             Sonarr = {
               icon = "sonarr.png";
-              href = "{{HOMEPAGE_VAR_SONARR_URL}}";
+              href = "{{SONARR_URL}}";
               description = "tv management";
               widget = {
                 type = "sonarr";
-                url = "{{HOMEPAGE_VAR_SONARR_URL}}";
-                key = "{{HOMEPAGE_VAR_SONARR_API_KEY}}";
+                url = "{{SONARR_URL}}";
+                key = "{{SONARR_API_KEY}}";
               };
             };
           }
           {
             Prowlarr = {
               icon = "prowlarr.png";
-              href = "{{HOMEPAGE_VAR_PROWLARR_URL}}";
+              href = "{{PROWLARR_URL}}";
               description = "index management";
               widget = {
                 type = "prowlarr";
-                url = "{{HOMEPAGE_VAR_PROWLARR_URL}}";
-                key = "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}";
+                url = "{{PROWLARR_URL}}";
+                key = "{{PROWLARR_API_KEY}}";
               };
             };
           }
           {
             Sabnzbd = {
               icon = "sabnzbd.png";
-              href = "{{HOMEPAGE_VAR_SABNZBD_URL}}/";
+              href = "{{SABNZBD_URL}}/";
               description = "download client";
               widget = {
                 type = "sabnzbd";
-                url = "{{HOMEPAGE_VAR_SABNZBD_URL}}";
-                key = "{{HOMEPAGE_VAR_SABNZBD_API_KEY}}";
+                url = "{{SABNZBD_URL}}";
+                key = "{{SABNZBD_API_KEY}}";
               };
             };
           }
@@ -160,10 +170,10 @@ _:
       }
       {
         openmeteo = {
-          label = "Bristol";
+          label = "Reykjavik";
           timezone = "Europe/London";
-          latitude = "{{HOMEPAGE_VAR_LATITUDE}}";
-          longitude = "{{HOMEPAGE_VAR_LONGITUDE}}";
+          latitude = "{{LATITUDE}}";
+          longitude = "{{LONGITUDE}}";
           units = "metric";
         };
       }
