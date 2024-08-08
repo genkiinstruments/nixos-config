@@ -389,6 +389,11 @@
             zen-mode-nvim
             twilight-nvim
 
+            # SQLITE and dadbod 👨
+            vim-dadbod
+            vim-dadbod-ui
+            vim-dadbod-completion
+
             # LazyVim
             LazyVim
             cmp-buffer
