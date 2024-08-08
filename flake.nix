@@ -135,10 +135,18 @@
                     identityPaths = [ "/Users/${user}/.ssh/id_ed25519" ];
 
                     secrets = {
-                      "my-secret" = {
+                      my-secret = {
                         symlink = true;
                         path = "/Users/${user}/Desktop/my-secret";
                         file = "${secrets}/my-secret.age";
+                        mode = "644";
+                        owner = "${user}";
+                        group = "staff";
+                      };
+                      atuin-key = {
+                        symlink = true;
+                        path = "/Users/${user}/.local/share/atuin/key";
+                        file = "${secrets}/atuin-key.age";
                         mode = "644";
                         owner = "${user}";
                         group = "staff";

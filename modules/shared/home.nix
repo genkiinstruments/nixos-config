@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 {
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
@@ -51,6 +56,9 @@
         keymap_mode = "auto";
         prefers_reduced_motion = true;
         enter_accept = true;
+        update_check = false;
+        sync_frequency = "0";
+        style = "compact";
       };
     };
     zoxide = {
@@ -680,7 +688,6 @@
               kdl
 
               svelte
-              sql
               elixir
               heex
               eex
