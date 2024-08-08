@@ -290,6 +290,7 @@
         };
       };
     };
+
     neovim = {
       enable = true;
       defaultEditor = true;
@@ -350,6 +351,10 @@
         markdownlint-cli2
 
         markdown-oxide
+
+        # sql
+        sqlfluff
+        sqlite
       ];
 
       plugins = [ pkgs.vimPlugins.lazy-nvim ];
@@ -393,6 +398,7 @@
             vim-dadbod
             vim-dadbod-ui
             vim-dadbod-completion
+            edgy-nvim
 
             # LazyVim
             LazyVim
@@ -535,6 +541,7 @@
                 } },
                 -- Lua
               { import = "lazyvim.plugins.extras.lang.rust" },
+              { import = "lazyvim.plugins.extras.lang.sql" },
               { import = "lazyvim.plugins.extras.linting.eslint" },
               { import = "lazyvim.plugins.extras.coding.mini-surround" },
               { import = "lazyvim.plugins.extras.editor.mini-diff" },
@@ -696,6 +703,8 @@
               elixir
               heex
               eex
+
+              sql
             ]
           )).dependencies;
       };
