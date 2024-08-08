@@ -670,17 +670,26 @@
                   secrets = {
                     "my-secret" = {
                       symlink = true;
-                      path = "/home/olafur/my-secret";
+                      path = "/home/${user}/my-secret";
                       file = "${secrets}/my-secret.age";
                       mode = "644";
                       owner = "${user}";
                       group = "users";
                     };
                     dashboard-env = {
+                      symlink = true;
                       file = "${secrets}/homepage-dashboard-env.age";
                       owner = "${user}";
                       group = "users";
                       mode = "644";
+                    };
+                    atuin-key = {
+                      symlink = true;
+                      path = "/home/${user}/.local/share/atuin/key";
+                      file = "${secrets}/atuin-key.age";
+                      mode = "644";
+                      owner = "${user}";
+                      group = "users";
                     };
                   };
                 };
