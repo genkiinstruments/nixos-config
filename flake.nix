@@ -320,9 +320,30 @@
                   srvos.nixosModules.mixins-trusted-nix-caches
                   disko.nixosModules.disko
                   home-manager.nixosModules.home-manager
+                  agenix.nixosModules.default
                   ./modules/shared
                   ./hosts/gdrn
                 ];
+                age = {
+                  secrets = {
+                    my-secret = {
+                      symlink = true;
+                      path = "/Users/${user}/Desktop/my-secret";
+                      file = "${secrets}/my-secret.age";
+                      mode = "644";
+                      owner = "${user}";
+                      group = "users";
+                    };
+                    atuin-key = {
+                      symlink = true;
+                      path = "/home/${user}/.local/share/atuin/key";
+                      file = "${secrets}/atuin-key.age";
+                      mode = "644";
+                      owner = "${user}";
+                      group = "users";
+                    };
+                  };
+                };
                 users.users.${user} = {
                   isNormalUser = true;
                   shell = "/run/current-system/sw/bin/fish";
