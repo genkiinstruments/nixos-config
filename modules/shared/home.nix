@@ -58,7 +58,6 @@
         enter_accept = true;
         update_check = false;
         sync_frequency = "0";
-        style = "compact";
       };
     };
     zoxide = {
