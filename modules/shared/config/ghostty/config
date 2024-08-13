@@ -23,12 +23,12 @@ font-thicken = true
 
 # window-theme = "dark"
 # window-decoration       = false
-window-colorspace = display-p3
-window-vsync = true
-window-padding-x = 0
-window-padding-y = 0
-window-padding-balance = true
-window-save-state = always
+# window-colorspace = display-p3
+# window-vsync = true
+# window-padding-x = 0
+# window-padding-y = 0
+# window-padding-balance = true
+# window-save-state = always
 
 shell-integration = fish
 
