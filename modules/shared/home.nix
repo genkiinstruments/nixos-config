@@ -73,7 +73,7 @@
     fish = {
       enable = true;
       shellAliases = {
-        n = "nvim";
+        n = ''nvim -c "Telescope find_files"'';
         da = "direnv allow";
         dr = "direnv reload";
         ga = "git add";
@@ -556,6 +556,7 @@
               { "williamboman/mason.nvim", enabled = false },
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
               { "akinsho/bufferline.nvim", enabled = false },
+              { "nvimdev/dashboard-nvim", enabled = false },
               -- { "preservim/vim-markdown", ft = { "markdown" } },
               -- import/override with your plugins
               { import = "plugins" },
