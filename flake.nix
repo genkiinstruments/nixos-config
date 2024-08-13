@@ -184,7 +184,7 @@
                         controlPersist = "1800";
                         forwardAgent = true;
                         addKeysToAgent = "yes";
-                        serverAliveInterval = 300;
+                        serverAliveInterval = 900;
                         extraConfig = "SetEnv TERM=xterm-256color";
                       };
                       programs.fish.interactiveShellInit = ''
