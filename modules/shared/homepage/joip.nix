@@ -42,6 +42,18 @@
             };
           }
           {
+            Jellyseerr = {
+              icon = "jellyseerr.png";
+              href = "{{HOMEPAGE_VAR_JELLYSEERR_URL}}";
+              description = "release management";
+              widget = {
+                type = "jellyseerr";
+                url = "{{HOMEPAGE_VAR_JELLYSEERR_URL}}";
+                key = "{{HOMEPAGE_VAR_JELLYSEERR_API_KEY}}";
+              };
+            };
+          }
+          {
             Radarr = {
               icon = "radarr.png";
               href = "{{HOMEPAGE_VAR_RADARR_URL}}";
