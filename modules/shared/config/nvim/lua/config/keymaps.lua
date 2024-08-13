@@ -17,3 +17,17 @@ for _, val in pairs({ "<C-h>", "<C-j>", "<C-k>", "<C-l>" }) do
 end
 
 keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
+
+vim.api.nvim_buf_set_var(0, "cmp", false)
+
+keymap({ "n", "i", "v" }, "<leader>uU", function()
+    if vim.fn.exists("b:cmp") == 0 or vim.api.nvim_buf_get_var(0, "cmp") then
+        vim.api.nvim_buf_set_var(0, "cmp", false)
+        require("cmp").setup.buffer({ enabled = false })
+        vim.notify("Disabled auto cmpletion")
+    else
+        vim.api.nvim_buf_set_var(0, "cmp", true)
+        require("cmp").setup.buffer({ enabled = true })
+        vim.notify("Enabled auto cmpletion")
+    end
+end, { desc = "Toggle suggestions" })
