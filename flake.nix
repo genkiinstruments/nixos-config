@@ -132,8 +132,10 @@
                     ./hosts/m3
                   ];
                   age = {
-                    identityPaths = [ "/Users/${user}/.ssh/id_ed25519" ];
-
+                    identityPaths = [
+                      # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
+                      "/etc/ssh/ssh_host_ed25519_key"
+                    ];
                     secrets = {
                       my-secret = {
                         symlink = true;
