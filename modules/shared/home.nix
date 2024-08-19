@@ -526,6 +526,10 @@
               { import = "lazyvim.plugins.extras.test.core" },
               { import = "lazyvim.plugins.extras.lang.typescript" },
               { import = "lazyvim.plugins.extras.lang.json" },
+              { import = "lazyvim.plugins.extras.lang.clangd" },
+              { import = "lazyvim.plugins.extras.lang.rust" },
+              { import = "lazyvim.plugins.extras.lang.nix" },
+              { import = "lazyvim.plugins.extras.lang.markdown" },
               { import = "lazyvim.plugins.extras.lang.python",
                 opts = {
                   adapters = {
@@ -545,11 +549,8 @@
               { import = "lazyvim.plugins.extras.editor.mini-move" },
               { import = "lazyvim.plugins.extras.editor.telescope" },
               { import = "lazyvim.plugins.extras.lsp.none-ls" },
-              { import = "lazyvim.plugins.extras.lang.clangd" },
-              { import = "lazyvim.plugins.extras.lang.nix" },
               { import = "lazyvim.plugins.extras.formatting.prettier" },
               { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-              { import = "lazyvim.plugins.extras.lang.markdown" },
               -- The following configs are needed for fixing lazyvim on nix
               -- force enable telescope-fzf-native.nvim
               -- { "nvim-telescope/telescope-zf-native.nvim", enabled = true },
