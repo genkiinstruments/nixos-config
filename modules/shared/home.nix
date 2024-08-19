@@ -341,7 +341,6 @@
         tailwindcss-language-server
 
         elixir
-        elixir-ls
 
         # Other
         marksman
@@ -372,8 +371,8 @@
             cmp-conjure
 
             # elixir
-            neotest-elixir
             neotest
+            neotest-elixir
             neotest-plenary
 
             # Python
@@ -430,8 +429,10 @@
             nvim-treesitter
             nvim-treesitter-context
             nvim-treesitter-textobjects
+
             telescope-frecency-nvim
             sqlite-lua
+
             nvim-ts-autotag
             nvim-ts-context-commentstring
             ts-comments-nvim
