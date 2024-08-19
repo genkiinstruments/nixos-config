@@ -558,7 +558,22 @@
               {
                 "nvim-telescope/telescope-frecency.nvim",
                 config = function()
-                  require("telescope").load_extension "frecency"
+                  require("telescope").setup({
+                    extensions = {
+                      frecency = {
+                        show_scores = true,
+                        auto_validate = false, -- manually gc with :FrecencyValidate
+                      },
+                    },
+                  })
+                  require("telescope").load_extension("frecency")
+                  local wk = require("which-key")
+                  wk.register({
+                    ["<space>"] = {
+                      name = "Find[ ](Telescope)",
+                        h = { "<Cmd>Telescope frecency workspace=CWD<CR>", "History (Frecency)" },
+                      },
+                  }, { prefix = "<leader>" })
                 end,
               },
               -- disable mason.nvim, use programs.neovim.extraPackages
