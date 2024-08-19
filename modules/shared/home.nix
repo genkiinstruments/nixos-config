@@ -376,7 +376,6 @@
             neotest-elixir
             neotest
             neotest-plenary
-            elixir-tools-nvim
 
             # Python
             neotest-python
