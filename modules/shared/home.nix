@@ -526,6 +526,7 @@
               { import = "lazyvim.plugins.extras.test.core" },
               { import = "lazyvim.plugins.extras.lang.typescript" },
               { import = "lazyvim.plugins.extras.lang.json" },
+              { import = "lazyvim.plugins.extras.lang.elixir" },
               { import = "lazyvim.plugins.extras.lang.clangd" },
               { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.lang.nix" },
@@ -698,6 +699,7 @@
               kdl
 
               svelte
+
               elixir
               heex
               eex
