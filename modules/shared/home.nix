@@ -383,6 +383,7 @@
             vim-tmux-navigator
 
             # Markdown
+            markdown-nvim
             render-markdown
             markdown-preview-nvim
             vim-markdown-toc
@@ -567,7 +568,41 @@
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
               { "akinsho/bufferline.nvim", enabled = false },
               { "nvimdev/dashboard-nvim", enabled = false },
-              -- { "preservim/vim-markdown", ft = { "markdown" } },
+              -- TODO: Fix once lazyvim has fixed issues with naming.. https://github.com/MeanderingProgrammer/render-markdown.nvim?tab=readme-ov-file#render-markdownnvim
+              {
+                'MeanderingProgrammer/render-markdown.nvim',
+                opts = {
+                  file_types = { "markdown", "norg", "rmd", "org" },
+                  code = {
+                    sign = false,
+                    width = "block",
+                    right_pad = 1,
+                  },
+                  heading = {
+                    sign = false,
+                    icons = {},
+                  },
+                },
+                ft = { "markdown", "norg", "rmd", "org" },
+                dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
+                config = function(_, opts)
+                  require("render-markdown").setup(opts)
+                  LazyVim.toggle.map("<leader>um", {
+                    name = "Render Markdown",
+                    get = function()
+                      return require("render-markdown.state").enabled
+                    end,
+                    set = function(enabled)
+                      local m = require("render-markdown")
+                      if enabled then
+                        m.enable()
+                      else
+                        m.disable()
+                      end
+                    end,
+                  })
+                end,
+              },
               -- import/override with your plugins
               { import = "plugins" },
               -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
