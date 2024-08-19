@@ -386,6 +386,7 @@
             vim-tmux-navigator
 
             # Markdown
+            render-markdown
             markdown-preview-nvim
             vim-markdown-toc
             vim-markdown
