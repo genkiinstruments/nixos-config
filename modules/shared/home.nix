@@ -71,7 +71,7 @@
     fish = {
       enable = true;
       shellAliases = {
-        n = ''nvim -c "Telescope find_files"'';
+        n = ''nvim -c "Telescope frecency workspace=CWD"'';
         da = "direnv allow";
         dr = "direnv reload";
         ga = "git add";
