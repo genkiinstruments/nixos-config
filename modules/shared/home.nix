@@ -430,6 +430,7 @@
             nvim-treesitter-context
             nvim-treesitter-textobjects
             telescope-frecency-nvim
+            sqlite-lua
             nvim-ts-autotag
             nvim-ts-context-commentstring
             ts-comments-nvim
@@ -443,7 +444,6 @@
             nvim-web-devicons
             persistence-nvim
             plenary-nvim
-            telescope-zf-native-nvim
             telescope-nvim
             todo-comments-nvim
             trouble-nvim
@@ -552,28 +552,13 @@
               { import = "lazyvim.plugins.extras.lsp.none-ls" },
               { import = "lazyvim.plugins.extras.formatting.prettier" },
               { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-              -- The following configs are needed for fixing lazyvim on nix
-              -- force enable telescope-fzf-native.nvim
-              -- { "nvim-telescope/telescope-zf-native.nvim", enabled = true },
               {
                 "nvim-telescope/telescope-frecency.nvim",
+                lazy = false,
                 config = function()
-                  require("telescope").setup({
-                    extensions = {
-                      frecency = {
-                        show_scores = true,
-                        auto_validate = false, -- manually gc with :FrecencyValidate
-                      },
-                    },
-                  })
-                  require("telescope").load_extension("frecency")
-                  local wk = require("which-key")
-                  wk.register({
-                    ["<space>"] = {
-                      name = "Find[ ](Telescope)",
-                        h = { "<Cmd>Telescope frecency workspace=CWD<CR>", "History (Frecency)" },
-                      },
-                  }, { prefix = "<leader>" })
+                  require("telescope").load_extension "frecency"
+                  vim.keymap.set("n", "<Leader>f.", function() require("telescope").extensions.frecency.frecency { workspace = "CWD", } end, { desc = "Find files in CWD by frecency" })
+                  vim.keymap.set("n", "<Leader>fF", function() require("telescope").extensions.frecency.frecency {  } end, { desc = "Find files by frecency" })
                 end,
               },
               -- disable mason.nvim, use programs.neovim.extraPackages
