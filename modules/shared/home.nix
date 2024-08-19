@@ -460,6 +460,22 @@
               path = mini-nvim;
             }
             {
+              name = "mini.diff";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.icons";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.move";
+              path = mini-nvim;
+            }
+            {
+              name = "mini.hipatterns";
+              path = mini-nvim;
+            }
+            {
               name = "mini.misc";
               path = mini-nvim;
             }
@@ -483,6 +499,26 @@
               name = "mini.surround";
               path = mini-nvim;
             }
+            (pkgs.vimUtils.buildVimPlugin {
+              pname = "luvit-meta";
+              src = pkgs.fetchFromGitHub {
+                owner = "Bilal2453";
+                repo = "luvit-meta";
+                rev = "ce76f6f6cdc9201523a5875a4471dcfe0186eb60";
+                hash = "sha256-zAAptV/oLuLAAsa2zSB/6fxlElk4+jNZd/cPr9oxFig=";
+              };
+              version = "2024-07-30";
+            })
+            (pkgs.vimUtils.buildVimPlugin {
+              pname = "venv-selector";
+              src = pkgs.fetchFromGitHub {
+                owner = "linux-cultist";
+                repo = "venv-selector.nvim";
+                rev = "f16c25bf16ac6e8bbdbcc9e9b3a1a00729d00c99";
+                hash = "sha256-zAAptV/oLuLAAsa2zSB/6fxlElk4+jNZd/cPr9oxFig=";
+              };
+              version = "2024-06-06";
+            })
           ];
           mkEntryFromDrv =
             drv:
