@@ -339,7 +339,6 @@
         nodePackages.prettier
         nodePackages.eslint
         tailwindcss-language-server
-        vscode-langservers-extracted
 
         elixir
         elixir-ls
