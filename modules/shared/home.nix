@@ -454,7 +454,6 @@
             which-key-nvim
             undotree
             cloak-nvim
-            harpoon2
             SchemaStore-nvim
             {
               name = "mini.ai";
