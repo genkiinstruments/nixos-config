@@ -1,9 +1,4 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}:
+{ pkgs, lib, ... }:
 {
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
@@ -11,6 +6,10 @@
   xdg.enable = true; # Needed for fish interactiveShellInit hack
 
   programs = {
+    gh = {
+      enable = true;
+      settings.git_protocol = "ssh";
+    };
     eza = {
       enable = true;
       enableFishIntegration = true;
@@ -725,7 +724,6 @@
     magic-wormhole-rs
     neofetch
     bitwarden-cli
-    gh
     nb
 
     # for sesh
