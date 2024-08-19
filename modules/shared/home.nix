@@ -599,6 +599,19 @@
                   vim.keymap.set("n", "<Leader>fF", function() require("telescope").extensions.frecency.frecency {  } end, { desc = "Find files by frecency" })
                 end,
               },
+              {
+                "folke/noice.nvim",
+                opts = {
+                  lsp = {
+                    hover = {
+                      -- Set not show a message if hover is not available
+                      -- ex: shift+k on Typescript code
+                      silent = true,
+                    },
+                  },
+                },
+              },
+              -- The following configs are needed for fixing lazyvim on nix
               -- disable mason.nvim, use programs.neovim.extraPackages
               { "williamboman/mason-lspconfig.nvim", enabled = false },
               { "williamboman/mason.nvim", enabled = false },
@@ -702,6 +715,36 @@
           end
 
           vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggle_markdown_todo()<CR>', { noremap = true, silent = true })
+
+          -- lsp
+          -- `on_attach` callback will be called after a language server
+          -- instance has been attached to an open buffer with matching filetype
+          -- here we're setting key mappings for hover documentation, goto definitions, goto references, etc
+          -- you may set those key mappings based on your own preference
+          local on_attach = function(client, bufnr)
+            local opts = { noremap=true, silent=true }
+
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>cr', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>cf', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>cd', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+            vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+          end
+
+          -- auto format on save
+          vim.cmd [[autocmd BufWritePre *.nix lua vim.lsp.buf.format()]]
+
+          require('lspconfig').elixirls.setup {
+            cmd = { "${pkgs.elixir-ls}/lib/language_server.sh" },
+            on_attach = on_attach
+          }
         '';
     };
 
