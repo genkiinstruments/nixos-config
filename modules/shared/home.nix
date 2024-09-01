@@ -601,7 +601,7 @@
               -- reuse files from pkgs.vimPlugins.*
               path = "${lazyPath}",
               patterns = { "." },
-              fallback = false, -- fallback to download
+              fallback = true, -- fallback to download
             },
             spec = {
               -- add LazyVim and import its plugins
