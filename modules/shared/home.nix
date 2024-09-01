@@ -297,6 +297,31 @@
           ];
         };
       };
+      languages = {
+        language-server.clangd = {
+          command = "clangd";
+          args = [
+            "--compile-commands-dir=build"
+            "--background-index"
+            "--header-insertion=iwyu"
+            "--import-insertions"
+            "--clang-tidy"
+            "--all-scopes-completion"
+            "--completion-style=detailed"
+            "--function-arg-placeholders"
+            "--pch-storage=memory"
+          ];
+        };
+        language = [
+          {
+            name = "cpp";
+            auto-format = true;
+            language-servers = [
+              "clangd"
+            ];
+          }
+        ];
+      };
     };
 
     neovim = {
