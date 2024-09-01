@@ -382,7 +382,6 @@
             vim-tmux-navigator
 
             # Markdown
-            markdown-nvim
             render-markdown
             markdown-preview-nvim
             vim-markdown-toc
@@ -567,7 +566,6 @@
               { import = "lazyvim.plugins.extras.lang.clangd" },
               { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.lang.nix" },
-              { import = "lazyvim.plugins.extras.lang.markdown" },
               { import = "lazyvim.plugins.extras.lang.python",
                 opts = {
                   adapters = {
@@ -618,41 +616,6 @@
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
               { "akinsho/bufferline.nvim", enabled = false },
               { "nvimdev/dashboard-nvim", enabled = false },
-              -- TODO: Fix once lazyvim has fixed issues with naming.. https://github.com/MeanderingProgrammer/render-markdown.nvim?tab=readme-ov-file#render-markdownnvim
-              {
-                'MeanderingProgrammer/render-markdown.nvim',
-                opts = {
-                  file_types = { "markdown", "norg", "rmd", "org" },
-                  code = {
-                    sign = false,
-                    width = "block",
-                    right_pad = 1,
-                  },
-                  heading = {
-                    sign = false,
-                    icons = {},
-                  },
-                },
-                ft = { "markdown", "norg", "rmd", "org" },
-                dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.nvim' },
-                config = function(_, opts)
-                  require("render-markdown").setup(opts)
-                  LazyVim.toggle.map("<leader>um", {
-                    name = "Render Markdown",
-                    get = function()
-                      return require("render-markdown.state").enabled
-                    end,
-                    set = function(enabled)
-                      local m = require("render-markdown")
-                      if enabled then
-                        m.enable()
-                      else
-                        m.disable()
-                      end
-                    end,
-                  })
-                end,
-              },
               -- import/override with your plugins
               { import = "plugins" },
               -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
@@ -679,42 +642,6 @@
 
           -- Don't show tabs
           vim.cmd [[ set showtabline=0 ]]
-
-          --- TODO: Make it work with visual mode too 😇
-          function toggle_markdown_todo()
-            -- Get the current line and cursor position
-            local line = vim.api.nvim_get_current_line()
-            local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-            
-            -- Check if the line is empty or has only whitespace
-            if line:match("^%s*$") then
-              -- If the line is empty or only whitespace, add "- [ ] "
-              line = "- [ ] "
-              vim.cmd('startinsert!')
-            elseif line:match("^%s*- %[ %]") then
-              -- Change unchecked to checked
-              line = line:gsub("^(%s*)- %[ %]", "%1- [x]")
-            elseif line:match("^%s*- %[x%]") then
-              -- Change checked to unchecked
-              line = line:gsub("^(%s*)- %[x%]", "%1- [ ]")
-            elseif not line:match("^%s*-") then
-              -- If there's no bullet point, prepend "- [ ] "
-              line = "- [ ] " .. line
-              vim.cmd('startinsert!')
-            else
-              -- If it's a bullet point without checkbox, add checkbox
-              line = line:gsub("^(%s*-)", "%1 [ ]")
-              vim.cmd('startinsert!')
-            end
-            
-            -- Set the modified line back
-            vim.api.nvim_set_current_line(line)
-            
-            -- Move the cursor to the end of the line
-            vim.api.nvim_win_set_cursor(0, {row, #line})
-          end
-
-          vim.api.nvim_set_keymap('n', '<leader>d', ':lua toggle_markdown_todo()<CR>', { noremap = true, silent = true })
 
           -- lsp
           -- `on_attach` callback will be called after a language server
