@@ -612,6 +612,7 @@
               },
               -- The following configs are needed for fixing lazyvim on nix
               -- disable mason.nvim, use programs.neovim.extraPackages
+              { "alexghergh/nvim-tmux-navigation", lazy = false, },
               { "williamboman/mason-lspconfig.nvim", enabled = false },
               { "williamboman/mason.nvim", enabled = false },
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
