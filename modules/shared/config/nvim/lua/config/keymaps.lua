@@ -31,3 +31,10 @@ keymap({ "n", "i", "v" }, "<leader>uU", function()
         vim.notify("Enabled auto cmpletion")
     end
 end, { desc = "Toggle suggestions" })
+
+-- Don't use nvim toggle term stuff.. use floatx term instead!
+vim.keymap.del("n", "<leader>ft")
+vim.keymap.del("n", "<leader>fT")
+vim.keymap.del("n", "<C-_>")
+vim.keymap.del("n", "<C-/>")
+
