@@ -604,11 +604,7 @@
               { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "catppuccin-mocha"}},
               { import = "lazyvim.plugins.extras.test.core" },
               -- import any extras modules here
-              { import = "lazyvim.plugins.extras.lang.typescript" },
-              { import = "lazyvim.plugins.extras.lang.json" },
               { import = "lazyvim.plugins.extras.lang.elixir" },
-              { import = "lazyvim.plugins.extras.lang.clangd" },
-              { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.lang.nix" },
               { import = "lazyvim.plugins.extras.lang.python",
                 opts = {
@@ -621,17 +617,12 @@
                   },
                 } },
                 -- Lua
-              { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.lang.sql" },
-              { import = "lazyvim.plugins.extras.linting.eslint" },
               { import = "lazyvim.plugins.extras.coding.mini-surround" },
               { import = "lazyvim.plugins.extras.editor.mini-diff" },
               { import = "lazyvim.plugins.extras.editor.mini-move" },
-              { import = "lazyvim.plugins.extras.editor.telescope" },
-              { import = "lazyvim.plugins.extras.lsp.none-ls" },
-              { import = "lazyvim.plugins.extras.formatting.prettier" },
-              { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
               { import = "lazyvim.plugins.extras.lang.tailwind" },
+              { import = "lazyvim.plugins.extras.util.mini-hipatterns" }, -- Tailwind 
               {
                 "nvim-telescope/telescope-frecency.nvim",
                 lazy = false,
@@ -646,22 +637,19 @@
                 opts = {
                   lsp = {
                     hover = {
-                      -- Set not show a message if hover is not available
-                      -- ex: shift+k on Typescript code
+                      -- Set not show a message if hover is not available, ex: shift+k on Typescript code
                       silent = true,
                     },
                   },
                 },
               },
-              -- The following configs are needed for fixing lazyvim on nix
-              -- disable mason.nvim, use programs.neovim.extraPackages
               { "alexghergh/nvim-tmux-navigation", lazy = false, },
+              -- The following configs are needed for fixing lazyvim on nix: disable mason.nvim, use programs.neovim.extraPackages
               { "williamboman/mason-lspconfig.nvim", enabled = false },
               { "williamboman/mason.nvim", enabled = false },
               { "nvim-neo-tree/neo-tree.nvim", enabled = false },
               { "akinsho/bufferline.nvim", enabled = false },
               { "nvimdev/dashboard-nvim", enabled = false },
-              -- import/override with your plugins
               { import = "plugins" },
               -- treesitter handled by xdg.configFile."nvim/parser", put this line at the end of spec to clear ensure_installed
               { "nvim-treesitter/nvim-treesitter", opts = function(_, opts) opts.ensure_installed = {} end, },
@@ -717,6 +705,11 @@
             cmd = { "${pkgs.elixir-ls}/lib/language_server.sh" },
             on_attach = on_attach
           }
+
+          require('lspconfig').emmet_ls.setup({
+            capabilities = capabilities,
+            filetypes = { "html", "css", "elixir", "eelixir", "heex" },
+          })
         '';
     };
 
