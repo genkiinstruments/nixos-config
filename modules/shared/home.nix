@@ -27,8 +27,7 @@
       settings = {
         git = {
           paging = {
-            colorArg = "always";
-            pager = "diff-so-fancy";
+            pager = "delta ";
           };
         };
         gui = {
@@ -217,8 +216,18 @@
 
     ssh.enable = true;
 
+    bat.enable = true;
+
     git = {
       enable = true;
+      delta = {
+        enable = true;
+        options = {
+          dark = true;
+          paging = "never";
+          syntax-theme = "catppuccin-mocha";
+        };
+      };
       lfs.enable = true;
       extraConfig = {
         init.defaultBranch = "main";
