@@ -373,6 +373,16 @@
         nodePackages.prettier
         nodePackages.eslint
         tailwindcss-language-server
+        (pkgs.vimUtils.buildVimPlugin {
+          pname = "tailwindcss-colorizer-cmp";
+          version = "1.0";
+          src = pkgs.fetchFromGitHub {
+            owner = "roobert";
+            repo = "tailwindcss-colorizer-cmp.nvim";
+            rev = "3d3cd95e4a4135c250faf83dd5ed61b8e5502b86";
+            hash = "sha256-PIkfJzLt001TojAnE/rdRhgVEwSvCvUJm/vNPLSWjpY=";
+          };
+        })
 
         elixir
 
@@ -621,6 +631,7 @@
               { import = "lazyvim.plugins.extras.lsp.none-ls" },
               { import = "lazyvim.plugins.extras.formatting.prettier" },
               { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+              { import = "lazyvim.plugins.extras.lang.tailwind" },
               {
                 "nvim-telescope/telescope-frecency.nvim",
                 lazy = false,
