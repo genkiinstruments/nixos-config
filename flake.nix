@@ -29,6 +29,14 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    homebrew-aerospace = {
+      url = "github:nikitabobko/homebrew-tap";
+      flake = false;
+    };
+    homebrew-zkondor = {
+      url = "github:zkondor/homebrew-dist";
+      flake = false;
+    };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -98,15 +106,16 @@
             nix-homebrew.darwinModules.nix-homebrew {
               inherit lib;
               nix-homebrew = {
-                enable = true;
                 inherit user;
+                enable = true;
+                mutableTaps = false;
                 taps = with inputs; {
                   "homebrew/homebrew-core" = homebrew-core;
                   "homebrew/homebrew-cask" = homebrew-cask;
                   "homebrew/homebrew-bundle" = homebrew-bundle;
+                  "nikitabobko/homebrew-tap" = homebrew-aerospace;
+                  "zkondor/homebrew-dist" = homebrew-zkondor;
                 };
-                mutableTaps = false;
-                autoMigrate = true;
               };
             };
         in
@@ -126,11 +135,23 @@
                     # TODO: openssh.authorizedKeys.keyFiles has been deprecated in nix-darwin
                     # srvos.darwinModules.common
                     home-manager.darwinModules.home-manager
-                    my-nix-homebrew
+                    nix-homebrew.darwinModules.nix-homebrew
                     agenix.darwinModules.default
                     ./modules/shared
                     ./hosts/m3
                   ];
+                  nix-homebrew = {
+                    inherit user;
+                    enable = true;
+                    mutableTaps = false;
+                    taps = with inputs; {
+                      "homebrew/homebrew-core" = homebrew-core;
+                      "homebrew/homebrew-cask" = homebrew-cask;
+                      "homebrew/homebrew-bundle" = homebrew-bundle;
+                      "nikitabobko/homebrew-tap" = homebrew-aerospace;
+                      "zkondor/homebrew-dist" = homebrew-zkondor;
+                    };
+                  };
                   age = {
                     identityPaths = [
                       # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
