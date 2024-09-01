@@ -37,7 +37,7 @@
           sidePanelWidth = 0.3;
           mainPanelSplitMode = "flexible";
           showFileTree = true;
-          nerdFontsVersion = "3";
+          nerdFontsVersion = 3;
           commitHashLength = 6;
           showDivergenceFromBaseBranch = "arrowAndNumber";
           skipDiscardChangeWarning = true;
