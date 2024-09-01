@@ -1,4 +1,5 @@
-_: {
+{ config, ... }:
+{
   # Enable tailscale. We manually authenticate when we want with `tailscale up`
   services.tailscale.enable = true;
 
@@ -7,7 +8,26 @@ _: {
 
   homebrew = {
     enable = true;
-    casks = [ "shortcat" "raycast" "arc" "karabiner-elements" ];
+    casks = [
+      "shortcat"
+      "raycast"
+      "arc"
+      "karabiner-elements"
+      {
+        name = "nikitabobko/tap/aerospace";
+        args = {
+          no_quarantine = true;
+        };
+      }
+      # "znotch"
+      {
+        name = "zkondor/dist/znotch";
+        # args = {
+        #   no_quarantine = true;
+        # };
+      }
+    ];
+    taps = builtins.attrNames config.nix-homebrew.taps;
     masApps = {
       # `nix run nixpkgs#mas -- search <app name>`
       "Keynote" = 409183694;
