@@ -723,6 +723,12 @@
         vim-tmux-navigator
         yank
         fzf-tmux-url
+        {
+          plugin = tmux-floax;
+          extraConfig = ''
+            set -g @floax-bind '-n C-0'
+          '';
+        }
       ];
       sensibleOnTop = true;
       extraConfig = (builtins.readFile ./config/tmux.conf);
