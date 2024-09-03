@@ -31,7 +31,7 @@
       settings = {
         git = {
           paging = {
-            pager = "delta ";
+            pager = "delta --dark --paging=never";
           };
         };
         gui = {
@@ -229,7 +229,6 @@
         options = {
           dark = true;
           paging = "never";
-          syntax-theme = "catppuccin-mocha";
         };
       };
       lfs.enable = true;
