@@ -218,6 +218,22 @@
         "type": "github"
       }
     },
+    "homebrew-ssh-askpass": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1707421167,
+        "narHash": "sha256-IFSYDt24xpO4vlxh1jLokN0BNFOKzny7l9rxjiNDWcE=",
+        "owner": "theseal",
+        "repo": "homebrew-ssh-askpass",
+        "rev": "e790f603a5edc44e807b45c275490819aed70be7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "theseal",
+        "repo": "homebrew-ssh-askpass",
+        "type": "github"
+      }
+    },
     "homebrew-zkondor": {
       "flake": false,
       "locked": {
@@ -357,6 +373,7 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
+        "homebrew-ssh-askpass": "homebrew-ssh-askpass",
         "homebrew-zkondor": "homebrew-zkondor",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
@@ -373,11 +390,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1723649489,
-        "narHash": "sha256-m86puAhVGXcFhOTJ7BG462UQXOuhvsOQjUhYM21ucjg=",
+        "lastModified": 1725393596,
+        "narHash": "sha256-nTzLVXRwgslHHydSXY2Kcbj72pBB5E9W6LblDE50qdI=",
         "ref": "refs/heads/main",
-        "rev": "3cb8d32642228f25bdb3ff69609dd41990bd03da",
-        "revCount": 17,
+        "rev": "fbbfc729c6f2c6d1560ae14d072890c9d5d59eaa",
+        "revCount": 18,
         "type": "git",
         "url": "ssh://git@github.com/multivac61/nix-secrets.git"
       },

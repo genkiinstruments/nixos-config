@@ -37,6 +37,10 @@
       url = "github:zkondor/homebrew-dist";
       flake = false;
     };
+    homebrew-ssh-askpass = {
+      url = "github:theseal/homebrew-ssh-askpass";
+      flake = false;
+    };
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -150,6 +154,7 @@
                       "homebrew/homebrew-bundle" = homebrew-bundle;
                       "nikitabobko/homebrew-tap" = homebrew-aerospace;
                       "zkondor/homebrew-dist" = homebrew-zkondor;
+                      "theseal/homebrew-ssh-askpass" = homebrew-ssh-askpass;
                     };
                   };
                   age = {
@@ -260,7 +265,7 @@
                       home = "/Users/${user}";
                     };
                   environment.systemPackages = with nixpkgs.legacyPackages.${system}; [ openssh ]; # needed for fido2 support
-                  environment.variables.SSH_ASKPASS = "/usr/local/bin/ssh-askpass"; # TODO: Bring to nixpkgs https://github.com/theseal/ssh-askpass
+                  environment.variables.SSH_ASKPASS = "/opt/homebrew/bin/ssh-askpass";
                   environment.variables.DISPLAY = ":0";
                   nix.settings.trusted-users = [
                     "root"

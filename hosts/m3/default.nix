@@ -13,20 +13,13 @@
       "raycast"
       "arc"
       "karabiner-elements"
-      {
-        name = "nikitabobko/tap/aerospace";
-        args = {
-          no_quarantine = true;
-        };
-      }
-      # "znotch"
-      {
-        name = "zkondor/dist/znotch";
-        # args = {
-        #   no_quarantine = true;
-        # };
-      }
+      "nikitabobko/tap/aerospace"
+      "zkondor/dist/znotch"
     ];
+    brews = [
+      "theseal/ssh-askpass/ssh-askpass"
+    ];
+    caskArgs.no_quarantine = true;
     taps = builtins.attrNames config.nix-homebrew.taps;
     masApps = {
       # `nix run nixpkgs#mas -- search <app name>`
