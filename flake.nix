@@ -301,30 +301,6 @@
                 ./hosts/gkr
               ];
             };
-          d =
-            let
-              name = "Daniel Gretarsson";
-              user = "genki";
-              userEmail = "daniel@genkiinstruments.com";
-              host = "d";
-            in
-            nix-darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              specialArgs = {
-                inherit
-                  inputs
-                  user
-                  name
-                  userEmail
-                  host
-                  ;
-              };
-              modules = [
-                home-manager.darwinModules.home-manager
-                my-nix-homebrew
-                ./hosts/d
-              ];
-            };
         };
 
       nixosConfigurations = {
