@@ -712,18 +712,30 @@
 
     tmux = {
       enable = true;
+      baseIndex = 1;
+      escapeTime = 0;
+      historyLimit = 1000000;
+      mouse = true;
+      newSession = true;
+      prefix = "C-Space";
+      sensibleOnTop = true;
+      terminal = "tmux-256color";
       plugins = with pkgs.tmuxPlugins; [
+        sensible
         vim-tmux-navigator
         yank
         fzf-tmux-url
         {
           plugin = tmux-floax;
           extraConfig = ''
-            set -g @floax-bind '-n C-0'
+            set -g @floax-bind '/'
+            set -g @floax-bind 'C-/'
+            set -g @floax-bind '-n C-/'
+            set -g @floax-session-name 'floax'
+            set -g @floax-text-color 'white'
           '';
         }
       ];
-      sensibleOnTop = true;
       extraConfig = (builtins.readFile ./config/tmux.conf);
     };
 

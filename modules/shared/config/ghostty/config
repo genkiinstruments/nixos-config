@@ -110,14 +110,14 @@ keybind = cmd+shift+r=text:\x02\x52
 keybind = cmd+shift+5=text:\x02\x25
 keybind = cmd+shift+'=text:\x02\x22
 
-keybind = cmd+a=text:\x02\x61
-keybind = cmd+b=text:\x02\x62
-keybind = cmd+d=text:\x02\x64
-keybind = cmd+e=text:\x02\x65
-keybind = cmd+g=text:\x02\x67
-keybind = cmd+j=text:\x02\x6A
-keybind = cmd+k=text:\x02\x6B
-keybind = cmd+r=text:\x02\x72
-keybind = cmd+x=text:\x02\x78
-keybind = cmd+y=text:\x02\x79
-keybind = cmd+z=text:\x02\x7A
+keybind = cmd+a=text:\x00\x61
+keybind = cmd+b=text:\x00\x62
+keybind = cmd+d=text:\x00\x64
+keybind = cmd+e=text:\x00\x65
+keybind = cmd+g=text:\x00\x67
+keybind = cmd+j=text:\x00\x6A
+keybind = cmd+k=text:\x00\x6B
+keybind = cmd+r=text:\x00\x72
+keybind = cmd+x=text:\x00\x78
+keybind = cmd+y=text:\x00\x79
+keybind = cmd+z=text:\x00\x7A
