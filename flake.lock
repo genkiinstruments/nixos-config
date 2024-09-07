@@ -349,16 +349,16 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1725448034,
-        "narHash": "sha256-YWbVeDERbIHAEQCtDtUunHYUNH31ReIdJIP8juXfdpM=",
+        "lastModified": 1725711646,
+        "narHash": "sha256-YfF3ZkwYWJn2HauY51epqyAx0aTWT3j4ynmlV76fAm4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "9b40840066f93767bb528810ea7dc9caacd8997f",
+        "rev": "3764d70f8fa2dd5df4ae5713a2cfbb140f9f6c0a",
         "type": "github"
       },
       "original": {
         "owner": "NixOS",
-        "ref": "nixos-unstable-small",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -379,12 +379,11 @@
         "nix-homebrew": "nix-homebrew",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": [
-          "srvos",
-          "nixpkgs"
-        ],
+        "nixpkgs": "nixpkgs_2",
         "secrets": "secrets",
-        "srvos": "srvos"
+        "srvos": [
+          "nixpkgs"
+        ]
       }
     },
     "secrets": {
@@ -401,24 +400,6 @@
       "original": {
         "type": "git",
         "url": "ssh://git@github.com/multivac61/nix-secrets.git"
-      }
-    },
-    "srvos": {
-      "inputs": {
-        "nixpkgs": "nixpkgs_2"
-      },
-      "locked": {
-        "lastModified": 1725708209,
-        "narHash": "sha256-Dur8ZkiskNeQxjivdp7Jtmz9ZFTi6q0w34+P6WTRyv0=",
-        "owner": "nix-community",
-        "repo": "srvos",
-        "rev": "c15adcd6056c0e218669e62affb3e27654d18181",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "srvos",
-        "type": "github"
       }
     },
     "systems": {
