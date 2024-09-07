@@ -360,7 +360,7 @@
         svelte-language-server
         nodePackages.typescript-language-server
         nodePackages.prettier
-        nodePackages.eslint
+        # nodePackages.eslint
         tailwindcss-language-server
         (pkgs.vimUtils.buildVimPlugin {
           pname = "tailwindcss-colorizer-cmp";
