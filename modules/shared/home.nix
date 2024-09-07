@@ -56,7 +56,6 @@
       settings = {
         exit_mode = "return-query";
         keymap_mode = "auto";
-        prefers_reduced_motion = true;
         enter_accept = true;
         update_check = false;
         sync_frequency = "0";
