@@ -343,6 +343,7 @@
 
         # Rust
         rust-analyzer
+
         rustfmt
         cargo
         rustc
@@ -611,6 +612,7 @@
               { import = "lazyvim.plugins.extras.editor.mini-diff" },
               { import = "lazyvim.plugins.extras.editor.mini-move" },
               { import = "lazyvim.plugins.extras.lang.tailwind" },
+              { import = "lazyvim.plugins.extras.lang.rust" },
               { import = "lazyvim.plugins.extras.util.mini-hipatterns" }, -- Tailwind 
               {
                 "nvim-telescope/telescope-frecency.nvim",
