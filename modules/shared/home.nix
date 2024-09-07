@@ -31,7 +31,7 @@
       settings = {
         git = {
           paging = {
-            pager = "delta --dark --paging=never";
+            pager = "${pkgs.diff-so-fancy}/bin/diff-so-fancy";
           };
         };
         gui = {
@@ -224,13 +224,6 @@
 
     git = {
       enable = true;
-      delta = {
-        enable = true;
-        options = {
-          dark = true;
-          paging = "never";
-        };
-      };
       lfs.enable = true;
       extraConfig = {
         init.defaultBranch = "main";
