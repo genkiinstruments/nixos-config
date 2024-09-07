@@ -2,7 +2,9 @@
   description = "Nix runs my 🌍🌎🌏";
   inputs = {
     srvos.url = "github:nix-community/srvos";
-    nixpkgs.follows = "srvos/nixpkgs"; # use the version of nixpkgs that has been tested with SrvOS
+    srvos.follows = "nixpkgs";
+    nixpkgs.url = "github:NixOS/nixpkgs/master";
+    # nixpkgs.follows = "srvos/nixpkgs"; # use the version of nixpkgs that has been tested with SrvOS
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -95,6 +97,7 @@
                 nixos-anywhere
                 age
                 age-plugin-yubikey
+                age-plugin-fido2-hmac
               ] ++ lib.optional stdenv.isDarwin [ nix-darwin.packages.${system}.darwin-rebuild ];
               shellHook = ''export EDITOR=nvim'';
             };

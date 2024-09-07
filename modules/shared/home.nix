@@ -812,7 +812,7 @@
     neofetch
     nb
     # TODO: Add once merged in nixpkgs
-    # age-plugin-fido2-hmac
+    age-plugin-fido2-hmac
     # bitwarden-cli
 
     # for sesh
