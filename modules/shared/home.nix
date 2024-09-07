@@ -810,8 +810,10 @@
     moonlight-qt
     magic-wormhole-rs
     neofetch
-    bitwarden-cli
     nb
+    # TODO: Add once merged in nixpkgs
+    # age-plugin-fido2-hmac
+    # bitwarden-cli
 
     # for sesh
     gh-dash
