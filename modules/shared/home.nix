@@ -376,13 +376,6 @@
 
         elixir
 
-        # Other
-        marksman
-        shfmt
-        markdownlint-cli2
-
-        markdown-oxide
-
         # sql
         sqlfluff
         sqlite
@@ -415,11 +408,6 @@
             neotest-zig
             vim-tmux-navigator
 
-            # Markdown
-            render-markdown
-            markdown-preview-nvim
-            vim-markdown-toc
-            vim-markdown
             conform-nvim
 
             zen-mode-nvim
@@ -766,8 +754,6 @@
               lua
               luadoc
               luap
-              markdown
-              markdown-inline
               python
               query
               regex
