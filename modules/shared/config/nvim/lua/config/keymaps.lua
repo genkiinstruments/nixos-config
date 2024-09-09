@@ -37,12 +37,3 @@ vim.keymap.del("n", "<leader>ft")
 vim.keymap.del("n", "<leader>fT")
 vim.keymap.del("n", "<C-_>")
 vim.keymap.del("n", "<C-/>")
-
-local nvim_tmux_nav = require("nvim-tmux-navigation")
-
-vim.keymap.set({ "n", "t", "i" }, "<C-h>", nvim_tmux_nav.NvimTmuxNavigateLeft)
-vim.keymap.set({ "n", "t", "i" }, "<C-j>", nvim_tmux_nav.NvimTmuxNavigateDown)
-vim.keymap.set({ "n", "t", "i" }, "<C-k>", nvim_tmux_nav.NvimTmuxNavigateUp)
-vim.keymap.set({ "n", "t", "i" }, "<C-l>", nvim_tmux_nav.NvimTmuxNavigateRight)
-vim.keymap.set({ "n", "t", "i" }, "<C-\\>", nvim_tmux_nav.NvimTmuxNavigateLastActive)
-vim.keymap.set({ "n", "t", "i" }, "<C-Space>", nvim_tmux_nav.NvimTmuxNavigateNext)
