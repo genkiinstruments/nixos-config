@@ -20,7 +20,7 @@ keymap("i", "jj", "<Esc>", { desc = "Exit insert mode" })
 
 vim.api.nvim_buf_set_var(0, "cmp", false)
 
-keymap({ "n", "i", "v" }, "<leader>uU", function()
+keymap({ "n", "v" }, "<leader>uU", function()
     if vim.fn.exists("b:cmp") == 0 or vim.api.nvim_buf_get_var(0, "cmp") then
         vim.api.nvim_buf_set_var(0, "cmp", false)
         require("cmp").setup.buffer({ enabled = false })
