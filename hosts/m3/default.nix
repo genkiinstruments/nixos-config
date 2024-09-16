@@ -18,6 +18,7 @@
     ];
     brews = [
       "theseal/ssh-askpass/ssh-askpass"
+      "bitwarden-cli"
     ];
     caskArgs.no_quarantine = true;
     taps = builtins.attrNames config.nix-homebrew.taps;
