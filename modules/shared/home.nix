@@ -357,6 +357,8 @@
         ruff-lsp
         pyright
 
+        emmet-ls
+
         # Svelte
         svelte-language-server
         nodePackages.typescript-language-server
