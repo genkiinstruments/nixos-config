@@ -1,9 +1,9 @@
 {
   description = "Nix runs my 🌍🌎🌏";
   inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     srvos.url = "github:nix-community/srvos";
     srvos.follows = "nixpkgs";
-    nixpkgs.url = "github:NixOS/nixpkgs/master";
     # nixpkgs.follows = "srvos/nixpkgs"; # use the version of nixpkgs that has been tested with SrvOS
     home-manager = {
       url = "github:nix-community/home-manager";
