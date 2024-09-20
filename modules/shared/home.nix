@@ -745,46 +745,14 @@
       terminal = "tmux-256color";
       plugins = with pkgs.tmuxPlugins; [
         sensible
-        continuum
         vim-tmux-navigator
         yank
         fzf-tmux-url
         tmux-thumbs
         {
-          plugin = resurrect; # Used by tmux-continuum
-          extraConfig = ''
-            set -g @resurrect-capture-pane-contents 'on'
-            set -g @resurrect-pane-contents-area 'visible'
-          '';
-        }
-        {
-          plugin = continuum;
-          extraConfig = ''
-            set -g @continuum-restore 'on'
-            set -g @continuum-save-interval '20' # minutes
-          '';
-        }
-        {
           plugin = extrakto;
           extraConfig = ''
             set -g @extrakto_grab_area "window recent"
-          '';
-        }
-        {
-          plugin = tmux-thumbs;
-          extraConfig = lib.mkIf pkgs.stdenv.isDarwin ''
-            # Copy to system clipboard on macOS
-            set -g @thumbs-command 'echo -n {} | pbcopy'
-          '';
-        }
-        {
-          plugin = tmux-floax;
-          extraConfig = ''
-            set -g @floax-bind '/'
-            set -g @floax-bind 'C-/'
-            set -g @floax-bind '-n C-/'
-            set -g @floax-session-name 'floax'
-            set -g @floax-text-color 'white'
           '';
         }
       ];
