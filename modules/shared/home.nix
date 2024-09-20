@@ -841,9 +841,9 @@
     age-plugin-fido2-hmac
     # bitwarden-cli
 
-    # for sesh
+    # TODO: update sesh in nixpkgs. currently using the one in ~/.local/bin/
+    # sesh
     gh-dash
-    sesh
     fzf
     gum
 
