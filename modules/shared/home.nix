@@ -401,8 +401,6 @@
     neovim
     ripgrep
     fd
-    ripgrep
-    fd
     nodejs
     cargo
     go
