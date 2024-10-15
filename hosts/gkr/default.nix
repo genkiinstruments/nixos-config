@@ -2,32 +2,9 @@
   lib,
   pkgs,
   user,
-  config,
-  secrets,
   ...
 }:
 {
-  age.secrets.gkr-github-runner.file = "${secrets}/gkr-github-runner.age";
-  age.secrets.gkr-github-runner.owner =
-    config.launchd.daemons.github-runner-runner.serviceConfig.UserName;
-
-  services.github-runners.runner = {
-    enable = true;
-    replace = true;
-    name = "gkr-github-runner";
-    url = "https://github.com/genkiinstruments";
-    tokenFile = config.age.secrets.gkr-github-runner.path;
-    extraPackages = with pkgs; [
-      bash
-      coreutils
-      git
-      gnutar
-      gzip
-      cachix
-      nix
-    ];
-  };
-
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
@@ -43,19 +20,34 @@
       "${user}"
       "github-runner"
     ];
-
-    gc = {
-      user = "root";
-      # automatic = true;
-      interval = {
-        Weekday = 0;
-        Hour = 2;
-        Minute = 0;
-      };
-      options = "--delete-older-than 30d";
-    };
   };
 
+  # TODO: This really is a hack to run actions-runner that was
+  # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
+  # under folder /Users/genki/actions-runner. The reason we do this is because the github-actions runner
+  # in nix-darwin - https://daiderd.com/nix-darwin/manual/index.html#opt-services.github-runners - runs inside a nix container
+  # and as such has no acccess to Apple clang and other dependencies needed. 
+  # NOTE: Don't run automatic gc as it may break the actions-runner code.
+  launchd.daemons.github-runner = {
+    serviceConfig = {
+      ProgramArguments = [
+        "/bin/sh"
+        "-c"
+        # follow exact steps of github guide to get this available
+        # so more automatic nix version would use pkgs.github-runner (and token sshed as file)
+        "/Users/${user}/actions-runner/run.sh"
+      ];
+      Label = "github-runner";
+      KeepAlive = true;
+      RunAtLoad = true;
+
+      StandardErrorPath = "/Users/${user}/actions-runner/err.log";
+      StandardOutPath = "/Users/${user}/actions-runner/ok.log";
+      WorkingDirectory = "/Users/${user}/actions-runner/";
+      SessionCreate = true;
+      UserName = "${user}";
+    };
+  };
   system = {
     stateVersion = 4;
 
