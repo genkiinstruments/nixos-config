@@ -1,10 +1,32 @@
-{ lib, pkgs, user, ... }:
-
 {
-  imports = [
-    ../../modules/darwin/home-manager.nix
-    ../../modules/shared
-  ];
+  lib,
+  pkgs,
+  user,
+  config,
+  secrets,
+  ...
+}:
+{
+  age.secrets.gkr-github-runner.file = "${secrets}/gkr-github-runner.age";
+  age.secrets.gkr-github-runner.owner =
+    config.launchd.daemons.github-runner-runner.serviceConfig.UserName;
+
+  services.github-runners.runner = {
+    enable = true;
+    replace = true;
+    name = "gkr-github-runner";
+    url = "https://github.com/genkiinstruments";
+    tokenFile = config.age.secrets.gkr-github-runner.path;
+    extraPackages = with pkgs; [
+      bash
+      coreutils
+      git
+      gnutar
+      gzip
+      cachix
+      nix
+    ];
+  };
 
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
@@ -16,42 +38,23 @@
 
   # Setup user, packages, programs
   nix = {
-    settings.trusted-users = [ "@admin" "${user}" "github-runner" ];
+    settings.trusted-users = [
+      "@admin"
+      "${user}"
+      "github-runner"
+    ];
 
     gc = {
       user = "root";
-      automatic = true;
-      interval = { Weekday = 0; Hour = 2; Minute = 0; };
+      # automatic = true;
+      interval = {
+        Weekday = 0;
+        Hour = 2;
+        Minute = 0;
+      };
       options = "--delete-older-than 30d";
     };
   };
-
-  launchd.daemons.github-runner = {
-    serviceConfig = {
-      ProgramArguments = [
-        "/bin/sh"
-        "-c"
-        # follow exact steps of github guide to get this available
-        # so more automatic nix version would use pkgs.github-runner (and token sshed as file)
-        "/Users/${user}/actions-runner/run.sh"
-      ];
-      Label = "github-runner";
-      KeepAlive = true;
-      RunAtLoad = true;
-
-      StandardErrorPath = "/Users/${user}/actions-runner/err.log";
-      StandardOutPath = "/Users/${user}/actions-runner/ok.log";
-      WorkingDirectory = "/Users/${user}/actions-runner/";
-      SessionCreate = true;
-      UserName = "${user}";
-    };
-  };
-
-  # Turn off NIX_PATH warnings now that we're using flakes
-  system.checks.verifyNixPath = false;
-
-  # Enable fonts dir
-  fonts.fontDir.enable = true;
 
   system = {
     stateVersion = 4;
@@ -97,7 +100,7 @@
     activationScripts.postActivation.text = ''
       # Set the default shell as fish for the user
       sudo chsh -s ${lib.getBin pkgs.fish}/bin/fish "${user}"
-      
+
       # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
       defaults write -g InitialKeyRepeat -int 10 
       defaults write -g KeyRepeat -int 1
