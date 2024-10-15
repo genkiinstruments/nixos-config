@@ -86,6 +86,7 @@
         gs = "git status";
         gt = "git tag";
         c = "clear";
+        lg = "lazygit";
       };
       interactiveShellInit = ''
         # bind to ctrl-p in normal and insert mode, add any other bindings you want here too
