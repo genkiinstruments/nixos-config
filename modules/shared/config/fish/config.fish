@@ -78,9 +78,7 @@ set -q PATH; or set PATH ''; set -gx PATH  "$HOME/.local/bin" $PATH;
 # Prompt
 #-------------------------------------------------------------------------------
 # Do not show any greeting
-set --universal --erase fish_greeting
-function fish_greeting; end
-funcsave fish_greeting
+set fish_greeting
 
 # My color scheme
 set -U fish_color_normal normal
