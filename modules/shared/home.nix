@@ -86,10 +86,12 @@
         c = "clear";
         lg = "lazygit";
       };
-      interactiveShellInit = lib.strings.concatStrings (lib.strings.intersperse "\n" ([
-            (builtins.readFile ./config/fish/config.fish)
-            "set -g SHELL ${pkgs.fish}/bin/fish"
-          ]));
+      interactiveShellInit = lib.strings.concatStrings (
+        lib.strings.intersperse "\n" ([
+          (builtins.readFile ./config/fish/config.fish)
+          "set -g SHELL ${pkgs.fish}/bin/fish"
+        ])
+      );
     };
 
     ssh.enable = true;
@@ -219,22 +221,25 @@
       mouse = true;
       newSession = true;
       prefix = "C-Space";
-      sensibleOnTop = true;
-      # terminal = "tmux-256color";
-      # plugins = with pkgs.tmuxPlugins; [
-      #   sensible
-      #   vim-tmux-navigator
-      #   yank
-      #   fzf-tmux-url
-      #   tmux-thumbs
-      #   {
-      #     plugin = extrakto;
-      #     extraConfig = ''
-      #       set -g @extrakto_grab_area "window recent"
-      #     '';
-      #   }
-      # ];
-      # extraConfig = (builtins.readFile ./config/tmux.conf);
+      plugins = with pkgs.tmuxPlugins; [
+        sensible
+        vim-tmux-navigator
+        yank
+        fzf-tmux-url
+        tmux-thumbs
+        {
+          plugin = extrakto;
+          extraConfig = ''
+            set -g @extrakto_grab_area "window recent"
+          '';
+        }
+      ];
+      extraConfig = lib.strings.concatStrings (
+        lib.strings.intersperse "\n" ([
+          (builtins.readFile ./config/tmux/tmux.conf)
+          "set -g default-command ${pkgs.fish}/bin/fish"
+        ])
+      );
     };
 
     starship = {
