@@ -1,3 +1,6 @@
+# I want my nix binaries to be found first in the nix path
+fish_add_path --path --move /run/current-system/sw/bin
+
 #-------------------------------------------------------------------------------
 # SSH Agent
 #-------------------------------------------------------------------------------
