@@ -90,17 +90,9 @@
     };
 
     activationScripts.postActivation.text = ''
-      # Set the default shell as fish for the user
-      sudo chsh -s ${lib.getBin pkgs.fish}/bin/fish "${user}"
-
       # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-      defaults write -g InitialKeyRepeat -int 10 
+      defaults write -g InitialKeyRepeat -int 10
       defaults write -g KeyRepeat -int 1
-    '';
-
-    # https://github.com/LnL7/nix-darwin/issues/811
-    activationScripts.setFishAsShell.text = ''
-      dscl . -create /Users/olafur UserShell /run/current-system/sw/bin/fish
     '';
   };
 }
