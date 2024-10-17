@@ -1,13 +1,10 @@
 {
   pkgs,
-  lib,
   ...
 }:
 {
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
-
-  xdg.enable = true; # Needed for fish interactiveShellInit hack
 
   programs = {
     gh = {
@@ -17,7 +14,7 @@
     eza = {
       enable = true;
       enableFishIntegration = true;
-      icons = true;
+      icons = "auto";
       git = true;
     };
     nix-index = {
@@ -51,7 +48,7 @@
       };
     };
     atuin = {
-      enable = true;
+      enable = false;
       enableFishIntegration = true;
       settings = {
         exit_mode = "return-query";
@@ -218,6 +215,8 @@
       '';
     };
 
+    bash.enable = true;
+
     ssh.enable = true;
 
     bat.enable = true;
@@ -346,21 +345,21 @@
       newSession = true;
       prefix = "C-Space";
       sensibleOnTop = true;
-      terminal = "tmux-256color";
-      plugins = with pkgs.tmuxPlugins; [
-        sensible
-        vim-tmux-navigator
-        yank
-        fzf-tmux-url
-        tmux-thumbs
-        {
-          plugin = extrakto;
-          extraConfig = ''
-            set -g @extrakto_grab_area "window recent"
-          '';
-        }
-      ];
-      extraConfig = (builtins.readFile ./config/tmux.conf);
+      # terminal = "tmux-256color";
+      # plugins = with pkgs.tmuxPlugins; [
+      #   sensible
+      #   vim-tmux-navigator
+      #   yank
+      #   fzf-tmux-url
+      #   tmux-thumbs
+      #   {
+      #     plugin = extrakto;
+      #     extraConfig = ''
+      #       set -g @extrakto_grab_area "window recent"
+      #     '';
+      #   }
+      # ];
+      # extraConfig = (builtins.readFile ./config/tmux.conf);
     };
 
     starship = {
@@ -379,12 +378,12 @@
   home.packages = with pkgs; [
     wget
     zip
-    moonlight-qt
+    # moonlight-qt
     magic-wormhole-rs
     neofetch
     nb
     # TODO: Add once merged in nixpkgs
-    age-plugin-fido2-hmac
+    # age-plugin-fido2-hmac
     # bitwarden-cli
 
     # TODO: update sesh in nixpkgs. currently using the one in ~/.local/bin/
