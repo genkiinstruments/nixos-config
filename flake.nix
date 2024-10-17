@@ -236,6 +236,7 @@
                     {
                       isHidden = false;
                       home = "/Users/${user}";
+                      shell = pkgs.fish;
                     };
                   environment.systemPackages = with nixpkgs.legacyPackages.${system}; [ openssh ]; # needed for fido2 support
                   environment.variables.SSH_ASKPASS = "/opt/homebrew/bin/ssh-askpass";
