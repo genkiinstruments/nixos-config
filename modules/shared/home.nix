@@ -227,7 +227,16 @@
         vim-tmux-navigator
         yank
         fzf-tmux-url
-        tmux-thumbs
+        {
+          plugin = tmux-thumbs;
+          extraConfig =
+            if pkgs.stdenv.isDarwin then
+              ''
+                set -g @thumbs-command 'echo -n {} | pbcopy'
+              ''
+            else
+              "";
+        }
         {
           plugin = extrakto;
           extraConfig = ''
