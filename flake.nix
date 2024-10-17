@@ -340,13 +340,14 @@
             modules = [
               {
                 imports = [
+                  home-manager.nixosModules.home-manager
                   srvos.nixosModules.server
                   srvos.nixosModules.mixins-systemd-boot
                   srvos.nixosModules.mixins-terminfo
                   srvos.nixosModules.mixins-nix-experimental
                   srvos.nixosModules.mixins-trusted-nix-caches
+                  srvos.nixosModules.roles-github-actions-runner
                   disko.nixosModules.disko
-                  home-manager.nixosModules.home-manager
                   agenix.nixosModules.default
                   ./modules/shared
                   ./hosts/gdrn
@@ -368,6 +369,12 @@
                       mode = "644";
                       owner = "${user}";
                       group = "users";
+                    };
+                    gdrn-github-runner-key = {
+                      file = "${secrets}/gdrn-github-runner-key.age";
+                    };
+                    gdrn-github-runner-cachixToken = {
+                      file = "${secrets}/gdrn-github-runner-cachixToken.age";
                     };
                   };
                 };

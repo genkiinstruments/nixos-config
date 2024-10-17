@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [ ./disko-config.nix ];
   disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";
@@ -22,4 +27,16 @@
   services.tailscale.enable = true;
 
   system.stateVersion = "23.05"; # Did you read the comment?
+  roles.github-actions-runner = {
+    url = "https://github.com/genkiinstruments";
+    count = 4;
+    name = "gdrn-github-runner";
+    githubApp = {
+      id = "1003596";
+      login = "genkiinstruments";
+      privateKeyFile = config.age.secrets.gdrn-github-runner-key.path;
+    };
+    cachix.cacheName = "genki";
+    cachix.tokenFile = config.age.secrets.gdrn-github-runner-cachixToken.path;
+  };
 }
