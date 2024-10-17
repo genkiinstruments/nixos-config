@@ -72,7 +72,8 @@ if test -d "/Applications/Hammerspoon.app"
 end
 
 # Add ~/.local/bin
-set -q PATH; or set PATH ''; set -gx PATH  "$HOME/.local/bin" $PATH;
+set -q PATH; or set PATH ''
+set -gx PATH "$HOME/.local/bin" $PATH
 
 #-------------------------------------------------------------------------------
 # Prompt
@@ -90,14 +91,14 @@ bind -M insert \cr _atuin_search
 bind -M insert \cf accept-autosuggestion
 
 function fish_user_key_bindings
-  fish_vi_key_bindings
+    fish_vi_key_bindings
 end
 
 set fish_vi_force_cursor
-set fish_cursor_default     block      blink
-set fish_cursor_insert      line       blink
+set fish_cursor_default block blink
+set fish_cursor_insert line blink
 set fish_cursor_replace_one underscore blink
-set fish_cursor_visual      block
+set fish_cursor_visual block
 
 #-------------------------------------------------------------------------------
 # Vars
