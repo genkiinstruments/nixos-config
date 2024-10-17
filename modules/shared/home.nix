@@ -92,8 +92,6 @@
           ]));
     };
 
-    bash.enable = true;
-
     ssh.enable = true;
 
     bat.enable = true;
