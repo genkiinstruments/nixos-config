@@ -8,7 +8,7 @@ pkgs.mkShell {
     age
     age-plugin-yubikey
     age-plugin-fido2-hmac
-    perSystem.nix-darwin.darwin-rebuild
+    # perSystem.nix-darwin.darwin-rebuild
   ];
 
   # Add environment variables
