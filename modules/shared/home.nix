@@ -88,10 +88,13 @@
         lg = "lazygit";
       };
       interactiveShellInit = lib.strings.concatStrings (
-        lib.strings.intersperse "\n" ([
-          (builtins.readFile ./config/fish/config.fish)
-          "set -g SHELL ${pkgs.fish}/bin/fish"
-        ])
+        lib.strings.intersperse "\n" (
+          [
+            (builtins.readFile ./config/fish/config.fish)
+            "set -g SHELL ${pkgs.fish}/bin/fish"
+          ]
+          ++ lib.optional pkgs.stdenv.isDarwin [ "fish_add_path --path --move /run/current-system/sw/bin" ]
+        )
       );
     };
 
