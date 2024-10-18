@@ -1,6 +1,23 @@
-{ pkgs, lib, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}:
+let
+  name = "Ólafur Bjarki Bogason";
+  user = "olafur";
+  userName = user;
+  host = "joip";
+  userEmail = "olafur@genkiinstruments.com";
+in
 {
   imports = [
+    inputs.srvos.nixosModules.server
+    inputs.nixos-hardware.nixosModules.intel-nuc-8i7beh
+    inputs.home-manager.nixosModules.home-manager
+    inputs.disko.nixosModules.disko
+    inputs.agenix.nixosModules.default
     ./disk-config.nix
     ./hardware-configuration.nix
     ../../modules/shared
@@ -12,6 +29,68 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  age = {
+    secrets = {
+      "my-secret" = {
+        symlink = true;
+        path = "/home/${user}/my-secret";
+        file = "${inputs.secrets}/my-secret.age";
+        mode = "644";
+        owner = "${user}";
+        group = "users";
+      };
+      dashboard-env = {
+        symlink = true;
+        file = "${inputs.secrets}/homepage-dashboard-env.age";
+        owner = "${user}";
+        group = "users";
+        mode = "644";
+      };
+      atuin-key = {
+        symlink = true;
+        path = "/home/${user}/.local/share/atuin/key";
+        file = "${inputs.secrets}/atuin-key.age";
+        mode = "644";
+        owner = "${user}";
+        group = "users";
+      };
+    };
+  };
+  users.users.${user} = {
+    isNormalUser = true;
+    shell = "/run/current-system/sw/bin/fish";
+    openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+    extraGroups = [ "wheel" ];
+  };
+  users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+    "${user}"
+  ];
+  networking.hostName = "joip";
+  # Workaround https://github.com/NixOS/nixpkgs/issues/180175
+  systemd.services.NetworkManager-wait-online.enable = false;
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = "backup";
+  home-manager.users.${user} =
+    { config, ... }:
+    {
+      imports = [
+        inputs.nix-index-database.hmModules.nix-index
+        inputs.catppuccin.homeManagerModules.catppuccin
+        ../../modules/shared/home.nix
+      ];
+      catppuccin = {
+        enable = true;
+        flavor = "mocha";
+      };
+      programs.git = {
+        inherit userEmail userName;
+      };
+    };
+  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.useDHCP = lib.mkDefault true;

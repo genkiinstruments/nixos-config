@@ -142,106 +142,15 @@
           inherit specialArgs;
           modules = [ ./hosts/kroli ];
         };
-        joip =
-          let
-            name = "Ólafur Bjarki Bogason";
-            user = "olafur";
-            userName = user;
-            host = "joip";
-            userEmail = "olafur@genkiinstruments.com";
-          in
-          nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            specialArgs = {
-              inherit
-                inputs
-                user
-                host
-                name
-                userEmail
-                secrets
-                ;
-            };
-            modules = [
-              {
-                imports = [
-                  srvos.nixosModules.server
-                  nixos-hardware.nixosModules.intel-nuc-8i7beh
-                  home-manager.nixosModules.home-manager
-                  disko.nixosModules.disko
-                  agenix.nixosModules.default
-                  ./hosts/joip
-                ];
-                age = {
-                  secrets = {
-                    "my-secret" = {
-                      symlink = true;
-                      path = "/home/${user}/my-secret";
-                      file = "${secrets}/my-secret.age";
-                      mode = "644";
-                      owner = "${user}";
-                      group = "users";
-                    };
-                    dashboard-env = {
-                      symlink = true;
-                      file = "${secrets}/homepage-dashboard-env.age";
-                      owner = "${user}";
-                      group = "users";
-                      mode = "644";
-                    };
-                    atuin-key = {
-                      symlink = true;
-                      path = "/home/${user}/.local/share/atuin/key";
-                      file = "${secrets}/atuin-key.age";
-                      mode = "644";
-                      owner = "${user}";
-                      group = "users";
-                    };
-                  };
-                };
-                users.users.${user} = {
-                  isNormalUser = true;
-                  shell = "/run/current-system/sw/bin/fish";
-                  openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
-                  extraGroups = [ "wheel" ];
-                };
-                users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
-                nix.settings.trusted-users = [
-                  "root"
-                  "@wheel"
-                  "${user}"
-                ];
-                networking.hostName = "joip";
-                # Workaround https://github.com/NixOS/nixpkgs/issues/180175
-                systemd.services.NetworkManager-wait-online.enable = false;
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.backupFileExtension = "backup";
-                home-manager.users.${user} =
-                  { config, ... }:
-                  {
-                    imports = [
-                      nix-index-database.hmModules.nix-index
-                      catppuccin.homeManagerModules.catppuccin
-                      ./modules/shared/home.nix
-                    ];
-                    catppuccin = {
-                      enable = true;
-                      flavor = "mocha";
-                    };
-                    programs.git = {
-                      inherit userEmail userName;
-                    };
-                  };
-                programs.fish.enable = true; # Otherwise our shell won't be installed correctly
-                system.stateVersion = "23.05";
-              }
-            ];
-          };
         biggimaus = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           inherit specialArgs;
           modules = [ ./hosts/biggimaus ];
+        };
+        joip = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [ ./hosts/joip ];
         };
       };
     };
