@@ -102,6 +102,9 @@
               shellHook = ''export EDITOR=nvim'';
             };
         };
+      specialArgs = {
+        inherit inputs;
+      };
     in
     {
       devShells = forAllSystems devShell;
@@ -109,34 +112,12 @@
         default = nixpkgs.legacyPackages.${system}.callPackage ./default.nix { };
       });
 
-      darwinConfigurations =
-        let
-          my-nix-homebrew =
-            { user, lib, ... }:
-            nix-homebrew.darwinModules.nix-homebrew {
-              inherit lib;
-              nix-homebrew = {
-                inherit user;
-                enable = true;
-                mutableTaps = false;
-                taps = with inputs; {
-                  "homebrew/homebrew-core" = homebrew-core;
-                  "homebrew/homebrew-cask" = homebrew-cask;
-                  "homebrew/homebrew-bundle" = homebrew-bundle;
-                  "nikitabobko/homebrew-tap" = homebrew-aerospace;
-                  "zkondor/homebrew-dist" = homebrew-zkondor;
-                };
-              };
-            };
-        in
-        {
-          m3 = nix-darwin.lib.darwinSystem {
-            system = "aarch64-darwin";
-            specialArgs = {
-              inherit inputs;
-            };
-            modules = [ ./hosts/m3 ];
-          };
+      darwinConfigurations = {
+        m3 = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          inherit specialArgs;
+          modules = [ ./hosts/m3 ];
+        };
 
           gkr =
             let
@@ -217,9 +198,7 @@
       nixosConfigurations = {
         gdrn = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-          specialArgs = {
-            inherit inputs;
-          };
+          inherit specialArgs;
           modules = [ ./hosts/gdrn ];
         };
         gugusar =
