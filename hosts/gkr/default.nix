@@ -1,10 +1,57 @@
 {
-  lib,
+  inputs,
   pkgs,
-  user,
   ...
 }:
+let
+  user = "genki";
+  userName = "Genki builder";
+  userEmail = "genki@genkiinstruments.com";
+in
 {
+  imports = [
+    inputs.home-manager.darwinModules.home-manager
+    inputs.agenix.darwinModules.default
+    inputs.nix-homebrew.darwinModules.nix-homebrew
+    ../../modules/shared
+  ];
+  age = {
+    identityPaths = [
+      # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
+      "/etc/ssh/ssh_host_ed25519_key"
+    ];
+  };
+  # I'm currently managing the github runner manually.. didn't get it to work properly with nix-darwin...
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.backupFileExtension = "backup";
+  home-manager.users.${user} =
+    { config, ... }:
+    {
+      imports = [
+        inputs.nix-index-database.hmModules.nix-index
+        inputs.catppuccin.homeManagerModules.catppuccin
+        ../../modules/shared/home.nix
+      ];
+      catppuccin = {
+        enable = true;
+        flavor = "mocha";
+      };
+      programs.git = {
+        inherit userEmail userName;
+      };
+      home.file.".config/karabiner/karabiner.json".source = config.lib.file.mkOutOfStoreSymlink ../../modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
+    };
+  users.users.${user} =
+    { pkgs, ... }:
+    {
+      shell = "/run/current-system/sw/bin/fish";
+      isHidden = false;
+      home = "/Users/${user}";
+    };
+  environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
+
+  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
   # Auto upgrade nix package and the daemon service.
   services.nix-daemon.enable = true;
 
@@ -27,7 +74,7 @@
   # under folder /Users/genki/actions-runner. The reason we do this is because the github-actions runner
   # in nix-darwin - https://daiderd.com/nix-darwin/manual/index.html#opt-services.github-runners - runs inside a nix container
   # and as such has no acccess to Apple clang and other dependencies needed. 
-  # NOTE: Don't run automatic gc as it may break the actions-runner code.
+  # Don't run automatic gc as it may break the actions-runner code.
   launchd.daemons.github-runner = {
     serviceConfig = {
       ProgramArguments = [

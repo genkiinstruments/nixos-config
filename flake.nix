@@ -119,81 +119,12 @@
           modules = [ ./hosts/m3 ];
         };
 
-          gkr =
-            let
-              name = "Genki";
-              user = "genki";
-              userName = "Genki builder";
-              userEmail = "genki@genkiinstruments.com";
-              host = "gkr";
-              system = "aarch64-darwin";
-            in
-            nix-darwin.lib.darwinSystem {
-              system = "aarch64-darwin";
-              specialArgs = {
-                inherit
-                  inputs
-                  user
-                  name
-                  userEmail
-                  host
-                  secrets
-                  ;
-              };
-              modules = [
-                {
-                  imports = [
-                    home-manager.darwinModules.home-manager
-                    agenix.darwinModules.default
-                    my-nix-homebrew
-                    ./modules/shared
-                    ./hosts/gkr
-                  ];
-                  age = {
-                    identityPaths = [
-                      # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
-                      "/etc/ssh/ssh_host_ed25519_key"
-                    ];
-                  };
-                  # I'm currently managing the github runner manually.. didn't get it to work properly with nix-darwin...
-                  home-manager.useGlobalPkgs = true;
-                  home-manager.useUserPackages = true;
-                  home-manager.backupFileExtension = "backup";
-                  home-manager.users.${user} =
-                    { config, ... }:
-                    {
-                      imports = [
-                        nix-index-database.hmModules.nix-index
-                        catppuccin.homeManagerModules.catppuccin
-                        ./modules/shared/home.nix
-                      ];
-                      catppuccin = {
-                        enable = true;
-                        flavor = "mocha";
-                      };
-                      programs.git = {
-                        inherit userEmail userName;
-                      };
-                      home.file.".config/karabiner/karabiner.json".source = config.lib.file.mkOutOfStoreSymlink ./modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
-                    };
-                  users.users.${user} =
-                    { pkgs, ... }:
-                    {
-                      shell = "/run/current-system/sw/bin/fish";
-                      isHidden = false;
-                      home = "/Users/${user}";
-                    };
-                  environment.systemPackages = with nixpkgs.legacyPackages.${system}; [ openssh ]; # needed for fido2 support
-                  nix.settings.trusted-users = [
-                    "root"
-                    "@wheel"
-                    "${user}"
-                  ]; # Otherwise we get complaints
-                  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
-                }
-              ];
-            };
+        gkr = nix-darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          inherit specialArgs;
+          modules = [ ./hosts/gkr ];
         };
+      };
 
       nixosConfigurations = {
         gdrn = nixpkgs.lib.nixosSystem {
