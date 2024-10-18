@@ -25,6 +25,7 @@ in
     ./disko-config.nix
     ../../modules/shared
   ];
+  nixpkgs.hostPlatform = "x86_64-linux";
   disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";
 
   hardware.enableRedistributableFirmware = true;

@@ -15,6 +15,7 @@ in
     inputs.nix-homebrew.darwinModules.nix-homebrew
     ../../modules/shared
   ];
+  nixpkgs.hostPlatform = "aarch64-darwin";
   age = {
     identityPaths = [
       # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption

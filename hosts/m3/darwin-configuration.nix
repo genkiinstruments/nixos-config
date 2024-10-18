@@ -17,6 +17,7 @@ in
     inputs.agenix.darwinModules.default
     ../../modules/shared
   ];
+  nixpkgs.hostPlatform = "aarch64-darwin";
   nix-homebrew = {
     inherit user;
     enable = true;
