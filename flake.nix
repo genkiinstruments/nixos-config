@@ -137,108 +137,11 @@
           inherit specialArgs;
           modules = [ ./hosts/gugusar ];
         };
-        kroli =
-          let
-            user = "genki";
-            userName = "Ólafur Bjarki Bogason";
-            userEmail = "olafur@genkiinstruments.com";
-          in
-          nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              {
-                imports = [
-                  home-manager.nixosModules.home-manager
-                  disko.nixosModules.disko
-                  ./modules/shared
-                ];
-                disko.devices = {
-                  disk = {
-                    main = {
-                      device = "/dev/disk/by-id/ata-SanDisk_SD8SN8U512G1002_175124804870";
-                      type = "disk";
-                      content = {
-                        type = "gpt";
-                        partitions = {
-                          boot = {
-                            size = "1M";
-                            type = "EF02"; # for grub MBR
-                          };
-                          ESP = {
-                            size = "1G";
-                            type = "EF00";
-                            content = {
-                              type = "filesystem";
-                              format = "vfat";
-                              mountpoint = "/boot";
-                            };
-                          };
-                          root = {
-                            size = "100%";
-                            content = {
-                              type = "filesystem";
-                              format = "ext4";
-                              mountpoint = "/";
-                            };
-                          };
-                        };
-                      };
-                    };
-                  };
-                };
-                boot = {
-                  loader.systemd-boot.enable = true;
-                  loader.efi.canTouchEfiVariables = true;
-                  initrd.availableKernelModules = [
-                    "xhci_pci"
-                    "ahci"
-                    "usb_storage"
-                    "sd_mod"
-                  ];
-                  kernelModules = [ "kvm-intel" ];
-                };
-                networking.hostName = "kroli";
-                networking.useDHCP = true;
-                users.users.${user} = {
-                  isNormalUser = true;
-                  shell = "/run/current-system/sw/bin/fish";
-                  openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
-                  extraGroups = [ "wheel" ];
-                  hashedPassword = "";
-                };
-                users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
-                users.users.root.hashedPassword = "";
-                security.sudo.execWheelOnly = true;
-                security.sudo.wheelNeedsPassword = false;
-                security.sudo.extraConfig = ''Defaults lecture = never'';
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.backupFileExtension = "backup";
-                home-manager.users.${user} =
-                  { config, ... }:
-                  {
-                    imports = [
-                      nix-index-database.hmModules.nix-index
-                      catppuccin.homeManagerModules.catppuccin
-                      ./modules/shared/home.nix
-                    ];
-                    catppuccin = {
-                      enable = true;
-                      flavor = "mocha";
-                    };
-                    programs.git = {
-                      inherit userEmail userName;
-                    };
-                  };
-                programs.fish.enable = true; # Otherwise our shell won't be installed correctly
-                services.tailscale.enable = true;
-                services.openssh.enable = true;
-                services.openssh.extraConfig = ''AllowAgentForwarding yes'';
-                programs.ssh.startAgent = true;
-                system.stateVersion = "23.05";
-              }
-            ];
-          };
+        kroli = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          inherit specialArgs;
+          modules = [ ./hosts/kroli ];
+        };
         biggimaus =
           let
             user = "genki";
