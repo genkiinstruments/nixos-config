@@ -104,6 +104,7 @@ in
     isNormalUser = true;
     shell = "/run/current-system/sw/bin/fish";
     description = "${userName}";
+    hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
     extraGroups = [
       "networkmanager"
       "wheel"
