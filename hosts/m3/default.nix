@@ -63,7 +63,7 @@ in
       imports = [
         inputs.nix-index-database.hmModules.nix-index
         inputs.catppuccin.homeManagerModules.catppuccin
-        ./modules/shared/home.nix
+        ../../modules/shared/home.nix
       ];
       catppuccin = {
         enable = true;
@@ -88,7 +88,7 @@ in
         serverAliveInterval = 900;
         extraConfig = "SetEnv TERM=xterm-256color";
       };
-      home.file.".config/karabiner/karabiner.json".source = ./modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
+      home.file.".config/karabiner/karabiner.json".source = ../../modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
     };
   users.users.${user} =
     { pkgs, ... }:
