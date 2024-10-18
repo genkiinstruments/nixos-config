@@ -559,7 +559,6 @@
                   disko.nixosModules.disko
                   home-manager.nixosModules.home-manager
                   ./modules/shared
-                  ./modules/shared/atuind.nix
                   ./hosts/biggimaus/disko-config.nix
                 ];
                 disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
@@ -605,6 +604,7 @@
                     programs.git = {
                       inherit userEmail userName;
                     };
+                    programs.atuin.settings.daemon.enabled = true;
                   };
                 programs.fish.enable = true; # Otherwise our shell won't be installed correctly
                 services.tailscale.enable = true;
