@@ -21,11 +21,13 @@ in
     inputs.srvos.nixosModules.roles-github-actions-runner
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
     ./disko-config.nix
     ../../modules/shared
   ];
   disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";
 
+  hardware.enableRedistributableFirmware = true;
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.availableKernelModules = [
@@ -51,6 +53,13 @@ in
 
   # Enable tailscale. We manually authenticate when we want with "sudo tailscale up". 
   services.tailscale.enable = true;
+
+  services.xserver.enable = true;
+  services.xserver.displayManager.gdm.enable = true;
+  services.xserver.desktopManager.gnome.enable = true;
+  fonts.enableDefaultPackages = true;
+  fonts.fontDir.enable = true;
+  fonts.packages = [ (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
   system.stateVersion = "23.05"; # Did you read the comment?
   roles.github-actions-runner = {
