@@ -278,8 +278,7 @@
     # FIXME: Also broken.
     # moonlight-qt
 
-    # TODO: update sesh in nixpkgs. currently using the one in ~/.local/bin/
-    # sesh
+    sesh
     gh-dash
     fzf
     gum
