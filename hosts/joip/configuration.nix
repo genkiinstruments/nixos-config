@@ -5,10 +5,8 @@
   ...
 }:
 let
-  name = "Ólafur Bjarki Bogason";
   user = "olafur";
   userName = user;
-  host = "joip";
   userEmail = "olafur@genkiinstruments.com";
 in
 {
