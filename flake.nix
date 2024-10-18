@@ -108,9 +108,6 @@
     in
     {
       devShells = forAllSystems devShell;
-      packages = forAllSystems (system: {
-        default = nixpkgs.legacyPackages.${system}.callPackage ./default.nix { };
-      });
 
       darwinConfigurations = {
         m3 = nix-darwin.lib.darwinSystem {
