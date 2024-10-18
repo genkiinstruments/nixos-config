@@ -268,13 +268,15 @@
   home.packages = with pkgs; [
     wget
     zip
-    # moonlight-qt
     magic-wormhole-rs
     neofetch
     nb
-    # TODO: Add once merged in nixpkgs
-    # age-plugin-fido2-hmac
+    age-plugin-fido2-hmac
+
+    # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
     # bitwarden-cli
+    # FIXME: Also broken.
+    # moonlight-qt
 
     # TODO: update sesh in nixpkgs. currently using the one in ~/.local/bin/
     # sesh
