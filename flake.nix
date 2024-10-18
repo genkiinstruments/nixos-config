@@ -329,94 +329,13 @@
         };
 
       nixosConfigurations = {
-        gdrn =
-          let
-            user = "genki";
-            userName = "Ólafur Bjarki Bogason";
-            userEmail = "olafur@genkiinstruments.com";
-          in
-          nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-            modules = [
-              {
-                imports = [
-                  home-manager.nixosModules.home-manager
-                  srvos.nixosModules.server
-                  srvos.nixosModules.mixins-systemd-boot
-                  srvos.nixosModules.mixins-terminfo
-                  srvos.nixosModules.mixins-nix-experimental
-                  srvos.nixosModules.mixins-trusted-nix-caches
-                  srvos.nixosModules.roles-github-actions-runner
-                  disko.nixosModules.disko
-                  agenix.nixosModules.default
-                  ./modules/shared
-                  ./hosts/gdrn
-                ];
-                age = {
-                  secrets = {
-                    my-secret = {
-                      symlink = true;
-                      path = "/Users/${user}/Desktop/my-secret";
-                      file = "${secrets}/my-secret.age";
-                      mode = "644";
-                      owner = "${user}";
-                      group = "users";
-                    };
-                    atuin-key = {
-                      symlink = true;
-                      path = "/home/${user}/.local/share/atuin/key";
-                      file = "${secrets}/atuin-key.age";
-                      mode = "644";
-                      owner = "${user}";
-                      group = "users";
-                    };
-                    gdrn-github-runner-key = {
-                      file = "${secrets}/gdrn-github-runner-key.age";
-                    };
-                    gdrn-github-runner-cachixToken = {
-                      file = "${secrets}/gdrn-github-runner-cachixToken.age";
-                    };
-                  };
-                };
-                users.users.${user} = {
-                  isNormalUser = true;
-                  shell = "/run/current-system/sw/bin/fish";
-                  description = "${userName}";
-                  extraGroups = [
-                    "networkmanager"
-                    "wheel"
-                    "docker"
-                  ];
-                  openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
-                };
-                users.users.root.openssh.authorizedKeys.keyFiles = [ ./authorized_keys ];
-                networking.hostName = "gdrn";
-                networking.hostId = "deadbeef";
-                home-manager.useGlobalPkgs = true;
-                home-manager.useUserPackages = true;
-                home-manager.backupFileExtension = "backup";
-                home-manager.users.${user} =
-                  { config, ... }:
-                  {
-                    imports = [
-                      nix-index-database.hmModules.nix-index
-                      catppuccin.homeManagerModules.catppuccin
-                      ./modules/shared/home.nix
-                    ];
-                    catppuccin = {
-                      enable = true;
-                      flavor = "mocha";
-                    };
-                    programs.git = {
-                      inherit userEmail userName;
-                    };
-                  };
-                programs.fish.enable = true;
-                services.openssh.extraConfig = ''AllowAgentForwarding yes'';
-                programs.ssh.startAgent = true;
-              }
-            ];
+        gdrn = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit inputs;
           };
+          modules = [ ./hosts/gdrn ];
+        };
         gugusar =
           let
             user = "genki";
