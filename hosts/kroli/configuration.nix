@@ -13,6 +13,7 @@ in
     inputs.disko.nixosModules.disko
     ../../modules/shared
   ];
+  nixpkgs.hostPlatform = "x86_64-linux";
   disko.devices = {
     disk = {
       main = {
