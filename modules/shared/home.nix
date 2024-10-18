@@ -287,7 +287,6 @@
     cachix
     xsel # for lazygit copy/paste stuff to clipboard
 
-    # neovim
     neovim
     ripgrep
     fd
