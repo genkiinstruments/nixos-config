@@ -11,8 +11,7 @@ let
 in
 {
   imports = [
-    # TODO: openssh.authorizedKeys.keyFiles has been deprecated in nix-darwin
-    # srvos.darwinModules.common
+    inputs.srvos.darwinModules.common
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.agenix.darwinModules.default
