@@ -60,18 +60,8 @@
   };
   outputs =
     {
-      self,
-      srvos,
       nix-darwin,
-      nix-homebrew,
-      home-manager,
       nixpkgs,
-      nixos-hardware,
-      nix-index-database,
-      disko,
-      catppuccin,
-      secrets,
-      agenix,
       ...
     }@inputs:
     let
