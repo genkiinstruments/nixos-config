@@ -13,11 +13,11 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
     inputs.self.modules.shared.default
+    inputs.self.nixosModules.common
   ];
 
-  disko.devices.disk.main.device = "/dev/disk/by-id/ata-SanDisk_SD8SN8U512G1002_175124804870";
-
   nixpkgs.hostPlatform = "x86_64-linux";
+  system.stateVersion = "23.05";
 
   boot = {
     loader.systemd-boot.enable = true;
@@ -55,5 +55,4 @@
   services.openssh.enable = true;
   services.openssh.extraConfig = ''AllowAgentForwarding yes'';
   programs.ssh.startAgent = true;
-  system.stateVersion = "23.05";
 }

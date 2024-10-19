@@ -1,13 +1,8 @@
-# USAGE in your configuration.nix.
-# Update devices to match your hardware.
-# {
-#  imports = [ ./disko-config.nix ];
-#  disko.devices.disk.main.device = "/dev/sda";
-# }
 {
   disko.devices = {
     disk = {
       main = {
+        device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
         type = "disk";
         content = {
           type = "gpt";

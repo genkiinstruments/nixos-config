@@ -12,12 +12,12 @@
     inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
     inputs.self.modules.shared.default
+    inputs.self.nixosModules.common
     ./disk-config.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
-
-  disko.devices.disk.main.device = "/dev/disk/by-id/ata-TOSHIBA_KSG60ZMV256G_M.2_2280_256GB_583B83NWK5SP";
+  system.stateVersion = "23.05";
 
   boot = {
     loader.systemd-boot.enable = true;
@@ -54,5 +54,4 @@
   services.openssh.enable = true;
   services.openssh.extraConfig = ''AllowAgentForwarding yes'';
   programs.ssh.startAgent = true;
-  system.stateVersion = "23.05";
 }

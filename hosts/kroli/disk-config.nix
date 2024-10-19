@@ -1,13 +1,8 @@
-# USAGE in your configuration.nix.
-# Update devices to match your hardware.
-# {
-#  imports = [ ./disko-config.nix ];
-#  disko.devices.disk.main.device = "/dev/sda";
-# }
 {
   disko.devices = {
     disk = {
       main = {
+        device = "/dev/disk/by-id/ata-SanDisk_SD8SN8U512G1002_175124804870";
         type = "disk";
         content = {
           type = "gpt";

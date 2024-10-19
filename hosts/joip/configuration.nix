@@ -18,12 +18,13 @@
     inputs.self.modules.shared.default
     inputs.self.nixosModules.servarr
     inputs.self.nixosModules.homepage
+    inputs.self.nixosModules.common
     ./disk-config.nix
     ./hardware-configuration.nix
   ];
 
-  system.stateVersion = "23.05"; # Did you read the comment?
   nixpkgs.hostPlatform = "x86_64-linux";
+  system.stateVersion = "23.05"; # Did you read the comment?
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
