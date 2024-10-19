@@ -108,6 +108,5 @@
 
   programs.fish.enable = true;
 
-  services.openssh.extraConfig = ''AllowAgentForwarding yes'';
   programs.ssh.startAgent = true;
 }

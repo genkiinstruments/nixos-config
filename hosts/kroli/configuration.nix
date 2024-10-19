@@ -53,6 +53,5 @@
 
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
   services.openssh.enable = true;
-  services.openssh.extraConfig = ''AllowAgentForwarding yes'';
   programs.ssh.startAgent = true;
 }
