@@ -7,14 +7,17 @@
 {
   imports = [
     inputs.srvos.nixosModules.server
+    inputs.srvos.nixosModules.mixins-systemd-boot
+    inputs.srvos.nixosModules.mixins-terminfo
+    inputs.srvos.nixosModules.mixins-nix-experimental
+    inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.nixos-hardware.nixosModules.intel-nuc-8i7beh
     inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.self.modules.shared.default
-    inputs.self.modules.shared.servarr
-    inputs.self.modules.shared.homepage
-    inputs.self.modules.shared.tailscale
+    inputs.self.nixosModules.servarr
+    inputs.self.nixosModules.homepage
     ./disk-config.nix
     ./hardware-configuration.nix
   ];
