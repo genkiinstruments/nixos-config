@@ -4,11 +4,6 @@
   lib,
   ...
 }:
-let
-  user = "olafur";
-  userName = user;
-  userEmail = "olafur@genkiinstruments.com";
-in
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -23,6 +18,8 @@ in
     ./disk-config.nix
     ./hardware-configuration.nix
   ];
+
+  system.stateVersion = "23.05"; # Did you read the comment?
   nixpkgs.hostPlatform = "x86_64-linux";
 
   boot.loader.systemd-boot.enable = true;
@@ -32,30 +29,30 @@ in
     secrets = {
       "my-secret" = {
         symlink = true;
-        path = "/home/${user}/my-secret";
+        path = "/home/olafur/my-secret";
         file = "${inputs.secrets}/my-secret.age";
         mode = "644";
-        owner = "${user}";
+        owner = "olafur";
         group = "users";
       };
       dashboard-env = {
         symlink = true;
         file = "${inputs.secrets}/homepage-dashboard-env.age";
-        owner = "${user}";
+        owner = "olafur";
         group = "users";
         mode = "644";
       };
       atuin-key = {
         symlink = true;
-        path = "/home/${user}/.local/share/atuin/key";
+        path = "/home/olafur/.local/share/atuin/key";
         file = "${inputs.secrets}/atuin-key.age";
         mode = "644";
-        owner = "${user}";
+        owner = "olafur";
         group = "users";
       };
     };
   };
-  users.users.${user} = {
+  users.users.olafur = {
     isNormalUser = true;
     shell = "/run/current-system/sw/bin/fish";
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
@@ -65,30 +62,15 @@ in
   nix.settings.trusted-users = [
     "root"
     "@wheel"
-    "${user}"
+    "olafur"
   ];
+
   networking.hostName = "joip";
-  # Workaround https://github.com/NixOS/nixpkgs/issues/180175
-  systemd.services.NetworkManager-wait-online.enable = false;
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.backupFileExtension = "backup";
-  home-manager.users.${user} =
-    { config, ... }:
-    {
-      imports = [
-        inputs.nix-index-database.hmModules.nix-index
-        inputs.catppuccin.homeManagerModules.catppuccin
-        inputs.self.homeModules.default
-      ];
-      catppuccin = {
-        enable = true;
-        flavor = "mocha";
-      };
-      programs.git = {
-        inherit userEmail userName;
-      };
-    };
+
+  systemd.services.NetworkManager-wait-online.enable = false; # Workaround https://github.com/NixOS/nixpkgs/issues/180175
+
+  home-manager.users.olafur.imports = [ inputs.self.homeModules.default ];
+
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -162,7 +144,6 @@ in
   networking.useHostResolvConf = lib.mkForce false;
   networking.firewall = {
     enable = true;
-    trustedInterfaces = [ "tailscale0" ];
     allowedTCPPorts = [
       80
       443
@@ -192,12 +173,4 @@ in
       20048
     ];
   };
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
 }

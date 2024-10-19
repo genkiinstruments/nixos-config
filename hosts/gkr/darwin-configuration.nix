@@ -3,11 +3,6 @@
   pkgs,
   ...
 }:
-let
-  user = "genki";
-  userName = "Genki builder";
-  userEmail = "genki@genkiinstruments.com";
-in
 {
   imports = [
     inputs.home-manager.darwinModules.home-manager
@@ -15,60 +10,28 @@ in
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.self.modules.shared.default
   ];
+
   nixpkgs.hostPlatform = "aarch64-darwin";
-  age = {
-    identityPaths = [
-      # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
-      "/etc/ssh/ssh_host_ed25519_key"
-    ];
+
+  # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
+  age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
+  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
+
+  users.users.genki = {
+    shell = "/run/current-system/sw/bin/fish";
+    isHidden = false;
+    home = "/Users/genki";
   };
-  # I'm currently managing the github runner manually.. didn't get it to work properly with nix-darwin...
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.backupFileExtension = "backup";
-  home-manager.users.${user} =
-    { config, ... }:
-    {
-      imports = [
-        inputs.nix-index-database.hmModules.nix-index
-        inputs.catppuccin.homeManagerModules.catppuccin
-        inputs.self.homeModules.default
-      ];
-      catppuccin = {
-        enable = true;
-        flavor = "mocha";
-      };
-      programs.git = {
-        inherit userEmail userName;
-      };
-      home.file.".config/karabiner/karabiner.json".source = config.lib.file.mkOutOfStoreSymlink ../../modules/darwin/config/karabiner/karabiner.json; # Hyper-key config
-    };
-  users.users.${user} =
-    { pkgs, ... }:
-    {
-      shell = "/run/current-system/sw/bin/fish";
-      isHidden = false;
-      home = "/Users/${user}";
-    };
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
 
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
-  # Auto upgrade nix package and the daemon service.
-  services.nix-daemon.enable = true;
 
-  # Enable tailscale. We manually authenticate when we want with
-  # "sudo tailscale up". If you don't use tailscale, you should comment
-  # out or delete all of this.
-  services.tailscale.enable = true;
-
-  # Setup user, packages, programs
-  nix = {
-    settings.trusted-users = [
-      "@admin"
-      "${user}"
-      "github-runner"
-    ];
-  };
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+    "genki"
+  ];
 
   # TODO: This really is a hack to run actions-runner that was
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
@@ -83,17 +46,17 @@ in
         "-c"
         # follow exact steps of github guide to get this available
         # so more automatic nix version would use pkgs.github-runner (and token sshed as file)
-        "/Users/${user}/actions-runner/run.sh"
+        "/Users/genki/actions-runner/run.sh"
       ];
       Label = "github-runner";
       KeepAlive = true;
       RunAtLoad = true;
 
-      StandardErrorPath = "/Users/${user}/actions-runner/err.log";
-      StandardOutPath = "/Users/${user}/actions-runner/ok.log";
-      WorkingDirectory = "/Users/${user}/actions-runner/";
+      StandardErrorPath = "/Users/genki/actions-runner/err.log";
+      StandardOutPath = "/Users/genki/actions-runner/ok.log";
+      WorkingDirectory = "/Users/genki/actions-runner/";
       SessionCreate = true;
-      UserName = "${user}";
+      UserName = "genki";
     };
   };
   system = {
