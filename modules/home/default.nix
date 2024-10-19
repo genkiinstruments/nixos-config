@@ -109,6 +109,8 @@
     git = {
       enable = true;
       lfs.enable = true;
+      userEmail = "olafur@genkiinstruments.com";
+      userName = "multivac61";
       extraConfig = {
         init.defaultBranch = "main";
         core = {
