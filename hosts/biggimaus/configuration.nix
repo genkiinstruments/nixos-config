@@ -9,12 +9,12 @@
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     inputs.self.modules.shared.default
+    inputs.self.nixosModules.common
     ./disko-config.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
-
-  disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
+  system.stateVersion = "23.05";
 
   boot = {
     loader.systemd-boot.enable = true;
@@ -48,5 +48,4 @@
   home-manager.users.genki.programs.atuin.settings.daemon.enabled = true;
 
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
-  system.stateVersion = "23.05";
 }

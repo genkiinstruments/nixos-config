@@ -1,12 +1,12 @@
 {
   lib,
-  pkgs,
   config,
   inputs,
   ...
 }:
 {
   imports = [
+    ./disko-config.nix
     inputs.home-manager.nixosModules.home-manager
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.mixins-systemd-boot
@@ -17,11 +17,12 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
-    ./disko-config.nix
     inputs.self.modules.shared.default
+    inputs.self.nixosModules.common
   ];
+
   nixpkgs.hostPlatform = "x86_64-linux";
-  disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";
+  system.stateVersion = "23.05"; # Did you read the comment?
 
   hardware.enableRedistributableFirmware = true;
 
@@ -37,9 +38,7 @@
   ];
   boot.kernelModules = [ "kvm-amd" ];
 
-  nix.gc.automatic = true;
-  nix.gc.dates = "*:45";
-  nix.gc.options = ''--max-freed "$((128 * 1024**3 - 1024 * $(df -P -k /nix/store | tail -n 1 | ${pkgs.gawk}/bin/awk '{ print $4 }')))"'';
+  fonts.fontDir.enable = true;
 
   networking.networkmanager.enable = true;
   networking.useDHCP = lib.mkDefault true;
@@ -51,7 +50,6 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  system.stateVersion = "23.05"; # Did you read the comment?
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
     count = 4;
