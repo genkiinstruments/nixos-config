@@ -68,7 +68,6 @@
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
   environment.variables.SSH_ASKPASS = "/opt/homebrew/bin/ssh-askpass"; # TODO: nixpkgs
   environment.variables.DISPLAY = ":0";
-  # environment.loginShell = "fish";
 
   programs.fish.enable = true;
 
