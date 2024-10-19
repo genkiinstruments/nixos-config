@@ -13,6 +13,9 @@
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
 
+  catppuccin.enable = true;
+  catppuccin.flavor = "mocha";
+
   programs = {
     gh = {
       enable = true;
