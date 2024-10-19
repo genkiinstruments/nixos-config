@@ -265,7 +265,7 @@
   };
 
   # Hyper-key config
-  home.file.".config/karabiner/karabiner.json".source = ../../modules/darwin/config/karabiner/karabiner.json;
+  home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
   home.file.".config/ghostty/config".source = ./config/ghostty/config;
   home.file.".hushlogin".text = "";
 

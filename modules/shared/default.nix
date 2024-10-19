@@ -23,20 +23,14 @@
   # https://nix.dev/manual/nix/2.22/language/import-from-derivation
   nix.settings.allow-import-from-derivation = false;
 
-  fonts.enableDefaultPackages = true;
   fonts.fontDir.enable = true;
   fonts.packages = [ (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
   # Deploy tailscale everywhere
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "both";
-    openFirewall = true;
-    permitCertUid = "caddy";
-  };
+  services.tailscale.enable = true;
 
-  networking.firewall.trustedInterfaces = [ "tailscale0" ];
-  networking.firewall.allowPing = true;
+  # networking.firewall.trustedInterfaces = [ "tailscale0" ];
+  # networking.firewall.allowPing = true;
 
   # Configure home-manager
   home-manager.extraSpecialArgs.inputs = inputs; # forward the inputs
