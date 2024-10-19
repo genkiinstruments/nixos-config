@@ -23,7 +23,7 @@ in
     inputs.agenix.nixosModules.default
     inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
     ./disko-config.nix
-    ../../modules/shared
+    inputs.self.modules.shared.default
   ];
   nixpkgs.hostPlatform = "x86_64-linux";
   disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538b931a6cbb0";
@@ -125,7 +125,7 @@ in
       imports = [
         inputs.nix-index-database.hmModules.nix-index
         inputs.catppuccin.homeManagerModules.catppuccin
-        ../../modules/shared/home.nix
+        inputs.self.homeModules.default
       ];
       catppuccin = {
         enable = true;

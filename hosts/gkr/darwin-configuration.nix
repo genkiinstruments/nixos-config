@@ -13,7 +13,7 @@ in
     inputs.home-manager.darwinModules.home-manager
     inputs.agenix.darwinModules.default
     inputs.nix-homebrew.darwinModules.nix-homebrew
-    ../../modules/shared
+    inputs.self.modules.shared.default
   ];
   nixpkgs.hostPlatform = "aarch64-darwin";
   age = {
@@ -32,7 +32,7 @@ in
       imports = [
         inputs.nix-index-database.hmModules.nix-index
         inputs.catppuccin.homeManagerModules.catppuccin
-        ../../modules/shared/home.nix
+        inputs.self.homeModules.default
       ];
       catppuccin = {
         enable = true;

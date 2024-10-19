@@ -15,7 +15,7 @@ in
     inputs.home-manager.darwinModules.home-manager
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.agenix.darwinModules.default
-    ../../modules/shared
+    inputs.self.modules.shared.default
   ];
   nixpkgs.hostPlatform = "aarch64-darwin";
   nix-homebrew = {
@@ -64,7 +64,7 @@ in
       imports = [
         inputs.nix-index-database.hmModules.nix-index
         inputs.catppuccin.homeManagerModules.catppuccin
-        ../../modules/shared/home.nix
+        inputs.self.homeModules.default
       ];
       catppuccin = {
         enable = true;

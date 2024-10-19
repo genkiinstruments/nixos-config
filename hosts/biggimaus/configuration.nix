@@ -16,7 +16,7 @@ in
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
-    ../../modules/shared
+    inputs.self.modules.shared.default
     ./disko-config.nix
   ];
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -54,7 +54,7 @@ in
       imports = [
         inputs.nix-index-database.hmModules.nix-index
         inputs.catppuccin.homeManagerModules.catppuccin
-        ../../modules/shared/home.nix
+        inputs.self.homeModules.default
       ];
       catppuccin = {
         enable = true;
