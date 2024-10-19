@@ -88,13 +88,11 @@
         lg = "lazygit";
       };
       interactiveShellInit = lib.strings.concatStrings (
-        lib.strings.intersperse "\n" (
-          [
-            (builtins.readFile ./config/fish/config.fish)
-            "set -g SHELL ${pkgs.fish}/bin/fish"
-          ]
-          ++ lib.optional pkgs.stdenv.isDarwin [ "fish_add_path --path --move /run/current-system/sw/bin" ]
-        )
+        lib.strings.intersperse "\n" ([
+          (builtins.readFile ./config/fish/config.fish)
+          "set -g SHELL ${pkgs.fish}/bin/fish"
+          (if pkgs.stdenv.isDarwin then "fish_add_path --path --move /run/current-system/sw/bin" else "")
+        ])
       );
     };
 
@@ -266,7 +264,7 @@
     };
   };
 
-  xdg.configFile."ghostty/config".source = ../shared/config/ghostty/config;
+  xdg.configFile."ghostty/config".source = ./config/ghostty/config;
   home.file.".hushlogin".text = "";
   home.packages = with pkgs; [
     wget

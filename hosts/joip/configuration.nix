@@ -16,12 +16,12 @@ in
     inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
+    inputs.self.modules.shared.default
+    inputs.self.modules.shared.servarr
+    inputs.self.modules.shared.homepage
+    inputs.self.modules.shared.tailscale
     ./disk-config.nix
     ./hardware-configuration.nix
-    ../../modules/shared
-    ../../modules/shared/servarr
-    ../../modules/shared/homepage
-    ../../modules/shared/tailscale.nix
   ];
   nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -79,7 +79,7 @@ in
       imports = [
         inputs.nix-index-database.hmModules.nix-index
         inputs.catppuccin.homeManagerModules.catppuccin
-        ../../modules/shared/home.nix
+        inputs.self.homeModules.default
       ];
       catppuccin = {
         enable = true;

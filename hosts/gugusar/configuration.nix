@@ -11,7 +11,7 @@ in
   imports = [
     inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
-    ../../modules/shared
+    inputs.self.modules.shared.default
   ];
   nixpkgs.hostPlatform = "x86_64-linux";
   disko.devices = {
@@ -82,7 +82,7 @@ in
       imports = [
         inputs.nix-index-database.hmModules.nix-index
         inputs.catppuccin.homeManagerModules.catppuccin
-        ../../modules/shared/home.nix
+        inputs.self.homeModules.default
       ];
       catppuccin = {
         enable = true;
