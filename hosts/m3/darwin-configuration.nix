@@ -43,13 +43,6 @@
 
   home-manager.users.olafur.imports = [ inputs.self.homeModules.default ];
   home-manager.users.olafur.programs.ssh = {
-    matchBlocks = {
-      "github.com" = {
-        user = "git";
-        identityFile = "~/.ssh/id_ed25519_sk";
-        identitiesOnly = true;
-      };
-    };
     controlMaster = "auto";
     controlPath = "/tmp/ssh-%u-%r@%h:%p";
     controlPersist = "1800";
