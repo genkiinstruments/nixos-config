@@ -23,7 +23,6 @@
   # https://nix.dev/manual/nix/2.22/language/import-from-derivation
   nix.settings.allow-import-from-derivation = false;
 
-  fonts.fontDir.enable = true;
   fonts.packages = [ (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
   # Deploy tailscale everywhere
