@@ -35,4 +35,5 @@
   home-manager.extraSpecialArgs.inputs = inputs; # forward the inputs
   home-manager.useGlobalPkgs = true; # don't create another instance of nixpkgs
   home-manager.useUserPackages = true; # install user packages directly to the user's profile
+  home-manager.backupFileExtension = "backup";
 }
