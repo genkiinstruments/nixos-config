@@ -3,7 +3,6 @@
   mkAppContainer =
     {
       name,
-      addToUsersGroup ? true,
     }:
     let
       addressParts = lib.strings.splitString ":" addresses."${name}";
@@ -36,17 +35,13 @@
 
           services = {
             "${name}" =
-              if addToUsersGroup then
-                {
-                  enable = true;
-                  openFirewall = true;
-                  group = "users";
-                }
-              else
-                {
-                  enable = true;
-                  openFirewall = true;
-                };
+              {
+                enable = true;
+                openFirewall = true;
+              }
+              // (lib.optionalAttrs (config.services.${name} ? group) {
+                group = "users";
+              });
 
             caddy = {
               enable = true;
