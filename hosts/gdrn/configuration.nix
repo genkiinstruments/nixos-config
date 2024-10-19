@@ -5,11 +5,6 @@
   inputs,
   ...
 }:
-let
-  user = "genki";
-  userName = "Ólafur Bjarki Bogason";
-  userEmail = "olafur@genkiinstruments.com";
-in
 {
   imports = [
     inputs.home-manager.nixosModules.home-manager
@@ -52,15 +47,9 @@ in
   virtualisation.docker.enable = true;
   virtualisation.multipass.enable = true;
 
-  # Enable tailscale. We manually authenticate when we want with "sudo tailscale up". 
-  services.tailscale.enable = true;
-
   services.xserver.enable = true;
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
-  fonts.enableDefaultPackages = true;
-  fonts.fontDir.enable = true;
-  fonts.packages = [ (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; }) ];
 
   system.stateVersion = "23.05"; # Did you read the comment?
   roles.github-actions-runner = {
@@ -79,18 +68,18 @@ in
     secrets = {
       my-secret = {
         symlink = true;
-        path = "/Users/${user}/Desktop/my-secret";
+        path = "/Users/genki/Desktop/my-secret";
         file = "${inputs.secrets}/my-secret.age";
         mode = "644";
-        owner = "${user}";
+        owner = "genki";
         group = "users";
       };
       atuin-key = {
         symlink = true;
-        path = "/home/${user}/.local/share/atuin/key";
+        path = "/home/genki/.local/share/atuin/key";
         file = "${inputs.secrets}/atuin-key.age";
         mode = "644";
-        owner = "${user}";
+        owner = "genki";
         group = "users";
       };
       gdrn-github-runner-key = {
@@ -101,10 +90,9 @@ in
       };
     };
   };
-  users.users.${user} = {
+  users.users.genki = {
     isNormalUser = true;
     shell = "/run/current-system/sw/bin/fish";
-    description = "${userName}";
     hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
     extraGroups = [
       "networkmanager"
@@ -114,28 +102,14 @@ in
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+
   networking.hostName = "gdrn";
   networking.hostId = "deadbeef";
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.backupFileExtension = "backup";
-  home-manager.users.${user} =
-    { config, ... }:
-    {
-      imports = [
-        inputs.nix-index-database.hmModules.nix-index
-        inputs.catppuccin.homeManagerModules.catppuccin
-        inputs.self.homeModules.default
-      ];
-      catppuccin = {
-        enable = true;
-        flavor = "mocha";
-      };
-      programs.git = {
-        inherit userEmail userName;
-      };
-    };
+
+  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
+
   programs.fish.enable = true;
+
   services.openssh.extraConfig = ''AllowAgentForwarding yes'';
   programs.ssh.startAgent = true;
 }

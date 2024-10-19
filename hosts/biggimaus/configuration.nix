@@ -1,12 +1,4 @@
-{
-  inputs,
-  ...
-}:
-let
-  user = "genki";
-  userName = "Ólafur Bjarki Bogason";
-  userEmail = "olafur@genkiinstruments.com";
-in
+{ inputs, ... }:
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -19,8 +11,11 @@ in
     inputs.self.modules.shared.default
     ./disko-config.nix
   ];
+
   nixpkgs.hostPlatform = "x86_64-linux";
+
   disko.devices.disk.main.device = "/dev/disk/by-id/nvme-eui.002538db21a8a97f";
+
   boot = {
     loader.systemd-boot.enable = true;
     loader.efi.canTouchEfiVariables = true;
@@ -35,37 +30,23 @@ in
     ];
     kernelModules = [ "kvm-intel" ];
   };
+
   networking.hostName = "biggimaus";
   networking.hostId = "deadbeef";
   networking.useDHCP = true;
-  users.users.${user} = {
+
+  users.users.genki = {
     isNormalUser = true;
     shell = "/run/current-system/sw/bin/fish";
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
     extraGroups = [ "wheel" ];
   };
+
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
-  home-manager.useGlobalPkgs = true;
-  home-manager.useUserPackages = true;
-  home-manager.backupFileExtension = "backup";
-  home-manager.users.${user} =
-    { config, ... }:
-    {
-      imports = [
-        inputs.nix-index-database.hmModules.nix-index
-        inputs.catppuccin.homeManagerModules.catppuccin
-        inputs.self.homeModules.default
-      ];
-      catppuccin = {
-        enable = true;
-        flavor = "mocha";
-      };
-      programs.git = {
-        inherit userEmail userName;
-      };
-      programs.atuin.settings.daemon.enabled = true;
-    };
+
+  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
+  home-manager.users.genki.programs.atuin.settings.daemon.enabled = true;
+
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
-  services.tailscale.enable = true;
   system.stateVersion = "23.05";
 }
