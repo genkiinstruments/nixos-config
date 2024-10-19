@@ -22,18 +22,12 @@ in
 
   containers = {
     jellyfin = libx.mkAppContainer { name = "jellyfin"; };
-    prowlarr = libx.mkAppContainer {
-      name = "prowlarr";
-      addToUsersGroup = false;
-    };
+    prowlarr = libx.mkAppContainer { name = "prowlarr"; };
     radarr = libx.mkAppContainer { name = "radarr"; };
     sabnzbd = libx.mkAppContainer { name = "sabnzbd"; };
     sonarr = libx.mkAppContainer { name = "sonarr"; };
     plex = libx.mkAppContainer { name = "plex"; };
     bazarr = libx.mkAppContainer { name = "bazarr"; };
-    jellyseerr = libx.mkAppContainer {
-      name = "jellyseerr";
-      addToUsersGroup = false;
-    };
+    jellyseerr = libx.mkAppContainer { name = "jellyseerr"; };
   };
 }
