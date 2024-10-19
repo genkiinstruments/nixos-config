@@ -5,6 +5,11 @@
 {
   imports = [
     ./disk-config.nix
+    inputs.srvos.nixosModules.server
+    inputs.srvos.nixosModules.mixins-systemd-boot
+    inputs.srvos.nixosModules.mixins-terminfo
+    inputs.srvos.nixosModules.mixins-nix-experimental
+    inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
     inputs.self.modules.shared.default
