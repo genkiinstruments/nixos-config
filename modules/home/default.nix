@@ -9,6 +9,7 @@
     inputs.nix-index-database.hmModules.nix-index
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
+
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
 
