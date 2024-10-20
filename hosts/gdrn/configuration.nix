@@ -2,6 +2,7 @@
   lib,
   config,
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -90,7 +91,7 @@
   };
   users.users.genki = {
     isNormalUser = true;
-    shell = "/run/current-system/sw/bin/fish";
+    shell = pkgs.fish;
     hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
     extraGroups = [
       "networkmanager"
@@ -105,8 +106,6 @@
   networking.hostId = "deadbeef";
 
   home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
-
-  programs.fish.enable = true;
 
   programs.ssh.startAgent = true;
 }

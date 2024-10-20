@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -37,7 +37,7 @@
 
   users.users.genki = {
     isNormalUser = true;
-    shell = "/run/current-system/sw/bin/fish";
+    shell = pkgs.fish;
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
     extraGroups = [ "wheel" ];
   };
@@ -46,6 +46,4 @@
 
   home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
   home-manager.users.genki.programs.atuin.settings.daemon.enabled = true;
-
-  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 }
