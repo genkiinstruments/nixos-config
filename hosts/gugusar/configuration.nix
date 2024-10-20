@@ -5,6 +5,7 @@
 }:
 {
   imports = [
+    ./disk-config.nix
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-terminfo
@@ -14,7 +15,6 @@
     inputs.disko.nixosModules.disko
     inputs.self.modules.shared.default
     inputs.self.nixosModules.common
-    ./disk-config.nix
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
@@ -41,6 +41,7 @@
     extraGroups = [ "wheel" ];
     hashedPassword = "";
   };
+
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   users.users.root.hashedPassword = "";
 
