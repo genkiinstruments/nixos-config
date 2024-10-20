@@ -23,6 +23,8 @@ jobs:
       id-token: "write"
       contents: "read"
     with:
+      enable-ssh-agent: true
+    with:
       runner-map: |
         {
           "aarch64-darwin": "macos-latest-xlarge",
@@ -32,3 +34,5 @@ jobs:
           "x86_64-linux": "UbuntuLatest32Cores128G"
         }
       visibility: private
+    secrets:
+      ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
