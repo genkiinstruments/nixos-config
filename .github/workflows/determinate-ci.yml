@@ -17,7 +17,7 @@ env:
 
 jobs:
   DeterminateCI:
-    uses: multivac61/ci/.github/workflows/workflow.yml@main
+    uses: multivac61/ci/.github/workflows/workflow.yml@multivac61-patch-1
     permissions:
       id-token: "write"
       contents: "read"
