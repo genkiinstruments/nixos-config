@@ -33,7 +33,6 @@
   };
 
   networking.hostName = "kroli";
-  networking.useDHCP = true;
 
   users.users.genki = {
     isNormalUser = true;
@@ -46,12 +45,5 @@
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   users.users.root.hashedPassword = "";
 
-  security.sudo.execWheelOnly = true;
-  security.sudo.wheelNeedsPassword = false;
-  security.sudo.extraConfig = ''Defaults lecture = never'';
-
   home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
-
-  services.openssh.enable = true;
-  programs.ssh.startAgent = true;
 }
