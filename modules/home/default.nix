@@ -214,6 +214,8 @@
         url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
         gpg.format = "ssh";
         user.signingKey = "~/.ssh/id_ed25519_sk";
+        color.ui = true;
+        github.user = "multivac61";
       };
       ignores = [
         # direnv
