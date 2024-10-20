@@ -24,7 +24,6 @@ jobs:
       contents: "read"
     with:
       enable-ssh-agent: true
-    with:
       runner-map: |
         {
           "aarch64-darwin": "macos-latest-xlarge",
