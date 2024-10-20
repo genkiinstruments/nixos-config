@@ -62,14 +62,12 @@
   users.users.olafur = {
     isHidden = false;
     home = "/Users/olafur";
-    shell = "/run/current-system/sw/bin/fish";
+    shell = pkgs.fish;
   };
 
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
   environment.variables.SSH_ASKPASS = "/opt/homebrew/bin/ssh-askpass"; # TODO: nixpkgs
   environment.variables.DISPLAY = ":0";
-
-  programs.fish.enable = true;
 
   nix.settings.trusted-users = [
     "root"

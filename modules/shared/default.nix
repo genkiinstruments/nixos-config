@@ -28,8 +28,7 @@
   # Deploy tailscale everywhere
   services.tailscale.enable = true;
 
-  # networking.firewall.trustedInterfaces = [ "tailscale0" ];
-  # networking.firewall.allowPing = true;
+  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
   # Configure home-manager
   home-manager.extraSpecialArgs.inputs = inputs; # forward the inputs

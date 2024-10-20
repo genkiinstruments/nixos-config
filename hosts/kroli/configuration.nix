@@ -1,5 +1,6 @@
 {
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -36,7 +37,7 @@
 
   users.users.genki = {
     isNormalUser = true;
-    shell = "/run/current-system/sw/bin/fish";
+    shell = pkgs.fish;
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
     extraGroups = [ "wheel" ];
     hashedPassword = "";
@@ -51,7 +52,6 @@
 
   home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
 
-  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
   services.openssh.enable = true;
   programs.ssh.startAgent = true;
 }

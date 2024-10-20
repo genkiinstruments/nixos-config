@@ -58,7 +58,7 @@
   };
   users.users.olafur = {
     isNormalUser = true;
-    shell = "/run/current-system/sw/bin/fish";
+    shell = pkgs.fish;
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
     extraGroups = [ "wheel" ];
   };
@@ -75,7 +75,6 @@
 
   home-manager.users.olafur.imports = [ inputs.self.homeModules.default ];
 
-  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   networking.useDHCP = lib.mkDefault true;

@@ -23,13 +23,11 @@
   home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
 
   users.users.genki = {
-    shell = "/run/current-system/sw/bin/fish";
+    shell = pkgs.fish;
     isHidden = false;
     home = "/Users/genki";
   };
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
-
-  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
   nix.settings.trusted-users = [
     "root"
