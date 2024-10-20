@@ -103,7 +103,6 @@
           (
             if pkgs.stdenv.isDarwin then
               ''
-                fish_add_path --path --move /run/current-system/sw/bin
                 #-------------------------------------------------------------------------------
                 # SSH Agent
                 #-------------------------------------------------------------------------------
@@ -185,6 +184,9 @@
                 # Add ~/.local/bin
                 set -q PATH; or set PATH ""
                 set -gx PATH "$HOME/.local/bin" $PATH
+
+                # Darwin openssh does not support FIDO2. Overwrite PATH with binaries in current system.
+                fish_add_path --path --move /run/current-system/sw/bin
               ''
             else
               ""
@@ -194,7 +196,6 @@
     };
 
     ssh.enable = true;
-
     bat.enable = true;
 
     git = {
