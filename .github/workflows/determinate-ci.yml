@@ -23,6 +23,5 @@ jobs:
       contents: "read"
     with:
       enable-ssh-agent: true
-      ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
     secrets:
       ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
