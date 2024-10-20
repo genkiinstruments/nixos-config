@@ -151,6 +151,6 @@
     # reload the settings and apply them without the need to logout/login
     activationScripts.postUserActivation.text = "/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u";
     # https://github.com/LnL7/nix-darwin/issues/811
-    activationScripts.setFishAsShell.text = "dscl . -create /Users/olafur UserShell /run/current-system/sw/bin/fish";
+    activationScripts.setFishAsShell.text = "dscl . -create /Users/olafur UserShell ${pkgs.fish}/bin/fish";
   };
 }
