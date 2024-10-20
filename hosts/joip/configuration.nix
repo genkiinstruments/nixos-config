@@ -63,26 +63,12 @@
     extraGroups = [ "wheel" ];
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-    "olafur"
-  ];
 
   networking.hostName = "joip";
-
-  systemd.services.NetworkManager-wait-online.enable = false; # Workaround https://github.com/NixOS/nixpkgs/issues/180175
 
   home-manager.users.olafur.imports = [ inputs.self.homeModules.default ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  networking.useDHCP = lib.mkDefault true;
-
-  networking.networkmanager.enable = true;
-
-  services.openssh.openFirewall = true;
-  programs.ssh.startAgent = true;
 
   services.home-assistant = {
     enable = true;
