@@ -397,6 +397,7 @@
     neovim
     ripgrep
     fd
+    neocmakelsp
     nodejs
     cargo
     go
