@@ -38,6 +38,13 @@
         owner = "olafur";
         group = "staff";
       };
+      cachix_auth_token = {
+        symlink = true;
+        file = "${inputs.secrets}/m3-CACHIX_AUTH_TOKEN.age";
+        mode = "644";
+        owner = "olafur";
+        group = "staff";
+      };
     };
   };
 
@@ -68,6 +75,9 @@
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
   environment.variables.SSH_ASKPASS = "/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass"; # TODO: nixpkgs
   environment.variables.DISPLAY = ":0";
+  environment.interactiveShellInit = ''
+    export CACHIX_AUTH_TOKEN="$(cat ${config.age.secrets.cachix_auth_token.path})"
+  '';
 
   nix.settings.trusted-users = [
     "root"
