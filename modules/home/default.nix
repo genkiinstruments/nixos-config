@@ -395,7 +395,7 @@
       enableFishIntegration = true;
       settings = {
         add_newline = false;
-        command_timeout = 1000;
+        command_timeout = 10000;
         scan_timeout = 3;
       };
     };
