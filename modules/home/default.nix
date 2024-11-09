@@ -309,6 +309,26 @@
             language-servers = [ "clangd" ];
           }
           {
+            name = "elixir";
+            auto-format = true;
+            language-id = "elixir";
+            language-servers = [
+              "elixir-ls"
+              "tailwindcss-ls"
+              "vscode-html-language-server"
+            ];
+          }
+          {
+            name = "heex";
+            auto-format = true;
+            language-id = "phoenix-heex";
+            language-servers = [
+              "elixir-ls"
+              "tailwindcss-ls"
+              "vscode-html-language-server"
+            ];
+          }
+          {
             name = "nix";
             auto-format = true;
             scope = "source.nix";
