@@ -66,7 +66,6 @@
   age = {
     secrets = {
       my-secret = {
-        symlink = true;
         path = "/Users/genki/Desktop/my-secret";
         file = "${inputs.secrets}/my-secret.age";
         mode = "644";
@@ -74,7 +73,6 @@
         group = "users";
       };
       atuin-key = {
-        symlink = true;
         path = "/home/genki/.local/share/atuin/key";
         file = "${inputs.secrets}/atuin-key.age";
         mode = "644";

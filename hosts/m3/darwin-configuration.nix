@@ -24,7 +24,6 @@
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
       my-secret = {
-        symlink = true;
         path = "/Users/olafur/Desktop/my-secret";
         file = "${inputs.secrets}/my-secret.age";
         mode = "644";
@@ -32,7 +31,6 @@
         group = "staff";
       };
       atuin-key = {
-        symlink = true;
         path = "/Users/olafur/.local/share/atuin/key";
         file = "${inputs.secrets}/atuin-key.age";
         mode = "644";
@@ -40,7 +38,6 @@
         group = "staff";
       };
       cachix_auth_token = {
-        symlink = true;
         file = "${inputs.secrets}/m3-CACHIX_AUTH_TOKEN.age";
         mode = "644";
         owner = "olafur";

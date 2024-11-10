@@ -32,7 +32,6 @@
   age = {
     secrets = {
       "my-secret" = {
-        symlink = true;
         path = "/home/olafur/my-secret";
         file = "${inputs.secrets}/my-secret.age";
         mode = "644";
@@ -40,14 +39,12 @@
         group = "users";
       };
       dashboard-env = {
-        symlink = true;
         file = "${inputs.secrets}/homepage-dashboard-env.age";
         owner = "olafur";
         group = "users";
         mode = "644";
       };
       atuin-key = {
-        symlink = true;
         path = "/home/olafur/.local/share/atuin/key";
         file = "${inputs.secrets}/atuin-key.age";
         mode = "644";
