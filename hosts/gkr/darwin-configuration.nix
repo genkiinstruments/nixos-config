@@ -12,7 +12,7 @@
     inputs.home-manager.darwinModules.home-manager
     inputs.agenix.darwinModules.default
     inputs.nix-homebrew.darwinModules.nix-homebrew
-    inputs.self.modules.darwin.default
+    inputs.self.darwinModules.common
     inputs.self.modules.shared.default
   ];
 
