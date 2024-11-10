@@ -481,7 +481,7 @@
       extraConfig = lib.strings.concatStrings (
         lib.strings.intersperse "\n" ([
           (builtins.readFile ./config/tmux/tmux.conf)
-          "set -g default-shell ${pkgs.fish}/bin/fish"
+          "set -g default-command ${pkgs.fish}/bin/fish"
         ])
       );
     };
