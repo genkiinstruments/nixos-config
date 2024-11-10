@@ -79,12 +79,8 @@
         owner = "genki";
         group = "users";
       };
-      gdrn-github-runner-key = {
-        file = "${inputs.secrets}/gdrn-github-runner-key.age";
-      };
-      gdrn-github-runner-cachixToken = {
-        file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
-      };
+      gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
+      gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
     };
   };
   users.users.genki = {
