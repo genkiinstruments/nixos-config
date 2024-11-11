@@ -30,8 +30,6 @@ font-thicken = true
 # window-padding-balance = true
 # window-save-state = always
 
-shell-integration = fish
-
 cursor-style = block
 cursor-style-blink = true
 # selection-invert-fg-bg = true
