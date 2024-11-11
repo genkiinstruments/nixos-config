@@ -55,12 +55,13 @@
         quitOnTopLevelReturn = true;
         disableStartupPopups = true;
         promptToReturnFromSubprocess = false;
+        keybinding.files.commitChangesWithEditor = "<disabled>";
         customCommands = [
           {
             key = "C";
             command = ''git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}" -m "{{ .Form.LongDescription }}"'';
             description = "commit with commitizen and long description";
-            context = "files";
+            context = "global";
             prompts = [
               {
                 type = "menu";
@@ -138,15 +139,6 @@
                 type = "input";
                 title = "Enter a longer description of the change (optional).";
                 key = "LongDescription";
-              }
-              {
-                type = "confirm";
-                title = "Is the commit message correct?";
-                body = ''
-                  {{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}
-
-                  {{ .Form.LongDescription }}
-                '';
               }
             ];
           }
