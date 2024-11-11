@@ -456,6 +456,7 @@
       mouse = true;
       newSession = true;
       prefix = "C-Space";
+      shell = "${pkgs.fish}/bin/fish";
       plugins = with pkgs.tmuxPlugins; [
         sensible
         vim-tmux-navigator
@@ -480,8 +481,8 @@
       ];
       extraConfig = lib.strings.concatStrings (
         lib.strings.intersperse "\n" ([
-          (builtins.readFile ./config/tmux/tmux.conf)
           "set -g default-command ${pkgs.fish}/bin/fish"
+          (builtins.readFile ./config/tmux/tmux.conf)
         ])
       );
     };
