@@ -15,7 +15,7 @@ def find_duplicate_lines(root_dir, extension=".nix"):
                 with open(filepath, "r", encoding="utf-8") as f:
                     for line_num, line in enumerate(f, 1):
                         content = line.strip()
-                        if content:
+                        if content and len(content.split()) > 1:
                             lines_map[content].append((filepath, line_num))
             except Exception as e:
                 print(f"Error reading {filepath}: {e}")
