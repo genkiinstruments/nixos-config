@@ -30,9 +30,8 @@ _: {
     };
 
     activationScripts.postActivation.text = ''
-      # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
-      defaults write -g InitialKeyRepeat -int 10
-      defaults write -g KeyRepeat -int 1
+      defaults write -g InitialKeyRepeat -int 8
+      defaults write -g KeyRepeat -int 0
     '';
 
     # reload the settings and apply them without the need to logout/login
