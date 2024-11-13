@@ -1,5 +1,6 @@
 {
   description = "Nix runs my 🌍🌎🌏";
+
   inputs = {
     srvos.url = "github:nix-community/srvos";
     nixpkgs.follows = "srvos/nixpkgs"; # use the version of nixpkgs that has been tested with SrvOS
@@ -34,5 +35,6 @@
     secrets.url = "git+ssh://git@github.com/multivac61/nix-secrets.git";
     secrets.flake = false;
   };
+
   outputs = inputs: inputs.blueprint { inherit inputs; };
 }
