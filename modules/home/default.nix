@@ -328,9 +328,8 @@
         github.user = "multivac61";
       };
       ignores = [
-        # direnv
         ".direnv"
-        ".envrc"
+        ".devenv"
 
         # nix
         "result"
@@ -338,9 +337,6 @@
 
         # vim
         ".*.swp"
-
-        # VSCode
-        ".vscode"
 
         # Work notes
         "WORK.md"
