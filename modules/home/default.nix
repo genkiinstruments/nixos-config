@@ -142,6 +142,13 @@
               }
             ];
           }
+          {
+            key = "O";
+            description = "open repo in GitHub";
+            command = "gh repo view --web";
+            context = "global";
+            loadingText = "Opening GitHub repo in browser...";
+          }
         ];
       };
     };
