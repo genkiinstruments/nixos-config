@@ -111,6 +111,23 @@
                 "type": "basic"
               }
             ]
+          },
+          {
+            "description": "Paste with middle mouse click",
+            "manipulators": [
+              {
+                "from": {
+                  "pointing_button": "button3"
+                },
+                "to": {
+                  "key_code": "v",
+                  "modifiers": [
+                    "right_command"
+                  ]
+                },
+                "type": "basic"
+              }
+            ]
           }
         ]
       },
