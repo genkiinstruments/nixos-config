@@ -338,6 +338,8 @@
         # vim
         ".*.swp"
 
+        ".DS_Store"
+
         # Work notes
         "WORK.md"
       ];
