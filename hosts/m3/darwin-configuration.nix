@@ -43,6 +43,12 @@
         owner = "olafur";
         group = "staff";
       };
+      ssh-serve-m3-gdrn = {
+        file = "${inputs.secrets}/ssh-serve-m3-gdrn.age";
+        mode = "600";
+        owner = "root";
+        group = "staff";
+      };
     };
   };
 
@@ -70,9 +76,12 @@
     shell = pkgs.fish;
   };
 
+  programs.ssh.knownHosts."gdrn".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEkxYcp4RFr6rNaxEZllpW3xVz/lFp/XB3YpgcTazOar";
+
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
   environment.variables.SSH_ASKPASS = "/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass"; # TODO: nixpkgs
   environment.variables.DISPLAY = ":0";
+
   environment.interactiveShellInit = ''
     export CACHIX_AUTH_TOKEN="$(cat ${config.age.secrets.cachix_auth_token.path})"
   '';
@@ -81,6 +90,22 @@
     "root"
     "@wheel"
     "olafur"
+  ];
+
+  nix.distributedBuilds = true;
+  nix.buildMachines = [
+    {
+      hostName = "gdrn";
+      sshUser = "ssh-ng://nix-ssh";
+      sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
+      system = "x86_64-linux";
+      maxJobs = 128;
+      supportedFeatures = [
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+      ];
+    }
   ];
 
   nix-homebrew = {
