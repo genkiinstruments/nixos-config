@@ -412,11 +412,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1729719288,
-        "narHash": "sha256-Ex3h74npNKavZ2vnUjFXLqZCx/tZ0JBGGk6ZSbKv+ko=",
+        "lastModified": 1731953635,
+        "narHash": "sha256-6nYxQclOok1Ob1LIGLZ7QEWjxJm0T7g3Dt9RPmYL8ug=",
         "ref": "refs/heads/main",
-        "rev": "e566b93e129d4a5b8a1aee52263b35d7dc2c577e",
-        "revCount": 26,
+        "rev": "67e40095611ffae2fd32d3fbde54f5a715fb7809",
+        "revCount": 27,
         "type": "git",
         "url": "ssh://git@github.com/multivac61/nix-secrets.git"
       },
