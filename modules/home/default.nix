@@ -65,11 +65,7 @@
     lazygit = {
       enable = true;
       settings = {
-        git = {
-          paging = {
-            pager = "${pkgs.diff-so-fancy}/bin/diff-so-fancy";
-          };
-        };
+        git.paging.pager = "${pkgs.diff-so-fancy}/bin/diff-so-fancy";
         gui = {
           language = "en";
           mouseEvents = false;
