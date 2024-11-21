@@ -9,16 +9,43 @@
     inputs.nix-index-database.hmModules.nix-index
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
-
-  home.enableNixpkgsReleaseCheck = false;
-  home.stateVersion = "23.05";
+  home = {
+    enableNixpkgsReleaseCheck = false;
+    stateVersion = "23.05";
     sessionVariables.EDITOR = "n";
+    file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+    file.".config/ghostty/config".source = ./config/ghostty/config;
+    file.".hushlogin".text = "";
+
+    packages = with pkgs; [
+      wget
+      zip
+      magic-wormhole-rs
+      neofetch
+      nb
+      age-plugin-fido2-hmac
+      gh-dash
+
+      # sesh and dependencies
+      sesh
+      fzf
+      gum
+
+      cachix
+
       moonlight-qt
+
+      # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
+      # bitwarden-cli
+    ];
+  };
 
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
 
   programs = {
+    btop.enable = true;
+    ssh.package = pkgs.openssh;
     gh = {
       enable = true;
       settings.git_protocol = "ssh";
@@ -499,31 +526,4 @@
       ];
     };
   };
-
-  # Hyper-key config
-  home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
-  home.file.".config/ghostty/config".source = ./config/ghostty/config;
-  home.file.".hushlogin".text = "";
-
-  home.packages = with pkgs; [
-    wget
-    zip
-    magic-wormhole-rs
-    neofetch
-    nb
-    age-plugin-fido2-hmac
-
-    # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
-    # bitwarden-cli
-
-    sesh
-    gh-dash
-    fzf
-    gum
-
-    btop
-    cachix
-    xsel # for lazygit copy/paste stuff to clipboard
-
-  ];
 }
