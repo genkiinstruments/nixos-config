@@ -205,104 +205,103 @@
         c = "clear";
         lg = "lazygit";
       };
-      interactiveShellInit = lib.strings.concatStrings (
-        lib.strings.intersperse "\n" ([
-          (builtins.readFile ./config/fish/config.fish)
-          "set -g SHELL ${pkgs.fish}/bin/fish"
-          (
-            if pkgs.stdenv.isDarwin then
-              ''
-                # Darwin openssh does not support FIDO2. Overwrite PATH with binaries in current system.
-                fish_add_path --path --move /run/current-system/sw/bin
-
-                #-------------------------------------------------------------------------------
-                # SSH Agent
-                #-------------------------------------------------------------------------------
-                function __ssh_agent_is_started -d "check if ssh agent is already started"
-                    if begin
-                            test -f $SSH_ENV; and test -z "$SSH_AGENT_PID"
-                        end
-                        source $SSH_ENV >/dev/null
+      interactiveShellInit =
+        if pkgs.stdenv.isDarwin then
+          ''
+            #-------------------------------------------------------------------------------
+            # SSH Agent
+            #-------------------------------------------------------------------------------
+            function __ssh_agent_is_started -d "check if ssh agent is already started"
+                if begin
+                        test -f $SSH_ENV; and test -z "$SSH_AGENT_PID"
                     end
-
-                    if test -z "$SSH_AGENT_PID"
-                        return 1
-                    end
-
-                    ssh-add -l >/dev/null 2>&1
-                    if test $status -eq 2
-                        return 1
-                    end
-                end
-
-                function __ssh_agent_start -d "start a new ssh agent"
-                    ssh-agent -c | sed 's/^echo/#echo/' >$SSH_ENV
-                    chmod 600 $SSH_ENV
                     source $SSH_ENV >/dev/null
-                    ssh-add
                 end
 
-                if not test -d $HOME/.ssh
-                    mkdir -p $HOME/.ssh
-                    chmod 0700 $HOME/.ssh
+                if test -z "$SSH_AGENT_PID"
+                    return 1
                 end
 
-                if test -d $HOME/.gnupg
-                    chmod 0700 $HOME/.gnupg
+                ${pkgs.openssh}/bin/ssh-add -l >/dev/null 2>&1
+                if test $status -eq 2
+                    return 1
                 end
+            end
 
-                if test -z "$SSH_ENV"
-                    set -xg SSH_ENV $HOME/.ssh/environment
-                end
+            function __ssh_agent_start -d "start a new ssh agent"
+                ${pkgs.openssh}/bin/ssh-agent -c | sed 's/^echo/#echo/' >$SSH_ENV
+                chmod 600 $SSH_ENV
+                source $SSH_ENV >/dev/null
+                ${pkgs.openssh}/bin/ssh-add
+            end
 
-                if not __ssh_agent_is_started
-                    __ssh_agent_start
-                end
+            if not test -d $HOME/.ssh
+                mkdir -p $HOME/.ssh
+                chmod 0700 $HOME/.ssh
+            end
 
-                #-------------------------------------------------------------------------------
-                # Ghostty Shell Integration
-                #-------------------------------------------------------------------------------
-                # Ghostty supports auto-injection but Nix-darwin hard overwrites XDG_DATA_DIRS
-                # which make it so that we can't use the auto-injection. We have to source
-                # manually.
-                if set -q GHOSTTY_RESOURCES_DIR
-                    source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
-                end
+            if test -z "$SSH_ENV"
+                set -xg SSH_ENV $HOME/.ssh/environment
+            end
 
-                #-------------------------------------------------------------------------------
-                # Programs
-                #-------------------------------------------------------------------------------
-                # Vim: We should move this somewhere else but it works for now
-                mkdir -p $HOME/.vim/{backup,swap,undo}
+            if not __ssh_agent_is_started
+                __ssh_agent_start
+            end
 
-                # Homebrew
-                if test -d /opt/homebrew
-                    set -gx HOMEBREW_PREFIX /opt/homebrew
-                    set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
-                    set -gx HOMEBREW_REPOSITORY /opt/homebrew
-                    set -q PATH; or set PATH ""
-                    set -gx PATH /opt/homebrew/bin /opt/homebrew/sbin $PATH
-                    set -q MANPATH; or set MANPATH ""
-                    set -gx MANPATH /opt/homebrew/share/man $MANPATH
-                    set -q INFOPATH; or set INFOPATH ""
-                    set -gx INFOPATH /opt/homebrew/share/info $INFOPATH
-                end
+            #-------------------------------------------------------------------------------
+            # Ghostty Shell Integration
+            #-------------------------------------------------------------------------------
+            # Ghostty supports auto-injection but Nix-darwin hard overwrites XDG_DATA_DIRS
+            # which make it so that we can't use the auto-injection. We have to source manually.
+            if set -q GHOSTTY_RESOURCES_DIR
+                source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
+            end
 
-                # Hammerspoon
-                if test -d "/Applications/Hammerspoon.app"
-                    set -q PATH; or set PATH ""
-                    set -gx PATH "/Applications/Hammerspoon.app/Contents/Frameworks/hs" $PATH
-                end
-
-                # Add ~/.local/bin
+            #-------------------------------------------------------------------------------
+            # Programs
+            #-------------------------------------------------------------------------------
+            # Homebrew
+            if test -d /opt/homebrew
+                set -gx HOMEBREW_PREFIX /opt/homebrew
+                set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
+                set -gx HOMEBREW_REPOSITORY /opt/homebrew
                 set -q PATH; or set PATH ""
-                set -gx PATH "$HOME/.local/bin" $PATH
-              ''
-            else
-              ""
-          )
-        ])
-      );
+                set -gx PATH /opt/homebrew/bin /opt/homebrew/sbin $PATH
+                set -q MANPATH; or set MANPATH ""
+                set -gx MANPATH /opt/homebrew/share/man $MANPATH
+                set -q INFOPATH; or set INFOPATH ""
+                set -gx INFOPATH /opt/homebrew/share/info $INFOPATH
+            end
+
+            # Do not show any greeting
+            set fish_greeting
+
+            #-------------------------------------------------------------------------------
+            # Atuin keybindings
+            #-------------------------------------------------------------------------------
+            # bind to ctrl-p in normal and insert mode
+            bind \cp _atuin_search
+            bind -M insert \cp _atuin_search
+            bind \cr _atuin_search
+            bind -M insert \cr _atuin_search
+
+            bind \cL clear
+
+            #-------------------------------------------------------------------------------
+            # VI keybindings
+            #-------------------------------------------------------------------------------
+            # Use Ctrl-f to complete a suggestion in vi mode
+            bind -M insert \cf accept-autosuggestion
+
+            fish_vi_key_bindings
+            set fish_vi_force_cursor
+            set fish_cursor_default block blink
+            set fish_cursor_insert line blink
+            set fish_cursor_replace_one underscore blink
+            set fish_cursor_visual block
+          ''
+        else
+          "";
     };
 
     ssh.enable = true;
