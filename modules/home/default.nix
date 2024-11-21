@@ -333,10 +333,7 @@
         else
           "";
     };
-
-    ssh.enable = true;
     bat.enable = true;
-
     git = {
       enable = true;
       lfs.enable = true;
