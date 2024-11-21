@@ -12,6 +12,7 @@
 
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
+    sessionVariables.EDITOR = "n";
 
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
@@ -190,7 +191,7 @@
     fish = {
       enable = true;
       shellAliases = {
-        n = "nvim";
+        n = "NVIM_APPNAME=mvim nvim";
         da = "direnv allow";
         dr = "direnv reload";
         ga = "git add";
@@ -481,6 +482,20 @@
       enableFishIntegration = true;
       settings.add_newline = false;
     };
+    neovim = {
+      enable = true;
+      extraPackages = with pkgs; [
+        xsel # for lazygit copy/paste stuff to clipboard
+        ripgrep
+        fd
+        neocmakelsp
+        nodejs
+        cargo
+        go
+        nixfmt-rfc-style
+        # workaround for nvim-spectre...
+        (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
+      ];
     };
   };
 
@@ -510,16 +525,5 @@
     cachix
     xsel # for lazygit copy/paste stuff to clipboard
 
-    # FIXME: Add as extraPackages to nvim
-    neovim
-    ripgrep
-    fd
-    neocmakelsp
-    nodejs
-    cargo
-    go
-    nixfmt-rfc-style
-    # workaround for nvim-spectre...
-    (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
   ];
 }
