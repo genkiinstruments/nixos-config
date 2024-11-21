@@ -46,7 +46,7 @@
       ssh-serve-m3-gdrn = {
         file = "${inputs.secrets}/ssh-serve-m3-gdrn.age";
         mode = "600";
-        owner = "root";
+        owner = "olafur";
         group = "staff";
       };
     };
@@ -86,27 +86,31 @@
     export CACHIX_AUTH_TOKEN="$(cat ${config.age.secrets.cachix_auth_token.path})"
   '';
 
-  nix.settings.trusted-users = [
-    "root"
-    "@wheel"
-    "olafur"
-  ];
+  nix = {
+    settings.trusted-users = [
+      "root"
+      "@wheel"
+      "olafur"
+    ];
 
-  nix.distributedBuilds = true;
-  nix.buildMachines = [
-    {
-      hostName = "gdrn";
-      sshUser = "ssh-ng://nix-ssh";
-      sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
-      system = "x86_64-linux";
-      maxJobs = 128;
-      supportedFeatures = [
-        "big-parallel"
-        "kvm"
-        "nixos-test"
-      ];
-    }
-  ];
+    linux-builder.enable = true; # Run the aarch64-linux linux-builder as a background service
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "gdrn";
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
+        system = "x86_64-linux";
+        maxJobs = 128;
+        # supportedFeatures = [
+        #   "big-parallel"
+        #   "kvm"
+        #   "nixos-test"
+        # ];
+      }
+    ];
+  };
 
   nix-homebrew = {
     user = "olafur";
