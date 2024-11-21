@@ -460,19 +460,11 @@
         fzf-tmux-url
         {
           plugin = tmux-thumbs;
-          extraConfig =
-            if pkgs.stdenv.isDarwin then
-              ''
-                set -g @thumbs-command 'echo -n {} | pbcopy'
-              ''
-            else
-              "";
+          extraConfig = if pkgs.stdenv.isDarwin then "set -g @thumbs-command 'echo -n {} | pbcopy'" else "";
         }
         {
           plugin = extrakto;
-          extraConfig = ''
-            set -g @extrakto_grab_area "window recent"
-          '';
+          extraConfig = "set -g @extrakto_grab_area 'window recent'";
         }
       ];
       extraConfig = lib.strings.concatStrings (
