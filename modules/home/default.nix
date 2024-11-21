@@ -61,7 +61,6 @@
       enableFishIntegration = true;
     };
     nix-index-database.comma.enable = true;
-
     lazygit = {
       enable = true;
       settings = {
@@ -210,7 +209,6 @@
           )}"
         }
       '';
-
     };
     fish = {
       enable = true;
