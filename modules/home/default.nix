@@ -13,6 +13,7 @@
   home.enableNixpkgsReleaseCheck = false;
   home.stateVersion = "23.05";
     sessionVariables.EDITOR = "n";
+      moonlight-qt
 
   catppuccin.enable = true;
   catppuccin.flavor = "mocha";
@@ -514,7 +515,6 @@
 
     # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
     # bitwarden-cli
-    # moonlight-qt
 
     sesh
     gh-dash
