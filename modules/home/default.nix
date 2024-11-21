@@ -204,6 +204,7 @@
         gt = "git tag";
         c = "clear";
         lg = "lazygit";
+        cat = "bat";
       };
       interactiveShellInit =
         if pkgs.stdenv.isDarwin then
