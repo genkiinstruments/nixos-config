@@ -78,7 +78,10 @@
 
   programs.ssh.knownHosts."gdrn".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEkxYcp4RFr6rNaxEZllpW3xVz/lFp/XB3YpgcTazOar";
 
-  environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
+  environment.systemPackages = with pkgs; [
+    openssh # needed for fido2 support
+    aerospace
+  ];
   environment.variables.SSH_ASKPASS = "/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass"; # TODO: nixpkgs
   environment.variables.DISPLAY = ":0";
 
@@ -120,7 +123,6 @@
       "homebrew/homebrew-core" = homebrew-core;
       "homebrew/homebrew-cask" = homebrew-cask;
       "homebrew/homebrew-bundle" = homebrew-bundle;
-      "nikitabobko/homebrew-tap" = homebrew-aerospace;
       "zkondor/homebrew-dist" = homebrew-zkondor;
       "theseal/homebrew-ssh-askpass" = homebrew-ssh-askpass;
     };
@@ -132,7 +134,6 @@
       "raycast"
       "arc"
       "karabiner-elements"
-      "nikitabobko/tap/aerospace"
       "zkondor/dist/znotch"
     ];
     brews = [

@@ -20,8 +20,6 @@
     homebrew-core.flake = false;
     homebrew-cask.url = "github:homebrew/homebrew-cask";
     homebrew-cask.flake = false;
-    homebrew-aerospace.url = "github:nikitabobko/homebrew-tap";
-    homebrew-aerospace.flake = false;
     homebrew-zkondor.url = "github:zkondor/homebrew-dist";
     homebrew-zkondor.flake = false;
     homebrew-ssh-askpass.url = "github:theseal/homebrew-ssh-askpass";
