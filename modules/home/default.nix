@@ -75,6 +75,7 @@
           commitHashLength = 6;
           showDivergenceFromBaseBranch = "arrowAndNumber";
           skipDiscardChangeWarning = true;
+          truncateCopiedCommitHashesTo = 40;
         };
         quitOnTopLevelReturn = true;
         disableStartupPopups = true;
