@@ -518,4 +518,47 @@
       ];
     };
   };
+<<<<<<< Updated upstream
+=======
+
+  # Hyper-key config
+  home.file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+  home.file.".config/ghostty/config".source = ./config/ghostty/config;
+  home.file.".hushlogin".text = "";
+
+  home.packages = with pkgs; [
+    wget
+    zip
+    magic-wormhole-rs
+    neofetch
+    nb
+    age-plugin-fido2-hmac
+
+    # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
+    # bitwarden-cli
+    # moonlight-qt
+
+    sesh
+    gh-dash
+    fzf
+    gum
+
+    btop
+    cachix
+    xsel # for lazygit copy/paste stuff to clipboard
+
+    # FIXME: Add as extraPackages to nvim
+    neovim
+    unzip
+    ripgrep
+    fd
+    neocmakelsp
+    nodejs
+    cargo
+    go
+    nixfmt-rfc-style
+    # workaround for nvim-spectre...
+    (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
+  ];
+>>>>>>> Stashed changes
 }

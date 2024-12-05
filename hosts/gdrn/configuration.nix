@@ -27,7 +27,6 @@
 
   hardware.enableRedistributableFirmware = true;
 
-  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
@@ -39,17 +38,17 @@
   ];
   boot.kernelModules = [ "kvm-amd" ];
 
-  fonts.fontDir.enable = true;
-
-  networking.networkmanager.enable = true;
   networking.useDHCP = lib.mkDefault true;
 
-  virtualisation.docker.enable = true;
-  virtualisation.multipass.enable = true;
-
-  services.xserver.enable = true;
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
+  nix.sshServe = {
+    protocol = "ssh-ng";
+    enable = true;
+    write = true;
+    keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0Z5mbT3Zy/X+lLDeWVzBwMreSDBglSzDrq/TtbsVSY olafur@M3.local"
+    ];
+  };
+  nix.settings.trusted-users = [ "nix-ssh" ];
 
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
@@ -87,11 +86,7 @@
     isNormalUser = true;
     shell = pkgs.fish;
     hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "docker"
-    ];
+    extraGroups = [ "wheel" ];
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
