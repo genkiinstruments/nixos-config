@@ -48,6 +48,7 @@
     fzf = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
       defaultCommand = "rg --files --no-ignore --hidden --follow --glob '!.git/*'";
       fileWidgetOptions = [
         "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
@@ -60,12 +61,14 @@
     eza = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
       icons = "auto";
       git = true;
     };
     nix-index = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
     };
     nix-index-database.comma.enable = true;
     lazygit = {
@@ -187,6 +190,7 @@
     atuin = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
       settings = {
         exit_mode = "return-query";
         keymap_mode = "auto";
@@ -198,6 +202,7 @@
     zoxide = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
     };
     direnv = {
       enable = true;
@@ -376,6 +381,7 @@
     yazi = {
       enable = true;
       enableFishIntegration = true;
+      enableBashIntegration = true;
     };
 
     helix = {
