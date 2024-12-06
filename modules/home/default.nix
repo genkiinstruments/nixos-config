@@ -28,7 +28,6 @@
 
       # sesh and dependencies
       sesh
-      fzf
       gum
 
       cachix
@@ -46,6 +45,14 @@
   programs = {
     btop.enable = true;
     ssh.package = pkgs.openssh;
+    fzf = {
+      enable = true;
+      enableFishIntegration = true;
+      defaultCommand = "rg --files --no-ignore --hidden --follow --glob '!.git/*'";
+      fileWidgetOptions = [
+        "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+      ];
+    };
     gh = {
       enable = true;
       settings.git_protocol = "ssh";
