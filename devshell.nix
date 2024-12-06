@@ -3,7 +3,6 @@ pkgs.mkShell {
   packages =
     with pkgs;
     [
-      bashInteractive
       git
       nixos-anywhere
       age
