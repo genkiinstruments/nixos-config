@@ -508,7 +508,6 @@
         xsel # for lazygit copy/paste to clipboard
         ripgrep
         fd
-        neocmakelsp
         nodejs
         cargo
         go
