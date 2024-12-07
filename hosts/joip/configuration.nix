@@ -16,8 +16,6 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.self.modules.shared.default
-    inputs.self.nixosModules.servarr
-    inputs.self.nixosModules.homepage
     inputs.self.nixosModules.common
     ./disk-config.nix
     ./hardware-configuration.nix
@@ -29,30 +27,14 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  age = {
-    secrets = {
-      "my-secret" = {
-        path = "/home/olafur/my-secret";
-        file = "${inputs.secrets}/my-secret.age";
-        mode = "644";
-        owner = "olafur";
-        group = "users";
-      };
-      dashboard-env = {
-        file = "${inputs.secrets}/homepage-dashboard-env.age";
-        owner = "olafur";
-        group = "users";
-        mode = "644";
-      };
-      atuin-key = {
-        path = "/home/olafur/.local/share/atuin/key";
-        file = "${inputs.secrets}/atuin-key.age";
-        mode = "644";
-        owner = "olafur";
-        group = "users";
-      };
-    };
+  age.secrets.atuin-key = {
+    path = "/home/olafur/.local/share/atuin/key";
+    file = "${inputs.secrets}/atuin-key.age";
+    mode = "644";
+    owner = "olafur";
+    group = "users";
   };
+  
   users.users.olafur = {
     isNormalUser = true;
     shell = pkgs.fish;
