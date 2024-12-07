@@ -507,6 +507,7 @@
       extraPackages = with pkgs; [
         xsel # for lazygit copy/paste to clipboard
         ripgrep
+        ast-grep
         fd
         nodejs
         cargo
