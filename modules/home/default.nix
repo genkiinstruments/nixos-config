@@ -513,8 +513,6 @@
         cargo
         go
         nixfmt-rfc-style
-        # workaround for nvim-spectre...
-        (writeShellScriptBin "gsed" ''exec ${pkgs.gnused}/bin/sed "$@"'')
       ];
     };
   };
