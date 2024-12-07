@@ -63,9 +63,7 @@
       icons = "auto";
       git = true;
     };
-    nix-index = {
-      enable = true;
-    };
+    nix-index.enable = true;
     nix-index-database.comma.enable = true;
     lazygit = {
       enable = true;
