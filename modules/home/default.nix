@@ -44,7 +44,9 @@
 
   programs = {
     btop.enable = true;
+    ssh.enable = true;
     ssh.package = pkgs.openssh;
+    ssh.extraConfig = "SetEnv TERM=xterm-256color";
     fzf = {
       enable = true;
       enableFishIntegration = true;
