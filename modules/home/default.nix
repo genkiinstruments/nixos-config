@@ -505,7 +505,7 @@
     neovim = {
       enable = true;
       extraPackages = with pkgs; [
-        xsel # for lazygit copy/paste stuff to clipboard
+        xsel # for lazygit copy/paste to clipboard
         ripgrep
         fd
         neocmakelsp
