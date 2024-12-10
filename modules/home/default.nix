@@ -333,7 +333,12 @@
     bash.enable = true;
     bat.enable = true;
     ripgrep.enable = true;
-    ripgrep.arguments = [ "--follow" "--pretty" "--hidden" "--smart-case" ];
+    ripgrep.arguments = [
+      "--follow"
+      "--pretty"
+      "--hidden"
+      "--smart-case"
+    ];
     git = {
       enable = true;
       lfs.enable = true;
