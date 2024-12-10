@@ -34,7 +34,7 @@
     owner = "olafur";
     group = "users";
   };
-  
+
   users.users.olafur = {
     isNormalUser = true;
     shell = pkgs.fish;

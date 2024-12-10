@@ -41,7 +41,7 @@
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
   # under folder /Users/genki/actions-runner. The reason we do this is because the github-actions runner
   # in nix-darwin - https://daiderd.com/nix-darwin/manual/index.html#opt-services.github-runners - runs inside a nix container
-  # and as such has no acccess to Apple clang and other dependencies needed. 
+  # and as such has no acccess to Apple clang and other dependencies needed.
   # Don't run automatic gc as it may break the actions-runner code.
   launchd.daemons.github-runner = {
     serviceConfig = {
