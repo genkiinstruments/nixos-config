@@ -69,6 +69,7 @@
       enable = true;
       settings = {
         git.paging.pager = "${pkgs.diff-so-fancy}/bin/diff-so-fancy";
+        git.truncateCopiedCommitHashesTo = 40;
         gui = {
           language = "en";
           mouseEvents = false;
@@ -79,7 +80,6 @@
           commitHashLength = 6;
           showDivergenceFromBaseBranch = "arrowAndNumber";
           skipDiscardChangeWarning = true;
-          truncateCopiedCommitHashesTo = 40;
         };
         quitOnTopLevelReturn = true;
         disableStartupPopups = true;
