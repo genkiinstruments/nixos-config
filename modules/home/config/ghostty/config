@@ -100,13 +100,11 @@ font-codepoint-map = U+21B5,U+25B8,U+2605,U+2630,U+2632,U+2714,U+E0A3,U+E615,U+E
 # \x01 is ctrl+a (common alternative tmux prefix)
 # \x00 is ctrl+space (common alternative tmux prefix)
 # https://unicodelookup.com/#%20Letter%20K/1
-keybind = cmd+shift+b=text:\x02\x42
-keybind = cmd+shift+d=text:\x02\x44
-keybind = cmd+shift+g=text:\x02\x47
-keybind = cmd+shift+r=text:\x02\x52
-
-keybind = cmd+shift+5=text:\x02\x25
-keybind = cmd+shift+'=text:\x02\x22
+keybind = cmd+shift+b=text:\x00\x42
+keybind = cmd+shift+d=text:\x00\x44
+keybind = cmd+shift+g=text:\x00\x47
+keybind = cmd+shift+r=text:\x00\x52
+keybind = cmd+shift+x=text:\x00\x58
 
 keybind = cmd+a=text:\x00\x61
 keybind = cmd+b=text:\x00\x62
@@ -116,6 +114,5 @@ keybind = cmd+g=text:\x00\x67
 keybind = cmd+j=text:\x00\x6A
 keybind = cmd+k=text:\x00\x6B
 keybind = cmd+r=text:\x00\x72
-keybind = cmd+x=text:\x00\x78
 keybind = cmd+y=text:\x00\x79
 keybind = cmd+z=text:\x00\x7A
