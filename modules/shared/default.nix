@@ -19,10 +19,6 @@
   ];
   nix.settings.experimental-features = lib.mkDefault "nix-command flakes";
 
-  # Disallow IFDs by default. IFDs can too easily sneak in and cause trouble.
-  # https://nix.dev/manual/nix/2.22/language/import-from-derivation
-  nix.settings.allow-import-from-derivation = false;
-
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
   # Deploy tailscale everywhere
