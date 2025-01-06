@@ -14,6 +14,7 @@
     stateVersion = "23.05";
     sessionVariables.EDITOR = "n";
     file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
+    # TODO: Add to home-manager once in srvos.nixpkgs
     file.".config/ghostty/config".source = ./config/ghostty/config;
     file.".hushlogin".text = "";
 
