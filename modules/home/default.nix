@@ -40,8 +40,18 @@
     ];
   };
 
-  catppuccin.enable = true;
-  catppuccin.flavor = "mocha";
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    # See issues with IFD: https://github.com/catppuccin/nix?tab=readme-ov-file#-faq
+    fzf.enable = false;
+    starship.enable = false;
+    cava.enable = false;
+    gh-dash.enable = false;
+    imv.enable = false;
+    swaylock.enable = false;
+    mako.enable = false;
+  };
 
   programs = {
     btop.enable = true;
