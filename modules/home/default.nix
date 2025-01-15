@@ -99,7 +99,7 @@
         customCommands = [
           {
             key = "C";
-            command = ''git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}" -m "{{ .Form.LongDescription }}"'';
+            command = ''git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}{{ .Form.Breaking }}: {{ .Form.Description }}" -m "{{ .Form.LongDescription }}"'';
             description = "commit with commitizen and long description";
             context = "global";
             prompts = [
@@ -169,6 +169,23 @@
                 type = "input";
                 title = "Enter the scope(s) of this change.";
                 key = "Scopes";
+              }
+              {
+                type = "menu";
+                title = "Breaking change?";
+                key = "Breaking";
+                options = [
+                  {
+                    name = "Default";
+                    description = "Not a breaking change";
+                    value = "";
+                  }
+                  {
+                    name = "BREAKING CHANGE";
+                    description = "Introduced a breaking change";
+                    value = "!";
+                  }
+                ];
               }
               {
                 type = "input";
