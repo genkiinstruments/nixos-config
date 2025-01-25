@@ -34,8 +34,10 @@
     '';
   };
 
-  services.vmware.guest.enable = true;
-  services.vmware.guest.headless = false;
+  virtualisation.vmware.guest = {
+    enable = true;
+    headless = false;
+  };
 
   # Ensure the udev rules are loaded
   services.udev.enable = true;
