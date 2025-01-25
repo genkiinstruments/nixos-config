@@ -113,6 +113,7 @@ keybind = cmd+e=text:\x00\x65
 keybind = cmd+g=text:\x00\x67
 keybind = cmd+j=text:\x00\x6A
 keybind = cmd+k=text:\x00\x6B
+keybind = cmd+l=text:\x00\x6C
 keybind = cmd+r=text:\x00\x72
 keybind = cmd+y=text:\x00\x79
 keybind = cmd+z=text:\x00\x7A

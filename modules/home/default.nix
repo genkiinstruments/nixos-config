@@ -28,6 +28,7 @@
       gh-dash
 
       # sesh and dependencies
+      # TODO: Update to newest version: https://github.com/joshmedeski/sesh/releases/tag/v2.8.0
       sesh
       gum
 
