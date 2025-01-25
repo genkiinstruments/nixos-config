@@ -16,6 +16,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # VMware, Parallels both only support this being 0 otherwise you see "error switching console mode" on boot.
+  boot.loader.systemd-boot.consoleMode = "0";
+
   networking.hostName = "m3vm"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -130,6 +133,14 @@
   environment.systemPackages = with pkgs; [
     magic-wormhole-rs
   ];
+
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
+  networking.useDHCP = false;
+
+  # Don't require password for sudo
+  security.sudo.wheelNeedsPassword = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
