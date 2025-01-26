@@ -26,7 +26,10 @@
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
-  services.udev.packages = [ pkgs.yubikey-personalization ];
+  services.udev.packages = [
+    pkgs.yubikey-personalization
+    pkgs.libfido2
+  ];
 
   programs.ssh = {
     startAgent = true;
@@ -108,6 +111,8 @@
     extraGroups = [
       "networkmanager"
       "wheel"
+      "plugdev"
+      "dialout"
     ];
     hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
