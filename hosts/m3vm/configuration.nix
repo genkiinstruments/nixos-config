@@ -114,6 +114,24 @@
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
 
+  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
+  home-manager.users.genki.programs.ssh = {
+    matchBlocks = {
+      "github.com" = {
+        user = "git";
+        identityFile = "~/.ssh/id_ed25519_sk";
+        identitiesOnly = true;
+      };
+    };
+    controlMaster = "auto";
+    controlPath = "/tmp/ssh-%u-%r@%h:%p";
+    controlPersist = "1800";
+    forwardAgent = true;
+    addKeysToAgent = "yes";
+    serverAliveInterval = 900;
+    extraConfig = "SetEnv TERM=xterm-256color";
+  };
+
   # Enable automatic login for the user.
   services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "genki";
