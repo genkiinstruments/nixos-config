@@ -1,10 +1,14 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}:
 {
   imports = [
-    ./hardware-configuration.nix
+    ./disko-config.nix
+    inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
-    # inputs.srvos.nixosModules.server
-    # inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
@@ -12,12 +16,132 @@
     inputs.self.nixosModules.common
   ];
 
-  # Bootloader.
+  # Be careful updating this.
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  # Use the systemd-boot EFI boot loader.
+  # arm uses EFI, so we need systemd-boot
   boot.loader.systemd-boot.enable = true;
+
+  # since it's a vm, we can do this on every update safely
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # VMware, Parallels both only support this being 0 otherwise you see "error switching console mode" on boot.
+  # VMware, Parallels both only support this being 0 otherwise you see
+  # "error switching console mode" on boot.
   boot.loader.systemd-boot.consoleMode = "0";
+
+  boot.initrd.availableKernelModules = [
+    "xhci_pci"
+    "nvme"
+    "sr_mod"
+  ];
+
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
+  networking.useDHCP = false;
+
+  # Don't require password for sudo
+  security.sudo.wheelNeedsPassword = false;
+
+  # Virtualization settings
+  virtualisation.docker.enable = true;
+
+  virtualisation.lxd.enable = true;
+
+  # Select internationalisation properties.
+  i18n = {
+    inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5.addons = with pkgs; [
+        fcitx5-mozc
+        fcitx5-gtk
+        fcitx5-chinese-addons
+      ];
+    };
+  };
+
+  # Enable tailscale. We manually authenticate when we want with
+  # "sudo tailscale up". If you don't use tailscale, you should comment
+  # out or delete all of this.
+  services.tailscale.enable = true;
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.mutableUsers = false;
+
+  # Manage fonts. We pull these from a secret directory since most of these
+  # fonts require a purchase.
+  fonts = {
+    fontDir.enable = true;
+
+    packages = [
+      pkgs.fira-code
+      pkgs.jetbrains-mono
+    ];
+  };
+
+  # List packages installed in system profile. To search, run:
+  # $ nix search wget
+  environment.systemPackages =
+    with pkgs;
+    [
+      cachix
+      gnumake
+      killall
+      niv
+      xclip
+      magic-wormhole-rs
+      git
+      ghostty
+
+      # For hypervisors that support auto-resizing, this script forces it.
+      # I've noticed not everyone listens to the udev events so this is a hack.
+      (writeShellScriptBin "xrandr-auto" ''
+        xrandr --output Virtual-1 --auto
+      '')
+    ]
+    ++ [
+      # This is needed for the vmware user tools clipboard to work.
+      # You can test if you don't need this by deleting this and seeing
+      # if the clipboard sill works.
+      gtkmm3
+    ];
+
+  # Our default non-specialised desktop environment.
+  services.xserver = {
+    enable = true;
+    xkb.layout = "us";
+    desktopManager.gnome.enable = true;
+    displayManager.gdm.enable = true;
+    displayManager.autoLogin.enable = true;
+    displayManager.autoLogin.user = "genki";
+  };
+
+  # Some programs need SUID wrappers, can be configured further or are
+  # started in user sessions.
+  # programs.mtr.enable = true;
+  # programs.gnupg.agent = {
+  #   enable = true;
+  #   enableSSHSupport = true;
+  # };
+
+  # Enable the OpenSSH daemon.
+  services.openssh.enable = true;
+  services.openssh.settings.PasswordAuthentication = true;
+  services.openssh.settings.PermitRootLogin = "no";
+
+  # Enable flatpak. I don't use any flatpak apps but I do sometimes
+  # test them so I keep this enabled.
+  services.flatpak.enable = true;
+
+  # Enable snap. I don't really use snap but I do sometimes test them
+  # and release snaps so we keep this enabled.
+  # services.snap.enable = true;
+
+  # Disable the firewall since we're in a VM and we want to make it
+  # easy to visit stuff in here. We only use NAT networking anyways.
+  networking.firewall.enable = false;
 
   networking.hostName = "m3vm"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -67,19 +191,6 @@
     LC_PAPER = "is_IS.UTF-8";
     LC_TELEPHONE = "is_IS.UTF-8";
     LC_TIME = "is_IS.UTF-8";
-  };
-
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
   };
 
   # Enable CUPS to print documents.
@@ -137,9 +248,7 @@
     extraConfig = "SetEnv TERM=xterm-256color";
   };
 
-  # Enable automatic login for the user.
-  services.xserver.displayManager.autoLogin.enable = true;
-  services.xserver.displayManager.autoLogin.user = "genki";
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
   systemd.services."getty@tty1".enable = false;
@@ -150,22 +259,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    magic-wormhole-rs
-    git
-    ghostty
-  ];
-
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
-  networking.useDHCP = false;
-
-  # Don't require password for sudo
-  security.sudo.wheelNeedsPassword = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -193,5 +286,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.11"; # Did you read the comment?
-
 }
