@@ -103,6 +103,10 @@
       git
       ghostty
       open-vm-tools
+      gnome-session
+      gnome-settings-daemon
+      gnome-shell
+      gnome-shell-extensions
 
       # For hypervisors that support auto-resizing, this script forces it.
       # I've noticed not everyone listens to the udev events so this is a hack.
@@ -119,6 +123,9 @@
   environment.sessionVariables = {
     LIBGL_ALWAYS_SOFTWARE = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
+    # Add these for better Wayland support
+    GDK_BACKEND = "wayland";
+    XDG_SESSION_TYPE = "wayland";
   };
 
   # Disable unnecessary services that might cause issues
@@ -128,6 +135,7 @@
   services.fprintd.enable = false;
 
   # Our default non-specialised desktop environment.
+  services.displayManager.autoLogin.enable = true;
   services.xserver = {
     enable = true;
     xkb.layout = "us";
@@ -135,7 +143,6 @@
     displayManager.gdm.enable = true;
     displayManager.gdm.wayland = true;
     displayManager.gdm.autoSuspend = false;
-    displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "genki";
 
     # Add device configuration
@@ -148,6 +155,7 @@
     '';
   };
   services.dbus.enable = true;
+  services.gvfs.enable = true;
   # Basic GNOME configuration
   services.gnome = {
     core-utilities.enable = true;
@@ -228,23 +236,14 @@
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.genki = {
@@ -255,6 +254,8 @@
       "wheel"
       "plugdev"
       "dialout"
+      "video"
+      "inputs"
     ];
     hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
