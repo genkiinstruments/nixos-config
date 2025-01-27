@@ -107,6 +107,9 @@
       gnome-settings-daemon
       gnome-shell
       gnome-shell-extensions
+      xorg.xinit
+      xorg.xauth # Add this
+      xorg.xrandr # Add this
 
       # For hypervisors that support auto-resizing, this script forces it.
       # I've noticed not everyone listens to the udev events so this is a hack.
@@ -123,9 +126,7 @@
   environment.sessionVariables = {
     LIBGL_ALWAYS_SOFTWARE = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
-    # Add these for better Wayland support
-    GDK_BACKEND = "wayland";
-    XDG_SESSION_TYPE = "wayland";
+    DISPLAY = ":0"; # Force display
   };
 
   # Disable unnecessary services that might cause issues
@@ -136,6 +137,7 @@
 
   # Our default non-specialised desktop environment.
   services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.user = "genki";
   services.xserver = {
     enable = true;
     xkb.layout = "us";
@@ -143,16 +145,6 @@
     displayManager.gdm.enable = true;
     displayManager.gdm.wayland = true;
     displayManager.gdm.autoSuspend = false;
-    displayManager.autoLogin.user = "genki";
-
-    # Add device configuration
-    config = ''
-      Section "Device"
-        Identifier "VMware SVGA II Adapter"
-        Driver "vmware"
-        Option "HWCursor" "True"
-      EndSection
-    '';
   };
   services.dbus.enable = true;
   services.gvfs.enable = true;
