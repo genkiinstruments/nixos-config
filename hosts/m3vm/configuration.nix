@@ -7,6 +7,7 @@
 {
   imports = [
     ./disko-config.nix
+    ./vmware-guest.nix
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     inputs.srvos.nixosModules.mixins-terminfo
@@ -31,10 +32,17 @@
   boot.loader.systemd-boot.consoleMode = "0";
 
   boot.initrd.availableKernelModules = [
+    "uhci_hcd"
+    "ahci"
     "xhci_pci"
     "nvme"
+    "usbhid"
     "sr_mod"
   ];
+  boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
+
+  networking.interfaces.ens160.useDHCP = true;
+  disabledModules = [ "virtualisation/vmware-guest.nix" ];
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -94,6 +102,7 @@
       magic-wormhole-rs
       git
       ghostty
+      open-vm-tools
 
       # For hypervisors that support auto-resizing, this script forces it.
       # I've noticed not everyone listens to the udev events so this is a hack.
@@ -107,6 +116,16 @@
       # if the clipboard sill works.
       gtkmm3
     ];
+  environment.sessionVariables = {
+    LIBGL_ALWAYS_SOFTWARE = "1";
+    WLR_NO_HARDWARE_CURSORS = "1";
+  };
+
+  # Disable unnecessary services that might cause issues
+  services.power-profiles-daemon.enable = false;
+  services.geoclue2.enable = false;
+  services.hardware.bolt.enable = false;
+  services.fprintd.enable = false;
 
   # Our default non-specialised desktop environment.
   services.xserver = {
@@ -114,8 +133,25 @@
     xkb.layout = "us";
     desktopManager.gnome.enable = true;
     displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = true;
+    displayManager.gdm.autoSuspend = false;
     displayManager.autoLogin.enable = true;
     displayManager.autoLogin.user = "genki";
+
+    # Add device configuration
+    config = ''
+      Section "Device"
+        Identifier "VMware SVGA II Adapter"
+        Driver "vmware"
+        Option "HWCursor" "True"
+      EndSection
+    '';
+  };
+  services.dbus.enable = true;
+  # Basic GNOME configuration
+  services.gnome = {
+    core-utilities.enable = true;
+    core-shell.enable = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -162,11 +198,6 @@
         ForwardAgent yes
         SecurityKeyProvider /dev/hidraw1  # This might be optional depending on your setup
     '';
-  };
-
-  virtualisation.vmware.guest = {
-    enable = true;
-    headless = false;
   };
 
   # Ensure the udev rules are loaded
