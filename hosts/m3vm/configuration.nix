@@ -75,6 +75,143 @@
   # out or delete all of this.
   services.tailscale.enable = true;
 
+  # Configure home-manager for Hyprland
+  home-manager.users.genki =
+    { pkgs, ... }:
+    {
+      imports = [ inputs.self.homeModules.default ];
+      programs.ssh = {
+        matchBlocks = {
+          "github.com" = {
+            user = "git";
+            identityFile = "~/.ssh/id_ed25519_sk";
+            identitiesOnly = true;
+          };
+        };
+        controlMaster = "auto";
+        controlPath = "/tmp/ssh-%u-%r@%h:%p";
+        controlPersist = "1800";
+        forwardAgent = true;
+        addKeysToAgent = "yes";
+        serverAliveInterval = 900;
+        extraConfig = "SetEnv TERM=xterm-256color";
+      };
+      wayland.windowManager.hyprland = {
+        enable = true;
+        settings = {
+          "$mod" = "SUPER";
+
+          bind = [
+            "$mod, Return, exec, ghostty"
+            "$mod, Q, killactive"
+            "$mod, M, exit"
+            "$mod, E, exec, dolphin"
+            "$mod, V, togglefloating"
+            "$mod, R, exec, wofi --show drun"
+            "$mod, P, pseudo"
+            "$mod, J, togglesplit"
+            "$mod, F, fullscreen"
+
+            # Move focus
+            "$mod, left, movefocus, l"
+            "$mod, right, movefocus, r"
+            "$mod, up, movefocus, u"
+            "$mod, down, movefocus, d"
+
+            # Workspaces
+            "$mod, 1, workspace, 1"
+            "$mod, 2, workspace, 2"
+            "$mod, 3, workspace, 3"
+            "$mod, 4, workspace, 4"
+            "$mod, 5, workspace, 5"
+            "$mod, 6, workspace, 6"
+            "$mod, 7, workspace, 7"
+            "$mod, 8, workspace, 8"
+            "$mod, 9, workspace, 9"
+
+            # Move windows to workspaces
+            "$mod SHIFT, 1, movetoworkspace, 1"
+            "$mod SHIFT, 2, movetoworkspace, 2"
+            "$mod SHIFT, 3, movetoworkspace, 3"
+            "$mod SHIFT, 4, movetoworkspace, 4"
+            "$mod SHIFT, 5, movetoworkspace, 5"
+            "$mod SHIFT, 6, movetoworkspace, 6"
+            "$mod SHIFT, 7, movetoworkspace, 7"
+            "$mod SHIFT, 8, movetoworkspace, 8"
+            "$mod SHIFT, 9, movetoworkspace, 9"
+          ];
+
+          exec-once = [
+            "waybar"
+            "mako"
+            "dunst"
+            "vmware-user-suid-wrapper"
+          ];
+
+          monitor = [
+            "Virtual-1,1920x1080@60,0x0,1"
+          ];
+
+          general = {
+            gaps_in = 5;
+            gaps_out = 20;
+            border_size = 2;
+            "col.active_border" = "rgba(33ccffee)";
+            "col.inactive_border" = "rgba(595959aa)";
+          };
+        };
+      };
+
+      # Dunst configuration
+      services.dunst = {
+        enable = true;
+        settings = {
+          global = {
+            font = "JetBrains Mono 10";
+            frame_width = 2;
+            frame_color = "#8AADF4";
+          };
+        };
+      };
+
+      # Mako configuration
+      services.mako = {
+        enable = true;
+        defaultTimeout = 5000;
+        font = "JetBrains Mono 10";
+        backgroundColor = "#1E1E2E";
+        textColor = "#CDD6F4";
+        borderColor = "#89B4FA";
+        borderRadius = 8;
+        borderSize = 2;
+        margin = "10";
+        padding = "15";
+      };
+
+      # Waybar configuration
+      programs.waybar = {
+        enable = true;
+        settings = [
+          {
+            height = 30;
+            modules-left = [
+              "hyprland/workspaces"
+              "hyprland/mode"
+            ];
+            modules-center = [ "hyprland/window" ];
+            modules-right = [
+              "pulseaudio"
+              "network"
+              "cpu"
+              "memory"
+              "clock"
+              "tray"
+            ];
+          }
+        ];
+      };
+    };
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
 
@@ -103,15 +240,20 @@
       git
       ghostty
       open-vm-tools
-      gnome-session
-      gnome-settings-daemon
-      gnome-shell
-      gnome-shell-extensions
-      xorg.xinit
-      xorg.xauth # Add this
-      xorg.xrandr # Add this
-      xclip
-      xsel
+      waybar # Status bar
+      wofi # Application launcher
+      dunst # Notification daemon
+      mako # Alternative notification daemon
+      wl-clipboard # Clipboard manager
+      grim # Screenshot utility
+      slurp # Screen area selection
+      swaylock # Screen locker
+      swayidle # Idle management daemon
+      wlsunset # Night light
+      light # Brightness control
+      pamixer # PulseAudio control
+      pavucontrol # PulseAudio GUI
+      networkmanagerapplet
 
       # For hypervisors that support auto-resizing, this script forces it.
       # I've noticed not everyone listens to the udev events so this is a hack.
@@ -123,15 +265,22 @@
       # This is needed for the vmware user tools clipboard to work.
       # You can test if you don't need this by deleting this and seeing
       # if the clipboard sill works.
-      shared-mime-info # Add this
-      xdg-utils # Add this
-      gtkmm3 # Make sure this is present
-      xorg.xhost # Add this
+      shared-mime-info
+      xdg-utils
+      gtkmm3
     ];
   environment.sessionVariables = {
     LIBGL_ALWAYS_SOFTWARE = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
-    DISPLAY = ":0"; # Force display
+    XDG_CURRENT_DESKTOP = "Hyprland";
+    XDG_SESSION_TYPE = "wayland";
+    MOZ_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
+  };
+
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
   };
 
   # Disable unnecessary services that might cause issues
@@ -143,35 +292,30 @@
   # Our default non-specialised desktop environment.
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "genki";
-  services.xserver = {
-    enable = true;
-    xkb.layout = "us";
-    desktopManager.gnome = {
-      enable = true;
-      extraGSettingsOverrides = ''
-        [org.gnome.desktop.interface]
-        gtk-enable-primary-paste=true
-      '';
-    };
-    displayManager.gdm.enable = true;
-    displayManager.gdm.wayland = false;
-    displayManager.gdm.autoSuspend = false;
-  };
   services.dbus.enable = true;
   services.gvfs.enable = true;
-  # Basic GNOME configuration
-  services.gnome = {
-    core-utilities.enable = true;
-    core-shell.enable = true;
+  # XDG Portal for screen sharing
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
+  # Replace with greetd auto-login configuration
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+        user = "greeter";
+      };
+      # Add auto-login configuration
+      initial_session = {
+        command = "Hyprland";
+        user = "genki";
+      };
+    };
+  };
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
@@ -250,29 +394,7 @@
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
 
-  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
-  home-manager.users.genki.programs.ssh = {
-    matchBlocks = {
-      "github.com" = {
-        user = "git";
-        identityFile = "~/.ssh/id_ed25519_sk";
-        identitiesOnly = true;
-      };
-    };
-    controlMaster = "auto";
-    controlPath = "/tmp/ssh-%u-%r@%h:%p";
-    controlPersist = "1800";
-    forwardAgent = true;
-    addKeysToAgent = "yes";
-    serverAliveInterval = 900;
-    extraConfig = "SetEnv TERM=xterm-256color";
-  };
-
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
-
-  # Workaround for GNOME autologin: https://github.com/NixOS/nixpkgs/issues/103746#issuecomment-945091229
-  systemd.services."getty@tty1".enable = false;
-  systemd.services."autovt@tty1".enable = false;
 
   # Install firefox.
   programs.firefox.enable = true;
