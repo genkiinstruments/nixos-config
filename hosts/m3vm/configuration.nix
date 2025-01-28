@@ -114,6 +114,7 @@
       xorg.xauth # Add this
       xorg.xrandr # Add this
       xclip
+      xsel
 
       # For hypervisors that support auto-resizing, this script forces it.
       # I've noticed not everyone listens to the udev events so this is a hack.
@@ -127,6 +128,7 @@
       # if the clipboard sill works.
       gtkmm3
     ];
+  services.spice-vdagentd.enable = true; # Additional clipboard support
   environment.sessionVariables = {
     LIBGL_ALWAYS_SOFTWARE = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
@@ -145,7 +147,13 @@
   services.xserver = {
     enable = true;
     xkb.layout = "us";
-    desktopManager.gnome.enable = true;
+    desktopManager.gnome = {
+      enable = true;
+      extraGSettingsOverrides = ''
+        [org.gnome.desktop.interface]
+        gtk-enable-primary-paste=true
+      '';
+    };
     displayManager.gdm.enable = true;
     displayManager.gdm.wayland = true;
     displayManager.gdm.autoSuspend = false;
