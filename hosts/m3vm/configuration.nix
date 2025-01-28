@@ -122,9 +122,11 @@
       # This is needed for the vmware user tools clipboard to work.
       # You can test if you don't need this by deleting this and seeing
       # if the clipboard sill works.
-      gtkmm3
+      shared-mime-info # Add this
+      xdg-utils # Add this
+      gtkmm3 # Make sure this is present
+      xorg.xhost # Add this
     ];
-  services.spice-vdagentd.enable = true; # Additional clipboard support
   environment.sessionVariables = {
     LIBGL_ALWAYS_SOFTWARE = "1";
     WLR_NO_HARDWARE_CURSORS = "1";
@@ -151,7 +153,7 @@
       '';
     };
     displayManager.gdm.enable = true;
-    displayManager.gdm.wayland = true;
+    displayManager.gdm.wayland = false;
     displayManager.gdm.autoSuspend = false;
   };
   services.dbus.enable = true;
