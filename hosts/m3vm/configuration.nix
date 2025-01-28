@@ -237,6 +237,7 @@
     isNormalUser = true;
     description = "genki";
     shell = pkgs.fish;
+    hashedPassword = "$6$UIOsLjI24UeaovvG$SVVrXdpnepj/w1jhmYNdpPpmcgkcXsMBcAkqrcIL5yCCYDAkc/8kblyzuBLyK6PnJqR1JxZ7XtlWyCJwWhGrw.";
     extraGroups = [
       "networkmanager"
       "wheel"
