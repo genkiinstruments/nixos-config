@@ -52,11 +52,7 @@
   # Don't require password for sudo
   security.sudo.wheelNeedsPassword = false;
 
-  virtualisation.vmware.guest = {
-    enable = true;
-    headless = false;
-  };
-
+  virtualisation.vmware.guest.enable = true;
   virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
 
