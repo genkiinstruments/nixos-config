@@ -52,10 +52,13 @@
   # Don't require password for sudo
   security.sudo.wheelNeedsPassword = false;
 
-  # Virtualization settings
-  virtualisation.docker.enable = true;
+  virtualisation.vmware.guest = {
+    enable = true;
+    headless = false;
+  };
 
   virtualisation.lxd.enable = true;
+  virtualisation.docker.enable = true;
 
   # Select internationalisation properties.
   i18n = {
