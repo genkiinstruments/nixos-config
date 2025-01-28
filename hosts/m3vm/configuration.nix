@@ -245,6 +245,8 @@
   users.users.genki = {
     isNormalUser = true;
     description = "genki";
+    shell = pkgs.fish;
+
     extraGroups = [
       "networkmanager"
       "wheel"
