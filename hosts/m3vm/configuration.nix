@@ -241,12 +241,10 @@
     pulse.enable = true;
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.genki = {
     isNormalUser = true;
     description = "genki";
     shell = pkgs.fish;
-
     extraGroups = [
       "networkmanager"
       "wheel"
@@ -255,7 +253,6 @@
       "video"
       "inputs"
     ];
-    hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
