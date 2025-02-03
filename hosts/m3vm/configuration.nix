@@ -8,6 +8,14 @@
   imports = [
     ./disko-config.nix
     ./vmware-guest.nix
+    ./phx_todo-service.nix
+    (
+      { ... }:
+      {
+        services."phx_todo".enable = true;
+        services."phx_todo".port = 4000;
+      }
+    )
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     inputs.srvos.nixosModules.desktop
@@ -21,8 +29,7 @@
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # Use the systemd-boot EFI boot loader.
-  # arm uses EFI, so we need systemd-boot
+  # Use the systemd-boot EFI boot loader. arm uses EFI, so we need systemd-boot
   boot.loader.systemd-boot.enable = true;
 
   # since it's a vm, we can do this on every update safely
@@ -42,7 +49,7 @@
   ];
   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
-  networking.interfaces.ens160.useDHCP = true;
+  # networking.interfaces.ens160.useDHCP = true;
   disabledModules = [ "virtualisation/vmware-guest.nix" ];
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -96,135 +103,26 @@
         serverAliveInterval = 900;
         extraConfig = "SetEnv TERM=xterm-256color";
       };
-      wayland.windowManager.hyprland = {
+      programs.i3status = {
         enable = true;
-        settings = {
-          "$mod" = "SUPER";
 
-          bind = [
-            "$mod, Return, exec, ghostty"
-            "$mod, Q, killactive"
-            "$mod, M, exit"
-            "$mod, E, exec, dolphin"
-            "$mod, V, togglefloating"
-            "$mod, R, exec, wofi --show drun"
-            "$mod, P, pseudo"
-            "$mod, J, togglesplit"
-            "$mod, F, fullscreen"
-
-            # Move focus
-            "$mod, left, movefocus, l"
-            "$mod, right, movefocus, r"
-            "$mod, up, movefocus, u"
-            "$mod, down, movefocus, d"
-
-            # Workspaces
-            "$mod, 1, workspace, 1"
-            "$mod, 2, workspace, 2"
-            "$mod, 3, workspace, 3"
-            "$mod, 4, workspace, 4"
-            "$mod, 5, workspace, 5"
-            "$mod, 6, workspace, 6"
-            "$mod, 7, workspace, 7"
-            "$mod, 8, workspace, 8"
-            "$mod, 9, workspace, 9"
-
-            # Move windows to workspaces
-            "$mod SHIFT, 1, movetoworkspace, 1"
-            "$mod SHIFT, 2, movetoworkspace, 2"
-            "$mod SHIFT, 3, movetoworkspace, 3"
-            "$mod SHIFT, 4, movetoworkspace, 4"
-            "$mod SHIFT, 5, movetoworkspace, 5"
-            "$mod SHIFT, 6, movetoworkspace, 6"
-            "$mod SHIFT, 7, movetoworkspace, 7"
-            "$mod SHIFT, 8, movetoworkspace, 8"
-            "$mod SHIFT, 9, movetoworkspace, 9"
-          ];
-
-          exec-once = [
-            "waybar"
-            "mako"
-            "dunst"
-            "vmware-user-suid-wrapper"
-          ];
-
-          monitor = [
-            "Virtual-1,1920x1080@60,0x0,1"
-          ];
-
-          general = {
-            gaps_in = 5;
-            gaps_out = 20;
-            border_size = 2;
-            "col.active_border" = "rgba(33ccffee)";
-            "col.inactive_border" = "rgba(595959aa)";
-          };
+        general = {
+          colors = true;
+          color_good = "#8C9440";
+          color_bad = "#A54242";
+          color_degraded = "#DE935F";
         };
-      };
 
-      # Dunst configuration
-      services.dunst = {
-        enable = true;
-        settings = {
-          global = {
-            font = "JetBrains Mono 10";
-            frame_width = 2;
-            frame_color = "#8AADF4";
-          };
+        modules = {
+          ipv6.enable = false;
+          "wireless _first_".enable = false;
+          "battery all".enable = false;
         };
-      };
-
-      # Mako configuration
-      services.mako = {
-        enable = true;
-        defaultTimeout = 5000;
-        font = "JetBrains Mono 10";
-        backgroundColor = "#1E1E2E";
-        textColor = "#CDD6F4";
-        borderColor = "#89B4FA";
-        borderRadius = 8;
-        borderSize = 2;
-        margin = "10";
-        padding = "15";
-      };
-
-      # Waybar configuration
-      programs.waybar = {
-        enable = true;
-        settings = [
-          {
-            height = 30;
-            modules-left = [
-              "hyprland/workspaces"
-              "hyprland/mode"
-            ];
-            modules-center = [ "hyprland/window" ];
-            modules-right = [
-              "pulseaudio"
-              "network"
-              "cpu"
-              "memory"
-              "clock"
-              "tray"
-            ];
-          }
-        ];
       };
     };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
-
-  # Manage fonts. We pull these from a secret directory since most of these
-  # fonts require a purchase.
-  fonts = {
-    fontDir.enable = true;
-
-    packages = [
-      pkgs.fira-code
-      pkgs.jetbrains-mono
-    ];
-  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -238,22 +136,13 @@
       xclip
       magic-wormhole-rs
       git
-      ghostty
+      alacritty
       open-vm-tools
-      waybar # Status bar
-      wofi # Application launcher
-      dunst # Notification daemon
-      mako # Alternative notification daemon
-      wl-clipboard # Clipboard manager
-      grim # Screenshot utility
-      slurp # Screen area selection
-      swaylock # Screen locker
-      swayidle # Idle management daemon
-      wlsunset # Night light
-      light # Brightness control
-      pamixer # PulseAudio control
-      pavucontrol # PulseAudio GUI
       networkmanagerapplet
+      gnome-tweaks
+      dconf-editor
+      ghostty
+      rofi
 
       # For hypervisors that support auto-resizing, this script forces it.
       # I've noticed not everyone listens to the udev events so this is a hack.
@@ -269,52 +158,49 @@
       xdg-utils
       gtkmm3
     ];
-  environment.sessionVariables = {
-    LIBGL_ALWAYS_SOFTWARE = "1";
-    WLR_NO_HARDWARE_CURSORS = "1";
-    XDG_CURRENT_DESKTOP = "Hyprland";
-    XDG_SESSION_TYPE = "wayland";
-    MOZ_ENABLE_WAYLAND = "1";
-    NIXOS_OZONE_WL = "1";
-  };
 
-  programs.hyprland = {
+  services.displayManager.defaultSession = "none+i3";
+
+  services.xserver = {
     enable = true;
-    xwayland.enable = true;
+    # displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+
+    dpi = 220;
+
+    desktopManager = {
+      xterm.enable = false;
+      wallpaper.mode = "fill";
+    };
+
+    displayManager = {
+      lightdm.enable = true;
+
+      # AARCH64: For now, on Apple Silicon, we must manually set the
+      # display resolution. This is a known issue with VMware Fusion.
+      sessionCommands = ''
+        ${pkgs.xorg.xset}/bin/xset r rate 200 40
+      '';
+    };
+
+    windowManager.i3.enable = true;
   };
 
-  # Disable unnecessary services that might cause issues
-  services.power-profiles-daemon.enable = false;
-  services.geoclue2.enable = false;
-  services.hardware.bolt.enable = false;
-  services.fprintd.enable = false;
+  # GNOME packages
+  environment.gnome.excludePackages = with pkgs; [
+    epiphany # web browser
+    totem # video player
+    geary # email client
+    evince # document viewer
+    # Add other GNOME packages you want to exclude
+  ];
 
-  # Our default non-specialised desktop environment.
-  services.displayManager.autoLogin.enable = true;
-  services.displayManager.autoLogin.user = "genki";
-  services.dbus.enable = true;
-  services.gvfs.enable = true;
-  # XDG Portal for screen sharing
+  # We need an XDG portal for various applications to work properly,
+  # such as Flatpak applications.
   xdg.portal = {
     enable = true;
-    wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
-  };
-
-  # Replace with greetd auto-login configuration
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-        user = "greeter";
-      };
-      # Add auto-login configuration
-      initial_session = {
-        command = "Hyprland";
-        user = "genki";
-      };
-    };
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 
   # Enable the OpenSSH daemon.
@@ -324,20 +210,11 @@
   # test them so I keep this enabled.
   services.flatpak.enable = true;
 
-  # Enable snap. I don't really use snap but I do sometimes test them
-  # and release snaps so we keep this enabled.
-  # services.snap.enable = true;
-
   # Disable the firewall since we're in a VM and we want to make it
   # easy to visit stuff in here. We only use NAT networking anyways.
   networking.firewall.enable = false;
 
   networking.hostName = "m3vm"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   services.udev.packages = [
     pkgs.yubikey-personalization
@@ -353,29 +230,11 @@
     '';
   };
 
-  # Ensure the udev rules are loaded
-  services.udev.enable = true;
-
   # Enable networking
   networking.networkmanager.enable = true;
 
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "is_IS.UTF-8";
-    LC_IDENTIFICATION = "is_IS.UTF-8";
-    LC_MEASUREMENT = "is_IS.UTF-8";
-    LC_MONETARY = "is_IS.UTF-8";
-    LC_NAME = "is_IS.UTF-8";
-    LC_NUMERIC = "is_IS.UTF-8";
-    LC_PAPER = "is_IS.UTF-8";
-    LC_TELEPHONE = "is_IS.UTF-8";
-    LC_TIME = "is_IS.UTF-8";
-  };
 
   users.users.genki = {
     isNormalUser = true;
@@ -399,27 +258,8 @@
   # Install firefox.
   programs.firefox.enable = true;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # For now, we need this since hardware acceleration does not work.
+  environment.variables.LIBGL_ALWAYS_SOFTWARE = "1";
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
