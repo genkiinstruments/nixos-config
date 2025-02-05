@@ -23,13 +23,6 @@
     # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
-      my-secret = {
-        path = "/Users/olafur/Desktop/my-secret";
-        file = "${inputs.secrets}/my-secret.age";
-        mode = "644";
-        owner = "olafur";
-        group = "staff";
-      };
       atuin-key = {
         path = "/Users/olafur/.local/share/atuin/key";
         file = "${inputs.secrets}/atuin-key.age";
