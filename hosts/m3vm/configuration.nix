@@ -78,6 +78,8 @@
   services.tailscale.enable = true;
 
   home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
+  home-manager.users.genki.home.activation.setup-mvim =
+    ''${perSystem.self.setup-mvim}/bin/setup-mvim'';
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
@@ -216,12 +218,6 @@
 
   # For now, we need this since hardware acceleration does not work.
   environment.variables.LIBGL_ALWAYS_SOFTWARE = "1";
-
-  system.activationScripts.setup-mvim = {
-    text = ''
-      ${perSystem.self.setup-mvim}/bin/setup-mvim
-    '';
-  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
