@@ -6,6 +6,7 @@ pkgs.mkShell {
       nixfmt-rfc-style
       git
       nixos-anywhere
+      nixos-rebuild
       age
       age-plugin-yubikey
       age-plugin-fido2-hmac
