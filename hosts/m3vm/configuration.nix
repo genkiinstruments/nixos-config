@@ -2,20 +2,26 @@
   pkgs,
   inputs,
   lib,
+  flake,
   ...
 }:
 {
   imports = [
     ./disko-config.nix
     ./vmware-guest.nix
-    ./phx_todo-service.nix
     (
       { ... }:
       {
-        services."phx_todo".enable = true;
-        services."phx_todo".port = 4000;
+        services.phx_todo = {
+          enable = true;
+          server = {
+            url = "https://m3vm.tail01dbd.ts.net";
+            secretKeybaseFile = "/home/genki/secret";
+          };
+        };
       }
     )
+    flake.modules.nixos.phx_todo
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
     inputs.srvos.nixosModules.desktop
