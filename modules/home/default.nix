@@ -100,7 +100,7 @@
         customCommands = [
           {
             key = "C";
-            command = ''git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}{{ .Form.Breaking }}: {{ .Form.Description }}" -m "{{ .Form.LongDescription }}"'';
+            command = ''git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}" -m "{{ .Form.LongDescription }}"'';
             description = "commit with commitizen and long description";
             context = "global";
             prompts = [
@@ -120,44 +120,44 @@
                     value = "fix";
                   }
                   {
+                    name = "Chores";
+                    description = "Other changes that don't modify src or test files";
+                    value = "chore";
+                  }
+                  {
                     name = "Documentation";
                     description = "Documentation only changes";
                     value = "docs";
                   }
                   {
                     name = "Styles";
-                    description = "Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc)";
+                    description = "Changes that affect white-space, formatting, missing semi-colons, etc";
                     value = "style";
                   }
                   {
                     name = "Code Refactoring";
-                    description = "A code change that neither fixes a bug nor adds a feature";
+                    description = "Neither fixes a bug nor adds a feature";
                     value = "refactor";
                   }
                   {
                     name = "Performance Improvements";
-                    description = "A code change that improves performance";
+                    description = "Improves performance";
                     value = "perf";
                   }
                   {
                     name = "Tests";
-                    description = "Adding missing tests or correcting existing tests";
+                    description = "Adding missing tests or correting existing tests";
                     value = "test";
                   }
                   {
                     name = "Builds";
-                    description = "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)";
+                    description = "Build system or external dependencies";
                     value = "build";
                   }
                   {
                     name = "Continuous Integration";
-                    description = "Changes to our CI configuration files and scripts (example scopes: Travis, Circle, BrowserStack, SauceLabs)";
+                    description = "CI configuration files and scripts";
                     value = "ci";
-                  }
-                  {
-                    name = "Chores";
-                    description = "Other changes that don't modify src or test files";
-                    value = "chore";
                   }
                   {
                     name = "Reverts";
@@ -170,23 +170,6 @@
                 type = "input";
                 title = "Enter the scope(s) of this change.";
                 key = "Scopes";
-              }
-              {
-                type = "menu";
-                title = "Breaking change?";
-                key = "Breaking";
-                options = [
-                  {
-                    name = "Default";
-                    description = "Not a breaking change";
-                    value = "";
-                  }
-                  {
-                    name = "BREAKING CHANGE";
-                    description = "Introduced a breaking change";
-                    value = "!";
-                  }
-                ];
               }
               {
                 type = "input";
