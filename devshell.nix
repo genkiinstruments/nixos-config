@@ -21,9 +21,6 @@ pkgs.mkShell {
           # Clone the repository
           if [ ! -d "$config_dir" ]; then
             git clone "$repo_url" "$config_dir"
-          else
-            echo "Config directory already exists at $config_dir"
-            exit 1
           fi
 
           # Ensure ~/.config exists
