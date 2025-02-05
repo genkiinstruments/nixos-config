@@ -27,10 +27,14 @@
       age-plugin-fido2-hmac
       gh-dash
 
-      # sesh and dependencies
-      # TODO: Update to newest version: https://github.com/joshmedeski/sesh/releases/tag/v2.8.0
-      sesh
-      gum
+      (sesh.overrideAttrs (old: {
+        src = fetchFromGitHub {
+          owner = "joshmedeski";
+          repo = "sesh";
+          rev = "c6bea953c996552ea814b5c5e72291753fb41d02";
+          sha256 = "sha256-IM6wE/DMplG8jk4BXYprwIztPbgAHubr/YFavvPkBU8=";
+        };
+      }))
 
       cachix
 
@@ -349,6 +353,7 @@
       "--hidden"
       "--smart-case"
     ];
+    fd.enable = true;
     git = {
       enable = true;
       lfs.enable = true;
