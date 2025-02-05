@@ -2,7 +2,6 @@
   pkgs,
   ...
 }:
-with builtins;
 let
   src = pkgs.fetchFromGitHub {
     owner = "multivac61";
@@ -10,9 +9,8 @@ let
     rev = "df490ec4f979c0df5e663b1788f87318c92c76f1";
     hash = "sha256-fCk7jpUKFtDBd6Md47Jwh4pJE+bwHCFDtua5H6c3Q2U=";
   };
-  mix = readFile "${src}/mix.exs";
-  pname = head (match ".*app:[[:space:]]*:([a-zA-Z0-9_]+).*" mix);
-  version = head (match ".*version:[[:space:]]*\"([0-9]+\\.[0-9]+\\.[0-9]+)\".*" mix);
+  pname = "phx_todo";
+  version = "0.1.0";
 in
 pkgs.beamPackages.mixRelease {
   inherit pname version src;
