@@ -3,6 +3,7 @@
   inputs,
   lib,
   flake,
+  perSystem,
   ...
 }:
 {
@@ -215,6 +216,12 @@
 
   # For now, we need this since hardware acceleration does not work.
   environment.variables.LIBGL_ALWAYS_SOFTWARE = "1";
+
+  system.activationScripts.setup-mvim = {
+    text = ''
+      ${perSystem.self.setup-mvim}/bin/setup-mvim
+    '';
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
