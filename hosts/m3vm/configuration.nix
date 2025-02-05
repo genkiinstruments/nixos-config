@@ -21,7 +21,7 @@
 
   services.phx_todo = {
     enable = true;
-    url = "https://m3vm.tail01dbd.ts.net";
+    url = "m3vm.tail01dbd.ts.net";
     secretKeybaseFile = "/home/genki/secret";
   };
 
