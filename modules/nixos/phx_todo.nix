@@ -73,7 +73,7 @@ in
         PORT = toString cfg.port;
         PHX_HOST = cfg.url;
 
-        DATABASE_URL = "postgresql:///${cfg.database.postgres.dbname}?host=${cfg.database.postgres.socket}";
+        DATABASE_URL = "postgresql:///${cfg.postgres.dbname}?host=${cfg.postgres.socket}";
         TZDATA_DIR = "/var/lib/phx_todo/elixir_tzdata"; # Ensure that `tzdata` doesn't write into its store-path
 
         # When distribution is enabled,
@@ -114,7 +114,7 @@ in
         User = config.services.postgresql.superUser;
         RemainAfterExit = true;
       };
-      script = with cfg.database.postgres; ''
+      script = with cfg.postgres; ''
         PSQL() {
           ${config.services.postgresql.package}/bin/psql --port=5432 "$@"
         }
@@ -126,6 +126,6 @@ in
       '';
     };
 
-    services.postgresql = lib.mkIf cfg.postgres.setup { enable = true; };
+    services.postgresql = lib.mkIf cfg.postgres.enable { enable = true; };
   };
 }
