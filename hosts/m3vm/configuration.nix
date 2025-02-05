@@ -80,27 +80,7 @@
   # Enable tailscale. We manually authenticate when we want with "sudo tailscale up".
   services.tailscale.enable = true;
 
-  home-manager.users.genki =
-    { pkgs, ... }:
-    {
-      imports = [ inputs.self.homeModules.default ];
-      programs.i3status = {
-        enable = true;
-
-        general = {
-          colors = true;
-          color_good = "#8C9440";
-          color_bad = "#A54242";
-          color_degraded = "#DE935F";
-        };
-
-        modules = {
-          ipv6.enable = false;
-          "wireless _first_".enable = false;
-          "battery all".enable = false;
-        };
-      };
-    };
+  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
