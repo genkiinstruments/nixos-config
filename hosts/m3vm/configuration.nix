@@ -9,18 +9,6 @@
   imports = [
     ./disko-config.nix
     ./vmware-guest.nix
-    (
-      { ... }:
-      {
-        services.phx_todo = {
-          enable = true;
-          server = {
-            url = "https://m3vm.tail01dbd.ts.net";
-            secretKeybaseFile = "/home/genki/secret";
-          };
-        };
-      }
-    )
     flake.modules.nixos.phx_todo
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
@@ -31,6 +19,12 @@
     inputs.self.modules.shared.default
     inputs.self.nixosModules.common
   ];
+
+  services.phx_todo = {
+    enable = true;
+    url = "https://m3vm.tail01dbd.ts.net";
+    secretKeybaseFile = "/home/genki/secret";
+  };
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
