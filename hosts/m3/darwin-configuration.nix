@@ -20,7 +20,7 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   age = {
-    # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
+    # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, nixos use builtin /etc/ssh/ssh_host_ed25519_key
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
       atuin-key = {
