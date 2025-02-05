@@ -29,6 +29,7 @@
   services.tailscale.enable = true;
 
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
+  environment.shells = with pkgs; [ fish ];
 
   # Configure home-manager
   home-manager.extraSpecialArgs.inputs = inputs; # forward the inputs
