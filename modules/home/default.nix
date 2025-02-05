@@ -42,6 +42,19 @@
 
       # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
       # bitwarden-cli
+
+      # neovim related stuff
+      neovim
+      xsel # for lazygit copy/paste to clipboard
+      ripgrep
+      ast-grep
+      fd
+      nodejs
+      cargo
+      go
+      nixfmt-rfc-style
+      python3
+      unzip
     ];
   };
 
@@ -388,21 +401,5 @@
 
     starship.enable = true;
     starship.settings.add_newline = false;
-
-    neovim = {
-      enable = true;
-      extraPackages = with pkgs; [
-        xsel # for lazygit copy/paste to clipboard
-        ripgrep
-        ast-grep
-        fd
-        nodejs
-        cargo
-        go
-        nixfmt-rfc-style
-        python3
-        unzip
-      ];
-    };
   };
 }
