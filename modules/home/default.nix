@@ -355,8 +355,6 @@
       ];
     };
 
-    yazi.enable = true;
-
     helix = {
       enable = true;
       extraPackages = with pkgs; [
