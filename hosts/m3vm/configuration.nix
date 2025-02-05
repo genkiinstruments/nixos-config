@@ -175,8 +175,22 @@
     pkgs.libfido2
   ];
 
-  programs.ssh.startAgent = true;
+  programs.ssh = {
+    startAgent = true;
+    # Add these settings
+    extraConfig = ''
+      StreamLocalBindUnlink yes
+    '';
+  };
 
+  # And maybe add these SSH daemon settings
+  services.openssh = {
+    enable = true;
+    settings = {
+      AllowAgentForwarding = true;
+      StreamLocalBindUnlink = true;
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
