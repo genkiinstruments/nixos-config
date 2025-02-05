@@ -24,7 +24,6 @@
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     secrets = {
       atuin-key = {
-        path = "/Users/olafur/.local/share/atuin/key";
         file = "${inputs.secrets}/atuin-key.age";
         mode = "644";
         owner = "olafur";
@@ -46,6 +45,7 @@
   };
 
   home-manager.users.olafur.imports = [ inputs.self.homeModules.default ];
+  home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
   home-manager.users.olafur.programs.ssh = {
     matchBlocks = {
       "github.com" = {
