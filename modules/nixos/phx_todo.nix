@@ -73,6 +73,10 @@ in
         '';
       };
     };
+
+    tailscale.enable = mkEnableOption "create tailscale funnel" // {
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -142,5 +146,18 @@ in
     };
 
     services.postgresql = lib.mkIf cfg.postgres.enable { enable = true; };
+
+    services.tailscale = lib.mkIf cfg.tailscale.enable { enable = true; };
+
+    systemd.services.tailscale-funnel-node-exporter = lib.mkIf cfg.tailscale.enable {
+      description = "Tailscale Funnel live_media";
+      after = [ "network-online.target" ];
+      wants = [ "network-online.target" ];
+      serviceConfig = {
+        ExecStart = "${pkgs.tailscale}/bin/tailscale funnel 4000";
+        Restart = "on-failure";
+      };
+      wantedBy = [ "multi-user.target" ];
+    };
   };
 }
