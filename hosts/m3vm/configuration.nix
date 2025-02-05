@@ -203,13 +203,6 @@
     config.common.default = "*";
   };
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  # Enable flatpak. I don't use any flatpak apps but I do sometimes
-  # test them so I keep this enabled.
-  services.flatpak.enable = true;
-
   # Disable the firewall since we're in a VM and we want to make it
   # easy to visit stuff in here. We only use NAT networking anyways.
   networking.firewall.enable = false;
@@ -221,14 +214,7 @@
     pkgs.libfido2
   ];
 
-  programs.ssh = {
-    startAgent = true;
-    extraConfig = ''
-      Host *
-        ForwardAgent yes
-        SecurityKeyProvider /dev/hidraw1  # This might be optional depending on your setup
-    '';
-  };
+  programs.ssh.startAgent = true;
 
   # Enable networking
   networking.networkmanager.enable = true;
