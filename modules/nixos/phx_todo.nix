@@ -51,6 +51,20 @@ in
           Name of the database to use.
         '';
       };
+      user = mkOption {
+        default = "phx_todo";
+        type = types.str;
+        description = ''
+          User of the database to use.
+        '';
+      };
+      password = mkOption {
+        default = "phx_todo";
+        type = types.str;
+        description = ''
+          Password of the database to use.
+        '';
+      };
       socket = mkOption {
         default = "/run/postgresql";
         type = types.str;
@@ -73,7 +87,7 @@ in
         PORT = toString cfg.port;
         PHX_HOST = cfg.url;
 
-        DATABASE_URL = "postgresql:///${cfg.postgres.dbname}?host=${cfg.postgres.socket}";
+        DATABASE_URL = "postgresql://${cfg.postgres.user}:${cfg.postgres.password}@localhost/${cfg.postgres.dbname}?host=${cfg.postgres.socket}";
         TZDATA_DIR = "/var/lib/phx_todo/elixir_tzdata"; # Ensure that `tzdata` doesn't write into its store-path
 
         # When distribution is enabled,
@@ -122,6 +136,7 @@ in
         if ! PSQL -lqt | ${pkgs.coreutils}/bin/cut -d \| -f 1 | ${pkgs.gnugrep}/bin/grep -qw ${dbname} ; then
           PSQL -tAc "CREATE ROLE phx_todo WITH LOGIN;"
           PSQL -tAc "CREATE DATABASE ${dbname} WITH OWNER phx_todo;"
+          PSQL -tAc " "ALTER USER ${user} PASSWORD '${password}';"
         fi
       '';
     };

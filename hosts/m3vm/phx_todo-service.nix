@@ -79,7 +79,7 @@ in
           Type = "simple";
           ExecStart = "${phoenixRelease}/bin/server";
           ExecStartPre = pkgs.writeShellScript "${appName}-pre" ''
-            ${pkgs.postgresql}/bin/psql -c "${passwd_set}"
+            ${pkgs.postgresql}/bin/psql -c "ALTER USER ${appName} PASSWORD '${appName}';"
             ${phoenixRelease}/bin/migrate
           '';
           Restart = "on-failure";
