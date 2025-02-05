@@ -70,7 +70,7 @@ in
           PORT = toString cfg.port;
           RELEASE_NAME = appName;
           RELEASE_COOKIE = "my_cookie";
-          DATABASE_URL = "ecto://${appName}:${appName}@localhost/${appName}";
+          DATABASE_URL = "ecto://${appName}:${appName}@localhost/${appName}?host=/run/postgresql";
           SECRET_KEY_BASE = "4nWbhhSm37+ddeAPP62e1c4K4ckKxSPus5ct7frMz21MIjgl0bI+4/h2JECs7oGXy2";
           TZDATA_DIR = "/var/lib/${appName}/elixir_tzdata";
           PHX_HOST = "m3vm.tail01dbd.ts.net";
@@ -104,9 +104,8 @@ in
     environment.systemPackages = [ phoenixRelease ];
     environment.variables = {
       RELEASE_NAME = appName;
+      # Needed if you want to run the application outside systemd, perhaps it should be glued into the app?
       RELEASE_COOKIE = "my_cookie";
-      DATABASE_URL = "postgresql:///${appName}:${appName}@${appName}?host=/run/postgresql";
-      TZDATA_DIR = "/var/lib/${appName}/elixir_tzdata";
       SECRET_KEY_BASE = "nWbhhSm37+ddeAPP62e1c4K4ckKxSPus5ct7frMz21MIjgl0bI+4/h2JECs7oGXy";
       PHX_HOST = "m3vm.tail01dbd.ts.net";
     };
