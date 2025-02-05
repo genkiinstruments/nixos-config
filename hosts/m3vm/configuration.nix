@@ -77,12 +77,9 @@
     };
   };
 
-  # Enable tailscale. We manually authenticate when we want with
-  # "sudo tailscale up". If you don't use tailscale, you should comment
-  # out or delete all of this.
+  # Enable tailscale. We manually authenticate when we want with "sudo tailscale up".
   services.tailscale.enable = true;
 
-  # Configure home-manager for Hyprland
   home-manager.users.genki =
     { pkgs, ... }:
     {
