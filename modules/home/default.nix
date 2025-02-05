@@ -201,6 +201,8 @@
         enter_accept = true;
         update_check = false;
         sync_frequency = "0";
+        filter_mode = "session";
+        workspaces = true;
       };
     };
     zoxide = {
