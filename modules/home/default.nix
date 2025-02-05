@@ -234,7 +234,7 @@
     fish = {
       enable = true;
       shellAliases = {
-        n = "NVIM_APPNAME=mvim nvim";
+        n = "nvim";
         da = "direnv allow";
         dr = "direnv reload";
         ga = "git add";
