@@ -204,9 +204,13 @@
         keymap_mode = "auto";
         enter_accept = true;
         update_check = false;
-        sync_frequency = "0";
         filter_mode = "session";
         workspaces = true;
+
+        stats.common_prefix = [
+          "sudo"
+          "time"
+        ];
       };
     };
     zoxide = {
