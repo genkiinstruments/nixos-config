@@ -136,7 +136,7 @@ in
         if ! PSQL -lqt | ${pkgs.coreutils}/bin/cut -d \| -f 1 | ${pkgs.gnugrep}/bin/grep -qw ${dbname} ; then
           PSQL -tAc "CREATE ROLE phx_todo WITH LOGIN;"
           PSQL -tAc "CREATE DATABASE ${dbname} WITH OWNER phx_todo;"
-          PSQL -tAc " "ALTER USER ${user} PASSWORD '${password}';"
+          PSQL -tAc "ALTER USER ${user} PASSWORD '${password}';"
         fi
       '';
     };
