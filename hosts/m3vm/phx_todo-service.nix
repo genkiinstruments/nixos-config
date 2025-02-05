@@ -31,10 +31,16 @@ let
         --replace "config :esbuild," "config :esbuild, path: \"${pkgs.esbuild}/bin/esbuild\", "
     '';
 
-    postBuild = ''
+    preBuild = ''
       # for external task you need a workaround for the no deps check flag
       # https://github.com/phoenixframework/phoenix/issues/2690
       mix do deps.loadpaths --no-deps-check, assets.deploy
+      mix do deps.loadpaths --no-deps-check, phx.gen.release
+
+      # Ensure that `tzdata` doesn't write into its store-path
+      cat >> config/runtime.exs <<EOF
+      config :tzdata, :data_dir, System.get_env("TZDATA_DIR")
+      EOF
     '';
   };
 in
@@ -46,41 +52,43 @@ in
       default = 4000;
       description = "Port to run the Phoenix application on";
     };
-    user = mkOption {
-      type = types.str;
-      default = appName;
-      description = "User to run the Phoenix application as";
-    };
-    group = mkOption {
-      type = types.str;
-      default = appName;
-      description = "Group to run the Phoenix application as";
-    };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.${appName} = {
-      description = "Phoenix Application Service";
-      wantedBy = [ "multi-user.target" ];
-      after = [
-        "network.target"
-        "postgresql.service"
-      ];
-      environment = {
-        PORT = toString cfg.port;
-        RELEASE_NAME = appName;
-        RELEASE_COOKIE = "my_cookie";
-        DATABASE_URL = "postgresql:///${appName}:${appName}@${appName}?host=/run/postgresql";
-        SECRET_KEY_BASE = "42";
+    systemd.services.${appName} =
+      let
+        passwd_set = "ALTER USER ${appName} PASSWORD '${appName}';";
+      in
+      {
+        description = "Phoenix Application Service";
+        wantedBy = [ "multi-user.target" ];
+        after = [
+          "network.target"
+          "postgresql.service"
+        ];
+        environment = {
+          PORT = toString cfg.port;
+          RELEASE_NAME = appName;
+          RELEASE_COOKIE = "my_cookie";
+          DATABASE_URL = "ecto://${appName}:${appName}@localhost/${appName}";
+          SECRET_KEY_BASE = "4nWbhhSm37+ddeAPP62e1c4K4ckKxSPus5ct7frMz21MIjgl0bI+4/h2JECs7oGXy2";
+          TZDATA_DIR = "/var/lib/${appName}/elixir_tzdata";
+          PHX_HOST = "m3vm.tail01dbd.ts.net";
+        };
+        serviceConfig = {
+          Type = "simple";
+          ExecStart = "${phoenixRelease}/bin/server";
+          ExecStartPre = pkgs.writeShellScript "${appName}-pre" ''
+            ${pkgs.postgresql}/bin/psql -c "${passwd_set}"
+            ${phoenixRelease}/bin/migrate
+          '';
+          Restart = "on-failure";
+          StateDirectory = "${appName}";
+          WorkingDirectory = "/var/lib/${appName}";
+          User = "${appName}";
+          Group = "${appName}";
+        };
       };
-      serviceConfig = {
-        Type = "simple";
-        User = cfg.user;
-        Group = cfg.group;
-        ExecStart = "${phoenixRelease}/bin/${appName} start";
-        Restart = "on-failure";
-      };
-    };
 
     # PostgreSQL configuration
     services.postgresql = {
@@ -93,5 +101,20 @@ in
         }
       ];
     };
+    environment.systemPackages = [ phoenixRelease ];
+    environment.variables = {
+      RELEASE_NAME = appName;
+      RELEASE_COOKIE = "my_cookie";
+      DATABASE_URL = "postgresql:///${appName}:${appName}@${appName}?host=/run/postgresql";
+      TZDATA_DIR = "/var/lib/${appName}/elixir_tzdata";
+      SECRET_KEY_BASE = "nWbhhSm37+ddeAPP62e1c4K4ckKxSPus5ct7frMz21MIjgl0bI+4/h2JECs7oGXy";
+      PHX_HOST = "m3vm.tail01dbd.ts.net";
+    };
+    users.users.${appName} = {
+      isSystemUser = true;
+      createHome = true;
+      group = "${appName}";
+    };
+    users.groups.${appName} = { };
   };
 }
