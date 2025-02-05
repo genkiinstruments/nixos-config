@@ -8,7 +8,6 @@
 {
   imports = [
     ./disko-config.nix
-    ./vmware-guest.nix
     flake.modules.nixos.phx_todo
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
@@ -48,9 +47,6 @@
     "sr_mod"
   ];
   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
-
-  # networking.interfaces.ens160.useDHCP = true;
-  disabledModules = [ "virtualisation/vmware-guest.nix" ];
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
