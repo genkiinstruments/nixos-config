@@ -48,7 +48,7 @@
   networking.hostName = "t1";
 
   # Needed because Hetzner Online doesn't provide RA. Replace the IPv6 with your own.
-  systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:c013:4db::/64";
+  systemd.network.networks."10-uplink".networkConfig.Address = "2a01:4f9:c013:4db::1";
 
   # Used by NixOS to handle state changes.
   system.stateVersion = "24.05";
