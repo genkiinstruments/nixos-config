@@ -159,5 +159,11 @@ in
       };
       wantedBy = [ "multi-user.target" ];
     };
+
+    # Enable Let's Encrypt and HTTPS by default.
+    services.nginx.virtualHosts.${cfg.url} = {
+      enableACME = true;
+      forceSSL = true;
+    };
   };
 }
