@@ -86,7 +86,9 @@ in
       after = [
         "network.target"
         "postgresql.service"
+        "phx_todo-postgres.service" # Depend on the postgres setup service
       ];
+      requires = [ "phx_todo-postgres.service" ]; # Ensure postgres setup runs before
       environment = {
         PORT = toString cfg.port;
         PHX_HOST = cfg.url;
@@ -124,23 +126,30 @@ in
         ${cfg.package}/bin/server
       '';
     };
-    systemd.services.phx_todo-postgres = {
+    systemd.services.phx_todo-postgres = lib.mkIf cfg.postgres.enable {
+      description = "Create PostgreSQL user and database for phx_todo";
       after = [ "postgresql.service" ];
+      before = [ "phx_todo.service" ]; # Create postgres user/db before phx_todo starts
       partOf = [ "phx_todo.service" ];
+      wantedBy = [ "multi-user.target" ]; # Ensure the service is enabled
       serviceConfig = {
         Type = "oneshot";
         User = config.services.postgresql.superUser;
         RemainAfterExit = true;
       };
       script = with cfg.postgres; ''
+        set -e # Exit immediately if a command exits with a non-zero status.
         PSQL() {
           ${config.services.postgresql.package}/bin/psql --port=5432 "$@"
         }
         # check if the database already exists
         if ! PSQL -lqt | ${pkgs.coreutils}/bin/cut -d \| -f 1 | ${pkgs.gnugrep}/bin/grep -qw ${dbname} ; then
-          PSQL -tAc "CREATE ROLE phx_todo WITH LOGIN;"
-          PSQL -tAc "CREATE DATABASE ${dbname} WITH OWNER phx_todo;"
-          PSQL -tAc "ALTER USER ${user} PASSWORD '${password}';"
+          echo "Creating role ${user}"
+          PSQL -tAc "CREATE ROLE ${user} WITH LOGIN PASSWORD '${password}';"
+          echo "Creating database ${dbname}"
+          PSQL -tAc "CREATE DATABASE ${dbname} WITH OWNER ${user};"
+        else
+          echo "Database ${dbname} already exists"
         fi
       '';
     };

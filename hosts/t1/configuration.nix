@@ -35,13 +35,6 @@
   age.secrets.p1_ssh_host_ed25519_key.file = "${inputs.secrets}/p1_ssh_host_ed25519_key.age";
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  services.openssh.hostKeys = [
-    {
-      path = config.age.secrets.p1_ssh_host_ed25519_key.file;
-      type = "ed25519";
-    }
-  ];
-
   # The machine architecture.
   nixpkgs.hostPlatform = "x86_64-linux";
 
