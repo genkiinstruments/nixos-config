@@ -22,8 +22,11 @@ pkgs.beamPackages.mixRelease {
 
   preConfigure = ''
     substituteInPlace config/config.exs \
-      --replace "config :tailwind," "config :tailwind, path: \"${pkgs.tailwindcss}/bin/tailwindcss\","\
-      --replace "config :esbuild," "config :esbuild, path: \"${pkgs.esbuild}/bin/esbuild\", "
+      --replace-fail "config :tailwind," "config :tailwind, path: \"${pkgs.tailwindcss}/bin/tailwindcss\"," \
+      --replace-fail "config :esbuild," "config :esbuild, path: \"${pkgs.esbuild}/bin/esbuild\", ";
+
+    # Ensure that `tzdata` doesn't write into its store-path
+    echo 'config :tzdata, :data_dir, System.get_env("TZDATA_DIR")' >> config/runtime.exs
   '';
 
   preBuild = ''
@@ -31,10 +34,5 @@ pkgs.beamPackages.mixRelease {
     # https://github.com/phoenixframework/phoenix/issues/2690
     mix do deps.loadpaths --no-deps-check, assets.deploy
     mix do deps.loadpaths --no-deps-check, phx.gen.release
-
-    # Ensure that `tzdata` doesn't write into its store-path
-    cat >> config/runtime.exs <<EOF
-    config :tzdata, :data_dir, System.get_env("TZDATA_DIR")
-    EOF
   '';
 }
