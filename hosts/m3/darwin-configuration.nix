@@ -47,7 +47,7 @@
 
   home-manager.users.olafur.imports = [ inputs.self.homeModules.default ];
   home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
-  home-manager.users.genki.home.activation.setup-mvim =
+  home-manager.users.olafur.home.activation.setup-mvim =
     ''${perSystem.self.setup-mvim}/bin/setup-mvim'';
   home-manager.users.olafur.programs.ssh = {
     matchBlocks = {
