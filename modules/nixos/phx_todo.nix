@@ -173,6 +173,17 @@ in
     services.nginx.virtualHosts.${cfg.url} = {
       enableACME = true;
       forceSSL = true;
+      locations."/" = {
+        proxyPass = "http://localhost:${toString cfg.port}";
+        proxyWebsockets = true; # Important for Phoenix LiveView
+        extraConfig = ''
+          proxy_http_version 1.1;
+          proxy_set_header Host $host;
+          proxy_set_header X-Real-IP $remote_addr;
+          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+          proxy_set_header X-Forwarded-Proto $scheme;
+        '';
+      };
     };
   };
 }
