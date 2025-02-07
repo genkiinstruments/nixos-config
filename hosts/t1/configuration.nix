@@ -8,6 +8,7 @@
   imports = [
     inputs.srvos.nixosModules.hardware-hetzner-cloud
     inputs.srvos.nixosModules.server
+    inputs.srvos.nixosModules.mixins-nginx
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     flake.modules.nixos.phx_todo
