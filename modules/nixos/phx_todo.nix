@@ -173,6 +173,7 @@ in
     services.nginx.virtualHosts.${cfg.url} = {
       enableACME = true;
       forceSSL = true;
+      serverAliases = [ "www.2-do.org" ]; # Add the www subdomain
       locations."/" = {
         proxyPass = "http://localhost:${toString cfg.port}";
         proxyWebsockets = true; # Important for Phoenix LiveView
