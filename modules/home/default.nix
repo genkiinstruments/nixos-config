@@ -217,7 +217,7 @@
         keymap_mode = "auto";
         enter_accept = true;
         update_check = false;
-        filter_mode = "session";
+        filter_mode = "directory";
         workspaces = true;
 
         stats.common_prefix = [
