@@ -375,7 +375,6 @@
       historyLimit = 1000000;
       mouse = true;
       newSession = true;
-      prefix = "C-Space";
       shell = "${pkgs.fish}/bin/fish";
       plugins = with pkgs.tmuxPlugins; [
         sensible
