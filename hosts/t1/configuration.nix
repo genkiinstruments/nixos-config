@@ -8,7 +8,6 @@
   imports = [
     inputs.srvos.nixosModules.hardware-hetzner-cloud
     inputs.srvos.nixosModules.server
-    inputs.srvos.nixosModules.mixins-nginx
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     flake.modules.nixos.phx_todo
@@ -23,10 +22,6 @@
     secretKeybaseFile = config.age.secrets.p1_phx_todo.path;
     tailscale.enable = false;
   };
-
-  # Configure Let's Encrypt
-  security.acme.acceptTerms = true;
-  security.acme.defaults.email = "genki@genkiinstruments.com";
 
   # Allow you to SSH to the servers as root
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
