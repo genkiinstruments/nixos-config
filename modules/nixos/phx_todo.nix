@@ -168,7 +168,10 @@ in
       };
       wantedBy = [ "multi-user.target" ];
     };
-
+    networking.firewall.allowedTCPPorts = [
+      80
+      443
+    ];
     services.caddy = {
       enable = true;
       globalConfig = ''
@@ -183,9 +186,8 @@ in
             reverse_proxy localhost:${toString cfg.port} {
               header_up Host {host}
               header_up X-Real-IP {remote_host}
-              header_up X-Forwarded-For {remote_host}
-              header_up X-Forwarded-Proto {scheme}
               
+              # WebSocket support for LiveView
               header_up Connection {>Connection}
               header_up Upgrade {>Upgrade}
               
