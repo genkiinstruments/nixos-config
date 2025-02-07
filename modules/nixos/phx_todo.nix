@@ -169,22 +169,41 @@ in
       wantedBy = [ "multi-user.target" ];
     };
 
-    # Enable Let's Encrypt and HTTPS by default.
-    services.nginx.virtualHosts.${cfg.url} = {
-      enableACME = true;
-      forceSSL = true;
-      serverAliases = [ "www.2-do.org" ]; # Add the www subdomain
-      locations."/" = {
-        proxyPass = "http://localhost:${toString cfg.port}";
-        proxyWebsockets = true; # Important for Phoenix LiveView
-        extraConfig = ''
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection $connection_upgrade;
-          proxy_set_header Host $host;
-          proxy_set_header X-Real-IP $remote_addr;
-          proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-          proxy_set_header X-Forwarded-Proto $scheme;
-        '';
+    services.caddy = {
+      enable = true;
+      globalConfig = ''
+        auto_https disable_redirects
+      '';
+
+      virtualHosts = {
+        ${cfg.url} = {
+          extraConfig = ''
+            encode gzip zstd
+
+            reverse_proxy localhost:${toString cfg.port} {
+              header_up Host {host}
+              header_up X-Real-IP {remote_host}
+              header_up X-Forwarded-For {remote_host}
+              header_up X-Forwarded-Proto {scheme}
+              
+              header_up Connection {>Connection}
+              header_up Upgrade {>Upgrade}
+              
+              flush_interval -1
+              transport http {
+                keepalive 30s
+                read_buffer 4096
+                write_buffer 4096
+              }
+            }
+          '';
+        };
+
+        "www.${cfg.url}" = {
+          extraConfig = ''
+            redir https://${cfg.url}{uri} permanent
+          '';
+        };
       };
     };
   };
