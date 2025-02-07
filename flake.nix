@@ -32,6 +32,8 @@
     agenix.url = "github:ryantm/agenix";
     secrets.url = "git+ssh://git@github.com/multivac61/nix-secrets.git";
     secrets.flake = false;
+    mvim.url = "github:multivac61/mvim";
+    mvim.flake = false;
   };
 
   outputs = inputs: inputs.blueprint { inherit inputs; };

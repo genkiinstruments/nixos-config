@@ -240,6 +240,22 @@
         "type": "github"
       }
     },
+    "mvim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1738781231,
+        "narHash": "sha256-7jbfgUJWm/lAb2ChZ1gmD6IxJ/1mstU19PftvQRwFyw=",
+        "owner": "multivac61",
+        "repo": "mvim",
+        "rev": "73a151fce22d64a9843aae9e378fb42900084c97",
+        "type": "github"
+      },
+      "original": {
+        "owner": "multivac61",
+        "repo": "mvim",
+        "type": "github"
+      }
+    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -380,6 +396,7 @@
         "homebrew-core": "homebrew-core",
         "homebrew-ssh-askpass": "homebrew-ssh-askpass",
         "homebrew-zkondor": "homebrew-zkondor",
+        "mvim": "mvim",
         "nix-darwin": "nix-darwin",
         "nix-homebrew": "nix-homebrew",
         "nix-index-database": "nix-index-database",
