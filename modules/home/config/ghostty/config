@@ -42,7 +42,7 @@ clipboard-paste-protection = false
 confirm-close-surface = false
 quit-after-last-window-closed = true
 
-# mouse-hide-while-typing = true
+mouse-hide-while-typing = true
 # mouse-shift-capture = true
 
 # https://github.com/ryanoasis/nerd-fonts/wiki/Glyph-Sets-and-Code-Points
