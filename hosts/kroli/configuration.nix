@@ -11,7 +11,6 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
-    inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
     inputs.self.modules.shared.default
     inputs.self.nixosModules.common
@@ -44,6 +43,4 @@
 
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   users.users.root.hashedPassword = "";
-
-  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
 }

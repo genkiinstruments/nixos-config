@@ -8,7 +8,6 @@
 {
   imports = [
     ./disko-config.nix
-    inputs.home-manager.nixosModules.home-manager
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-terminfo
@@ -93,8 +92,6 @@
 
   networking.hostName = "gdrn";
   networking.hostId = "deadbeef";
-
-  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
 
   programs.ssh.startAgent = true;
 }

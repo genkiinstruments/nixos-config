@@ -7,7 +7,6 @@
     inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
-    inputs.home-manager.nixosModules.home-manager
     inputs.self.modules.shared.default
     inputs.self.nixosModules.common
     ./disko-config.nix
@@ -43,7 +42,4 @@
   };
 
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
-
-  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
-  home-manager.users.genki.programs.atuin.settings.daemon.enabled = true;
 }
