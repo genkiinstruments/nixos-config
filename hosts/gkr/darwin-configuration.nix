@@ -9,7 +9,6 @@
     inputs.srvos.darwinModules.mixins-telegraf
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.srvos.darwinModules.mixins-nix-experimental
-    inputs.home-manager.darwinModules.home-manager
     inputs.agenix.darwinModules.default
     inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.self.darwinModules.common
@@ -20,8 +19,6 @@
 
   # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-
-  home-manager.users.genki.imports = [ inputs.self.homeModules.default ];
 
   users.users.genki = {
     shell = pkgs.fish;

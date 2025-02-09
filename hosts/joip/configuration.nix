@@ -12,7 +12,6 @@
     inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.nixos-hardware.nixosModules.intel-nuc-8i7beh
-    inputs.home-manager.nixosModules.home-manager
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.self.modules.shared.default
@@ -44,8 +43,6 @@
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
 
   networking.hostName = "joip";
-
-  home-manager.users.olafur.imports = [ inputs.self.homeModules.default ];
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
