@@ -2,13 +2,11 @@
   pkgs,
   inputs,
   lib,
-  flake,
   ...
 }:
 {
   imports = [
     ./disko-config.nix
-    flake.modules.nixos.phx_todo
     inputs.disko.nixosModules.disko
     inputs.srvos.nixosModules.desktop
     inputs.srvos.nixosModules.mixins-terminfo
@@ -17,12 +15,6 @@
     inputs.self.modules.shared.default
     inputs.self.nixosModules.common
   ];
-
-  services.phx_todo = {
-    enable = true;
-    url = "v1.tail01dbd.ts.net";
-    secretKeybaseFile = "/home/genki/secret";
-  };
 
   nix.sshServe = {
     protocol = "ssh-ng";
