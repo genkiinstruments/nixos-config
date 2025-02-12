@@ -54,6 +54,8 @@
 
   programs.ssh.knownHosts."gdrn".publicKey =
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEkxYcp4RFr6rNaxEZllpW3xVz/lFp/XB3YpgcTazOar";
+  programs.ssh.knownHosts."v1".publicKey =
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK8F/pBuJfsUohU1/NNFNH0n8LcXv0amtcsu5KswIjsl";
 
   environment.systemPackages = with pkgs; [
     openssh # needed for fido2 support
