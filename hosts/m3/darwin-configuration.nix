@@ -78,8 +78,6 @@
       "@wheel"
       "olafur"
     ];
-
-    linux-builder.enable = true;
     distributedBuilds = true;
     buildMachines = [
       {
