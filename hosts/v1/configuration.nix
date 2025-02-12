@@ -24,6 +24,16 @@
     secretKeybaseFile = "/home/genki/secret";
   };
 
+  nix.sshServe = {
+    protocol = "ssh-ng";
+    enable = true;
+    write = true;
+    keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0Z5mbT3Zy/X+lLDeWVzBwMreSDBglSzDrq/TtbsVSY olafur@M3.local"
+    ];
+  };
+  nix.settings.trusted-users = [ "nix-ssh" ];
+
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
