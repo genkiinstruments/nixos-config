@@ -52,11 +52,6 @@
     shell = pkgs.fish;
   };
 
-  programs.ssh.knownHosts."gdrn".publicKey =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEkxYcp4RFr6rNaxEZllpW3xVz/lFp/XB3YpgcTazOar";
-  programs.ssh.knownHosts."v1".publicKey =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK8F/pBuJfsUohU1/NNFNH0n8LcXv0amtcsu5KswIjsl";
-
   environment.systemPackages = with pkgs; [
     openssh # needed for fido2 support
     aerospace
@@ -96,6 +91,7 @@
         sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
         system = "aarch64-linux";
         maxJobs = 128;
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUd1K2prYmJ2WVVndDN3azFFdEd5VXBHVDZMQ0EzUklBa1M0L0JjVzdEeHUgcm9vdEBtM3ZtCg==";
         supportedFeatures = [
           "nixos-test"
           "benchmark"
