@@ -20,7 +20,7 @@
 
   services.phx_todo = {
     enable = true;
-    url = "m3vm.tail01dbd.ts.net";
+    url = "v1.tail01dbd.ts.net";
     secretKeybaseFile = "/home/genki/secret";
   };
 
@@ -162,7 +162,7 @@
   # easy to visit stuff in here. We only use NAT networking anyways.
   networking.firewall.enable = false;
 
-  networking.hostName = "m3vm"; # Define your hostname.
+  networking.hostName = "v1"; # Define your hostname.
 
   services.udev.packages = [
     pkgs.yubikey-personalization
