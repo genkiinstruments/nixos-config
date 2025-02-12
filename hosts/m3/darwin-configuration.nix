@@ -98,6 +98,12 @@
         sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
         system = "aarch64-linux";
         maxJobs = 128;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
       }
     ];
   };
