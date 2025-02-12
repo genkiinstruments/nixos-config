@@ -114,6 +114,10 @@
         disableStartupPopups = true;
         promptToReturnFromSubprocess = false;
         keybinding.files.commitChangesWithEditor = "<disabled>";
+        # Classhing with tmux keybindngs
+        keybinding.commits.moveDownCommit = "<c-J>";
+        keybinding.commits.moveUpCommit = "<c-K>";
+        keybinding.commits.openLogMenu = "<c-L>";
         customCommands = [
           {
             key = "C";
