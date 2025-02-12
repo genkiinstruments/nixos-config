@@ -29,6 +29,7 @@
     enable = true;
     write = true;
     keys = [
+      # TODO: Generate own key.
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0Z5mbT3Zy/X+lLDeWVzBwMreSDBglSzDrq/TtbsVSY olafur@M3.local"
     ];
   };

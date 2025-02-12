@@ -89,11 +89,15 @@
         sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
         system = "x86_64-linux";
         maxJobs = 128;
-        # supportedFeatures = [
-        #   "big-parallel"
-        #   "kvm"
-        #   "nixos-test"
-        # ];
+      }
+      {
+        hostName = "v1";
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        # TODO: Own key
+        sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
+        system = "aarch64-linux";
+        maxJobs = 128;
       }
     ];
   };
