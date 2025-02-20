@@ -10,7 +10,6 @@
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.srvos.darwinModules.mixins-nix-experimental
     inputs.agenix.darwinModules.default
-    inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.self.darwinModules.common
     inputs.self.modules.shared.default
   ];

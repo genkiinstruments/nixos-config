@@ -11,7 +11,6 @@
     inputs.srvos.darwinModules.mixins-telegraf
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.srvos.darwinModules.mixins-nix-experimental
-    inputs.nix-homebrew.darwinModules.nix-homebrew
     inputs.agenix.darwinModules.default
     inputs.self.modules.shared.default
     inputs.self.darwinModules.common
@@ -82,6 +81,7 @@
         sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
         system = "x86_64-linux";
         maxJobs = 128;
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUl1UHF1RTUwNDVZcUFwZ2swdzBrU0d5ZHBhbDVaTVNmTWlablR6MHVOWDMgcm9vdEBnZHJuCg==";
       }
       {
         hostName = "v1";
@@ -102,33 +102,27 @@
     ];
   };
 
-  nix-homebrew = {
-    user = "olafur";
-    enable = true;
-    mutableTaps = false;
-    taps = with inputs; {
-      "homebrew/homebrew-core" = homebrew-core;
-      "homebrew/homebrew-cask" = homebrew-cask;
-      "homebrew/homebrew-bundle" = homebrew-bundle;
-      "zkondor/homebrew-dist" = homebrew-zkondor;
-      "theseal/homebrew-ssh-askpass" = homebrew-ssh-askpass;
-    };
-  };
   homebrew = {
     enable = true;
     casks = [
+      # guis
       "shortcat"
       "raycast"
       "arc"
       "karabiner-elements"
-      "zkondor/dist/znotch"
     ];
     brews = [
+      # clis and libraries
       "theseal/ssh-askpass/ssh-askpass"
       "bitwarden-cli"
     ];
-    caskArgs.no_quarantine = true;
-    taps = builtins.attrNames config.nix-homebrew.taps;
+    taps = [
+      {
+        name = "theseal/ssh-askpass";
+        clone_target = "https://github.com/theseal/ssh-askpass.git";
+        force_auto_update = true;
+      }
+    ];
     masApps = {
       # `nix run nixpkgs#mas -- search <app name>`
       "Keynote" = 409183694;
