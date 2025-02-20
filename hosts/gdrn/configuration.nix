@@ -89,6 +89,7 @@
     openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+  users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
   networking.hostName = "gdrn";
   networking.hostId = "deadbeef";
