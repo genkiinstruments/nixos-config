@@ -273,31 +273,6 @@
         set fish_greeting
 
         #-------------------------------------------------------------------------------
-        # Ghostty Shell Integration
-        #-------------------------------------------------------------------------------
-        # Ghostty supports auto-injection but Nix-darwin hard overwrites XDG_DATA_DIRS
-        # which make it so that we can't use the auto-injection. We have to source manually.
-        if set -q GHOSTTY_RESOURCES_DIR
-            source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
-        end
-
-        #-------------------------------------------------------------------------------
-        # Programs
-        #-------------------------------------------------------------------------------
-        # Homebrew
-        if test -d /opt/homebrew
-            set -gx HOMEBREW_PREFIX /opt/homebrew
-            set -gx HOMEBREW_CELLAR /opt/homebrew/Cellar
-            set -gx HOMEBREW_REPOSITORY /opt/homebrew
-            set -q PATH; or set PATH ""
-            set -gx PATH /opt/homebrew/bin /opt/homebrew/sbin $PATH
-            set -q MANPATH; or set MANPATH ""
-            set -gx MANPATH /opt/homebrew/share/man $MANPATH
-            set -q INFOPATH; or set INFOPATH ""
-            set -gx INFOPATH /opt/homebrew/share/info $INFOPATH
-        end
-
-        #-------------------------------------------------------------------------------
         # Atuin keybindings
         #-------------------------------------------------------------------------------
         # bind to ctrl-p in normal and insert mode
