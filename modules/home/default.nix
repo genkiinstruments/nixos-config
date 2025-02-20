@@ -6,7 +6,6 @@
 }:
 {
   imports = [
-    inputs.nix-index-database.hmModules.nix-index
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
   home = {
@@ -92,8 +91,6 @@
       icons = "auto";
       git = true;
     };
-    nix-index.enable = true;
-    nix-index-database.comma.enable = true;
     lazygit = {
       enable = true;
       settings = {
