@@ -71,9 +71,9 @@
 
   nix = {
     settings.trusted-users = [
-      "root"
       "@wheel"
       "olafur"
+      "nix-ssh"
     ];
     distributedBuilds = true;
     buildMachines = [
