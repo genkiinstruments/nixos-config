@@ -21,12 +21,9 @@
     protocol = "ssh-ng";
     enable = true;
     write = true;
-    keys = [
-      # TODO: Generate own key.
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0Z5mbT3Zy/X+lLDeWVzBwMreSDBglSzDrq/TtbsVSY olafur@M3.local"
-    ];
   };
   nix.settings.trusted-users = [ "nix-ssh" ];
+  users.users.nix-ssh.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
