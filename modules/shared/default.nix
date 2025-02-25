@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   lib,
   ...
@@ -25,10 +24,5 @@
 
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
-  # Deploy tailscale everywhere
-  services.tailscale.enable = true;
-
-  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
-  environment.shells = with pkgs; [ fish ];
-  home-manager.backupFileExtension = "backup";
+  services.tailscale.enable = true; # Deploy tailscale everywhere
 }

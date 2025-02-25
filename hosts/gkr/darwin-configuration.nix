@@ -12,6 +12,7 @@
     inputs.agenix.darwinModules.default
     inputs.self.darwinModules.common
     inputs.self.modules.shared.default
+    inputs.self.modules.shared.home-manager
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
