@@ -54,7 +54,10 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgZsVoqTNrbGtewP2+mEBSXQuiEEWcGuRyp0VtyQ9NR genki@v1"
     ];
   };
-  nix.settings.trusted-users = [ "nix-ssh" ];
+  nix.settings.trusted-users = [
+    "nix-ssh"
+    "@wheel"
+  ];
 
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
