@@ -21,6 +21,10 @@
     protocol = "ssh-ng";
     enable = true;
     write = true;
+    # For Nix remote builds, the SSH authentication needs to be non-interactive and not dependent on ssh-agent, since the Nix daemon needs to be able to authenticate automatically.
+    keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0V/P7rcJdL7gumCvQPgbsZoMgfF8FcOAE++LsyZPCr olafur@M3.local"
+    ];
   };
   nix.settings.trusted-users = [ "nix-ssh" ];
   users.users.nix-ssh.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
