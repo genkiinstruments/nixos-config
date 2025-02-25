@@ -2,9 +2,15 @@
   description = "Nix runs the 🌍🌎🌏";
 
   inputs = {
-    srvos.url = "github:nix-community/srvos";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable&shallow=1";
 
-    nixpkgs.follows = "srvos/nixpkgs"; # use the version of nixpkgs that has been tested with SrvOS
+    srvos.url = "github:nix-community/srvos";
+    srvos.inputs.nixpkgs.follows = "nixpkgs";
+
+    agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    agenix.inputs.darwin.follows = "nix-darwin";
+    agenix.inputs.home-manager.follows = "home-manager";
 
     blueprint.url = "github:numtide/blueprint";
     blueprint.inputs.nixpkgs.follows = "nixpkgs";
@@ -22,9 +28,6 @@
 
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
-
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     secrets.url = "git+ssh://git@github.com/multivac61/nix-secrets.git";
     secrets.flake = false;
