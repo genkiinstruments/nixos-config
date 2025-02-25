@@ -117,26 +117,3 @@ keybind = cmd+l=text:\x00\x6C
 keybind = cmd+r=text:\x00\x72
 keybind = cmd+y=text:\x00\x79
 keybind = cmd+z=text:\x00\x7A
-
-#-------------------------------------------------------------------------------
-# Ghostty Shell Integration
-#-------------------------------------------------------------------------------
-# Ghostty supports auto-injection but Nix-darwin hard overwrites XDG_DATA_DIRS
-# which make it so that we can't use the auto-injection. We have to source
-# manually.
-if set -q GHOSTTY_RESOURCES_DIR
-    source "$GHOSTTY_RESOURCES_DIR/shell-integration/fish/vendor_conf.d/ghostty-shell-integration.fish"
-end
-
-# Homebrew
-if test -d "/opt/homebrew"
-    set -gx HOMEBREW_PREFIX "/opt/homebrew";
-    set -gx HOMEBREW_CELLAR "/opt/homebrew/Cellar";
-    set -gx HOMEBREW_REPOSITORY "/opt/homebrew";
-    set -q PATH; or set PATH ''; set -gx PATH "/opt/homebrew/bin" "/opt/homebrew/sbin" $PATH;
-    set -q MANPATH; or set MANPATH ''; set -gx MANPATH "/opt/homebrew/share/man" $MANPATH;
-    set -q INFOPATH; or set INFOPATH ''; set -gx INFOPATH "/opt/homebrew/share/info" $INFOPATH;
-end
-
-# Add ~/.local/bin
-set -q PATH; or set PATH ''; set -gx PATH  "$HOME/.local/bin" $PATH;

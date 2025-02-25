@@ -1,12 +1,10 @@
 {
   inputs,
   pkgs,
-  perSystem,
   ...
 }:
 {
   imports = [ inputs.self.homeModules.default ];
-  home.activation.setup-mvim = ''${perSystem.self.setup-mvim}/bin/setup-mvim'';
   programs.ssh = {
     matchBlocks = {
       "github.com" = {

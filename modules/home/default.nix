@@ -7,6 +7,7 @@
 {
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
+    # flake.homeModules.nvim
   ];
   home = {
     enableNixpkgsReleaseCheck = false;
@@ -24,14 +25,13 @@
       neofetch
       nb
       age-plugin-fido2-hmac
-      gh-dash
 
       (sesh.overrideAttrs (old: {
         src = fetchFromGitHub {
           owner = "joshmedeski";
           repo = "sesh";
-          rev = "c6bea953c996552ea814b5c5e72291753fb41d02";
-          sha256 = "sha256-IM6wE/DMplG8jk4BXYprwIztPbgAHubr/YFavvPkBU8=";
+          rev = "476dbf94026d367d145c9f1ccc88bc8078cc8660";
+          sha256 = "sha256-YFvUYacuvyzNXwY+y9kI4tPlrlojDuZpR7VaTGdVqb8=";
         };
       }))
 
@@ -41,19 +41,6 @@
 
       # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
       # bitwarden-cli
-
-      # neovim related stuff
-      neovim
-      xsel # for lazygit copy/paste to clipboard
-      ripgrep
-      ast-grep
-      fd
-      nodejs
-      cargo
-      go
-      nixfmt-rfc-style
-      python3
-      unzip
     ];
   };
 
@@ -252,7 +239,7 @@
     fish = {
       enable = true;
       shellAliases = {
-        n = "nvim";
+        n = "mvim";
         da = "direnv allow";
         dr = "direnv reload";
         ga = "git add";
@@ -268,34 +255,12 @@
         lg = "lazygit";
         cat = "bat";
       };
-      interactiveShellInit = ''
-        # Do not show any greeting
-        set fish_greeting
-
-        #-------------------------------------------------------------------------------
-        # Atuin keybindings
-        #-------------------------------------------------------------------------------
-        # bind to ctrl-p in normal and insert mode
-        bind \cp _atuin_search
-        bind -M insert \cp _atuin_search
-        bind \cr _atuin_search
-        bind -M insert \cr _atuin_search
-
-        bind \cL clear
-
-        #-------------------------------------------------------------------------------
-        # VI keybindings
-        #-------------------------------------------------------------------------------
-        # Use Ctrl-f to complete a suggestion in vi mode
-        bind -M insert \cf accept-autosuggestion
-
-        fish_vi_key_bindings
-        set fish_vi_force_cursor
-        set fish_cursor_default block blink
-        set fish_cursor_insert line blink
-        set fish_cursor_replace_one underscore blink
-        set fish_cursor_visual block
-      '';
+      interactiveShellInit = lib.strings.concatStrings (
+        lib.strings.intersperse "\n" ([
+          (builtins.readFile ./config/fish/config.fish)
+          "set -g SHELL ${pkgs.fish}/bin/fish"
+        ])
+      );
     };
     bash.enable = true;
     bat.enable = true;
@@ -314,10 +279,7 @@
       userName = "multivac61";
       extraConfig = {
         init.defaultBranch = "main";
-        core = {
-          editor = "nvim";
-          autocrlf = "input";
-        };
+        core.autocrlf = "input";
         pull.rebase = true;
         rebase.autoStash = true;
         url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
