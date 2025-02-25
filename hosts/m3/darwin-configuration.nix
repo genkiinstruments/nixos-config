@@ -34,8 +34,14 @@
         owner = "olafur";
         group = "staff";
       };
-      ssh-serve-m3-gdrn = {
-        file = "${inputs.secrets}/ssh-serve-m3-gdrn.age";
+      nix-ssh-m3-v1 = {
+        file = "${inputs.secrets}/nix-ssh-m3-v1.age";
+        mode = "600";
+        owner = "olafur";
+        group = "staff";
+      };
+      nix-ssh-m3-gdrn = {
+        file = "${inputs.secrets}/nix-ssh-m3-gdrn.age";
         mode = "600";
         owner = "olafur";
         group = "staff";
@@ -76,19 +82,27 @@
         hostName = "gdrn";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
-        sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
-        system = "x86_64-linux";
+        systems = [ "aarch64-linux" ];
         maxJobs = 128;
+        sshKey = config.age.secrets.nix-ssh-m3-gdrn.path;
         publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUl1UHF1RTUwNDVZcUFwZ2swdzBrU0d5ZHBhbDVaTVNmTWlablR6MHVOWDMgcm9vdEBnZHJuCg==";
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
       }
       {
         hostName = "v1";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
-        # TODO: Own key
-        sshKey = config.age.secrets.ssh-serve-m3-gdrn.path;
-        system = "aarch64-linux";
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
         maxJobs = 128;
+        sshKey = config.age.secrets.nix-ssh-m3-v1.path;
         publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUd1K2prYmJ2WVVndDN3azFFdEd5VXBHVDZMQ0EzUklBa1M0L0JjVzdEeHUgcm9vdEBtM3ZtCg==";
         supportedFeatures = [
           "nixos-test"
