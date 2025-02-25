@@ -26,7 +26,10 @@
         hostName = "gdrn";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
-        systems = [ "aarch64-linux" ];
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
         maxJobs = 128;
         sshKey = config.age.secrets.nix-ssh-v1-gdrn.path;
         publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUl1UHF1RTUwNDVZcUFwZ2swdzBrU0d5ZHBhbDVaTVNmTWlablR6MHVOWDMgcm9vdEBnZHJuCg==";
@@ -51,7 +54,10 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0V/P7rcJdL7gumCvQPgbsZoMgfF8FcOAE++LsyZPCr olafur@M3.local"
     ];
   };
-  nix.settings.trusted-users = [ "nix-ssh" ];
+  nix.settings.trusted-users = [
+    "nix-ssh"
+    "@wheel"
+  ];
   users.users.nix-ssh.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
 
   # Be careful updating this.
