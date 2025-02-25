@@ -49,7 +49,7 @@
     enable = true;
     write = true;
     keys = builtins.filter (x: x != "") (
-      builtins.splitString "\n" (builtins.readFile ../../authorized_keys)
+      lib.splitString "\n" (builtins.readFile ../../authorized_keys)
     );
   };
   nix.settings.trusted-users = [ "nix-ssh" ];
