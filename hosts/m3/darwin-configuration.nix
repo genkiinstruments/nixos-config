@@ -112,6 +112,32 @@
       }
     ];
   };
+  programs.ssh.extraConfig = ''
+    Host gdrn
+      User nix-ssh
+      HostName gdrn.tail01dbd.ts.net
+      IdentityFile ${config.age.secrets.nix-ssh-m3-gdrn.path}
+    Host v1
+      User nix-ssh
+      HostName v1.tail01dbd.ts.net
+      IdentityFile ${config.age.secrets.nix-ssh-m3-v1.path}
+  '';
+  programs.ssh.knownHosts = {
+    "v1" = {
+      hostNames = [
+        "v1"
+        "v1.tail01dbd.ts.net"
+      ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGu+jkbbvYUgt3wk1EtGyUpGT6LCA3RIAkS4/BcW7Dxu";
+    };
+    "gdrn" = {
+      hostNames = [
+        "gdrn"
+        "gdrn.tail01dbd.ts.net"
+      ];
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuPquE5045YqApgk0w0kSGydpal5ZMSfMiZnTz0uNX3";
+    };
+  };
 
   homebrew = {
     enable = true;
