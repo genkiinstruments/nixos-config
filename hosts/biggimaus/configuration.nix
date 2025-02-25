@@ -8,6 +8,7 @@
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
     inputs.self.modules.shared.default
+    inputs.self.modules.shared.home-manager
     inputs.self.nixosModules.common
     ./disko-config.nix
   ];

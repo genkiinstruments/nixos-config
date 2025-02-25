@@ -15,6 +15,7 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.self.modules.shared.default
+    inputs.self.modules.shared.home-manager
     inputs.self.nixosModules.common
     ./disk-config.nix
     ./hardware-configuration.nix

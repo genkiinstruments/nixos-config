@@ -12,6 +12,7 @@
     inputs.srvos.darwinModules.mixins-nix-experimental
     inputs.agenix.darwinModules.default
     inputs.self.modules.shared.default
+    inputs.self.modules.shared.home-manager
     inputs.self.darwinModules.common
   ];
 
