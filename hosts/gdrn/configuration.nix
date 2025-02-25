@@ -2,7 +2,6 @@
   lib,
   config,
   inputs,
-  pkgs,
   ...
 }:
 {
@@ -39,13 +38,19 @@
 
   networking.useDHCP = lib.mkDefault true;
 
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 90;
+  };
+
   nix.sshServe = {
     protocol = "ssh-ng";
     enable = true;
     write = true;
-    keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG0Z5mbT3Zy/X+lLDeWVzBwMreSDBglSzDrq/TtbsVSY olafur@M3.local"
-    ];
+    keys = builtins.filter (x: x != "") (
+      builtins.splitString "\n" (builtins.readFile ../../authorized_keys)
+    );
   };
   nix.settings.trusted-users = [ "nix-ssh" ];
 
@@ -61,33 +66,9 @@
     cachix.cacheName = "genki";
     cachix.tokenFile = config.age.secrets.gdrn-github-runner-cachixToken.path;
   };
-  age = {
-    secrets = {
-      my-secret = {
-        path = "/Users/genki/Desktop/my-secret";
-        file = "${inputs.secrets}/my-secret.age";
-        mode = "644";
-        owner = "genki";
-        group = "users";
-      };
-      atuin-key = {
-        path = "/home/genki/.local/share/atuin/key";
-        file = "${inputs.secrets}/atuin-key.age";
-        mode = "644";
-        owner = "genki";
-        group = "users";
-      };
-      gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
-      gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
-    };
-  };
-  users.users.genki = {
-    isNormalUser = true;
-    shell = pkgs.fish;
-    hashedPassword = "$y$j9T$m2uMTFs0f/KCLtDqCSuMO1$cjP9ZlnzZeIpH8Ibb8h2hbl//3hjgXEYVolfwG2vHg5";
-    extraGroups = [ "wheel" ];
-    openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
-  };
+  age.secrets.gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
+  age.secrets.gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
+
   users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
