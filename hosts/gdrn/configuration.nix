@@ -48,10 +48,8 @@
     protocol = "ssh-ng";
     enable = true;
     write = true;
-    keys = builtins.filter (x: x != "") (
-      lib.splitString "\n" (builtins.readFile ../../authorized_keys)
-    );
   };
+  users.users.nix-ssh.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
   nix.settings.trusted-users = [ "nix-ssh" ];
 
   roles.github-actions-runner = {
