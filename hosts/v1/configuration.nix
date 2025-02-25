@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   lib,
+  config,
   ...
 }:
 {
@@ -18,6 +19,27 @@
     inputs.self.nixosModules.common
   ];
 
+  nix = {
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "gdrn";
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        systems = [ "aarch64-linux" ];
+        maxJobs = 128;
+        sshKey = config.age.secrets.nix-ssh-v1-gdrn.path;
+        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUl1UHF1RTUwNDVZcUFwZ2swdzBrU0d5ZHBhbDVaTVNmTWlablR6MHVOWDMgcm9vdEBnZHJuCg==";
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+      }
+    ];
+  };
+  age.secrets.nix-ssh-v1-gdrn.file = "${inputs.secrets}/nix-ssh-v1-gdrn.age";
   age.secrets.v1-top-secret.file = "${inputs.secrets}/v1-top-secret.age";
 
   nix.sshServe = {
