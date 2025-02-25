@@ -147,34 +147,6 @@
         "type": "github"
       }
     },
-    "mvim": {
-      "inputs": {
-        "blueprint": [
-          "blueprint"
-        ],
-        "home-manager": [
-          "home-manager"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "srvos": "srvos",
-        "treefmt-nix": "treefmt-nix"
-      },
-      "locked": {
-        "lastModified": 1740491174,
-        "narHash": "sha256-64EzziZxcUC8TorGglnVUuZKN/MAdNtmIT0rojTfV0o=",
-        "owner": "multivac61",
-        "repo": "mvim",
-        "rev": "0125269cca7bdc3705830762ae4dbb68115ea62f",
-        "type": "github"
-      },
-      "original": {
-        "owner": "multivac61",
-        "repo": "mvim",
-        "type": "github"
-      }
-    },
     "nix-darwin": {
       "inputs": {
         "nixpkgs": [
@@ -234,7 +206,6 @@
         "catppuccin": "catppuccin",
         "disko": "disko",
         "home-manager": "home-manager_2",
-        "mvim": "mvim",
         "nix-darwin": "nix-darwin",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": [
@@ -242,7 +213,8 @@
           "nixpkgs"
         ],
         "secrets": "secrets",
-        "srvos": "srvos_2"
+        "srvos": "srvos",
+        "treefmt-nix": "treefmt-nix"
       }
     },
     "secrets": {
@@ -262,27 +234,6 @@
       }
     },
     "srvos": {
-      "inputs": {
-        "nixpkgs": [
-          "mvim",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1740358604,
-        "narHash": "sha256-Wi87Dx5j8JH+ETlU0zrPSAe7zD2wQkEY6DtITCeyOdI=",
-        "owner": "nix-community",
-        "repo": "srvos",
-        "rev": "b3065811ae1c822b856af8a254e07703172a0e76",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "srvos",
-        "type": "github"
-      }
-    },
-    "srvos_2": {
       "inputs": {
         "nixpkgs": "nixpkgs"
       },
@@ -333,7 +284,6 @@
     "treefmt-nix": {
       "inputs": {
         "nixpkgs": [
-          "mvim",
           "nixpkgs"
         ]
       },
