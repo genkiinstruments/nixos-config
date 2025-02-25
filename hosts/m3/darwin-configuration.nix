@@ -59,7 +59,6 @@
 
   environment.systemPackages = with pkgs; [
     openssh # needed for fido2 support
-    aerospace
   ];
   environment.variables.SSH_ASKPASS = "/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass"; # TODO: nixpkgs
   environment.variables.DISPLAY = ":0";
