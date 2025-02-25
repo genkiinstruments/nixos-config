@@ -12,10 +12,13 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
+    inputs.agenix.nixosModules.default
     inputs.self.modules.shared.default
     inputs.self.modules.shared.home-manager
     inputs.self.nixosModules.common
   ];
+
+  age.secrets.v1-top-secret.file = "${inputs.secrets}/v1-top-secret.age";
 
   nix.sshServe = {
     protocol = "ssh-ng";
