@@ -30,8 +30,19 @@
     secrets.flake = false;
 
     mvim.url = "github:multivac61/mvim";
-    mvim.flake = false;
+    mvim.inputs.nixpkgs.follows = "nixpkgs";
+    mvim.inputs.blueprint.follows = "blueprint";
+    mvim.inputs.home-manager.follows = "home-manager";
   };
 
-  outputs = inputs: inputs.blueprint { inherit inputs; };
+  outputs =
+    inputs:
+    inputs.blueprint {
+      inherit inputs;
+      systems = [
+        "aarch64-darwin"
+        "aarch64-linux"
+        "x86_64-linux"
+      ];
+    };
 }
