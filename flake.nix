@@ -29,10 +29,8 @@
     secrets.url = "git+ssh://git@github.com/multivac61/nix-secrets.git";
     secrets.flake = false;
 
-    mvim.url = "github:multivac61/mvim";
-    mvim.inputs.nixpkgs.follows = "nixpkgs";
-    mvim.inputs.blueprint.follows = "blueprint";
-    mvim.inputs.home-manager.follows = "home-manager";
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
