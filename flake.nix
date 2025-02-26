@@ -29,7 +29,7 @@
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
 
-    secrets.url = "git+ssh://git@github.com/multivac61/nix-secrets.git";
+    secrets.url = "github:multivac61/nix-secrets";
     secrets.flake = false;
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
