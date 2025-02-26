@@ -282,16 +282,7 @@
         core.autocrlf = "input";
         pull.rebase = true;
         rebase.autoStash = true;
-        url = {
-          "ssh://git@github.com/".pushInsteadOf = "https://github.com/";
-          "git@github.com:" = {
-            insteadOf = "gh:";
-            pushInsteadOf = [
-              "github:"
-              "git://github.com/"
-            ];
-          };
-        };
+        url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
         gpg.format = "ssh";
         user.signingKey = "~/.ssh/id_ed25519_sk";
         color.ui = true;

@@ -180,15 +180,15 @@
       "locked": {
         "lastModified": 1740516933,
         "narHash": "sha256-sS8mCNO+C0lOjcCJIfMyymi6O1iHppKc1FeJnL381DE=",
-        "owner": "multivac61",
-        "repo": "nix-secrets",
+        "ref": "refs/heads/main",
         "rev": "2d2a831f71ce1e65560f753db815a869b0f4b3d9",
-        "type": "github"
+        "revCount": 35,
+        "type": "git",
+        "url": "ssh://git@github.com/multivac61/nix-secrets.git"
       },
       "original": {
-        "owner": "multivac61",
-        "repo": "nix-secrets",
-        "type": "github"
+        "type": "git",
+        "url": "ssh://git@github.com/multivac61/nix-secrets.git"
       }
     },
     "srvos": {
