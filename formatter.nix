@@ -13,6 +13,15 @@ inputs.treefmt-nix.lib.mkWrapper pkgs {
   programs.shellcheck.enable = true;
   programs.taplo.enable = true;
 
+  programs.shfmt.enable = true;
+  settings.formatter.shfmt.includes = [
+    "*.envrc"
+    "*.envrc.private-template"
+    "*.bashrc"
+    "*.bash_profile"
+    "*.bashrc.load"
+  ];
+
   settings.global.excludes = [
     "*.png"
     "*.jpg"
@@ -23,7 +32,7 @@ inputs.treefmt-nix.lib.mkWrapper pkgs {
     "*.ico"
     "*.webp"
     "*.gif"
-    "lazyvim.json"
-    "lazy-lock.json"
+    "**/lazyvim.json"
+    "**/lazy-lock.json"
   ];
 }

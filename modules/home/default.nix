@@ -26,7 +26,7 @@
       nb
       age-plugin-fido2-hmac
 
-      (sesh.overrideAttrs (old: {
+      (sesh.overrideAttrs (_old: {
         src = fetchFromGitHub {
           owner = "joshmedeski";
           repo = "sesh";

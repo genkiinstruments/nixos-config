@@ -19,7 +19,7 @@ jobs:
       - uses: cachix/cachix-action@vXX
         with:
           name: genki
-          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
       - uses: actions/create-github-app-token@main
         id: app-token
