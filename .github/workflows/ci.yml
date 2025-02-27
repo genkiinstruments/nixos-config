@@ -1,0 +1,98 @@
+on:
+  workflow_call:
+    inputs:
+      visibility:
+        required: false
+        type: string
+      default-branch:
+        required: false
+        default: ${{ github.event.repository.default_branch }}
+        type: string
+      enable-ssh-agent:
+        required: false
+        default: false
+        type: boolean
+      directory:
+        required: false
+        default: "."
+        type: string
+      runner-map:
+        required: false
+        type: string
+        default: |
+          {
+            "aarch64-darwin": "macos-latest",
+            "x86_64-darwin": "macos-latest",
+            "x86_64-linux": "ubuntu-latest",
+            "i686-linux": "ubuntu-latest",
+            "aarch64-linux": "ubuntu-24.04-arm"
+          }
+
+    secrets:
+      ssh-private-key:
+        required: false
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+
+    outputs:
+      systems: ${{ steps.inventory.outputs.systems }}
+
+    permissions:
+      id-token: "write"
+      contents: "read"
+
+    steps:
+      - uses: actions/checkout@v4
+      # disabled pending strategy discussion on exposing tunables
+      # - uses: Determinatesystems/flake-checker-action@main
+      - uses: cachix/install-nix-action@master
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: cachix/cachix-action@master
+        with:
+          name: genki
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extraPullNames: nix-community
+      - uses: webfactory/ssh-agent@v0.9.0
+        if: ${{ inputs.enable-ssh-agent }}
+        with:
+          ssh-private-key: ${{ secrets.ssh-private-key }}
+      - name: Inventory the flake for targeted systems
+        id: inventory
+        env:
+          FLAKE_ITER_RUNNER_MAP: ${{ toJson(fromJson(inputs.runner-map)) }}
+        working-directory: ${{ inputs.directory }}
+        run: |
+          nix run "https://flakehub.com/f/DeterminateSystems/flake-iter/*" -- systems
+
+  build:
+    runs-on: ${{ matrix.systems.runner }}
+    needs: inventory
+    strategy:
+      matrix:
+        systems: ${{ fromJSON(needs.inventory.outputs.systems) }}
+
+    permissions:
+      id-token: "write"
+      contents: "read"
+
+    steps:
+      - uses: cachix/install-nix-action@master
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: cachix/cachix-action@master
+        with:
+          name: genki
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extraPullNames: nix-community
+      - uses: webfactory/ssh-agent@v0.9.0
+        if: ${{ inputs.enable-ssh-agent }}
+        with:
+          ssh-private-key: ${{ secrets.ssh-private-key }}
+      - name: Build for ${{ matrix.systems.nix-system }}
+        env:
+          FLAKE_ITER_NIX_SYSTEM: ${{ matrix.systems.nix-system }}
+        working-directory: ${{ inputs.directory }}
+        run: nix run 'https://flakehub.com/f/DeterminateSystems/flake-iter/*' -- --verbose build
