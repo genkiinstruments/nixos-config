@@ -19,6 +19,9 @@ jobs:
           name: genki
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Update vim plugins
         run: |
           nix run .#mvim -- --headless "+Lazy! update" +qa
