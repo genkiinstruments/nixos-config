@@ -146,6 +146,7 @@
       "shortcat"
       "raycast"
       "arc"
+      "firefox"
       "karabiner-elements"
     ];
     brews = [
