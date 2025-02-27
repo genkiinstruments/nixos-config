@@ -31,6 +31,12 @@ on:
     secrets:
       ssh-private-key:
         required: false
+      cachix-name:
+        required: true
+      cachix-auth-token:
+        required: true
+      github-access-token:
+        required: true
 
 jobs:
   inventory:
@@ -49,11 +55,11 @@ jobs:
       # - uses: Determinatesystems/flake-checker-action@main
       - uses: cachix/install-nix-action@master
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          github_access_token: ${{ secrets.github-access-token }}
       - uses: cachix/cachix-action@master
         with:
-          name: genki
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          name: "${{ secrets.cachix-name }}"
+          authToken: "${{ secrets.cachix-auth-token }}"
           extraPullNames: nix-community
       - uses: webfactory/ssh-agent@v0.9.0
         if: ${{ inputs.enable-ssh-agent }}
@@ -81,11 +87,11 @@ jobs:
     steps:
       - uses: cachix/install-nix-action@master
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+          github_access_token: ${{ secrets.github-access-token }}
       - uses: cachix/cachix-action@master
         with:
           name: genki
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          authToken: "${{ secrets.cachix-auth-token }}"
           extraPullNames: nix-community
       - uses: webfactory/ssh-agent@v0.9.0
         if: ${{ inputs.enable-ssh-agent }}
