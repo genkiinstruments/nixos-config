@@ -1,6 +1,27 @@
 # Do not show any greeting
 set fish_greeting
 
+function , --description "Shortcut: nix shell with multiple pkgs: `nix shell nixpkgs#{foo,bar,baz}`"
+    if test (count $argv) -gt 0
+        set packages_args
+        for pkg in $argv
+            set -a packages_args "nixpkgs#$pkg"
+        end
+        nix shell $packages_args
+    else
+        echo "Usage: , package1 package2 ..."
+    end
+end
+
+function . --description "Shortcut for `nix run nixpkgs#foo`"
+    if test (count $argv) -gt 0
+        set package $argv[1]
+        nix run nixpkgs#$package
+    else
+        echo "Usage: . package_name"
+    end
+end
+
 #-------------------------------------------------------------------------------
 # Atuin keybindings
 #-------------------------------------------------------------------------------
