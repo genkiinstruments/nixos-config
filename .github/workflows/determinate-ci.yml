@@ -25,3 +25,6 @@ jobs:
       enable-ssh-agent: true
     secrets:
       ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      cachix-name: genki
+      cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
+      github-access-token: ${{ secrets.GITHUB_TOKEN }}
