@@ -9,13 +9,13 @@
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
   home = {
-    enableNixpkgsReleaseCheck = false;
     stateVersion = "23.05";
+
     file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
     file.".config/ghostty/config".source = ./config/ghostty/config;
-    sessionVariables.EDITOR = "nvim";
-
     file.".hushlogin".text = "";
+
+    sessionVariables.EDITOR = "nvim";
 
     packages = with pkgs; [
       wget
