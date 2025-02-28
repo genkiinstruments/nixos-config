@@ -56,3 +56,5 @@ debug
 .repro
 *.log
 data
+
+treesitter-rev

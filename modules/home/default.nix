@@ -3,13 +3,11 @@
   flake,
   pkgs,
   lib,
-  config,
   ...
 }:
 {
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
-    flake.homeModules.nvim
   ];
   home = {
     enableNixpkgsReleaseCheck = false;
@@ -18,17 +16,7 @@
     file.".config/ghostty/config".source = ./config/ghostty/config;
     sessionVariables.EDITOR = "nvim";
 
-    # mandatory when HM is used as a standalone
-    homeDirectory =
-      if pkgs.stdenv.hostPlatform.isDarwin then # we assume that the username is set elsewhere
-        if (config.home.username == "root") then "/var/root" else "/Users/${config.home.username}"
-      else if (config.home.username == "root") then
-        "/root"
-      else
-        "/home/${config.home.username}";
-
     file.".hushlogin".text = "";
-
 
     packages = with pkgs; [
       wget
