@@ -16,6 +16,8 @@ let
       "/root"
     else
       "/home/${config.home.username}";
+
+  nvimConfigSource = "${homeDirectory}/dev/nixos-config/home/nvim";
 in
 {
   home.packages = nvim-lsp-packages ++ [
@@ -31,34 +33,64 @@ in
     echo "Setting up Neovim configuration..."
 
     NVIM_CONFIG_PATH="${config.xdg.configHome}/nvim"
+    NVIM_CONFIG_SOURCE="${nvimConfigSource}"
 
-    # Check if the target exists and what type it is
+    # Debug information
+    echo "NVIM_CONFIG_PATH: $NVIM_CONFIG_PATH"
+    echo "NVIM_CONFIG_SOURCE: $NVIM_CONFIG_SOURCE"
+
+    # Check for and remove the circular symlink
+    if [ -L "$NVIM_CONFIG_SOURCE/nvim" ]; then
+      echo "Found circular symlink at $NVIM_CONFIG_SOURCE/nvim, removing it"
+      TARGET=$(readlink "$NVIM_CONFIG_SOURCE/nvim")
+      echo "It points to: $TARGET"
+      rm -f "$NVIM_CONFIG_SOURCE/nvim"
+      echo "Circular symlink removed"
+    fi
+
+    # Double-check it's gone
+    if [ -L "$NVIM_CONFIG_SOURCE/nvim" ]; then
+      echo "ERROR: Failed to remove circular symlink!"
+      ls -la "$NVIM_CONFIG_SOURCE"
+      exit 1
+    fi
+
+    # Set up the main symlink from ~/.config/nvim to our config directory
     if [ -e "$NVIM_CONFIG_PATH" ]; then
-      if [ -d "$NVIM_CONFIG_PATH" ] && [ ! -L "$NVIM_CONFIG_PATH" ]; then
-        # It's a directory (not a symlink), exit with error
-        echo "Error: $NVIM_CONFIG_PATH exists as a directory. Please remove it manually if you want to replace it with a symlink."
+      if [ -L "$NVIM_CONFIG_PATH" ]; then
+        # It's a symlink, check where it points
+        TARGET=$(readlink "$NVIM_CONFIG_PATH")
+        echo "Existing symlink at $NVIM_CONFIG_PATH points to: $TARGET"
+        if [ "$TARGET" != "$NVIM_CONFIG_SOURCE" ]; then
+          echo "Updating symlink to point to $NVIM_CONFIG_SOURCE"
+          ln -sfn "$NVIM_CONFIG_SOURCE" "$NVIM_CONFIG_PATH"
+        fi
+      elif [ -d "$NVIM_CONFIG_PATH" ]; then
+        echo "Error: $NVIM_CONFIG_PATH exists as a directory. Please remove it manually."
         exit 1
-      elif [ -L "$NVIM_CONFIG_PATH" ]; then
-        # It's a symlink, we can override it
-        echo "Replacing existing symlink at $NVIM_CONFIG_PATH"
       else
-        # It's a file, exit with error
         echo "Error: $NVIM_CONFIG_PATH exists as a file. Please remove it manually."
         exit 1
       fi
+    else
+      echo "Creating new symlink at $NVIM_CONFIG_PATH"
+      ln -sfn "$NVIM_CONFIG_SOURCE" "$NVIM_CONFIG_PATH"
     fi
 
-    # Create the symlink to your repository (will override existing symlink)
-    ln -sf "${homeDirectory}/dev/nixos-config/home/nvim" "$NVIM_CONFIG_PATH"
-
     # Write the treesitter revision
-    echo "${treesitter-grammars.rev}" > "$NVIM_CONFIG_PATH/treesitter-rev"
+    echo "${treesitter-grammars.rev}" > "$NVIM_CONFIG_SOURCE/treesitter-rev"
 
     # Update plugins if needed
-    if [[ -f "$NVIM_CONFIG_PATH/lazy-lock.json" ]]; then
-      if ! grep -q "${treesitter-grammars.rev}" "$NVIM_CONFIG_PATH/lazy-lock.json"; then
+    if [[ -f "$NVIM_CONFIG_SOURCE/lazy-lock.json" ]]; then
+      if ! grep -q "${treesitter-grammars.rev}" "$NVIM_CONFIG_SOURCE/lazy-lock.json"; then
         ${neovim}/bin/nvim --headless "+Lazy! update" +qa
       fi
+    fi
+
+    # Final check to make sure circular symlink didn't somehow get recreated
+    if [ -L "$NVIM_CONFIG_SOURCE/nvim" ]; then
+      echo "WARNING: Circular symlink was recreated! Removing again..."
+      rm -f "$NVIM_CONFIG_SOURCE/nvim"
     fi
   '';
 }
