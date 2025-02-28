@@ -40,7 +40,7 @@ writeShellApplication {
     mkdir -p "$CONFIG_DIR" "$XDG_DATA_HOME"
     chmod -R u+w "$CONFIG_DIR"
     rm -rf "$CONFIG_DIR"
-    cp -arfT '${flake}/modules/home/config/nvim/' "$CONFIG_DIR"
+    cp -arfT '${flake}/home/nvim/' "$CONFIG_DIR"
     chmod -R u+w "$CONFIG_DIR"
     echo "${treesitter-grammars.rev}" > "$CONFIG_DIR/treesitter-rev"
 
