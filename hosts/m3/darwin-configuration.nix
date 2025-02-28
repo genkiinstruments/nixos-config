@@ -153,7 +153,6 @@
     brews = [
       # clis and libraries
       "theseal/ssh-askpass/ssh-askpass"
-      "bitwarden-cli"
     ];
     taps = [
       {

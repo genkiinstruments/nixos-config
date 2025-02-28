@@ -39,9 +39,7 @@
       cachix
 
       moonlight-qt
-
-      # FIXME: Currently broken in nixpkgs: https://github.com/NixOS/nixpkgs/issues/339576
-      # bitwarden-cli
+      bitwarden-cli
     ];
   };
 
