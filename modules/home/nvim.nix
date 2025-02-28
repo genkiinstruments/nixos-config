@@ -15,7 +15,8 @@ in
     pkgs.git
   ];
 
-  # home.file.".config/nvim".source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dev/nixos-config/home/nvim";
+  home.file.".config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/dev/nixos-config/home/nvim";
   xdg.dataFile."nvim/site/parser".source = treesitter-grammars;
 
   # Use Home Manager's dag (directed acyclic graph) system to ensure proper ordering
