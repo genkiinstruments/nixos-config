@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  flake,
   ...
 }:
 {
@@ -14,9 +15,9 @@
     inputs.nixos-hardware.nixosModules.intel-nuc-8i7beh
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
-    inputs.self.modules.shared.default
-    inputs.self.modules.shared.home-manager
-    inputs.self.nixosModules.common
+    flake.modules.shared.default
+    flake.modules.shared.home-manager
+    flake.nixosModules.common
     ./disk-config.nix
     ./hardware-configuration.nix
   ];

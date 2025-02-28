@@ -2,6 +2,7 @@
   config,
   inputs,
   pkgs,
+  flake,
   ...
 }:
 {
@@ -11,9 +12,9 @@
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.srvos.darwinModules.mixins-nix-experimental
     inputs.agenix.darwinModules.default
-    inputs.self.modules.shared.default
-    inputs.self.modules.shared.home-manager
-    inputs.self.darwinModules.common
+    flake.modules.shared.default
+    flake.modules.shared.home-manager
+    flake.darwinModules.common
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";

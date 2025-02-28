@@ -1,6 +1,5 @@
-{ inputs, ... }:
+{ flake, ... }:
 {
-
-  imports = [ inputs.self.homeModules.default ];
+  imports = [ flake.homeModules.default ];
   programs.atuin.settings.daemon.enabled = true;
 }

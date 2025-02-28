@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ flake, ... }:
 {
-  imports = [ inputs.self.homeModules.default ];
+  imports = [ flake.homeModules.default ];
 }

@@ -1,10 +1,13 @@
 {
-  inputs,
+  flake,
   pkgs,
   ...
 }:
 {
-  imports = [ inputs.self.homeModules.default ];
+  imports = [
+    flake.homeModules.default
+    flake.homeModules.nvim
+  ];
   programs.ssh = {
     matchBlocks = {
       "github.com" = {

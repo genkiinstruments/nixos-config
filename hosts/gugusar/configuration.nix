@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  flake,
   ...
 }:
 {
@@ -12,9 +13,9 @@
     inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
-    inputs.self.modules.shared.default
-    inputs.self.modules.shared.home-manager
-    inputs.self.nixosModules.common
+    flake.modules.shared.default
+    flake.modules.shared.home-manager
+    flake.nixosModules.common
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";

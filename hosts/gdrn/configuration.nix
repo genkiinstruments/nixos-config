@@ -2,6 +2,7 @@
   lib,
   config,
   inputs,
+  flake,
   ...
 }:
 {
@@ -16,8 +17,8 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
-    inputs.self.modules.shared.default
-    inputs.self.nixosModules.common
+    flake.modules.shared.default
+    flake.nixosModules.common
   ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
