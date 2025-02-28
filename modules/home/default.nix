@@ -9,6 +9,8 @@
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
   home = {
+    enableNixpkgsReleaseCheck = false;
+
     stateVersion = "23.05";
 
     file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
