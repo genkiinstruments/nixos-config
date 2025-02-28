@@ -24,9 +24,8 @@
       zip
       magic-wormhole-rs
       neofetch
-      nb
-      age-plugin-fido2-hmac
-
+      cachix
+      bitwarden-cli
       (sesh.overrideAttrs (_old: {
         src = fetchFromGitHub {
           owner = "joshmedeski";
@@ -35,11 +34,6 @@
           sha256 = "sha256-YFvUYacuvyzNXwY+y9kI4tPlrlojDuZpR7VaTGdVqb8=";
         };
       }))
-
-      cachix
-
-      moonlight-qt
-      bitwarden-cli
     ];
   };
 
