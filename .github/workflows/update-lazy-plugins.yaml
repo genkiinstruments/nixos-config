@@ -25,7 +25,7 @@ jobs:
       - name: Update vim plugins
         run: |
           nix run .#mvim -- --headless "+Lazy! update" +qa
-          cp $HOME/.config/mvim/lazy-lock.json modules/home/config/nvim/lazy-lock.json
+          cp $HOME/.config/mvim/lazy-lock.json home/nvim/lazy-lock.json
       - uses: actions/create-github-app-token@main
         id: app-token
         with:
