@@ -3,7 +3,10 @@
   ...
 }:
 {
-  imports = [ flake.homeModules.default ];
+  imports = [
+    flake.homeModules.default
+    flake.homeModules.nvim
+  ];
 
   programs.ssh = {
     controlMaster = "auto";
