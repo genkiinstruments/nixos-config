@@ -28,7 +28,6 @@
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
         systems = [
-          "aarch64-linux"
           "x86_64-linux"
         ];
         maxJobs = 128;
