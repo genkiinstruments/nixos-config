@@ -1,6 +1,5 @@
 {
   inputs,
-  pkgs,
   lib,
   flake,
   ...
@@ -16,7 +15,6 @@
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
-    flake.modules.shared.home-manager
     flake.nixosModules.common
     ./disk-config.nix
   ];
@@ -29,20 +27,6 @@
 
   facter.reportPath = ./facter.json;
 
-  age.secrets.atuin-key = {
-    path = "/home/olafur/.local/share/atuin/key";
-    file = "${inputs.secrets}/atuin-key.age";
-    mode = "644";
-    owner = "olafur";
-    group = "users";
-  };
-
-  users.users.olafur = {
-    isNormalUser = true;
-    shell = pkgs.fish;
-    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-    extraGroups = [ "wheel" ];
-  };
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
   services.home-assistant = {
