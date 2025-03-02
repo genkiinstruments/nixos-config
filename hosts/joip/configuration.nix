@@ -12,21 +12,22 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
-    inputs.nixos-hardware.nixosModules.intel-nuc-8i7beh
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
+    inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.nixosModules.common
     ./disk-config.nix
-    ./hardware-configuration.nix
   ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  networking.hostName = "joip";
+
   system.stateVersion = "23.05"; # Did you read the comment?
 
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+
+  facter.reportPath = ./facter.json;
 
   age.secrets.atuin-key = {
     path = "/home/olafur/.local/share/atuin/key";
@@ -43,10 +44,6 @@
     extraGroups = [ "wheel" ];
   };
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-
-  networking.hostName = "joip";
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
 
   services.home-assistant = {
     enable = true;
