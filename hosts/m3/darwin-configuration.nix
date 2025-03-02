@@ -85,7 +85,6 @@
         systems = [ "aarch64-linux" ];
         maxJobs = 128;
         sshKey = config.age.secrets.nix-ssh-m3-gdrn.path;
-        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUl1UHF1RTUwNDVZcUFwZ2swdzBrU0d5ZHBhbDVaTVNmTWlablR6MHVOWDMgcm9vdEBnZHJuCg==";
         supportedFeatures = [
           "nixos-test"
           "benchmark"
