@@ -75,7 +75,7 @@
   age.secrets.gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
   age.secrets.gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
   networking.hostName = "gdrn";

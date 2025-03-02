@@ -43,9 +43,9 @@
   users.users.genki = {
     isNormalUser = true;
     shell = pkgs.fish;
-    openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
     extraGroups = [ "wheel" ];
   };
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 }

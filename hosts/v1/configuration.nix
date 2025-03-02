@@ -58,7 +58,7 @@
     "nix-ssh"
     "@wheel"
   ];
-  users.users.nix-ssh.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+  users.users.nix-ssh.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -238,9 +238,9 @@
       "video"
       "inputs"
     ];
-    openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
-  users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 

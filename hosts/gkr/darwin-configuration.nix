@@ -25,7 +25,7 @@
     shell = pkgs.fish;
     isHidden = false;
     home = "/Users/genki";
-    openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
 

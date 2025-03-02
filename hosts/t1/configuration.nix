@@ -24,7 +24,7 @@
   };
 
   # Allow you to SSH to the servers as root
-  users.users.root.openssh.authorizedKeys.keyFiles = [ ../../authorized_keys ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   users.users.root.initialHashedPassword = "$y$j9T$F.Rvr/xlJG562p7eQNksx1$RS7MnDu22HbUxdZeJwVrsGjbJeqoYWT2ytkOENznX55";
 
   age.secrets.p1_phx_todo.file = "${inputs.secrets}/p1_phx_todo.age";
