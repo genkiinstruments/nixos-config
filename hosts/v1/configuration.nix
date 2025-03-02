@@ -30,7 +30,7 @@
         systems = [
           "x86_64-linux"
         ];
-        maxJobs = 128;
+        maxJobs = 32;
         sshKey = config.age.secrets.nix-ssh-v1-gdrn.path;
         supportedFeatures = [
           "nixos-test"

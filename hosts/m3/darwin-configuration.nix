@@ -83,7 +83,7 @@
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
         systems = [ "aarch64-linux" ];
-        maxJobs = 128;
+        maxJobs = 32;
         sshKey = config.age.secrets.nix-ssh-m3-gdrn.path;
         supportedFeatures = [
           "nixos-test"
@@ -100,7 +100,7 @@
           "aarch64-linux"
           "x86_64-linux"
         ];
-        maxJobs = 128;
+        maxJobs = 14;
         sshKey = config.age.secrets.nix-ssh-m3-v1.path;
         publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUd1K2prYmJ2WVVndDN3azFFdEd5VXBHVDZMQ0EzUklBa1M0L0JjVzdEeHUgcm9vdEBtM3ZtCg==";
         supportedFeatures = [
