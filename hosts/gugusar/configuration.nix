@@ -10,7 +10,6 @@
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-terminfo
-    inputs.srvos.nixosModules.mixins-nix-experimental
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
     flake.modules.shared.default
@@ -22,8 +21,6 @@
   system.stateVersion = "23.05";
 
   boot = {
-    loader.systemd-boot.enable = true;
-    loader.efi.canTouchEfiVariables = true;
     initrd.availableKernelModules = [
       "xhci_pci"
       "ahci"

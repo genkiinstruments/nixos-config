@@ -7,9 +7,8 @@
 {
   imports = [
     inputs.srvos.nixosModules.server
-    inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-terminfo
-    inputs.srvos.nixosModules.mixins-nix-experimental
+    inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
@@ -22,8 +21,6 @@
   networking.hostName = "joip";
 
   system.stateVersion = "23.05"; # Did you read the comment?
-
-  boot.loader.systemd-boot.enable = true;
 
   facter.reportPath = ./facter.json;
 

@@ -8,9 +8,7 @@
 {
   imports = [
     inputs.srvos.darwinModules.common
-    inputs.srvos.darwinModules.mixins-telegraf
     inputs.srvos.darwinModules.mixins-terminfo
-    inputs.srvos.darwinModules.mixins-nix-experimental
     inputs.agenix.darwinModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager

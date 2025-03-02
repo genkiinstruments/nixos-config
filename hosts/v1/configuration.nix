@@ -12,8 +12,7 @@
     inputs.disko.nixosModules.disko
     inputs.srvos.nixosModules.desktop
     inputs.srvos.nixosModules.mixins-terminfo
-    inputs.srvos.nixosModules.mixins-nix-experimental
-    inputs.srvos.nixosModules.mixins-trusted-nix-caches
+    inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.agenix.nixosModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager
@@ -60,12 +59,6 @@
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  # Use the systemd-boot EFI boot loader. arm uses EFI, so we need systemd-boot
-  boot.loader.systemd-boot.enable = true;
-
-  # since it's a vm, we can do this on every update safely
-  boot.loader.efi.canTouchEfiVariables = true;
 
   # VMware, Parallels both only support this being 0 otherwise you see
   # "error switching console mode" on boot.
