@@ -1,6 +1,7 @@
 {
   inputs,
   flake,
+  config,
   ...
 }:
 {
@@ -25,42 +26,89 @@
 
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
+  # [TODO]: Provide upstream fix? (March 02, 2025 17:25, )
+  users.groups.secrets = {
+    members = [
+      "oauth2-proxy"
+      "buildbot"
+    ];
+  };
+
+  age.secrets = {
+    buildbot-github-app-secret-key.file = "${inputs.secrets}/buildbot-github-app-secret-key.age";
+    buildbot-github-oauth-secret.file = "${inputs.secrets}/buildbot-github-oauth-secret.age";
+    buildbot-github-webhook-secret.file = "${inputs.secrets}/buildbot-github-webhook-secret.age";
+    buildbot-nix-worker-password.file = "${inputs.secrets}/buildbot-nix-worker-password.age";
+    buildbot-nix-workers-json.file = "${inputs.secrets}/buildbot-nix-workers-json.age";
+
+    buildbot-client-secret = {
+      file = "${inputs.secrets}/buildbot-client-secret.age";
+      owner = "root";
+      group = "secrets";
+      mode = "0440";
+    };
+
+    buildbot-github-cookie-secret = {
+      file = "${inputs.secrets}/buildbot-github-cookie-secret.age";
+      owner = "root";
+      group = "secrets";
+      mode = "0440";
+    };
+
+    buildbot-http-basic-auth-password = {
+      file = "${inputs.secrets}/buildbot-http-basic-auth-password.age";
+      owner = "root";
+      group = "secrets";
+      mode = "0440";
+    };
+  };
+
   services.buildbot-nix.master = {
     enable = true;
-
     domain = "buildbot.bygenki.com";
-    workersFile = pkgs.writeText "workers.json" "changeMe";
+    outputsPath = "/var/www/buildbot/nix-outputs/";
+    workersFile = config.age.secrets.buildbot-nix-workers-json.path;
     admins = [
       "multivac61"
       "dingari"
+      "MatthewCroughan"
     ];
-
     authBackend = "httpbasicauth";
     # this is a randomly generated secret, which is only used to authenticate requests from the oauth2 proxy to buildbot
-    httpBasicAuthPasswordFile = pkgs.writeText "http-basic-auth-passwd" "changeMe";
-
+    httpBasicAuthPasswordFile = config.age.secrets.buildbot-http-basic-auth-password.path;
     github = {
       enable = true;
-      webhookSecretFile = pkgs.writeText "github_webhook_secret" "changeMe";
+      webhookSecretFile = config.age.secrets.buildbot-github-webhook-secret.path;
+      oauthId = "Ov23liztqfvRnVaEz57V";
+      oauthSecretFile = config.age.secrets.buildbot-github-oauth-secret.path;
       topic = "build-with-buildbot";
       authType.app = {
-        secretKeyFile = pkgs.writeText "github_app_secret_key" "changeMe";
+        secretKeyFile = config.age.secrets.buildbot-github-app-secret-key.path;
         id = 1163488;
       };
     };
-
     accessMode.fullyPrivate = {
       backend = "github";
       # this is a randomly generated alphanumeric secret, which is used to encrypt the cookies set by oauth2-proxy, it must be 8, 16, or 32 characters long
-      cookieSecretFile = pkgs.writeText "github_cookie_secret" "changeMe";
-      clientSecretFile = pkgs.writeText "github_oauth_secret" "changeMe";
-      clientId = "Iv1.XXXXXXXXXXXXXXXX";
+      cookieSecretFile = config.age.secrets.buildbot-github-cookie-secret.path;
+      clientSecretFile = config.age.secrets.buildbot-client-secret.path;
+      clientId = "Iv23lioyXvbIN5gVi6KN";
     };
   };
 
   services.buildbot-nix.worker = {
     enable = true;
-    workerPasswordFile = "/secret/worker_secret";
+    workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
+  };
+
+  services.nginx.virtualHosts.${config.services.buildbot-nix.master.domain} = {
+    forceSSL = true;
+    enableACME = true;
+  };
+
+  security.acme = {
+    acceptTerms = true;
+    defaults.email = "olafur@genkiinstruments.com";
   };
 
   zramSwap = {
