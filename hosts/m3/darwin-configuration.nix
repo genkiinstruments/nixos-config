@@ -135,7 +135,7 @@
         "gdrn"
         "gdrn.tail01dbd.ts.net"
       ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIuPquE5045YqApgk0w0kSGydpal5ZMSfMiZnTz0uNX3";
+      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRXFsRbLcgKBiszr7aZoJ9SkwWVz0TMMmH/DKvrHyg6";
     };
   };
 
