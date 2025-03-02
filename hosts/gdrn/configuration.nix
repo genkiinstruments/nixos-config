@@ -14,7 +14,6 @@
     inputs.srvos.nixosModules.roles-github-actions-runner
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
-    inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
     flake.nixosModules.common
