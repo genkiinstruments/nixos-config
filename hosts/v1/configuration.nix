@@ -43,7 +43,6 @@
     ];
   };
   age.secrets.nix-ssh-v1-gdrn.file = "${inputs.secrets}/nix-ssh-v1-gdrn.age";
-  age.secrets.v1-top-secret.file = "${inputs.secrets}/v1-top-secret.age";
 
   nix.sshServe = {
     protocol = "ssh-ng";
