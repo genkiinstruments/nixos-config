@@ -1,5 +1,4 @@
 {
-  lib,
   config,
   inputs,
   flake,
@@ -7,7 +6,6 @@
 }:
 {
   imports = [
-    ./disko-config.nix
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-terminfo
@@ -17,27 +15,15 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-hardware.nixosModules.common-cpu-amd-raphael-igpu
+    inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
     flake.nixosModules.common
+    ./disko-config.nix
   ];
 
-  nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  hardware.enableRedistributableFirmware = true;
-
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-    "sr_mod"
-  ];
-  boot.kernelModules = [ "kvm-amd" ];
-
-  networking.useDHCP = lib.mkDefault true;
+  facter.reportPath = ./facter.json;
 
   zramSwap = {
     enable = true;
@@ -79,7 +65,6 @@
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
   networking.hostName = "gdrn";
-  networking.hostId = "deadbeef";
 
   programs.ssh.startAgent = true;
 }
