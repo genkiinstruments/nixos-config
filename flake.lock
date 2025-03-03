@@ -269,11 +269,11 @@
         "rev": "f4a3e497cba3928650e9ef0c32d135aec7006985",
         "revCount": 45,
         "type": "git",
-        "url": "ssh://git@github.com/multivac61/nix-secrets.git"
+        "url": "ssh://git@github.com/genkiinstruments/nix-secrets.git"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/multivac61/nix-secrets.git"
+        "url": "ssh://git@github.com/genkiinstruments/nix-secrets.git"
       }
     },
     "srvos": {
