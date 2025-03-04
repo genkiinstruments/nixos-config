@@ -17,7 +17,7 @@ let
     else
       "/home/${config.home.username}";
 
-  nvimConfigSource = "${homeDirectory}/dev/nixos-config/home/nvim";
+  nvimConfigSource = "${homeDirectory}/dev/genkiinstruments/nixos-config/home/nvim";
 in
 {
   home.packages = nvim-lsp-packages ++ [
