@@ -98,11 +98,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741818059,
-        "narHash": "sha256-TxCi0pazPhj1dUKc+eR8jqvXwMiPQMdEt/YRffZOYig=",
+        "lastModified": 1741860468,
+        "narHash": "sha256-ArG3mnjHmcal5ny72VZvCqHchz9RsWiUBCRSGS0FXlA=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "da6d41516d7b70799b3c1d9b2d9e7731c5f8cb04",
+        "rev": "50abeb976eb85fe6695a2888ec4c274675563c15",
         "type": "github"
       },
       "original": {
@@ -128,21 +128,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "disko",
-        "type": "github"
-      }
-    },
-    "flake-compat": {
-      "locked": {
-        "lastModified": 1688025799,
-        "narHash": "sha256-ktpB4dRtnksm9F5WawoIkEneh1nrEvuxb5lJFt1iOyw=",
-        "owner": "nix-community",
-        "repo": "flake-compat",
-        "rev": "8bf105319d44f6b9f0d764efa4fdef9f1cc9ba1c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "flake-compat",
         "type": "github"
       }
     },
@@ -175,11 +160,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1741211898,
+        "lastModified": 1741213602,
         "narHash": "sha256-fMwgAZTcGa0ojcF0Yi9uwVPGrw781JzQcA3N+lU+kRQ=",
         "ref": "refs/heads/main",
-        "rev": "793ac147490ae06e3357054120e826a96e8ed825",
-        "revCount": 12,
+        "rev": "590211596298c25583ea5370e6ae44350e8d3ada",
+        "revCount": 14,
         "type": "git",
         "url": "ssh://git@github.com/genkiinstruments/genki-www.git"
       },
@@ -254,26 +239,6 @@
         "type": "github"
       }
     },
-    "nixos-apple-silicon": {
-      "inputs": {
-        "flake-compat": "flake-compat",
-        "nixpkgs": "nixpkgs_2",
-        "rust-overlay": "rust-overlay"
-      },
-      "locked": {
-        "lastModified": 1737610856,
-        "narHash": "sha256-oQxZlfbfj5UlxR+PoiygJKkq5MxC0f+u9aANl0sSmNM=",
-        "owner": "matthewcroughan",
-        "repo": "nixos-apple-silicon",
-        "rev": "a448d139633ae14007146af8db01e77199847b66",
-        "type": "github"
-      },
-      "original": {
-        "owner": "matthewcroughan",
-        "repo": "nixos-apple-silicon",
-        "type": "github"
-      }
-    },
     "nixos-facter-modules": {
       "locked": {
         "lastModified": 1738752252,
@@ -332,28 +297,11 @@
         "genki-www": "genki-www",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
-        "nixos-apple-silicon": "nixos-apple-silicon",
         "nixos-facter-modules": "nixos-facter-modules",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_2",
         "secrets": "secrets",
         "srvos": "srvos",
         "treefmt-nix": "treefmt-nix_2"
-      }
-    },
-    "rust-overlay": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1686795910,
-        "narHash": "sha256-jDa40qRZ0GRQtP9EMZdf+uCbvzuLnJglTUI2JoHfWDc=",
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "rev": "5c2b97c0a9bc5217fc3dfb1555aae0fb756d99f9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "oxalica",
-        "repo": "rust-overlay",
-        "type": "github"
       }
     },
     "secrets": {

@@ -2,6 +2,7 @@
   config,
   inputs,
   flake,
+  perSystem,
   ...
 }:
 {
@@ -33,7 +34,7 @@
     protocol = "ssh-ng";
     enable = true;
     write = true;
-    # For Nix remote builds, the SSH authentication needs to be non-interactive and not dependent on ssh-agent, since the Nix daemon needs to be able to authenticate automatically.
+    # Nix daemon needs to be able to authenticate non-interactively.
     keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJMSR/8/YBvhetwK3qcgnz39xnk27Oq1mHLaEpFRiXhR olafur@M3.local"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgZsVoqTNrbGtewP2+mEBSXQuiEEWcGuRyp0VtyQ9NR genki@v1"
@@ -43,6 +44,16 @@
     "nix-ssh"
     "@wheel"
   ];
+
+  services.tailscale.permitCertUid = "caddy";
+
+  services.caddy = {
+    enable = true;
+    virtualHosts."gdrn.tail01dbd.ts.net".extraConfig = ''
+      root * ${perSystem.genki-www.default}
+      file_server
+    '';
+  };
 
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";

@@ -36,6 +36,9 @@
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
     buildbot-nix.url = "github:nix-community/buildbot-nix";
+
+    genki-www.url = "git+ssh://git@github.com/genkiinstruments/genki-www.git";
+    genki-www.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
