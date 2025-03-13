@@ -1,7 +1,6 @@
 {
   inputs,
   flake,
-  pkgs,
   ...
 }:
 {
@@ -38,13 +37,5 @@
   networking.hostName = "biggimaus";
   networking.hostId = "deadbeef";
   networking.useDHCP = true;
-
-  users.users.genki = {
-    isNormalUser = true;
-    shell = pkgs.fish;
-    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-    extraGroups = [ "wheel" ];
-  };
-
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 }
