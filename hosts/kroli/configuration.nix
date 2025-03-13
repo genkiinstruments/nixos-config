@@ -40,6 +40,5 @@
     hashedPassword = "";
   };
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   users.users.root.hashedPassword = "";
 }

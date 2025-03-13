@@ -231,7 +231,6 @@
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
-  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 

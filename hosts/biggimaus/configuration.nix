@@ -37,5 +37,4 @@
   networking.hostName = "biggimaus";
   networking.hostId = "deadbeef";
   networking.useDHCP = true;
-  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 }

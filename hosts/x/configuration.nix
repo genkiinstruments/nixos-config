@@ -25,8 +25,6 @@
 
   facter.reportPath = ./facter.json;
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-
   # [TODO]: Provide upstream fix? (March 02, 2025 17:25, )
   users.groups.secrets = {
     members = [

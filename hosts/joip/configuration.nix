@@ -24,8 +24,6 @@
 
   facter.reportPath = ./facter.json;
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-
   services.home-assistant = {
     enable = true;
     openFirewall = true;
