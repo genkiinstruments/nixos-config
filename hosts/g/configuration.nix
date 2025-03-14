@@ -12,10 +12,11 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
-    inputs.agenix.nixosModules.default
-    inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
     flake.nixosModules.common
+    flake.modules.shared.home-manager
+    inputs.agenix.nixosModules.default
+    inputs.nixos-facter-modules.nixosModules.facter
     ./disko.nix
   ];
 
@@ -36,6 +37,22 @@
     # The display has √(2560² + 1600²) px / 8.8in ≃ 343 dpi
     # Per the documentation, antialiasing, hinting, etc. have no visible effect at such high pixel densities anyhow.
     hinting.enable = lib.mkDefault false;
+  };
+
+  users.users.genki = {
+    isNormalUser = true;
+    description = "genki";
+    shell = pkgs.fish;
+    hashedPassword = "$6$UIOsLjI24UeaovvG$SVVrXdpnepj/w1jhmYNdpPpmcgkcXsMBcAkqrcIL5yCCYDAkc/8kblyzuBLyK6PnJqR1JxZ7XtlWyCJwWhGrw.";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "plugdev"
+      "dialout"
+      "video"
+      "inputs"
+    ];
+    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
 
   # More HiDPI settings
