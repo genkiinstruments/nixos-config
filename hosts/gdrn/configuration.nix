@@ -44,6 +44,7 @@
     "nix-ssh"
     "@wheel"
   ];
+  programs.ssh.startAgent = true;
 
   services.tailscale.permitCertUid = "caddy";
 
@@ -74,5 +75,4 @@
 
   networking.hostName = "gdrn";
 
-  programs.ssh.startAgent = true;
 }
