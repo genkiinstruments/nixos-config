@@ -11,7 +11,6 @@
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
     flake.modules.shared.default
-    flake.modules.shared.home-manager
     flake.nixosModules.common
     ./disko-config.nix
   ];
