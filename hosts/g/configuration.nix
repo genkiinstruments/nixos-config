@@ -138,14 +138,24 @@
     displayManager = {
       lightdm.enable = true;
 
-      # AARCH64: For now, on Apple Silicon, we must manually set the
-      # display resolution. This is a known issue with VMware Fusion.
       sessionCommands = ''
-        ${pkgs.xorg.xset}/bin/xset r rate 200 40
+        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rotate right
       '';
     };
 
     windowManager.i3.enable = true;
+    inputClassSections = [
+      ''
+        Identifier "Rotate touchscreen"
+        MatchIsTouchscreen "on"
+        Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
+      ''
+      ''
+        Identifier "Rotate touchpad"
+        MatchIsTouchpad "on"
+        Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
+      ''
+    ];
   };
 
   # GNOME packages
