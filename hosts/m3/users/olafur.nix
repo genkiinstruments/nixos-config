@@ -65,5 +65,4 @@
         __ssh_agent_start
     end
   '';
-
 }
