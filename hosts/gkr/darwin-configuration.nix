@@ -25,6 +25,7 @@
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
+  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
   nix.settings.trusted-users = [
     "root"
