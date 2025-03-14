@@ -1,6 +1,5 @@
 {
   inputs,
-  pkgs,
   flake,
   ...
 }:
@@ -30,14 +29,6 @@
   };
 
   networking.hostName = "gugusar";
-
-  users.users.genki = {
-    isNormalUser = true;
-    shell = pkgs.fish;
-    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-    extraGroups = [ "wheel" ];
-    hashedPassword = "";
-  };
 
   users.users.root.hashedPassword = "";
 }
