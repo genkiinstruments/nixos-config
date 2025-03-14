@@ -10,6 +10,7 @@ pkgs.mkShell {
       age
       age-plugin-yubikey
       age-plugin-fido2-hmac
+      perSystem.self.deploy
     ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       perSystem.nix-darwin.darwin-rebuild
