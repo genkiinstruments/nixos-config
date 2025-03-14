@@ -80,7 +80,21 @@
         hostName = "gdrn";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
-        systems = [ "aarch64-linux" ];
+        systems = [ "x86_64-linux" ];
+        maxJobs = 32;
+        sshKey = config.age.secrets.nix-ssh-m3-gdrn.path;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+      }
+      {
+        hostName = "x";
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        systems = [ "x86_64-linux" ];
         maxJobs = 32;
         sshKey = config.age.secrets.nix-ssh-m3-gdrn.path;
         supportedFeatures = [
@@ -96,11 +110,9 @@
         protocol = "ssh-ng";
         systems = [
           "aarch64-linux"
-          "x86_64-linux"
         ];
         maxJobs = 14;
         sshKey = config.age.secrets.nix-ssh-m3-v1.path;
-        publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUd1K2prYmJ2WVVndDN3azFFdEd5VXBHVDZMQ0EzUklBa1M0L0JjVzdEeHUgcm9vdEBtM3ZtCg==";
         supportedFeatures = [
           "nixos-test"
           "benchmark"
