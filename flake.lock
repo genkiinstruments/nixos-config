@@ -48,28 +48,6 @@
         "type": "github"
       }
     },
-    "blueprint_2": {
-      "inputs": {
-        "nixpkgs": [
-          "genki-www",
-          "nixpkgs"
-        ],
-        "systems": "systems_3"
-      },
-      "locked": {
-        "lastModified": 1739959476,
-        "narHash": "sha256-wMGZp7fS7LekFLFB0WVjmin2o8TuRKuAYdDCPKSpNeg=",
-        "owner": "numtide",
-        "repo": "blueprint",
-        "rev": "ee2f933b458137c9cf3e415daab4856521caefa0",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "blueprint",
-        "type": "github"
-      }
-    },
     "buildbot-nix": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -154,17 +132,19 @@
     },
     "genki-www": {
       "inputs": {
-        "blueprint": "blueprint_2",
+        "blueprint": [
+          "blueprint"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1741213602,
-        "narHash": "sha256-fMwgAZTcGa0ojcF0Yi9uwVPGrw781JzQcA3N+lU+kRQ=",
+        "lastModified": 1741969630,
+        "narHash": "sha256-Zs7qzNYv3GLziD2pMv9RpEFnCNR5bxLcAx2sXgtDRJs=",
         "ref": "refs/heads/main",
-        "rev": "590211596298c25583ea5370e6ae44350e8d3ada",
-        "revCount": 14,
+        "rev": "6b8a10b122b9d1a23061ac984d1c2b2a44865767",
+        "revCount": 20,
         "type": "git",
         "url": "ssh://git@github.com/genkiinstruments/genki-www.git"
       },
@@ -356,21 +336,6 @@
       }
     },
     "systems_2": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
-    "systems_3": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",

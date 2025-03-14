@@ -39,6 +39,7 @@
 
     genki-www.url = "git+ssh://git@github.com/genkiinstruments/genki-www.git";
     genki-www.inputs.nixpkgs.follows = "nixpkgs";
+    genki-www.inputs.blueprint.follows = "blueprint";
   };
 
   outputs =
