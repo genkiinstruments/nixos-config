@@ -55,7 +55,6 @@
     "nix-ssh"
     "@wheel"
   ];
-  users.users.nix-ssh.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
