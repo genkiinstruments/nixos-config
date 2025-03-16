@@ -35,6 +35,9 @@
 
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
+    # The module applies custom patches that only apply to buildbot > 4.0.0.
+    # To use buildbot-nix with NixOS 24.05, you should therefore not override the
+    # nixpkgs input to your own stable version of buildbot-nix.
     buildbot-nix.url = "github:nix-community/buildbot-nix";
 
     genki-www.url = "git+ssh://git@github.com/genkiinstruments/genki-www.git";
