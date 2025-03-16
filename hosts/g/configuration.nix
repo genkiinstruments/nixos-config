@@ -77,6 +77,9 @@
 
   programs.nix-ld.enable = true;
 
+  # We are using zsh here.
+  home-manager.users.olafur.programs.atuin.settings.daemon.enabled = false;
+
   users.mutableUsers = false;
 
   # List packages installed in system profile. To search, run:
