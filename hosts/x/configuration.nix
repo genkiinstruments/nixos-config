@@ -176,10 +176,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEgZsVoqTNrbGtewP2+mEBSXQuiEEWcGuRyp0VtyQ9NR genki@v1"
     ];
   };
-  nix.settings.trusted-users = [
-    "nix-ssh"
-    "@wheel"
-  ];
+  nix.settings.trusted-users = [ "nix-ssh" ];
 
   system.stateVersion = "24.11";
 }

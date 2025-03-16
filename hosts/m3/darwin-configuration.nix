@@ -70,7 +70,6 @@
 
   nix = {
     settings.trusted-users = [
-      "@wheel"
       "olafur"
       "nix-ssh"
     ];

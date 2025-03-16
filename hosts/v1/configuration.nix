@@ -51,10 +51,7 @@
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0V/P7rcJdL7gumCvQPgbsZoMgfF8FcOAE++LsyZPCr olafur@M3.local"
     ];
   };
-  nix.settings.trusted-users = [
-    "nix-ssh"
-    "@wheel"
-  ];
+  nix.settings.trusted-users = [ "nix-ssh" ];
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;

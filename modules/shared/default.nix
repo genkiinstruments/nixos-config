@@ -25,6 +25,9 @@
   # https://nix.dev/manual/nix/2.22/language/import-from-derivation
   nix.settings.allow-import-from-derivation = false;
 
+  # If the user is in @wheel they are trusted by default.
+  nix.settings.trusted-users = [ "@wheel" ];
+
   fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
 
   services.tailscale.enable = true; # Deploy tailscale everywhere
