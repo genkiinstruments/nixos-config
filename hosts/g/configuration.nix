@@ -12,32 +12,32 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
-    flake.modules.shared.default
-    flake.nixosModules.common
-    flake.modules.shared.home-manager
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
+    flake.modules.shared.default
+    flake.modules.shared.home-manager
+    flake.nixosModules.common
     ./disko.nix
   ];
 
-  boot = {
-    # As of kernel version 6.6.72, amdgpu throws a fatal error during init, resulting in a barely-working display
-    kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.12") pkgs.linuxPackages_latest;
+  # As of kernel version 6.6.72, amdgpu throws a fatal error during init, resulting in a barely-working display
+  boot.kernelPackages = lib.mkIf (lib.versionOlder pkgs.linux.version "6.12") pkgs.linuxPackages_latest;
 
-    kernelParams = [
-      # The GPD Pocket 4 uses a tablet LTPS display, that is mounted rotated 90° counter-clockwise
-      "fbcon=rotate:1"
-      "video=eDP-1:panel_orientation=right_side_up"
-    ];
-  };
+  boot.kernelParams = [
+    # The GPD Pocket 4 uses a tablet LTPS display, that is mounted rotated 90° counter-clockwise
+    "fbcon=rotate:1"
+    "video=eDP-1:panel_orientation=right_side_up"
+  ];
 
   fonts.fontconfig = {
     subpixel.rgba = "vbgr"; # Pixel order for rotated screen
 
-    # The display has √(2560² + 1600²) px / 8.8in ≃ 343 dpi
     # Per the documentation, antialiasing, hinting, etc. have no visible effect at such high pixel densities anyhow.
     hinting.enable = lib.mkDefault false;
   };
+  #
+  # The display has √(2560² + 1600²) px / 8.8in ≃ 343 dpi
+  services.xserver.dpi = 343;
 
   users.users.genki = {
     isNormalUser = true;
@@ -45,8 +45,8 @@
     shell = pkgs.fish;
     hashedPassword = "$6$UIOsLjI24UeaovvG$SVVrXdpnepj/w1jhmYNdpPpmcgkcXsMBcAkqrcIL5yCCYDAkc/8kblyzuBLyK6PnJqR1JxZ7XtlWyCJwWhGrw.";
     extraGroups = [
-      "networkmanager"
       "wheel"
+      "networkmanager"
       "plugdev"
       "dialout"
       "video"
@@ -55,25 +55,17 @@
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
 
-  # More HiDPI settings
-  services.xserver.dpi = 343;
-
-  # If the user is in @wheel they are trusted by default.
-  nix.settings.trusted-users = [ "@wheel" ];
-
   security.sudo.wheelNeedsPassword = false;
 
-  # Enable SSH everywhere
   services.openssh.enable = true;
-
   networking.hostName = "g";
 
   facter.reportPath = ./facter.json;
 
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
-  };
+  services.tailscale.enable = true;
+
+  # Reduce the timeout from the default 90 seconds to something shorter
+  systemd.services.tailscale.serviceConfig.TimeoutStopSec = 5;
 
   zramSwap = {
     enable = true;
@@ -85,7 +77,6 @@
 
   programs.nix-ld.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.mutableUsers = false;
 
   # List packages installed in system profile. To search, run:
@@ -107,12 +98,6 @@
       dconf-editor
       ghostty
       rofi
-
-      # For hypervisors that support auto-resizing, this script forces it.
-      # I've noticed not everyone listens to the udev events so this is a hack.
-      (writeShellScriptBin "xrandr-auto" ''
-        xrandr --output Virtual-1 --auto
-      '')
     ]
     ++ [
       # This is needed for the vmware user tools clipboard to work.
@@ -123,39 +108,15 @@
       gtkmm3
     ];
 
-  services.displayManager.defaultSession = "none+i3";
-
   services.xserver = {
     enable = true;
     # displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
-    desktopManager = {
-      xterm.enable = false;
-      wallpaper.mode = "fill";
-    };
-
-    displayManager = {
-      lightdm.enable = true;
-
-      sessionCommands = ''
-        ${pkgs.xorg.xrandr}/bin/xrandr --output eDP-1 --rotate right
-      '';
-    };
-
-    windowManager.i3.enable = true;
-    inputClassSections = [
-      ''
-        Identifier "Rotate touchscreen"
-        MatchIsTouchscreen "on"
-        Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
-      ''
-      ''
-        Identifier "Rotate touchpad"
-        MatchIsTouchpad "on"
-        Option "TransformationMatrix" "0 1 0 -1 0 1 0 0 1"
-      ''
-    ];
+    desktopManager.xterm.enable = false;
+    desktopManager.wallpaper.mode = "fill";
+    # displayManager.lightdm.enable = true;
+    # windowManager.i3.enable = true;
   };
 
   # GNOME packages
@@ -166,14 +127,6 @@
     evince # document viewer
     # Add other GNOME packages you want to exclude
   ];
-
-  # We need an XDG portal for various applications to work properly,
-  # such as Flatpak applications.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
-  };
 
   services.udev.packages = [
     pkgs.yubikey-personalization
