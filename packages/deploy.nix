@@ -17,7 +17,7 @@ pkgs.writeShellApplication {
     USER="$2"
     echo "Deploying $NAME for user $USER"
 
-    rsync -av --delete ${toString flake}/. "root@$NAME:/etc/nixos-config/"
+    rsync -av --delete "${toString flake}/" "root@$NAME:/etc/nixos-config"
 
     ssh -t "root@$NAME" "
       if [ -d /Applications ]; then
