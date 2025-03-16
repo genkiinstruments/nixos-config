@@ -77,8 +77,8 @@
 
   programs.nix-ld.enable = true;
 
-  # We are using zsh here.
-  home-manager.users.olafur.programs.atuin.settings.daemon.enabled = false;
+  # We are using zsh: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
+  home-manager.users.genki.programs.atuin.settings.daemon.enabled = false;
 
   users.mutableUsers = false;
 
