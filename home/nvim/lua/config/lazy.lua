@@ -34,6 +34,7 @@ require("lazy").setup({
         },
         -- Lua
         { import = "lazyvim.plugins.extras.lang.sql" },
+        { import = "lazyvim.plugins.extras.lang.go" },
         { import = "lazyvim.plugins.extras.coding.mini-surround" },
         { import = "lazyvim.plugins.extras.editor.mini-diff" },
         { import = "lazyvim.plugins.extras.editor.mini-move" },

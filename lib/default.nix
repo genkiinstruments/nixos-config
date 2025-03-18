@@ -45,6 +45,7 @@ _: {
       zls
 
       # mvim custom
+      gopls
       stdenv.cc # needed to compile and link nl and other packages
       elixir-ls
       emmet-language-server
