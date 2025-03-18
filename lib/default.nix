@@ -45,6 +45,7 @@ _: {
       zls
 
       # mvim custom
+      sqlite # dadbod
       gopls
       stdenv.cc # needed to compile and link nl and other packages
       elixir-ls
