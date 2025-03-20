@@ -15,6 +15,7 @@
 
     file.".config/karabiner/karabiner.json".source = ./config/karabiner/karabiner.json;
     file.".config/ghostty/config".source = ./config/ghostty/config;
+    file.".hammerspoon/init.lua".source = ./config/hammerspoon/init.lua;
     file.".hushlogin".text = "";
 
     sessionVariables.EDITOR = "nvim";
@@ -26,6 +27,15 @@
       neofetch
       cachix
       bitwarden-cli
+      hammerspoon
+      (claude-code.overrideAttrs (_old: rec {
+        version = "0.2.52";
+        src = fetchzip {
+          url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
+          hash = "sha256-Yhsmc95rzMEMB2e4Chs6E8r2cFZeOPAs6pH5fH5nC5E=";
+        };
+        npmDepsHash = "sha256-L+aGG3qHdoO+pdgSq+BhbhDszmIWWssqbyviytokzuI=";
+      }))
       (sesh.overrideAttrs (_old: {
         src = fetchFromGitHub {
           owner = "joshmedeski";
