@@ -83,7 +83,7 @@ in
       # Update plugins if needed
       if [[ -f "$NVIM_CONFIG_SOURCE/lazy-lock.json" ]]; then
         if ! grep -q "${treesitter-grammars.rev}" "$NVIM_CONFIG_SOURCE/lazy-lock.json"; then
-          ${neovim}/bin/nvim --headless "+Lazy! update" +qa
+          ${neovim}/bin/nvim --headless "+Lazy! update" +qa > /dev/null 2>&1
         fi
       fi
 
