@@ -16,7 +16,7 @@ in
 writeShellApplication {
   inherit name;
   text = ''
-    set -efux
+    set -efu
     unset VIMINIT
     export PATH="${pkgs.coreutils}/bin:${lspEnv}/bin:${neovim}/bin:$PATH"
     export NVIM_APPNAME=${name}
@@ -45,9 +45,9 @@ writeShellApplication {
     echo "${treesitter-grammars.rev}" > "$CONFIG_DIR/treesitter-rev"
 
     if ! grep -q "${treesitter-grammars.rev}" "$CONFIG_DIR/lazy-lock.json"; then
-      nvim --headless "+Lazy! update" +qa
+      nvim --headless "+Lazy! update" +qa > /dev/null 2>&1 &
     else
-      nvim --headless -c 'quitall'
+      nvim --headless -c 'quitall' > /dev/null 2>&1
     fi
 
     mkdir -p "$XDG_DATA_HOME/$NVIM_APPNAME/lib/" "$XDG_DATA_HOME/$NVIM_APPNAME/site/"
