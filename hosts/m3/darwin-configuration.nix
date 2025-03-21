@@ -156,7 +156,6 @@
       "raycast"
       "arc"
       "firefox"
-      "karabiner-elements"
     ];
     brews = [
       # clis and libraries
