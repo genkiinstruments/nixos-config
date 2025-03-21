@@ -8,7 +8,6 @@
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.substituters = [
-    "https://oceansprint.tvix.store/cno/"
     "https://genki.cachix.org"
     "https://nix-community.cachix.org"
     "https://cache.nixos.org"
