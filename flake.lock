@@ -140,11 +140,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742567403,
-        "narHash": "sha256-su842ZxQjfMOfQyfeSrBcRyM0DFH5Qi7QUdK9Bk1E6c=",
+        "lastModified": 1742568941,
+        "narHash": "sha256-kBy5w5a95bnSiRuExrJGrS02bONUyPh0NWfdp551d5U=",
         "ref": "refs/heads/main",
-        "rev": "3dd6c844ad5d0ea290e44dc5520e37eaa1ade57f",
-        "revCount": 56,
+        "rev": "28711078c5fda61427262d3d2ec2104688b8eb98",
+        "revCount": 57,
         "type": "git",
         "url": "ssh://git@github.com/multivac61/fod-oracle.git"
       },
