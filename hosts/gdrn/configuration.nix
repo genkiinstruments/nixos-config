@@ -22,14 +22,63 @@
     ./disko-config.nix
   ];
 
+  # Hardware optimizations
+  boot = {
+    # Kernel settings
+    kernelPackages = pkgs.linuxPackages_latest; # Use latest kernel for AMD CPU optimizations
+
+    # Hardware-specific optimizations
+    kernelParams = [
+      # CPU optimizations
+      "amd_pstate=active" # Enable AMD pstate driver for better power management
+      "processor.max_cstate=5" # Limit C-states for better latency
+
+      # I/O optimizations
+      "elevator=none" # Use the multi-queue scheduler for NVMe
+      "transparent_hugepage=madvise" # Set THP to madvise for server workloads
+
+      # Memory optimizations
+      "default_hugepagesz=2M" # Default huge page size
+      "hugepagesz=1G" # Support for 1GB huge pages
+    ];
+
+    initrd.availableKernelModules = [
+      "nvme" # NVMe support
+      "xhci_pci" # USB 3.0 support
+      "ahci" # SATA support
+      "usbhid" # USB HID support
+    ];
+  };
+
+  # NVMe and disk optimizations
+  services.fstrim.enable = true; # Enable TRIM for SSDs
+  services.fstrim.interval = "daily"; # Run TRIM daily
+
+  # ZFS optimizations
+  services.zfs = {
+    autoScrub.enable = true;
+    autoScrub.interval = "weekly";
+    trim.enable = true;
+  };
+
   system.stateVersion = "23.05"; # Did you read the comment?
 
   facter.reportPath = ./facter.json;
 
+  # Optimized memory configuration for AMD Ryzen
   zramSwap = {
     enable = true;
     algorithm = "zstd";
     memoryPercent = 90;
+  };
+
+  # CPU optimization settings for AMD processors
+  hardware.cpu.amd.updateMicrocode = true;
+
+  # Enable specific performance governors
+  powerManagement = {
+    enable = true;
+    cpuFreqGovernor = "performance";
   };
 
   nix.sshServe = {
