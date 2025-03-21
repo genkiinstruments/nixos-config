@@ -142,15 +142,15 @@
       "locked": {
         "lastModified": 1742593941,
         "narHash": "sha256-RKDQcD2TWTEp8ZBtlJqsSrQRzwe1r+Lpcn73EqQOxeo=",
-        "ref": "refs/heads/main",
+        "owner": "multivac61",
+        "repo": "fod-oracle",
         "rev": "81a92c3d74fcf6c6eeee1c6c9cf0de65ce1b2acf",
-        "revCount": 62,
-        "type": "git",
-        "url": "ssh://git@github.com/multivac61/fod-oracle.git"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/multivac61/fod-oracle.git"
+        "owner": "multivac61",
+        "repo": "fod-oracle",
+        "type": "github"
       }
     },
     "genki-www": {
