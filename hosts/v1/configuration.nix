@@ -67,6 +67,19 @@
     "nvme"
     "usbhid"
     "sr_mod"
+    "ata_piix"
+    "mptspi"
+    "vmxnet3"
+  ];
+
+  # VMware specific optimizations
+  boot.initrd.kernelModules = [
+    "vmw_vmci"
+    "vmwgfx"
+  ];
+  boot.kernelParams = [
+    "vmware_balloon.dynamic_entitlement=1"
+    "vmware_balloon.first_time_delay=0"
   ];
   boot.binfmt.emulatedSystems = [ "x86_64-linux" ];
 
@@ -75,10 +88,31 @@
   # replicates the default behaviour.
   networking.useDHCP = false;
 
+  # VM performance tuning
+  services.fstrim.enable = true; # Enables periodic TRIM for better disk performance
+  services.fstrim.interval = "daily";
+
+  # Optimize VM memory usage
+  zramSwap = {
+    enable = true;
+    algorithm = "zstd";
+    memoryPercent = 50; # Allocate half of RAM for compressed swap
+  };
+
+  # Set vm.swappiness for better VM memory management
+  boot.kernel.sysctl = {
+    "vm.swappiness" = 10;
+    "vm.vfs_cache_pressure" = 50;
+  };
+
   # Don't require password for sudo
   security.sudo.wheelNeedsPassword = false;
 
-  virtualisation.vmware.guest.enable = true;
+  # Enhanced VMware guest support
+  virtualisation.vmware.guest = {
+    enable = true;
+    headless = false; # Set to true if this is a headless server
+  };
   virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
 
@@ -122,6 +156,10 @@
       ghostty
       rofi
 
+      # Better clipboard support for VMware
+      wl-clipboard
+      xsel
+
       # For hypervisors that support auto-resizing, this script forces it.
       # I've noticed not everyone listens to the udev events so this is a hack.
       (writeShellScriptBin "xrandr-auto" ''
@@ -154,10 +192,19 @@
     displayManager = {
       lightdm.enable = true;
 
-      # AARCH64: For now, on Apple Silicon, we must manually set the
-      # display resolution. This is a known issue with VMware Fusion.
+      # Automatically handle display resolution for VMware
+      # Add more optimizations for VMware Fusion
       sessionCommands = ''
+        # Set keyboard repeat rate for better responsiveness
         ${pkgs.xorg.xset}/bin/xset r rate 200 40
+
+        # Force display resizing
+        ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --auto
+
+        # Improve application responsiveness
+        ${pkgs.xorg.xset}/bin/xset b off
+        ${pkgs.xorg.xset}/bin/xset s off
+        ${pkgs.xorg.xset}/bin/xset -dpms
       '';
     };
 
