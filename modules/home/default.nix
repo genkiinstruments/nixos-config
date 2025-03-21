@@ -56,6 +56,7 @@
     imv.enable = false;
     swaylock.enable = false;
     mako.enable = false;
+    lazygit.enable = false;
   };
 
   programs = {
