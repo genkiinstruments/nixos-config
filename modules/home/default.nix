@@ -27,7 +27,6 @@
       neofetch
       cachix
       bitwarden-cli
-      hammerspoon
       (claude-code.overrideAttrs (_old: rec {
         version = "0.2.52";
         src = fetchzip {
