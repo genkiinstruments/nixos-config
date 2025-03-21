@@ -43,6 +43,10 @@
     genki-www.url = "git+ssh://git@github.com/genkiinstruments/genki-www.git";
     genki-www.inputs.nixpkgs.follows = "nixpkgs";
     genki-www.inputs.blueprint.follows = "blueprint";
+
+    fod-oracle.url = "git+ssh://git@github.com/multivac61/fod-oracle.git";
+    fod-oracle.inputs.nixpkgs.follows = "nixpkgs";
+    fod-oracle.inputs.blueprint.follows = "blueprint";
   };
 
   outputs =
