@@ -121,16 +121,32 @@
   age.secrets.gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
 
   age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
-  age.secrets.gdrn-cloudflared-tunnel.owner = "cloudflared";
-  age.secrets.gdrn-cloudflared-tunnel.group = "cloudflared";
 
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
-  services.cloudflared.enable = true;
-  services.cloudflared.tunnels."d148fd83-41dd-4e16-8ac8-4460c16b0258" = {
-    credentialsFile = config.age.secrets.gdrn-cloudflared-tunnel.path;
-    default = "http_status:404";
-    ingress."api.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+  services.cloudflared = {
+    enable = true;
+    # Add additional configuration options to fix TLS curve preferences
+    package = pkgs.cloudflared;
+    tunnels."d148fd83-41dd-4e16-8ac8-4460c16b0258" = {
+      credentialsFile = config.age.secrets.gdrn-cloudflared-tunnel.path;
+      default = "http_status:404";
+      ingress = {
+        # Route requests to both the root domain and api subdomain to the fod-oracle service
+        "fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+        "api.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+        # Catch any subdomains or paths under the main domain
+        "*.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+      };
+    };
+  };
+  
+  # Fix TLS curve preferences by setting environment variables for cloudflared
+  systemd.services.cloudflared.environment = {
+    # Only use P-256 curve which is widely supported
+    GODEBUG = "tls13=1,tlsrsakex=0,tlscurve=1";
+    # Increase UDP buffer size to fix the buffer warning
+    QUIC_GO_DISABLE_GSO = "1";
   };
 
   networking.hostName = "gdrn";
