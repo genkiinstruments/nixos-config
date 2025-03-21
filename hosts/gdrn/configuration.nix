@@ -119,34 +119,26 @@
   };
   age.secrets.gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
   age.secrets.gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
-  age.secrets.gdrn-cloudflare-api-token-file.file = "${inputs.secrets}/gdrn-cloudflare-api-token-file.age";
+
+  age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
+  age.secrets.gdrn-cloudflared-tunnel.owner = "cloudflared";
+  age.secrets.gdrn-cloudflared-tunnel.group = "cloudflared";
 
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
+
+  services.cloudflared.enable = true;
+  services.cloudflared.tunnels."d148fd83-41dd-4e16-8ac8-4460c16b0258" = {
+    credentialsFile = config.age.secrets.gdrn-cloudflared-tunnel.path;
+    default = "http_status:404";
+    ingress."api.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+  };
 
   networking.hostName = "gdrn";
 
   # Enable the FOD Oracle API service
   services.fod-oracle = {
     enable = true;
-    port = 8081; # Default API port
-    dbPath = "/root/db/fods.db";
-
-    # Domain configuration
-    domain = "api.fod-oracle.org"; # Change to your API domain
-
-    # Cloudflare DNS API authentication (choose one method)
-    # Option 1: Direct token in configuration (less secure)
-    # cloudflareApiToken = "your-cloudflare-api-token";
-
-    # Option 2: Token from a file (more secure)
-    cloudflareApiTokenFile = config.age.secrets.gdrn-cloudflare-api-token-file.path;
-
-    # Open firewall for HTTP/HTTPS
-    openFirewall = true;
-
-    # Optional: Tailscale access
-    exposeThroughTailscale = false; # Set to true if you want Tailscale access as well
-    tailscaleTags = [ "tag:fod-oracle" ]; # Only needed if exposeThroughTailscale = true
+    port = 8081;
   };
 
   # System packages
@@ -156,33 +148,4 @@
     curl
     jq
   ];
-
-  # Secrets management with agenix (recommended)
-  # age.secrets.cloudflare_token = {
-  #   file = ./secrets/cloudflare_token.age;
-  #   path = "/run/secrets/cloudflare_token";
-  #   owner = "caddy";
-  #   group = "caddy";
-  #   mode = "0400";
-  # };
-
-  # # Networking settings
-  # networking = {
-  #   # Ensure domain name resolves locally for testing
-  #   hosts = {
-  #     "127.0.0.1" = [ "api.fod-oracle.org" ];
-  #   };
-  #
-  #   # Open firewall
-  #   firewall = {
-  #     enable = true;
-  #     allowedTCPPorts = [
-  #       80
-  #       443
-  #     ];
-  #     # Tailscale traffic (if using Tailscale)
-  #     allowedUDPPorts = lib.mkIf config.services.fod-oracle.exposeThroughTailscale [ 41641 ];
-  #   };
-  # };
-
 }
