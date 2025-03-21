@@ -311,10 +311,10 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1742507568,
-        "narHash": "sha256-60LQ4G2jhqr+5Ay4Ws18r3lrdz/dnEw3Dcus79RTyJk=",
+        "lastModified": 1742566509,
+        "narHash": "sha256-qI7zjbOPglvbCfl7oN7Kn50YZr3pM45r9Uk1oMvbbj4=",
         "ref": "refs/heads/main",
-        "rev": "3643d81f003406c3ee54861f55e9a1905ce557bf",
+        "rev": "5c49f3abe543d2a206fd314ea60df517e48c81c3",
         "revCount": 46,
         "type": "git",
         "url": "ssh://git@github.com/genkiinstruments/nix-secrets.git"
