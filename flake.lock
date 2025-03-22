@@ -165,15 +165,15 @@
       "locked": {
         "lastModified": 1742222414,
         "narHash": "sha256-oeG8O/QzvrKCDNim90Tf2zOWZJynCXthk838mzCdbu0=",
-        "ref": "refs/heads/main",
+        "owner": "genkiinstruments",
+        "repo": "genki-www",
         "rev": "266704e038b782c5778570d82c4d1d060eedb60d",
-        "revCount": 21,
-        "type": "git",
-        "url": "ssh://git@github.com/genkiinstruments/genki-www.git"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/genkiinstruments/genki-www.git"
+        "owner": "genkiinstruments",
+        "repo": "genki-www",
+        "type": "github"
       }
     },
     "hercules-ci-effects": {
@@ -313,15 +313,15 @@
       "locked": {
         "lastModified": 1742587949,
         "narHash": "sha256-Dtewnwv40PX/64ux9ZSZhWRMkk9j1czruabPgQBF+G8=",
-        "ref": "refs/heads/main",
+        "owner": "genkiinstruments",
+        "repo": "nix-secrets",
         "rev": "778979ca23806accc5fc787b8d0b77eb030b1f28",
-        "revCount": 47,
-        "type": "git",
-        "url": "ssh://git@github.com/genkiinstruments/nix-secrets.git"
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "ssh://git@github.com/genkiinstruments/nix-secrets.git"
+        "owner": "genkiinstruments",
+        "repo": "nix-secrets",
+        "type": "github"
       }
     },
     "srvos": {
