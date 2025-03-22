@@ -11,35 +11,52 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      # Checkout repository with GITHUB_TOKEN
+      # Generate GitHub App token for private repo access
+      - uses: actions/create-github-app-token@main
+        id: app-token
+        with:
+          app-id: ${{ vars.CI_APP_ID }}
+          private-key: ${{ secrets.CI_PRIVATE_KEY }}
+          # Explicitly list repositories for access
+          repositories: >-
+            nixos-config,
+            nix-secrets
+
+      # Checkout with token that has access to private repos
       - uses: actions/checkout@main
         with:
           submodules: true
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      # Setup SSH for private repository access
-      # This is the key approach - we'll use SSH for private repos
-      - uses: webfactory/ssh-agent@master
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      # Configure Git to use SSH for private repositories
-      - name: Configure Git for SSH access to private repositories
-        run: |
-          git config --global url."git@github.com:".insteadOf "https://github.com/"
-          git config --global url."git@github.com:".insteadOf "git+https://github.com/"
-          git config --global url."git@github.com:".insteadOf "github:"
+          token: ${{ steps.app-token.outputs.token }}
+          fetch-depth: 0
           
-      # Verify SSH connection to GitHub
-      - name: Verify SSH connection
+      # Configure Git with token for private repo access
+      - name: Configure Git for private repositories
         run: |
-          ssh -T git@github.com || true
+          git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "git+https://github.com/"
+          git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "github:"
+      
+      # Test access to private repository
+      - name: Test access to private repository
+        run: |
+          echo "Checking access to private repository..."
+          curl -s -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
+            https://api.github.com/repos/genkiinstruments/nix-secrets/branches/main | jq .name || echo "Failed to access repo"
+
+      # Update flake.nix to include specific branch
+      - name: Update flake.nix to specify branch
+        run: |
+          sed -i 's|github:genkiinstruments/nix-secrets|github:genkiinstruments/nix-secrets/main|g' flake.nix
+          echo "Modified flake.nix to specify branch:"
+          grep -A 1 "secrets" flake.nix
           
       # Install Nix
       - uses: cachix/install-nix-action@master
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-          
+          github_access_token: ${{ steps.app-token.outputs.token }}
+          extra_nix_config: |
+            access-tokens = github.com=${{ steps.app-token.outputs.token }}
+            
       # Setup Cachix
       - uses: cachix/cachix-action@master
         with:
@@ -47,25 +64,17 @@ jobs:
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
 
-      # Debug environment
-      - name: Debug environment
-        run: |
-          nix --version
-          git config --list | grep url
-          echo "Using SSH for private repositories"
-      
-      # Update flake.lock using direct nix command
+      # Update flake.lock file
       - name: Update flake.lock
         run: |
-          
-          # Update flake.lock
+          export NIX_CONFIG="access-tokens = github.com=${{ steps.app-token.outputs.token }}"
           nix flake update --commit-lock-file --option commit-lockfile-summary "flake.lock: Update"
         
-      # Create a PR with the changes
+      # Create Pull Request
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           commit-message: "flake.lock: Update"
           title: "Update flake.lock"
           body: "Updated flake.lock with the latest dependency versions"
