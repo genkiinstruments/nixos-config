@@ -29,12 +29,16 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
           
-      # Configure Git with token for private repo access
+      # Configure Git with token for private repo access and set identity
       - name: Configure Git for private repositories
         run: |
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "https://github.com/"
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "git+https://github.com/"
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "github:"
+          
+          # Set Git identity for commits
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
       
       # Test access to private repository
       - name: Test access to private repository
@@ -42,13 +46,6 @@ jobs:
           echo "Checking access to private repository..."
           curl -s -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
             https://api.github.com/repos/genkiinstruments/nix-secrets/branches/main | jq .name || echo "Failed to access repo"
-
-      # Update flake.nix to include specific branch
-      - name: Update flake.nix to specify branch
-        run: |
-          sed -i 's|github:genkiinstruments/nix-secrets|github:genkiinstruments/nix-secrets/main|g' flake.nix
-          echo "Modified flake.nix to specify branch:"
-          grep -A 1 "secrets" flake.nix
           
       # Install Nix
       - uses: cachix/install-nix-action@master
@@ -68,10 +65,21 @@ jobs:
       - name: Update flake.lock
         run: |
           export NIX_CONFIG="access-tokens = github.com=${{ steps.app-token.outputs.token }}"
-          nix flake update --commit-lock-file --option commit-lockfile-summary "flake.lock: Update"
+          # Update without auto-commit
+          nix flake update
+          
+          # Check if there are changes
+          if git diff --exit-code flake.lock; then
+            echo "No changes to flake.lock"
+          else
+            echo "Changes detected in flake.lock, committing..."
+            git add flake.lock
+            git commit -m "flake.lock: Update"
+          fi
         
-      # Create Pull Request
+      # Create Pull Request if there are changes
       - name: Create Pull Request
+        id: create-pr
         uses: peter-evans/create-pull-request@main
         with:
           token: ${{ steps.app-token.outputs.token }}
@@ -82,3 +90,9 @@ jobs:
           labels: |
             dependencies
             auto-merge
+      
+      # Output PR details
+      - name: PR Output
+        if: steps.create-pr.outputs.pull-request-number
+        run: |
+          echo "Pull Request created: ${{ steps.create-pr.outputs.pull-request-url }}"
