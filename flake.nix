@@ -27,7 +27,7 @@
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
 
-    secrets.url = "git+ssh://git@github.com/genkiinstruments/nix-secrets.git";
+    secrets.url = "github:genkiinstruments/nix-secrets";
     secrets.flake = false;
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
@@ -40,7 +40,7 @@
     # nixpkgs input to your own stable version of buildbot-nix.
     buildbot-nix.url = "github:nix-community/buildbot-nix";
 
-    genki-www.url = "git+ssh://git@github.com/genkiinstruments/genki-www.git";
+    genki-www.url = "github:genkiinstruments/genki-www";
     genki-www.inputs.nixpkgs.follows = "nixpkgs";
     genki-www.inputs.blueprint.follows = "blueprint";
 
