@@ -24,7 +24,14 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Update vim plugins
         run: |
-          nix run .#mvim -- --headless "+Lazy! update" +qa
+          # First run ensures everything is properly set up
+          nix run .#mvim -- --headless -c 'quitall'
+          # Then actually run the update
+          nix run .#mvim -- --headless "+Lazy! update" +qa || {
+            echo "First attempt failed, trying with debug info"
+            ls -la $HOME/.config/mvim/lazy
+          }
+          # Copy the updated lock file
           cp $HOME/.config/mvim/lazy-lock.json home/nvim/lazy-lock.json
       - uses: actions/create-github-app-token@main
         id: app-token

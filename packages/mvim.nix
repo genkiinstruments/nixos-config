@@ -44,6 +44,15 @@ writeShellApplication {
     chmod -R u+w "$CONFIG_DIR"
     echo "${treesitter-grammars.rev}" > "$CONFIG_DIR/treesitter-rev"
 
+    # Always ensure lazy.nvim is properly initialized first
+    # This is crucial for CI environments where the plugin might not be installed
+    LAZY_NVIM_DIR="$XDG_DATA_HOME/$NVIM_APPNAME/lazy/lazy.nvim"
+    if [ ! -d "$LAZY_NVIM_DIR" ]; then
+      mkdir -p "$(dirname "$LAZY_NVIM_DIR")"
+      git clone --filter=blob:none --branch=stable https://github.com/folke/lazy.nvim.git "$LAZY_NVIM_DIR"
+    fi
+
+    # Then check if we need to update
     if ! grep -q "${treesitter-grammars.rev}" "$CONFIG_DIR/lazy-lock.json"; then
       nvim --headless "+Lazy! update" +qa > /dev/null 2>&1 &
     else
