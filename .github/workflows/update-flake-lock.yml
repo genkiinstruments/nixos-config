@@ -11,73 +11,45 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      # Generate GitHub App token for private repo access
       - uses: actions/create-github-app-token@main
         id: app-token
         with:
           app-id: ${{ vars.CI_APP_ID }}
           private-key: ${{ secrets.CI_PRIVATE_KEY }}
-          # Explicitly list repositories for access
-          repositories: >-
-            nixos-config,
-            nix-secrets
+          owner: ${{ github.repository_owner }}
 
-      # Checkout with token that has access to private repos
       - uses: actions/checkout@main
         with:
           submodules: true
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
-          
-      # Configure Git with token for private repo access and set identity
+
       - name: Configure Git for private repositories
         run: |
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "https://github.com/"
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "git+https://github.com/"
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "github:"
-          
+
           # Set Git identity for commits
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "actions@github.com"
-      
-      # Test access to private repository
-      - name: Test access to private repository
-        run: |
-          echo "Checking access to private repository..."
-          curl -s -H "Authorization: token ${{ steps.app-token.outputs.token }}" \
-            https://api.github.com/repos/genkiinstruments/nix-secrets/branches/main | jq .name || echo "Failed to access repo"
-          
-      # Install Nix
+
       - uses: cachix/install-nix-action@master
         with:
           github_access_token: ${{ steps.app-token.outputs.token }}
           extra_nix_config: |
             access-tokens = github.com=${{ steps.app-token.outputs.token }}
-            
-      # Setup Cachix
+
       - uses: cachix/cachix-action@master
         with:
           name: genki
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
 
-      # Update flake.lock file
       - name: Update flake.lock
         run: |
-          export NIX_CONFIG="access-tokens = github.com=${{ steps.app-token.outputs.token }}"
-          # Update without auto-commit
           nix flake update
-          
-          # Check if there are changes
-          if git diff --exit-code flake.lock; then
-            echo "No changes to flake.lock"
-          else
-            echo "Changes detected in flake.lock, committing..."
-            git add flake.lock
-            git commit -m "flake.lock: Update"
-          fi
-        
-      # Create Pull Request if there are changes
+
       - name: Create Pull Request
         id: create-pr
         uses: peter-evans/create-pull-request@main
@@ -90,8 +62,7 @@ jobs:
           labels: |
             dependencies
             auto-merge
-      
-      # Output PR details
+
       - name: PR Output
         if: steps.create-pr.outputs.pull-request-number
         run: |
