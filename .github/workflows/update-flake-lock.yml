@@ -11,25 +11,45 @@ jobs:
   createPullRequest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@main
-        with:
-          submodules: true
-      - uses: cachix/install-nix-action@master
-        with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      - uses: cachix/cachix-action@master
-        with:
-          name: genki
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          extraPullNames: nix-community
-      - uses: webfactory/ssh-agent@master
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      # Generate GitHub App token for private repo access
       - uses: actions/create-github-app-token@main
         id: app-token
         with:
           app-id: ${{ vars.CI_APP_ID }}
           private-key: ${{ secrets.CI_PRIVATE_KEY }}
+
+      # Checkout with token that has access to private repos
+      - uses: actions/checkout@main
+        with:
+          submodules: true
+          token: ${{ steps.app-token.outputs.token }}
+
+      # Configure Git with token for private repo access
+      - name: Configure Git for private repositories
+        run: |
+          git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "https://github.com/"
+          git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "git+https://github.com/"
+          git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "github:"
+
+      # Setup SSH for fallback access method
+      - uses: webfactory/ssh-agent@master
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Install Nix with token access
+      - uses: cachix/install-nix-action@master
+        with:
+          github_access_token: ${{ steps.app-token.outputs.token }}
+          extra_nix_config: |
+            access-tokens = github.com=${{ steps.app-token.outputs.token }}
+
+      # Setup Cachix
+      - uses: cachix/cachix-action@master
+        with:
+          name: genki
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extraPullNames: nix-community
+
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
