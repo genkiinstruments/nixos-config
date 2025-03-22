@@ -35,22 +35,21 @@
 
   age.secrets =
     let
-      mkSecret = file: {
+      mkBuildbotSecret = file: {
         inherit file;
-        owner = "root";
-        group = "secrets";
-        mode = "0440";
+        owner = config.services.buildbot-master.user;
+        group = config.services.buildbot-master.group;
       };
     in
     {
-      buildbot-github-app-secret-key = mkSecret "${inputs.secrets}/buildbot-github-app-secret-key.age";
-      buildbot-github-oauth-secret = mkSecret "${inputs.secrets}/buildbot-github-oauth-secret.age";
-      buildbot-github-webhook-secret = mkSecret "${inputs.secrets}/buildbot-github-webhook-secret.age";
-      buildbot-nix-worker-password = mkSecret "${inputs.secrets}/buildbot-nix-worker-password.age";
-      buildbot-nix-workers-json = mkSecret "${inputs.secrets}/buildbot-nix-workers-json.age";
-      buildbot-client-secret = mkSecret "${inputs.secrets}/buildbot-client-secret.age";
-      buildbot-github-cookie-secret = mkSecret "${inputs.secrets}/buildbot-github-cookie-secret.age";
-      buildbot-http-basic-auth-password = mkSecret "${inputs.secrets}/buildbot-http-basic-auth-password.age";
+      buildbot-github-app-secret-key = mkBuildbotSecret "${inputs.secrets}/buildbot-github-app-secret-key.age";
+      buildbot-github-oauth-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-github-oauth-secret.age";
+      buildbot-github-webhook-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-github-webhook-secret.age";
+      buildbot-nix-worker-password = mkBuildbotSecret "${inputs.secrets}/buildbot-nix-worker-password.age";
+      buildbot-nix-workers-json = mkBuildbotSecret "${inputs.secrets}/buildbot-nix-workers-json.age";
+      buildbot-client-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-client-secret.age";
+      buildbot-github-cookie-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-github-cookie-secret.age";
+      buildbot-http-basic-auth-password = mkBuildbotSecret "${inputs.secrets}/buildbot-http-basic-auth-password.age";
 
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
