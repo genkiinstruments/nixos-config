@@ -118,7 +118,7 @@ keybind = cmd+i=text:\x00\x69
 keybind = cmd+j=text:\x00\x6A
 keybind = cmd+k=text:\x00\x6B
 keybind = cmd+l=text:\x00\x6C
-keybind = cmd+m=text:\x00\x6D
+# keybind = cmd+m=text:\x00\x6D
 keybind = cmd+n=text:\x00\x6E
 keybind = cmd+o=text:\x00\x6F
 keybind = cmd+p=text:\x00\x70
