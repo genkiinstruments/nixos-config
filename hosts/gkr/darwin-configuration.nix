@@ -25,7 +25,10 @@
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
   nix.settings.trusted-users = [ "genki" ];
-  environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
+  environment.systemPackages = with pkgs; [
+    openssh # needed for fido2 support
+    gh # needed for the softwave github run
+  ];
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
   # Create the nix-ssh user for remote builds - rely on Tailscale SSH for authentication
