@@ -54,17 +54,17 @@
 
     # Create an executable wrapper script for SSH commands that sets PATH
     cat > /Users/Shared/nix-ssh/bin/nix-ssh-wrapper.sh << 'EOF'
-    #!/bin/bash
-    export PATH=/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH
-    exec "$@"
-    EOF
+#!/bin/bash
+export PATH=/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH
+exec "$@"
+EOF
     chmod +x /Users/Shared/nix-ssh/bin/nix-ssh-wrapper.sh
 
     # Set up proper PATH for nix-ssh to find nix commands
     cat > /Users/Shared/nix-ssh/.bash_profile << 'EOF'
-    export PATH=/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH
-    export NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
-    EOF
+export PATH=/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:$PATH
+export NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+EOF
 
     # Change SSH shell command for nix-ssh user to use the wrapper
     dscl . -change /Users/nix-ssh UserShell /bin/bash /Users/Shared/nix-ssh/bin/nix-ssh-wrapper.sh || true
@@ -72,10 +72,8 @@
     # Fix ownerships
     chown -R nix-ssh:staff /Users/Shared/nix-ssh
     
-    # Set up proper PATH for nix-ssh to find nix commands
-    echo 'export PATH=$PATH:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin' > /Users/Shared/nix-ssh/.bash_profile
-    echo 'export NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt' >> /Users/Shared/nix-ssh/.bash_profile
-    chown nix-ssh:staff /Users/Shared/nix-ssh/.bash_profile
+    # Add nix-ssh to nixbld group for build permissions
+    dscl . -append /Groups/nixbld GroupMembership nix-ssh || true
   '';
 
   # Enable Tailscale
@@ -94,18 +92,6 @@
   # Make sure all required groups exist
   users.groups.nixbld = { };
   users.knownGroups = [ "nixbld" ];
-  
-  # Make sure nix-ssh is in the nixbld group
-  system.activationScripts.extraUserActivation.text = ''
-    echo "Adding nix-ssh to nixbld group"
-    dscl . -append /Groups/nixbld GroupMembership nix-ssh || true
-  '';
-
-  # Make sure nix-ssh is in the nixbld group
-  system.activationScripts.extraUserActivation.text = ''
-    echo "Adding nix-ssh to nixbld group"
-    dscl . -append /Groups/nixbld GroupMembership nix-ssh || true
-  '';
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
