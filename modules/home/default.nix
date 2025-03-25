@@ -25,7 +25,6 @@
       magic-wormhole-rs
       neofetch
       cachix
-      bitwarden-cli
       (claude-code.overrideAttrs (_old: rec {
         version = "0.2.52";
         src = fetchzip {
