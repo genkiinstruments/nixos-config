@@ -27,24 +27,53 @@
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
-  nix.settings.trusted-users = [ "genki" "nix-ssh" ];
-  
+  nix.settings.trusted-users = [
+    "genki"
+    "nix-ssh"
+  ];
+
   # Create the nix-ssh user for remote builds
-  # Create the nix-ssh user for remote builds with system integration
   users.users.nix-ssh = {
     name = "nix-ssh";
     shell = pkgs.bash;
     isHidden = false;
     home = "/var/empty";
     createHome = true;
+    # Explicitly set UID for better compatibility
+    uid = 599;
+    gid = 20; # staff group
+    # Add the same authorized keys as used for other users
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
+  
+  # Make sure the home directory has proper permissions
+  system.activationScripts.postActivation.text = ''
+    # Fix permissions for nix-ssh user
+    mkdir -p /var/empty/.ssh
+    if [ -f "${flake}/authorized_keys" ]; then
+      cp ${flake}/authorized_keys /var/empty/.ssh/authorized_keys
+      chmod 700 /var/empty/.ssh
+      chmod 600 /var/empty/.ssh/authorized_keys
+      chown -R nix-ssh:staff /var/empty /var/empty/.ssh
+    fi
+  '';
 
   # Enable remote builds
   nix.distributedBuilds = true;
+  
+  # Configure Nix for serving builds
+  nix.extraOptions = ''
+    # Enable better protocol for SSH
+    builders-use-substitutes = true
+    experimental-features = nix-command flakes
+  '';
+  
+  # Make sure all required groups exist
+  users.groups.nixbld = {};
+  users.knownGroups = [ "nixbld" ];
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
-  ids.gids.nixbld = 350;
+  # ids.gids.nixbld = 350;
 
   # TODO: This really is a hack to run actions-runner that was
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
