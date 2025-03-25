@@ -26,11 +26,9 @@
         hostName = "gdrn";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
-        systems = [
-          "x86_64-linux"
-        ];
+        systems = [ "x86_64-linux" ];
         maxJobs = 32;
-        sshKey = config.age.secrets.nix-ssh-v1-gdrn.path;
+        # sshKey = config.age.secrets.nix-ssh-v1-gdrn.path;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
@@ -259,9 +257,9 @@
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
 
-  users.users.genki = {
+  users.users.olafur = {
     isNormalUser = true;
-    description = "genki";
+    description = "olafur";
     shell = pkgs.fish;
     hashedPassword = "$6$UIOsLjI24UeaovvG$SVVrXdpnepj/w1jhmYNdpPpmcgkcXsMBcAkqrcIL5yCCYDAkc/8kblyzuBLyK6PnJqR1JxZ7XtlWyCJwWhGrw.";
     extraGroups = [
