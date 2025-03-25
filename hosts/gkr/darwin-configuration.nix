@@ -73,7 +73,7 @@
   users.knownGroups = [ "nixbld" ];
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
-  # ids.gids.nixbld = 350;
+  ids.gids.nixbld = 350;
 
   # TODO: This really is a hack to run actions-runner that was
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
