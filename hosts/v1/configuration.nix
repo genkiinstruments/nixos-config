@@ -15,29 +15,10 @@
     inputs.agenix.nixosModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager
+    flake.modules.shared.builders
     flake.nixosModules.common
     flake.nixosModules.ssh-serve
   ];
-
-  nix = {
-    distributedBuilds = true;
-    buildMachines = [
-      # Using Tailscale SSH for authentication
-      {
-        hostName = "gdrn";
-        sshUser = "nix-ssh";
-        protocol = "ssh-ng";
-        systems = [ "x86_64-linux" ];
-        maxJobs = 32;
-        supportedFeatures = [
-          "nixos-test"
-          "benchmark"
-          "big-parallel"
-          "kvm"
-        ];
-      }
-    ];
-  };
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;

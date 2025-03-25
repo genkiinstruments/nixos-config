@@ -24,15 +24,12 @@
     home = "/Users/genki";
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
+  nix.settings.trusted-users = [ "genki" ];
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
-  nix.settings.trusted-users = [
-    "genki"
-    "nix-ssh"
-  ];
-
   # Create the nix-ssh user for remote builds - rely on Tailscale SSH for authentication
+  # NOTE: Have to manually create the user on macOS. Does not need to be an administrator
   users.users.nix-ssh = {
     name = "nix-ssh";
     shell = pkgs.bash;
@@ -40,15 +37,6 @@
     home = "/Users/nix-ssh";
     createHome = true;
   };
-
-  nix.distributedBuilds = true;
-
-  # Configure Nix for serving builds
-  nix.extraOptions = ''
-    # Enable better protocol for SSH
-    builders-use-substitutes = true
-    experimental-features = nix-command flakes
-  '';
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
