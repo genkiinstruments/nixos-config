@@ -8,6 +8,7 @@
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
+
   home = {
     enableNixpkgsReleaseCheck = false;
 
@@ -60,6 +61,7 @@
   };
 
   programs = {
+    jq.enable = true;
     yazi.enable = true;
     gh-dash.enable = true;
     btop.enable = true;
