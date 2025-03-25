@@ -27,7 +27,7 @@
       neofetch
       cachix
       (claude-code.overrideAttrs (_old: rec {
-        version = "0.2.52";
+        version = "0.2.53";
         src = fetchzip {
           url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
           hash = "sha256-oWXtIGJwVe/LwAlIWfpA5Jn9zZWQtjw03DkyQ/Sg08c=";
