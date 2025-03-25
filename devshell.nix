@@ -1,5 +1,5 @@
 { pkgs, perSystem }:
-pkgs.mkShell {
+pkgs.mkShellNoCC {
   packages =
     with pkgs;
     [
@@ -11,6 +11,7 @@ pkgs.mkShell {
       age-plugin-yubikey
       age-plugin-fido2-hmac
       perSystem.self.deploy
+      home-manager
     ]
     ++ lib.optionals stdenv.hostPlatform.isDarwin [
       perSystem.nix-darwin.darwin-rebuild
