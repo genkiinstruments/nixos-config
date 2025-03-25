@@ -44,33 +44,33 @@
     uid = 599;
     gid = 20; # staff group
   };
-  
+
   # Make sure the home directory has proper permissions
   system.activationScripts.postActivation.text = ''
     # Ensure the nix-ssh user has a proper home directory
     mkdir -p /Users/Shared/nix-ssh
     chown -R nix-ssh:staff /Users/Shared/nix-ssh
   '';
-  
+
   # Enable Tailscale
   services.tailscale.enable = true;
 
   # Enable remote builds
   nix.distributedBuilds = true;
-  
+
   # Configure Nix for serving builds
   nix.extraOptions = ''
     # Enable better protocol for SSH
     builders-use-substitutes = true
     experimental-features = nix-command flakes
   '';
-  
+
   # Make sure all required groups exist
-  users.groups.nixbld = {};
+  users.groups.nixbld = { };
   users.knownGroups = [ "nixbld" ];
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
-  # ids.gids.nixbld = 350;
+  ids.gids.nixbld = 350;
 
   # TODO: This really is a hack to run actions-runner that was
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
