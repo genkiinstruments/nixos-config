@@ -17,6 +17,7 @@
     inputs.buildbot-nix.nixosModules.buildbot-master
     inputs.buildbot-nix.nixosModules.buildbot-worker
     flake.modules.shared.default
+    flake.modules.shared.builders
     flake.nixosModules.common
     flake.nixosModules.ssh-serve
     ./disko.nix
