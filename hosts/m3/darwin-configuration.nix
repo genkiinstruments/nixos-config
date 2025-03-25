@@ -118,6 +118,17 @@
       }
       {
         hostName = "gkr";
+        sshUser = "genki";
+        protocol = "ssh-ng";
+        systems = [ "aarch64-darwin" ];
+        maxJobs = 8;
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
+      }
+      {
+        hostName = "gkr";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
         systems = [ "aarch64-darwin" ];
@@ -154,6 +165,14 @@
       PubkeyAuthentication yes
       IdentitiesOnly yes
       
+    Host gkr gkr.tail01dbd.ts.net
+      User genki
+      HostName gkr.tail01dbd.ts.net
+      StrictHostKeyChecking accept-new
+      BatchMode yes
+      PubkeyAuthentication yes
+      IdentitiesOnly yes
+
     Host gkr gkr.tail01dbd.ts.net
       User nix-ssh
       HostName gkr.tail01dbd.ts.net

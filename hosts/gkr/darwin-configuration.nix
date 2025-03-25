@@ -30,13 +30,16 @@
   nix.settings.trusted-users = [ "genki" "nix-ssh" ];
   
   # Create the nix-ssh user for remote builds
+  # Create the nix-ssh user for remote builds with system integration
   users.users.nix-ssh = {
+    name = "nix-ssh";
     shell = pkgs.bash;
     isHidden = false;
     home = "/var/empty";
+    createHome = true;
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
-  
+
   # Enable remote builds
   nix.distributedBuilds = true;
 
