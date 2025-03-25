@@ -34,6 +34,7 @@
         npmDepsHash = "sha256-3igDt1N77LJu5Dq9uK3bd90sfYZkjBOt5ArvoRibFeo=";
       }))
       (sesh.overrideAttrs (_old: {
+        version = "2.13.0";
         src = fetchFromGitHub {
           owner = "joshmedeski";
           repo = "sesh";
