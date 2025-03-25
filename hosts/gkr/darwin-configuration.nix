@@ -32,31 +32,28 @@
     "nix-ssh"
   ];
 
-  # Create the nix-ssh user for remote builds
+  # Create the nix-ssh user for remote builds - rely on Tailscale SSH for authentication
   users.users.nix-ssh = {
     name = "nix-ssh";
     shell = pkgs.bash;
+    # Basic user with nix access - no need for SSH keys since we use Tailscale
     isHidden = false;
-    home = "/var/empty";
+    home = "/Users/Shared/nix-ssh";
     createHome = true;
     # Explicitly set UID for better compatibility
     uid = 599;
     gid = 20; # staff group
-    # Add the same authorized keys as used for other users
-    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
   
   # Make sure the home directory has proper permissions
   system.activationScripts.postActivation.text = ''
-    # Fix permissions for nix-ssh user
-    mkdir -p /var/empty/.ssh
-    if [ -f "${flake}/authorized_keys" ]; then
-      cp ${flake}/authorized_keys /var/empty/.ssh/authorized_keys
-      chmod 700 /var/empty/.ssh
-      chmod 600 /var/empty/.ssh/authorized_keys
-      chown -R nix-ssh:staff /var/empty /var/empty/.ssh
-    fi
+    # Ensure the nix-ssh user has a proper home directory
+    mkdir -p /Users/Shared/nix-ssh
+    chown -R nix-ssh:staff /Users/Shared/nix-ssh
   '';
+  
+  # Enable Tailscale
+  services.tailscale.enable = true;
 
   # Enable remote builds
   nix.distributedBuilds = true;
@@ -73,7 +70,7 @@
   users.knownGroups = [ "nixbld" ];
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
-  ids.gids.nixbld = 350;
+  # ids.gids.nixbld = 350;
 
   # TODO: This really is a hack to run actions-runner that was
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
