@@ -50,6 +50,11 @@
     # Ensure the nix-ssh user has a proper home directory
     mkdir -p /Users/Shared/nix-ssh
     chown -R nix-ssh:staff /Users/Shared/nix-ssh
+    
+    # Set up proper PATH for nix-ssh to find nix commands
+    echo 'export PATH=$PATH:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin' > /Users/Shared/nix-ssh/.bash_profile
+    echo 'export NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt' >> /Users/Shared/nix-ssh/.bash_profile
+    chown nix-ssh:staff /Users/Shared/nix-ssh/.bash_profile
   '';
 
   # Enable Tailscale
@@ -68,6 +73,12 @@
   # Make sure all required groups exist
   users.groups.nixbld = { };
   users.knownGroups = [ "nixbld" ];
+  
+  # Make sure nix-ssh is in the nixbld group
+  system.activationScripts.extraUserActivation.text = ''
+    echo "Adding nix-ssh to nixbld group"
+    dscl . -append /Groups/nixbld GroupMembership nix-ssh || true
+  '';
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
