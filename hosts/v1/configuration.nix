@@ -21,6 +21,7 @@
   ];
 
   # Be careful updating this.
+  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   # VMware, Parallels both only support this being 0 otherwise you see "error switching console mode" on boot.
@@ -240,8 +241,6 @@
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
-
-  nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
 
   # Install firefox.
   programs.firefox.enable = true;
