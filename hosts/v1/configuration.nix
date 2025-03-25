@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   lib,
-  config,
   flake,
   ...
 }:
@@ -17,18 +16,19 @@
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.nixosModules.common
+    flake.nixosModules.ssh-serve
   ];
 
   nix = {
     distributedBuilds = true;
     buildMachines = [
+      # Using Tailscale SSH for authentication
       {
         hostName = "gdrn";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
         systems = [ "x86_64-linux" ];
         maxJobs = 32;
-        # sshKey = config.age.secrets.nix-ssh-v1-gdrn.path;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
@@ -38,24 +38,11 @@
       }
     ];
   };
-  age.secrets.nix-ssh-v1-gdrn.file = "${inputs.secrets}/nix-ssh-v1-gdrn.age";
-
-  nix.sshServe = {
-    protocol = "ssh-ng";
-    enable = true;
-    write = true;
-    # For Nix remote builds, the SSH authentication needs to be non-interactive and not dependent on ssh-agent, since the Nix daemon needs to be able to authenticate automatically.
-    keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF0V/P7rcJdL7gumCvQPgbsZoMgfF8FcOAE++LsyZPCr olafur@M3.local"
-    ];
-  };
-  nix.settings.trusted-users = [ "nix-ssh" ];
 
   # Be careful updating this.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # VMware, Parallels both only support this being 0 otherwise you see
-  # "error switching console mode" on boot.
+  # VMware, Parallels both only support this being 0 otherwise you see "error switching console mode" on boot.
   boot.loader.systemd-boot.consoleMode = "0";
 
   boot.initrd.availableKernelModules = [

@@ -1,5 +1,4 @@
-{ }:
-{
+_: {
   nix = {
     sshServe.protocol = "ssh-ng";
     sshServe.enable = true;

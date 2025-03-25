@@ -81,7 +81,6 @@
         protocol = "ssh-ng";
         systems = [ "x86_64-linux" ];
         maxJobs = 32;
-        sshKey = config.age.secrets.nix-ssh-m3-gdrn.path;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
@@ -95,7 +94,6 @@
         protocol = "ssh-ng";
         systems = [ "x86_64-linux" ];
         maxJobs = 32;
-        sshKey = config.age.secrets.nix-ssh-m3-gdrn.path;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
@@ -111,7 +109,6 @@
           "aarch64-linux"
         ];
         maxJobs = 14;
-        sshKey = config.age.secrets.nix-ssh-m3-v1.path;
         supportedFeatures = [
           "nixos-test"
           "benchmark"
@@ -119,34 +116,44 @@
           "kvm"
         ];
       }
+      {
+        hostName = "gkr";
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        systems = [ "aarch64-darwin" ];
+        maxJobs = 8;
+        supportedFeatures = [
+          "benchmark"
+          "big-parallel"
+        ];
+      }
     ];
   };
   programs.ssh.extraConfig = ''
-    Host gdrn
+    Host gdrn gdrn.tail01dbd.ts.net
       User nix-ssh
       HostName gdrn.tail01dbd.ts.net
-      IdentityFile ${config.age.secrets.nix-ssh-m3-gdrn.path}
-    Host v1
+      StrictHostKeyChecking accept-new
+      BatchMode yes
+      PubkeyAuthentication yes
+      IdentitiesOnly yes
+      
+    Host v1 v1.tail01dbd.ts.net
       User nix-ssh
       HostName v1.tail01dbd.ts.net
-      IdentityFile ${config.age.secrets.nix-ssh-m3-v1.path}
+      StrictHostKeyChecking accept-new
+      BatchMode yes
+      PubkeyAuthentication yes
+      IdentitiesOnly yes
+
+    Host x x.tail01dbd.ts.net
+      User nix-ssh
+      HostName x.tail01dbd.ts.net
+      StrictHostKeyChecking accept-new
+      BatchMode yes
+      PubkeyAuthentication yes
+      IdentitiesOnly yes
   '';
-  programs.ssh.knownHosts = {
-    "v1" = {
-      hostNames = [
-        "v1"
-        "v1.tail01dbd.ts.net"
-      ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGu+jkbbvYUgt3wk1EtGyUpGT6LCA3RIAkS4/BcW7Dxu";
-    };
-    "gdrn" = {
-      hostNames = [
-        "gdrn"
-        "gdrn.tail01dbd.ts.net"
-      ];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRXFsRbLcgKBiszr7aZoJ9SkwWVz0TMMmH/DKvrHyg6";
-    };
-  };
 
   homebrew = {
     enable = true;
