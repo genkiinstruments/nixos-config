@@ -108,7 +108,7 @@ keybind = cmd+shift+x=text:\x00\x58
 
 keybind = cmd+a=text:\x00\x61
 keybind = cmd+b=text:\x00\x62
-keybind = cmd+c=text:\x00\x63
+# keybind = cmd+c=text:\x00\x63
 keybind = cmd+d=text:\x00\x64
 keybind = cmd+e=text:\x00\x65
 keybind = cmd+f=text:\x00\x66
