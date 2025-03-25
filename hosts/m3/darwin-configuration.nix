@@ -153,6 +153,14 @@
       BatchMode yes
       PubkeyAuthentication yes
       IdentitiesOnly yes
+      
+    Host gkr gkr.tail01dbd.ts.net
+      User nix-ssh
+      HostName gkr.tail01dbd.ts.net
+      StrictHostKeyChecking accept-new
+      BatchMode yes
+      PubkeyAuthentication yes
+      IdentitiesOnly yes
   '';
 
   homebrew = {

@@ -27,7 +27,18 @@
   environment.systemPackages = with pkgs; [ openssh ]; # needed for fido2 support
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
-  nix.settings.trusted-users = [ "genki" ];
+  nix.settings.trusted-users = [ "genki" "nix-ssh" ];
+  
+  # Create the nix-ssh user for remote builds
+  users.users.nix-ssh = {
+    shell = pkgs.bash;
+    isHidden = false;
+    home = "/var/empty";
+    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
+  };
+  
+  # Enable remote builds
+  nix.distributedBuilds = true;
 
   # TODO: This really is a hack to run actions-runner that was
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
