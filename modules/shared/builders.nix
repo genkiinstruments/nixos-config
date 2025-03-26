@@ -57,7 +57,6 @@ _: {
       }
     ];
   };
-
   programs.ssh.extraConfig = ''
     Host gdrn gdrn.tail01dbd.ts.net
       User nix-ssh
