@@ -28,6 +28,14 @@
 
   facter.reportPath = ./facter.json;
 
+  # [TODO]: Provide upstream fix? (March 02, 2025 17:25, )
+  users.groups.secrets = {
+    members = [
+      "oauth2-proxy"
+      "buildbot"
+    ];
+  };
+
   age.secrets =
     let
       mkBuildbotSecret = file: {
