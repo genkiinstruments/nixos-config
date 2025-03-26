@@ -1,8 +1,6 @@
 _: {
   nix = {
-    settings.trusted-users = [
-      "nix-ssh"
-    ];
+    settings.trusted-users = [ "nix-ssh" ];
     distributedBuilds = true;
     buildMachines = [
       {
