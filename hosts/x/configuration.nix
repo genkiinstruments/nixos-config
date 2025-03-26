@@ -68,6 +68,11 @@
     domain = "x.tail01dbd.ts.net";
     outputsPath = "/var/www/buildbot/nix-outputs/";
     workersFile = config.age.secrets.buildbot-nix-workers-json.path;
+    buildSystems = [
+      "aarch64-darwin"
+      "aarch64-linux"
+      "x86_64-linux"
+    ];
     admins = [
       "multivac61"
       "dingari"
