@@ -23,6 +23,8 @@
   # Be careful updating this.
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   boot.kernelPackages = pkgs.linuxPackages_latest;
+  networking.hostName = "v1"; # Define your hostname.
+  system.stateVersion = "24.11"; # Did you read the comment?
 
   # VMware, Parallels both only support this being 0 otherwise you see "error switching console mode" on boot.
   boot.loader.systemd-boot.consoleMode = "0";
@@ -72,9 +74,6 @@
     "vm.vfs_cache_pressure" = 50;
   };
 
-  # Don't require password for sudo
-  security.sudo.wheelNeedsPassword = false;
-
   # Enhanced VMware guest support
   virtualisation.vmware.guest = {
     enable = true;
@@ -82,26 +81,6 @@
   };
   virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
-
-  # Select internationalisation properties.
-  i18n = {
-    inputMethod = {
-      enable = true;
-      type = "fcitx5";
-      fcitx5.addons = with pkgs; [
-        fcitx5-mozc
-        fcitx5-gtk
-        fcitx5-chinese-addons
-      ];
-    };
-  };
-
-  # Enable tailscale. We manually authenticate when we want with "sudo tailscale up".
-  services.tailscale.enable = true;
-  programs.nix-ld.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.mutableUsers = false;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -146,7 +125,6 @@
 
   services.xserver = {
     enable = true;
-    # displayManager.gdm.enable = true;
     desktopManager.gnome.enable = true;
 
     dpi = 220;
@@ -159,60 +137,33 @@
     displayManager = {
       lightdm.enable = true;
 
-      # Automatically handle display resolution for VMware
-      # Add more optimizations for VMware Fusion
       sessionCommands = ''
         # Set keyboard repeat rate for better responsiveness
         ${pkgs.xorg.xset}/bin/xset r rate 200 40
-
-        # Force display resizing
-        ${pkgs.xorg.xrandr}/bin/xrandr --output Virtual-1 --auto
-
-        # Improve application responsiveness
-        ${pkgs.xorg.xset}/bin/xset b off
-        ${pkgs.xorg.xset}/bin/xset s off
-        ${pkgs.xorg.xset}/bin/xset -dpms
       '';
     };
 
     windowManager.i3.enable = true;
   };
 
-  # GNOME packages
   environment.gnome.excludePackages = with pkgs; [
     epiphany # web browser
     totem # video player
     geary # email client
     evince # document viewer
-    # Add other GNOME packages you want to exclude
   ];
 
-  # We need an XDG portal for various applications to work properly,
-  # such as Flatpak applications.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
-  };
-
-  # Disable the firewall since we're in a VM and we want to make it
-  # easy to visit stuff in here. We only use NAT networking anyways.
+  # Disable the firewall since we're in a VM and we want to make it easy to visit stuff in here. We only use NAT networking anyways.
   networking.firewall.enable = false;
-
-  networking.hostName = "v1"; # Define your hostname.
 
   services.udev.packages = [
     pkgs.yubikey-personalization
     pkgs.libfido2
   ];
 
-  programs.ssh = {
-    startAgent = true;
-    # Add these settings
-    extraConfig = ''
-      StreamLocalBindUnlink yes
-    '';
-  };
+  programs.ssh.startAgent = true;
+  programs.firefox.enable = true;
+  programs.nix-ld.enable = true;
 
   # And maybe add these SSH daemon settings
   services.openssh = {
@@ -226,6 +177,10 @@
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
 
+  # Don't require password for sudo
+  security.sudo.wheelNeedsPassword = false;
+
+  users.mutableUsers = false;
   users.users.olafur = {
     isNormalUser = true;
     description = "olafur";
@@ -241,18 +196,9 @@
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
+  nix.settings.trusted-users = [ "olafur" ];
 
-  # Install firefox.
-  programs.firefox.enable = true;
-
+  #
   # For now, we need this since hardware acceleration does not work.
   environment.variables.LIBGL_ALWAYS_SOFTWARE = "1";
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.11"; # Did you read the comment?
 }
