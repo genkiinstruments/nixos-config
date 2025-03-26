@@ -311,11 +311,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1742587949,
-        "narHash": "sha256-Dtewnwv40PX/64ux9ZSZhWRMkk9j1czruabPgQBF+G8=",
+        "lastModified": 1742996796,
+        "narHash": "sha256-rYP1m8IJcf7BDRgrg1bLwXTpoPIrZNMG6Hba0ebbi3s=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "778979ca23806accc5fc787b8d0b77eb030b1f28",
+        "rev": "6a8680b81dd450db2ef9bb511b602073058dc76d",
         "type": "github"
       },
       "original": {

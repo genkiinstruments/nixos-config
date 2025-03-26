@@ -3,6 +3,7 @@
   flake,
   config,
   pkgs,
+  perSystem,
   ...
 }:
 {
@@ -60,7 +61,50 @@
 
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
+      superbooth-slack-token = {
+        file = "${inputs.secrets}/superbooth-slack-token.age";
+        owner = "root";
+        mode = "0400";
+      };
     };
+
+  # Create a systemd service for the Superbooth reminder script
+  systemd.services.superbooth-reminder = {
+    description = "Superbooth Countdown Reminder";
+    script = ''
+      export SLACK_TOKEN=$(cat ${config.age.secrets.superbooth-slack-token.path})
+      ${perSystem.self.superbooth-reminder}/bin/superbooth-reminder
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+    # Will run daily at 9:00AM
+    startAt = "00:09:00";
+  };
+
+  # Add a systemd timer to stop the service after May 8th, 2025
+  systemd.timers.superbooth-reminder-cleanup = {
+    description = "Disable Superbooth reminder after May 8th, 2025";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "2025-05-09 00:00:00";
+      Unit = "superbooth-reminder-cleanup.service";
+    };
+  };
+
+  systemd.services.superbooth-reminder-cleanup = {
+    description = "Disable Superbooth reminder after May 8th, 2025";
+    script = ''
+      systemctl disable --now superbooth-reminder.service
+      systemctl disable --now superbooth-reminder-cleanup.timer
+      echo "Superbooth reminder has been disabled as scheduled."
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
+    };
+  };
 
   services.buildbot-nix.master = {
     enable = true;
