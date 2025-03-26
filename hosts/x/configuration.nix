@@ -3,6 +3,7 @@
   flake,
   config,
   pkgs,
+  lib,
   ...
 }:
 {
@@ -17,7 +18,7 @@
     inputs.buildbot-nix.nixosModules.buildbot-master
     inputs.buildbot-nix.nixosModules.buildbot-worker
     flake.modules.shared.default
-    flake.modules.shared.builders
+    # flake.modules.shared.builders
     flake.nixosModules.common
     flake.nixosModules.ssh-serve
     ./disko.nix
@@ -155,6 +156,15 @@
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "server";
+  };
+
+  # Configure OAuth2 proxy to allow GitHub webhooks through without authentication
+  services.oauth2-proxy.extraConfig = lib.mkForce {
+    skip-auth-route = [
+      "^/change_hook"
+      "^/hooks/github"
+      "^/hooks/gitea"
+    ];
   };
 
   zramSwap = {
