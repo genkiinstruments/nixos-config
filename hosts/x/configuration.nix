@@ -35,7 +35,7 @@
       };
       mkOauth2ProxySecret = file: {
         inherit file;
-        owner = config.services.buildbot-master.user;
+        owner = "oauth2-proxy";
       };
     in
     {
