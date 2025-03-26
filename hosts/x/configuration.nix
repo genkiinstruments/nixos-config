@@ -3,7 +3,6 @@
   flake,
   config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -28,13 +27,10 @@
 
   facter.reportPath = ./facter.json;
 
-  # [TODO]: Provide upstream fix? (March 02, 2025 17:25, )
-  users.groups.secrets = {
-    members = [
-      "oauth2-proxy"
-      "buildbot"
-    ];
-  };
+  users.groups.secrets.members = [
+    "oauth2-proxy"
+    "buildbot"
+  ];
 
   age.secrets =
     let
@@ -56,7 +52,11 @@
 
       buildbot-client-secret = mkOauth2ProxySecret "${inputs.secrets}/buildbot-client-secret.age";
       buildbot-github-cookie-secret = mkOauth2ProxySecret "${inputs.secrets}/buildbot-github-cookie-secret.age";
-      buildbot-http-basic-auth-password = mkOauth2ProxySecret "${inputs.secrets}/buildbot-http-basic-auth-password.age";
+
+      buildbot-http-basic-auth-password.file = "${inputs.secrets}/buildbot-http-basic-auth-password.age";
+      buildbot-http-basic-auth-password.owner = config.services.buildbot-master.user;
+      buildbot-http-basic-auth-password.group = "secrets";
+      buildbot-http-basic-auth-password.mode = "0440";
 
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
