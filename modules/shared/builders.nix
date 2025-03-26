@@ -33,9 +33,7 @@ _: {
         hostName = "v1";
         sshUser = "nix-ssh";
         protocol = "ssh-ng";
-        systems = [
-          "aarch64-linux"
-        ];
+        systems = [ "aarch64-linux" ];
         maxJobs = 14;
         supportedFeatures = [
           "nixos-test"
