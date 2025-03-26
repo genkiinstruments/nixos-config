@@ -18,6 +18,7 @@
     inputs.fod-oracle.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
+    flake.modules.shared.builders
     flake.nixosModules.common
     flake.nixosModules.ssh-serve
     ./disko-config.nix
