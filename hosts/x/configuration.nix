@@ -159,8 +159,8 @@
   };
 
   # Configure OAuth2 proxy to allow GitHub webhooks through without authentication
-  services.oauth2-proxy.extraConfig = lib.mkForce {
-    skip-auth-route = [
+  services.oauth2-proxy.extraConfig = {
+    skip-auth-route = lib.mkForce [
       "^/change_hook"
       "^/hooks/github"
       "^/hooks/gitea"
