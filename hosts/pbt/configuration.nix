@@ -10,6 +10,7 @@
     inputs.srvos.nixosModules.desktop
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-systemd-boot
+    inputs.nixos-facter-modules.nixosModules.facter
     inputs.agenix.nixosModules.default
     flake.modules.shared.default
     flake.nixosModules.common
@@ -18,9 +19,9 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  nixpkgs.hostPlatform = "aarch64-linux";
   networking.hostName = "pbt";
   system.stateVersion = "25.05"; # Did you read the comment?
+  facter.reportPath = ./facter.json;
 
   # Automatic garbage collection
   nix = {
