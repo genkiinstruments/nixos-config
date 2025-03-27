@@ -7,7 +7,7 @@
 }:
 {
   imports = [
-    inputs.srvos.nixosModules.desktop
+    inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.nixos-facter-modules.nixosModules.facter
