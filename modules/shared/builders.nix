@@ -52,7 +52,7 @@ let
     (mkBuilder {
       hostName = "pbt";
       systems = [ "aarch64-linux" ];
-      maxJobs = 14;
+      maxJobs = 8;
     })
     (mkBuilder {
       hostName = "gkr";
