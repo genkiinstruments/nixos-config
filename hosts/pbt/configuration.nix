@@ -51,6 +51,10 @@
     experimentalGPUInstallMode = "replace";
   };
   hardware.graphics.enable32Bit = lib.mkForce false;
+
+  # Disable WiFi module entirely
+  boot.extraModprobeConfig = ''blacklist brcmfmac'';
+
   zramSwap = {
     enable = true;
     algorithm = "zstd";
@@ -62,6 +66,8 @@
     # https://rdx.overdevs.com/comments.html?url=https://www.reddit.com/r/AsahiLinux/comments/1gy0t86/psa_transitioning_from_zramswap_to_zswap/
     kernelParams = [
       "zswap.zpool=zsmalloc"
+      # Disable WiFi to prevent issues
+      "module_blacklist=brcmfmac"
     ];
     binfmt.emulatedSystems = [ "x86_64-linux" ];
     loader = {
@@ -78,9 +84,14 @@
       "dm-snapshot"
     ];
   };
-  networking.wireless.iwd = {
-    enable = true;
-    settings.General.EnableNetworkConfiguration = true;
+  # Disable wireless networking entirely
+  networking.wireless.enable = false;
+  networking.wireless.iwd.enable = false;
+
+  # Enable wired networking
+  networking.useDHCP = false;
+  networking.interfaces.enp1s0 = {
+    useDHCP = true;
   };
 
   fileSystems."/" = {
