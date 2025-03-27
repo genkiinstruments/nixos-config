@@ -22,6 +22,24 @@
   networking.hostName = "pbt";
   system.stateVersion = "25.05"; # Did you read the comment?
 
+  # Automatic garbage collection
+  nix = {
+    # Enable auto garbage collection
+    settings.auto-optimise-store = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+      # Free up to 95% of disk space when threshold is reached
+      persistent = true;
+      randomizedDelaySec = "45min";
+    };
+    # Clean the store when free space drops below 5%
+    extraOptions = ''
+      min-free = ${toString (5 * 1024 * 1024 * 1024)}  # 5 GiB
+      max-free = ${toString (10 * 1024 * 1024 * 1024)} # 10 GiB
+    '';
+  };
 
   hardware.asahi = {
     enable = true;
