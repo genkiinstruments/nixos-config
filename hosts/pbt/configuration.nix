@@ -25,17 +25,14 @@
 
   # Automatic garbage collection
   nix = {
-    # Enable auto garbage collection
     settings.auto-optimise-store = true;
     gc = {
       automatic = true;
       dates = "weekly";
       options = "--delete-older-than 30d";
-      # Free up to 95% of disk space when threshold is reached
       persistent = true;
       randomizedDelaySec = "45min";
     };
-    # Clean the store when free space drops below 5%
     extraOptions = ''
       min-free = ${toString (5 * 1024 * 1024 * 1024)}  # 5 GiB
       max-free = ${toString (10 * 1024 * 1024 * 1024)} # 10 GiB
@@ -70,7 +67,6 @@
       # Disable WiFi to prevent issues
       "module_blacklist=brcmfmac"
     ];
-    binfmt.emulatedSystems = [ "x86_64-linux" ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = lib.mkForce false;
@@ -89,11 +85,10 @@
   networking.wireless.enable = false;
   networking.wireless.iwd.enable = false;
 
-  # Enable wired networking
+  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
+  # Per-interface useDHCP will be mandatory in the future, so this generated config
+  # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp1s0 = {
-    useDHCP = true;
-  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/91812e0b-248e-46f7-b104-95af0d3e0801";
