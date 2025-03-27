@@ -3,7 +3,6 @@
   flake,
   lib,
   modulesPath,
-  pkgs,
   ...
 }:
 {
@@ -23,11 +22,6 @@
   networking.hostName = "pbt";
   system.stateVersion = "25.05"; # Did you read the comment?
 
-  environment.systemPackages = [
-    # openssh # needed for fido2 support
-    # openssh is not available on aarch64-linux
-    pkgs.hello
-  ];
 
   hardware.asahi = {
     enable = true;
