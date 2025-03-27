@@ -50,11 +50,6 @@ let
       maxJobs = 32;
     })
     (mkBuilder {
-      hostName = "v1";
-      systems = [ "aarch64-linux" ];
-      maxJobs = 14;
-    })
-    (mkBuilder {
       hostName = "pbt";
       systems = [ "aarch64-linux" ];
       maxJobs = 14;
