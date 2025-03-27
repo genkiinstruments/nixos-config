@@ -80,7 +80,7 @@
       User = "root";
     };
     # Will run daily at 9:00AM
-    startAt = "00:09:00";
+    startAt = "09:00:00";
   };
 
   # Add a systemd timer to stop the service after May 8th, 2025
