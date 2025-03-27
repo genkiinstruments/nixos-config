@@ -132,30 +132,30 @@ keybind = cmd+u=text:\x00\x75
 keybind = cmd+x=text:\x00\x78
 keybind = cmd+y=text:\x00\x79
 keybind = cmd+z=text:\x00\x7A
-keybind = cmd+A=text:\x00\x41
-keybind = cmd+B=text:\x00\x42
-keybind = cmd+C=text:\x00\x43
-keybind = cmd+D=text:\x00\x44
-keybind = cmd+E=text:\x00\x45
-keybind = cmd+F=text:\x00\x46
-keybind = cmd+G=text:\x00\x47
-keybind = cmd+H=text:\x00\x48
-keybind = cmd+I=text:\x00\x49
-keybind = cmd+J=text:\x00\x4A
-keybind = cmd+K=text:\x00\x4B
-keybind = cmd+L=text:\x00\x4C
-keybind = cmd+M=text:\x00\x4D
-keybind = cmd+N=text:\x00\x4E
-keybind = cmd+O=text:\x00\x4F
-keybind = cmd+P=text:\x00\x50
-keybind = cmd+Q=text:\x00\x51
-keybind = cmd+R=text:\x00\x52
-keybind = cmd+S=text:\x00\x53
-keybind = cmd+T=text:\x00\x54
-keybind = cmd+U=text:\x00\x55
-keybind = cmd+V=text:\x00\x56
-keybind = cmd+W=text:\x00\x57
-keybind = cmd+X=text:\x00\x58
-keybind = cmd+Y=text:\x00\x59
-keybind = cmd+Z=text:\x00\x5A
+# keybind = cmd+A=text:\x00\x41
+# keybind = cmd+B=text:\x00\x42
+# keybind = cmd+C=text:\x00\x43
+# keybind = cmd+D=text:\x00\x44
+# keybind = cmd+E=text:\x00\x45
+# keybind = cmd+F=text:\x00\x46
+# keybind = cmd+G=text:\x00\x47
+# keybind = cmd+H=text:\x00\x48
+# keybind = cmd+I=text:\x00\x49
+# keybind = cmd+J=text:\x00\x4A
+# keybind = cmd+K=text:\x00\x4B
+# keybind = cmd+L=text:\x00\x4C
+# keybind = cmd+M=text:\x00\x4D
+# keybind = cmd+N=text:\x00\x4E
+# keybind = cmd+O=text:\x00\x4F
+# keybind = cmd+P=text:\x00\x50
+# keybind = cmd+Q=text:\x00\x51
+# keybind = cmd+R=text:\x00\x52
+# keybind = cmd+S=text:\x00\x53
+# keybind = cmd+T=text:\x00\x54
+# keybind = cmd+U=text:\x00\x55
+# keybind = cmd+V=text:\x00\x56
+# keybind = cmd+W=text:\x00\x57
+# keybind = cmd+X=text:\x00\x58
+# keybind = cmd+Y=text:\x00\x59
+# keybind = cmd+Z=text:\x00\x5A
 
