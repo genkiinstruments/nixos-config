@@ -6,6 +6,9 @@
   perSystem,
   ...
 }:
+let
+  inherit (flake.lib) tailnet;
+in
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -109,7 +112,7 @@
   services.buildbot-nix.master = {
     enable = true;
     useHTTPS = true;
-    domain = "x.tail01dbd.ts.net";
+    domain = "${config.networking.hostName}.${tailnet}";
     outputsPath = "/var/www/buildbot/nix-outputs/";
     workersFile = config.age.secrets.buildbot-nix-workers-json.path;
     buildSystems = [

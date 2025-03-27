@@ -6,6 +6,9 @@
   pkgs,
   ...
 }:
+let
+  inherit (flake.lib) tailnet;
+in
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -89,7 +92,7 @@
 
   services.caddy = {
     enable = true;
-    virtualHosts."gdrn.tail01dbd.ts.net".extraConfig = ''
+    virtualHosts."${config.networking.hostName}.${tailnet}".extraConfig = ''
       root * ${perSystem.genki-www.default}
       file_server
     '';

@@ -1,4 +1,6 @@
 _: {
+  tailnet = "tail01dbd.ts.net";
+
   nvim-lsp-packages =
     { pkgs, ... }:
     with pkgs;
