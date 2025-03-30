@@ -85,10 +85,10 @@
   networking.wireless.enable = false;
   networking.wireless.iwd.enable = false;
 
-  # The global useDHCP flag is deprecated, therefore explicitly set to false here.
-  # Per-interface useDHCP will be mandatory in the future, so this generated config
-  # replicates the default behaviour.
+  # Enable wired networking for built-in ethernet and USB-C adapter
   networking.useDHCP = false;
+  networking.interfaces.enu1.useDHCP = true;
+  networking.interfaces.end0.useDHCP = true;
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/91812e0b-248e-46f7-b104-95af0d3e0801";
