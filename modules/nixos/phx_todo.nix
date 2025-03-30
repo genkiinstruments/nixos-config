@@ -186,11 +186,11 @@ in
             reverse_proxy localhost:${toString cfg.port} {
               header_up Host {host}
               header_up X-Real-IP {remote_host}
-              
+
               # WebSocket support for LiveView
               header_up Connection {>Connection}
               header_up Upgrade {>Upgrade}
-              
+
               flush_interval -1
               transport http {
                 keepalive 30s

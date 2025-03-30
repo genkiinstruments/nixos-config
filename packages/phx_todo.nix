@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 let
   src = pkgs.fetchFromGitHub {
     owner = "multivac61";

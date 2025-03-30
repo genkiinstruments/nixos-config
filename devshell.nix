@@ -1,4 +1,7 @@
-{ pkgs, perSystem }:
+{
+  pkgs,
+  perSystem,
+}:
 pkgs.mkShellNoCC {
   packages =
     with pkgs;

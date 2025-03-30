@@ -262,10 +262,10 @@
         cat = "bat";
       };
       interactiveShellInit = lib.strings.concatStrings (
-        lib.strings.intersperse "\n" ([
+        lib.strings.intersperse "\n" [
           (builtins.readFile ./config/fish/config.fish)
           "set -g SHELL ${pkgs.fish}/bin/fish"
-        ])
+        ]
       );
     };
     bash.enable = true;
@@ -335,10 +335,10 @@
         }
       ];
       extraConfig = lib.strings.concatStrings (
-        lib.strings.intersperse "\n" ([
+        lib.strings.intersperse "\n" [
           "set -g default-command ${pkgs.fish}/bin/fish"
           (builtins.readFile ./config/tmux/tmux.conf)
-        ])
+        ]
       );
     };
 

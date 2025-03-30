@@ -135,5 +135,4 @@
     pkgs.yubikey-personalization
     pkgs.libfido2
   ];
-
 }

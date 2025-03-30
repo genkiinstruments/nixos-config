@@ -73,4 +73,3 @@ in
 
   programs.ssh.extraConfig = sshConfigs;
 }
-

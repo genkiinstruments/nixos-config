@@ -18,4 +18,3 @@ hs.hotkey.bind(hyper, "]", function()
 		win:focusWindowEast()
 	end
 end)
-

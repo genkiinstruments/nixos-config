@@ -1,8 +1,4 @@
-{
-  pkgs,
-  ...
-}:
-
+{ pkgs, ... }:
 let
   # Create a wrapped Python environment with all dependencies
   pythonEnv = pkgs.python3.withPackages (
@@ -14,6 +10,7 @@ let
   );
 in
 pkgs.writeScriptBin "superbooth-reminder" # python
+
   ''
     #!${pythonEnv}/bin/python
     import os

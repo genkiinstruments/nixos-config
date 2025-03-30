@@ -1,11 +1,10 @@
-{ lib
-, python3
-, fetchFromGitHub
-, gzip
-, gnutar
-, lzfse
+{
+  python3,
+  fetchFromGitHub,
+  gzip,
+  gnutar,
+  lzfse,
 }:
-
 python3.pkgs.buildPythonApplication rec {
   pname = "asahi-fwextract";
   version = "0.7.8";
