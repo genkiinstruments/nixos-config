@@ -26,23 +26,8 @@
       magic-wormhole-rs
       neofetch
       cachix
-      (claude-code.overrideAttrs (_old: rec {
-        version = "0.2.53";
-        src = fetchzip {
-          url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-          hash = "sha256-oWXtIGJwVe/LwAlIWfpA5Jn9zZWQtjw03DkyQ/Sg08c=";
-        };
-        npmDepsHash = "sha256-3igDt1N77LJu5Dq9uK3bd90sfYZkjBOt5ArvoRibFeo=";
-      }))
-      (sesh.overrideAttrs (_old: {
-        version = "2.13.0";
-        src = fetchFromGitHub {
-          owner = "joshmedeski";
-          repo = "sesh";
-          rev = "476dbf94026d367d145c9f1ccc88bc8078cc8660";
-          sha256 = "sha256-YFvUYacuvyzNXwY+y9kI4tPlrlojDuZpR7VaTGdVqb8=";
-        };
-      }))
+      claude-code
+      sesh
     ];
   };
 
