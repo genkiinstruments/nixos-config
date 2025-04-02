@@ -37,6 +37,12 @@
     };
   };
 
+  nix.settings = {
+    substituters = [ "https://genki.cachix.org" ];
+    trusted-public-keys = [ "genki.cachix.org-1:5l+wAa4rDwhcd5Wm43eK4N73qJ6GIKmJQ87Nw/bRGfE=" ];
+    trusted-users = [ "olafur" ];
+  };
+
   home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
 
   users.users.olafur = {
@@ -44,7 +50,6 @@
     home = "/Users/olafur";
     shell = pkgs.fish;
   };
-  nix.settings.trusted-users = [ "olafur" ];
 
   environment.systemPackages = with pkgs; [
     openssh # needed for fido2 support
