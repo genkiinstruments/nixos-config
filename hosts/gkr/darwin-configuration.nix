@@ -37,7 +37,6 @@
   # Create the nix-ssh user for remote builds - rely on Tailscale SSH for authentication
   # NOTE: Have to manually create the user on macOS. Does not need to be an administrator
   users.users.nix-ssh = {
-    name = "nix-ssh";
     shell = pkgs.bash;
     isHidden = false;
     home = "/Users/nix-ssh";
