@@ -21,7 +21,7 @@
   ];
 
   # As of kernel version 6.6.72, amdgpu throws a fatal error during init, resulting in a barely-working display
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.kernelParams = [
     # The GPD Pocket 4 uses a tablet LTPS display, that is mounted rotated 90° counter-clockwise

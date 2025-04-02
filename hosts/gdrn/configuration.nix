@@ -30,7 +30,8 @@ in
   # Hardware optimizations
   boot = {
     # Kernel settings
-    kernelPackages = pkgs.linuxPackages_latest; # Use latest kernel for AMD CPU optimizations
+    # [TODO]: Broken in nixpkgs (March 31, 2025 15:57, )
+    # kernelPackages = pkgs.linuxPackages_latest; # Use latest kernel for AMD CPU optimizations
 
     # Hardware-specific optimizations
     kernelParams = [
