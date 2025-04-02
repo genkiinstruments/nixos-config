@@ -24,7 +24,10 @@
     home = "/Users/genki";
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
-  nix.settings.trusted-users = [ "genki" ];
+  nix.settings.trusted-users = [
+    "genki"
+    "nix-ssh"
+  ];
   environment.systemPackages = with pkgs; [
     openssh # needed for fido2 support
     gh # needed for the softwave github run
