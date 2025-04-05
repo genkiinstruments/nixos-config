@@ -22,7 +22,7 @@ pkgs.writeScriptBin "superbooth-reminder" # python
 
     # Get Slack API token from environment variable
     SLACK_TOKEN = os.environ.get("SLACK_TOKEN")
-    CHANNEL = "#henrik"
+    CHANNEL = "#katla-hardware"
 
     client = WebClient(token=SLACK_TOKEN)
 
