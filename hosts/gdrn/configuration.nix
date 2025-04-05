@@ -122,22 +122,49 @@ in
 
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
-  services.cloudflared = {
-    enable = true;
-    # Add additional configuration options to fix TLS curve preferences
-    package = pkgs.cloudflared;
-    tunnels."d148fd83-41dd-4e16-8ac8-4460c16b0258" = {
-      credentialsFile = config.age.secrets.gdrn-cloudflared-tunnel.path;
-      default = "http_status:404";
-      ingress = {
-        # Route requests to both the root domain and api subdomain to the fod-oracle service
-        "fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
-        "api.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
-        # Catch any subdomains or paths under the main domain
-        "*.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+  services.cloudflared =
+    let
+      # [TODO]: Fix after upstream update (April 04, 2025 10:11, )
+
+      patchedCloudflared = pkgs.cloudflared.override {
+        buildGoModule = pkgs.buildGoModule.override {
+          go = pkgs.buildPackages.go_1_23.overrideAttrs (old: {
+            pname = "cloudflare-go";
+            version = "1.22.5-devel-cf";
+
+            src = pkgs.fetchFromGitHub {
+              owner = "cloudflare";
+              repo = "go";
+              rev = "af19da5605ca11f85776ef7af3384a02a315a52b";
+              hash = "sha256-6VT9CxlHkja+mdO1DeFoOTq7gjb3T5jcf2uf9TB/CkU=";
+            };
+
+            patches = map (
+              patch:
+              if (baseNameOf patch == "go_no_vendor_checks-1.23.patch") then
+                ./exprs/go-no-vendor-1.22.patch
+              else
+                patch
+            ) old.patches;
+          });
+        };
+      };
+    in
+    {
+      enable = true;
+      package = patchedCloudflared.overrideAttrs { meta.broken = false; };
+      tunnels."d148fd83-41dd-4e16-8ac8-4460c16b0258" = {
+        credentialsFile = config.age.secrets.gdrn-cloudflared-tunnel.path;
+        default = "http_status:404";
+        ingress = {
+          # Route requests to both the root domain and api subdomain to the fod-oracle service
+          "fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+          "api.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+          # Catch any subdomains or paths under the main domain
+          "*.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+        };
       };
     };
-  };
 
   # Fix TLS curve preferences by setting environment variables for cloudflared
   systemd.services.cloudflared.environment = {
