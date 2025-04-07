@@ -6,9 +6,6 @@
   pkgs,
   ...
 }:
-let
-  inherit (flake.lib) tailnet;
-in
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -26,6 +23,8 @@ in
     flake.nixosModules.ssh-serve
     ./disko-config.nix
   ];
+
+  networking.hostName = "gdrn";
 
   # Hardware optimizations
   boot = {
@@ -89,16 +88,6 @@ in
 
   programs.ssh.startAgent = true;
 
-  services.tailscale.permitCertUid = "caddy";
-
-  services.caddy = {
-    enable = true;
-    virtualHosts."${config.networking.hostName}.${tailnet}".extraConfig = ''
-      root * ${perSystem.genki-www.default}
-      file_server
-    '';
-  };
-
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
     count = 4;
@@ -113,6 +102,7 @@ in
   };
   age.secrets.gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
   age.secrets.gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
+
   nix.settings = {
     substituters = [ "https://genki.cachix.org" ];
     trusted-public-keys = [ "genki.cachix.org-1:5l+wAa4rDwhcd5Wm43eK4N73qJ6GIKmJQ87Nw/bRGfE=" ];
@@ -125,7 +115,6 @@ in
   services.cloudflared =
     let
       # [TODO]: Fix after upstream update (April 04, 2025 10:11, )
-
       patchedCloudflared = pkgs.cloudflared.override {
         buildGoModule = pkgs.buildGoModule.override {
           go = pkgs.buildPackages.go_1_23.overrideAttrs (old: {
@@ -157,24 +146,26 @@ in
         credentialsFile = config.age.secrets.gdrn-cloudflared-tunnel.path;
         default = "http_status:404";
         ingress = {
-          # Route requests to both the root domain and api subdomain to the fod-oracle service
-          "fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
+          "fod-oracle.org" = "http://localhost:5173";
+          # API endpoints go to the fod-oracle service
           "api.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
-          # Catch any subdomains or paths under the main domain
-          "*.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
         };
       };
     };
 
-  # Fix TLS curve preferences by setting environment variables for cloudflared
-  systemd.services.cloudflared.environment = {
-    # Only use P-256 curve which is widely supported
-    GODEBUG = "tls13=1,tlsrsakex=0,tlscurve=1";
-    # Increase UDP buffer size to fix the buffer warning
-    QUIC_GO_DISABLE_GSO = "1";
-  };
+  # Use static file server instead of Caddy to avoid certificate warnings
+  systemd.services.static-file-server = {
+    description = "Simple static file server for docs";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "network.target" ];
 
-  networking.hostName = "gdrn";
+    serviceConfig = {
+      ExecStart = "${pkgs.python3}/bin/python3 -m http.server 5173 --directory ${perSystem.fod-oracle.docs}/share/doc/docs";
+      Restart = "always";
+      RestartSec = "5";
+      DynamicUser = true;
+    };
+  };
 
   # Enable the FOD Oracle API service
   services.fod-oracle = {
