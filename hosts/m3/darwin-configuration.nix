@@ -61,8 +61,10 @@
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
 
-  home-manager.users.olafur.home.sessionVariables.SSH_AUTH_SOCK =
-    "~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
+  environment.etc."ssh/ssh_config.d/secretive.conf".text = ''
+    Host *
+      IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+  '';
 
   homebrew = {
     enable = true;
