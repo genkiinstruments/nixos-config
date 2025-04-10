@@ -57,7 +57,14 @@
 
   security.sudo.wheelNeedsPassword = false;
 
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    # Enable X11 forwarding for clipboard sharing
+    extraConfig = ''
+      X11Forwarding yes
+      X11UseLocalhost yes
+    '';
+  };
   networking.hostName = "g";
 
   facter.reportPath = ./facter.json;
@@ -92,6 +99,7 @@
       killall
       niv
       xclip
+      xsel
       magic-wormhole-rs
       git
       alacritty
