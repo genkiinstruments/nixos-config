@@ -12,6 +12,5 @@
     forwardAgent = true;
     addKeysToAgent = "yes";
     serverAliveInterval = 900;
-    extraConfig = "SetEnv TERM=xterm-256color";
   };
 }

@@ -1,7 +1,5 @@
 {
   flake,
-  inputs,
-  config,
   pkgs,
   ...
 }:
@@ -14,10 +12,6 @@
   # Configure SSH for clipboard sharing
   programs.ssh = {
     enable = true;
-    extraConfig = ''
-      Host g
-        SetEnv TERM=xterm-256color
-    '';
   };
 
 }
