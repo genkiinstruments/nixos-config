@@ -70,6 +70,7 @@
       "raycast"
       "arc"
       "firefox"
+      "kicad"
     ];
     brews = [
       # clis and libraries
