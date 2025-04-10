@@ -156,11 +156,6 @@
   # Disable the firewall since we're in a VM and we want to make it easy to visit stuff in here. We only use NAT networking anyways.
   networking.firewall.enable = false;
 
-  services.udev.packages = [
-    pkgs.yubikey-personalization
-    pkgs.libfido2
-  ];
-
   programs.ssh.startAgent = true;
   programs.firefox.enable = true;
   programs.nix-ld.enable = true;

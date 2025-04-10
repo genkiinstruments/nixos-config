@@ -139,11 +139,6 @@
     # Add other GNOME packages you want to exclude
   ];
 
-  services.udev.packages = [
-    pkgs.yubikey-personalization
-    pkgs.libfido2
-  ];
-
   # Disable auto-suspend when on AC power
   services.logind = {
     lidSwitch = "suspend";
@@ -155,7 +150,7 @@
       HandleSuspendKeyLongPress=ignore
     '';
   };
-  
+
   # GNOME power settings - disable auto-suspend completely
   services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
     [org.gnome.settings-daemon.plugins.power]
@@ -163,7 +158,7 @@
     sleep-inactive-battery-type='nothing'
     power-button-action='nothing'
     idle-dim=false
-    
+
     [org.gnome.desktop.session]
     idle-delay=uint32 0
   '';
