@@ -53,7 +53,6 @@
   environment.systemPackages = with pkgs; [
     openssh # needed for fido2 support
   ];
-  environment.variables.SSH_ASKPASS = "/Applications/ssh-askpass.app/Contents/MacOS/ssh-askpass"; # TODO: nixpkgs
   environment.variables.DISPLAY = ":0";
 
   environment.interactiveShellInit = ''
@@ -61,6 +60,9 @@
   '';
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
+
+  home-manager.users.olafur.home.sessionVariables.SSH_AUTH_SOCK =
+    "~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh";
 
   homebrew = {
     enable = true;
@@ -70,18 +72,15 @@
       "raycast"
       "arc"
       "firefox"
+      "secretive"
       "kicad"
     ];
     brews = [
       # clis and libraries
-      "theseal/ssh-askpass/ssh-askpass"
+      "age-plugin-se"
     ];
     taps = [
-      {
-        name = "theseal/ssh-askpass";
-        clone_target = "https://github.com/theseal/ssh-askpass.git";
-        force_auto_update = true;
-      }
+      # for things not in the hombrew repo, e.g.,
     ];
     masApps = {
       # `nix run nixpkgs#mas -- search <app name>`
