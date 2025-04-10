@@ -135,4 +135,38 @@
     pkgs.yubikey-personalization
     pkgs.libfido2
   ];
+
+  # Disable auto-suspend when on AC power
+  services.logind = {
+    lidSwitch = "suspend";
+    lidSwitchExternalPower = "ignore";
+    lidSwitchDocked = "ignore";
+    extraConfig = ''
+      IdleAction=ignore
+      HandleSuspendKey=ignore
+      HandleSuspendKeyLongPress=ignore
+    '';
+  };
+  
+  # GNOME power settings - disable auto-suspend completely
+  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+    [org.gnome.settings-daemon.plugins.power]
+    sleep-inactive-ac-type='nothing'
+    sleep-inactive-battery-type='nothing'
+    power-button-action='nothing'
+    idle-dim=false
+    
+    [org.gnome.desktop.session]
+    idle-delay=uint32 0
+  '';
+  systemd.targets.sleep.enable = false;
+  systemd.targets.suspend.enable = false;
+  systemd.targets.hibernate.enable = false;
+  systemd.targets.hybrid-sleep.enable = false;
+
+  # Disable automatic sleep from all sources
+  powerManagement.enable = true;
+  powerManagement.powertop.enable = false;
+  powerManagement.cpuFreqGovernor = "performance";
+  services.tlp.enable = false; # Disable TLP if it's enabled elsewhere
 }
