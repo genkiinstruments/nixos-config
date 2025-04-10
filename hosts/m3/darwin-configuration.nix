@@ -50,11 +50,6 @@
     shell = pkgs.fish;
   };
 
-  environment.systemPackages = with pkgs; [
-    openssh # needed for fido2 support
-  ];
-  environment.variables.DISPLAY = ":0";
-
   environment.interactiveShellInit = ''
     export CACHIX_AUTH_TOKEN="$(cat ${config.age.secrets.cachix_auth_token.path})"
   '';
