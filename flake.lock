@@ -56,11 +56,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1744202774,
-        "narHash": "sha256-51lqiz0UR6ZWqHDdbT74RNyFinRF1WsR5qjvV5uy8T4=",
+        "lastModified": 1744289588,
+        "narHash": "sha256-xzYebbAH13K6pK/Z+Vvu/uY52NkTkOs/o7PEAeAx5Yg=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "7b9470b52144566fe1a2c7372fae245628d1fbb6",
+        "rev": "8a50a4bcf8090c156d38ae96a57ded65f1341ac6",
         "type": "github"
       },
       "original": {
@@ -164,11 +164,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1743846009,
-        "narHash": "sha256-kYG3HwhBCnWj0RzaRucua0tRFlPBVZOOCyGGqZuGyQg=",
+        "lastModified": 1744300532,
+        "narHash": "sha256-DqxHkWIoKQ+BYJcvyrRKG/OWQoKooCWfogeewOdqJeA=",
         "owner": "genkiinstruments",
         "repo": "genki-www",
-        "rev": "3b263664f8c209fd4f06df76e0524d6d7c5816e5",
+        "rev": "001e4ca6d7b2e11e4de9890f4b2de570cdf5dcd2",
         "type": "github"
       },
       "original": {
@@ -209,11 +209,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744223888,
-        "narHash": "sha256-reYpe0J1J+wH34JFs7KKp0G5nP7+XSQ5z0ZLFJcfJr8=",
+        "lastModified": 1744360457,
+        "narHash": "sha256-Rcd9KYFRYPkMfOsz6vzWosEfggJMGjb1/j9mnxC7q9s=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "79461936709b12e17adb9c91dd02d1c66d577f09",
+        "rev": "da624eaad0fefd4dac002e1f09d300d150c20483",
         "type": "github"
       },
       "original": {
@@ -260,10 +260,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1743862455,
-        "narHash": "sha256-I/QXtrqznq1321mYR9TyMPX/zCWb9iAH64hO+pEBY00=",
+        "lastModified": 1744174375,
+        "narHash": "sha256-oxI9TLgnQbQ/WL0tIwVSIooLbXq4PW1QUhf5aQmXFgk=",
         "ref": "nixos-unstable-small",
-        "rev": "06f3516b0397bd241bde2daefc8538fc886c5467",
+        "rev": "ef3a956f697525883b77192cbe208233ea0f8f79",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -312,11 +312,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1742996796,
-        "narHash": "sha256-rYP1m8IJcf7BDRgrg1bLwXTpoPIrZNMG6Hba0ebbi3s=",
+        "lastModified": 1744316549,
+        "narHash": "sha256-5bCAO9PX1cqeM5HlaJHRfatfnX8LAEdduRCa7BR0Qk0=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "6a8680b81dd450db2ef9bb511b602073058dc76d",
+        "rev": "5dd9c924073efab7a8c354e5638295b10cfddbd3",
         "type": "github"
       },
       "original": {
