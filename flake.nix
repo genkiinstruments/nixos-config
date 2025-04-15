@@ -1,5 +1,5 @@
 {
-  description = "Nix runs the 🌍🌎🌏";
+  description = "Genki 🌍🌎🌏";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable&shallow=1";
