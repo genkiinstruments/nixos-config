@@ -7,17 +7,17 @@ vim.opt.swapfile = false
 -- Configure clipboard with built-in OSC52 support for SSH sessions
 vim.opt.clipboard = "unnamedplus"
 if vim.env.SSH_TTY then
-  vim.g.clipboard = {
-    name = 'OSC 52',
-    copy = {
-      ['+'] = require('vim.clipboard.osc52').copy('+'),
-      ['*'] = require('vim.clipboard.osc52').copy('*'),
-    },
-    paste = {
-      ['+'] = { 'xclip', '-selection', 'clipboard', '-o' },
-      ['*'] = { 'xclip', '-selection', 'primary', '-o' },
-    },
-  }
+    vim.g.clipboard = {
+        name = "OSC 52",
+        copy = {
+            ["+"] = require("vim.clipboard.osc52").copy("+"),
+            ["*"] = require("vim.clipboard.osc52").copy("*"),
+        },
+        paste = {
+            ["+"] = { "xclip", "-selection", "clipboard", "-o" },
+            ["*"] = { "xclip", "-selection", "primary", "-o" },
+        },
+    }
 end
 
 --  https://old.reddit.com/r/neovim/comments/1ajpdrx/lazyvim_weird_live_grep_root_dir_functionality_in/

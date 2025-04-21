@@ -52,18 +52,18 @@ keymap("n", "gx", function()
         open_url(url)
         return
     end
-    
+
     -- Use Neovim's built-in URL detection
     local url = vim.fn.expand("<cfile>")
-    
+
     -- Check if it's a URL we can handle
     if url:match("^https?://") or url:match("^www%.") then
         open_url(url)
         return
     end
-    
+
     -- Otherwise, fall back to Neovim's built-in behavior
-    vim.cmd('call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote())')
+    vim.cmd("call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote())")
 end, { noremap = true, silent = true, desc = "Open URL" })
 
 vim.api.nvim_buf_set_var(0, "cmp", false)
