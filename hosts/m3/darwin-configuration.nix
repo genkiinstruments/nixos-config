@@ -71,6 +71,7 @@
       "firefox"
       "secretive"
       "kicad"
+      "tailscale"
     ];
     brews = [
       # clis and libraries

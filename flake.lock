@@ -424,16 +424,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1744961264,
-        "narHash": "sha256-aRmUh0AMwcbdjJHnytg1e5h5ECcaWtIFQa6d9gI85AI=",
-        "owner": "numtide",
+        "lastModified": 1745430243,
+        "narHash": "sha256-zc6oQWLtAfnERMkL8q79qnBDqiJqwYdk6AiXvjn/RK8=",
+        "owner": "multivac61",
         "repo": "treefmt-nix",
-        "rev": "8d404a69efe76146368885110f29a2ca3700bee6",
+        "rev": "f349630c5c3c79ea0eb09eeaf5507cf9c1fdcfb9",
         "type": "github"
       },
       "original": {
-        "owner": "numtide",
+        "owner": "multivac61",
         "repo": "treefmt-nix",
+        "rev": "f349630c5c3c79ea0eb09eeaf5507cf9c1fdcfb9",
         "type": "github"
       }
     }
