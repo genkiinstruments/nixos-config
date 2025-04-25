@@ -11,6 +11,7 @@
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.agenix.darwinModules.default
     flake.modules.shared.default
+    flake.modules.shared.builders
     flake.modules.shared.home-manager
     flake.darwinModules.common
   ];
