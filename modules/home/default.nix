@@ -121,6 +121,11 @@
                     value = "chore";
                   }
                   {
+                    name = "Chore: Update lazy-lock";
+                    description = "Update lazy vim lock file";
+                    value = "chore: update lazy-lock.json";
+                  }
+                  {
                     name = "Documentation";
                     description = "Documentation only changes";
                     value = "docs";
