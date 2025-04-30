@@ -35,6 +35,7 @@ in
     "oauth2-proxy"
     "buildbot"
   ];
+  users.users.root.hashedPassword = "$y$j9T$nDvnJMkeA2vFi99.NQ7oV.$nF/0/2A56QVv8OEJVWf6t/fVk9JL85y220TtS.WHGE/";
 
   age.secrets =
     let
