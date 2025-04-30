@@ -17,6 +17,7 @@
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.nixosModules.common
+    flake.nixosModules.pipewire
     ./disko.nix
   ];
 

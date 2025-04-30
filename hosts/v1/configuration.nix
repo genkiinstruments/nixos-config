@@ -18,6 +18,7 @@
     flake.modules.shared.builders
     flake.nixosModules.common
     flake.nixosModules.ssh-serve
+    flake.nixosModules.pipewire
   ];
 
   # Be careful updating this.
