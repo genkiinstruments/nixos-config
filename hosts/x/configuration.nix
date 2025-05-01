@@ -221,11 +221,6 @@ in
     };
   };
 
-  services.tailscale = {
-    enable = true;
-    useRoutingFeatures = "server";
-  };
-
   zramSwap = {
     enable = true;
     algorithm = "zstd";
