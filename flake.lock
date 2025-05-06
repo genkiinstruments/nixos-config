@@ -56,11 +56,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1746332045,
-        "narHash": "sha256-aNTkiJu5vaPCQMYJ+DcKf7FRTm6w7FNzQvnG27vKcCs=",
+        "lastModified": 1746450531,
+        "narHash": "sha256-S2ruwHI2XUm4+fY0HBYcSqa2CryThpNx/yXM7/Xps+E=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "dd2d478798cec15fd1b8983f3f7a80d9aa52be18",
+        "rev": "0c69948d9552d11069eb18dece42431c2fef8ca5",
         "type": "github"
       },
       "original": {
@@ -164,11 +164,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746137844,
-        "narHash": "sha256-7dEBOYo9yT1LX1z/tKSgLmvod6qNdKDtLYFD9TNKTp0=",
+        "lastModified": 1746500345,
+        "narHash": "sha256-7qht5zsd79Dr0Cc0ekpbmHmuA/bZEgvfSBys7KldP9E=",
         "owner": "genkiinstruments",
         "repo": "genki-www",
-        "rev": "2f7e6f52ca7afee2eb6755e5fb1633dfd9b144dc",
+        "rev": "d3786a016617f81f3f9d0bc2092be69ed9aa7df8",
         "type": "github"
       },
       "original": {
