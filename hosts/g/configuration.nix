@@ -86,7 +86,7 @@
 
   programs.nix-ld.enable = true;
 
-  # We are using zsh: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
+  # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
   home-manager.users.genki.programs.atuin.daemon.enable = true;
 
   users.mutableUsers = false;
