@@ -21,6 +21,7 @@ in
     inputs.buildbot-nix.nixosModules.buildbot-worker
     flake.modules.shared.default
     flake.modules.shared.builders
+    flake.modules.shared.home-manager
     flake.nixosModules.common
     flake.nixosModules.ssh-serve
     ./disko.nix
@@ -184,4 +185,27 @@ in
   };
 
   system.stateVersion = "24.11";
+
+  # Don't require password for sudo
+  security.sudo.wheelNeedsPassword = false;
+
+  users.mutableUsers = false;
+  # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
+  home-manager.users.olafur.programs.atuin.daemon.enable = true;
+  users.users.olafur = {
+    isNormalUser = true;
+    description = "olafur";
+    shell = pkgs.fish;
+    hashedPassword = "$6$UIOsLjI24UeaovvG$SVVrXdpnepj/w1jhmYNdpPpmcgkcXsMBcAkqrcIL5yCCYDAkc/8kblyzuBLyK6PnJqR1JxZ7XtlWyCJwWhGrw.";
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "plugdev"
+      "dialout"
+      "video"
+      "inputs"
+    ];
+    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
+  };
+  nix.settings.trusted-users = [ "olafur" ];
 }
