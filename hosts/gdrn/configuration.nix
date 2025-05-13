@@ -74,9 +74,6 @@
 
   facter.reportPath = ./facter.json;
 
-  # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
-  home-manager.users.olafur.programs.atuin.daemon.enable = true;
-
   # Optimized memory configuration for AMD Ryzen
   zramSwap = {
     enable = true;
@@ -187,11 +184,13 @@
     curl
     jq
   ];
-  #
+
   # Don't require password for sudo
   security.sudo.wheelNeedsPassword = false;
 
   users.mutableUsers = false;
+  # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
+  home-manager.users.olafur.programs.atuin.daemon.enable = true;
   users.users.olafur = {
     isNormalUser = true;
     description = "olafur";
