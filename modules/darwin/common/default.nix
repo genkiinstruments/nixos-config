@@ -33,8 +33,5 @@ _: {
       defaults write -g InitialKeyRepeat -int 8
       defaults write -g KeyRepeat -int 0
     '';
-
-    # reload the settings and apply them without the need to logout/login
-    activationScripts.postUserActivation.text = "/System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u";
   };
 }
