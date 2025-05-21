@@ -1,38 +1,13 @@
 theme = catppuccin-mocha
+
 macos-option-as-alt = true
 
 font-family = "JetBrainsMono Nerd Font Mono"
-font-size = 16
+font-size = 14
 font-thicken = true
-
-# background-opacity = 0.95
-# background-blur-radius = 30
-# unfocused-split-opacity = 0.90
-
-# minimum-contrast = 1.0
-
-# Leading
-# adjust-cell-height = 10%
-
-# adjust-underline-thickness = 0.5
-# adjust-underline-thickness = -50%
-# adjust-underline-position = 25%
-
-# visible-menu
-# macos-non-native-fullscreen = visible-menu
-
-# window-theme = "dark"
-# window-decoration       = false
-# window-colorspace = display-p3
-# window-vsync = true
-# window-padding-x = 0
-# window-padding-y = 0
-# window-padding-balance = true
-# window-save-state = always
 
 cursor-style = block
 cursor-style-blink = true
-# selection-invert-fg-bg = true
 
 clipboard-read = allow
 clipboard-write = allow
@@ -43,121 +18,15 @@ confirm-close-surface = false
 quit-after-last-window-closed = true
 
 mouse-hide-while-typing = true
-# mouse-shift-capture = true
-
-# https://github.com/ryanoasis/nerd-fonts/wiki/Glyph-Sets-and-Code-Points
-# font-awesome
-font-codepoint-map = U+f000-U+f2e0,U+e200-U+e2a9=JetBrainsMono Nerd Font Mono
-
-# seti-ui
-font-codepoint-map = U+e5fa-U+e6b1=JetBrainsMono Nerd Font Mono
-
-# codicons
-font-codepoint-map = U+ea60-U+ebeb=JetBrainsMono Nerd Font Mono
-
-## Font mapping
-# Pomicons
-font-codepoint-map = U+E000-U+E00D=Symbols Nerd Font Mono
-
-# Powerline
-font-codepoint-map = U+e0a0-U+e0a2,U+e0b0-U+e0b3=Symbols Nerd Font Mono
-
-# Powerline Extra
-font-codepoint-map = U+e0a3-U+e0a3,U+e0b4-U+e0c8,U+e0cc-U+e0d2,U+e0d4-U+e0d4=Symbols Nerd Font Mono
-
-# Symbols original
-font-codepoint-map = U+e5fa-U+e62b=Symbols Nerd Font Mono
-
-# Devicons
-font-codepoint-map = U+e700-U+e7c5=Symbols Nerd Font Mono
-
-# Font awesome
-font-codepoint-map = U+f000-U+f2e0=Symbols Nerd Font Mono
-
-# Font awesome extension
-font-codepoint-map = U+e200-U+e2a9=Symbols Nerd Font Mono
-
-# Octicons
-font-codepoint-map = U+f400-U+f4a8,U+2665-U+2665,U+26A1-U+26A1,U+f27c-U+f27c=Symbols Nerd Font Mono
-
-# Font Linux
-font-codepoint-map = U+F300-U+F313=Symbols Nerd Font Mono
-
-# Nerd Fonts - Font Power Symbols
-font-codepoint-map = U+23fb-U+23fe,U+2b58-U+2b58=Symbols Nerd Font Mono
-
-# Material Design Icons
-font-codepoint-map = U+f500-U+fd46=Symbols Nerd Font Mono
-
-# Weather Icons
-font-codepoint-map = U+e300-U+e3eb=Symbols Nerd Font Mono
-
-# Misc Code Point Fixes
-font-codepoint-map = U+21B5,U+25B8,U+2605,U+2630,U+2632,U+2714,U+E0A3,U+E615,U+E62B=Symbols Nerd Font Mono
 
 # Keybinds
-# \x02 is ctrl+b (default tmux prefix)
-# \x01 is ctrl+a (common alternative tmux prefix)
-# \x00 is ctrl+space (common alternative tmux prefix)
 # https://unicodelookup.com/#%20Letter%20K/1
-keybind = cmd+shift+b=text:\x00\x42
-keybind = cmd+shift+d=text:\x00\x44
-keybind = cmd+shift+g=text:\x00\x47
-keybind = cmd+shift+r=text:\x00\x52
-keybind = cmd+shift+x=text:\x00\x58
+# \x00 is ctrl+space (common alternative tmux prefix)
+# \x01 is ctrl+a (common alternative tmux prefix)
+# \x02 is ctrl+b (default tmux prefix)
 
-keybind = cmd+a=text:\x00\x61
-keybind = cmd+b=text:\x00\x62
-# keybind = cmd+c=text:\x00\x63
-keybind = cmd+d=text:\x00\x64
-keybind = cmd+e=text:\x00\x65
-keybind = cmd+f=text:\x00\x66
 keybind = cmd+g=text:\x00\x67
-keybind = cmd+h=text:\x00\x68
-keybind = cmd+i=text:\x00\x69
-keybind = cmd+j=text:\x00\x6A
 keybind = cmd+k=text:\x00\x6B
-keybind = cmd+l=text:\x00\x6C
-# keybind = cmd+m=text:\x00\x6D
 keybind = cmd+n=text:\x00\x6E
-keybind = cmd+o=text:\x00\x6F
 keybind = cmd+p=text:\x00\x70
-# keybind = cmd+q=text:\x00\x71
-keybind = cmd+r=text:\x00\x72
-keybind = cmd+s=text:\x00\x73
-# keybind = cmd+t=text:\x00\x74
-keybind = cmd+u=text:\x00\x75
-# keybind = cmd+v=text:\x00\x76
-# keybind = cmd+w=text:\x00\x77
-keybind = cmd+x=text:\x00\x78
-keybind = cmd+y=text:\x00\x79
-keybind = cmd+z=text:\x00\x7A
-# keybind = cmd+shift+k=text:\x00\x77
-# keybind = cmd+A=text:\x00\x41
-# keybind = cmd+B=text:\x00\x42
-# keybind = cmd+C=text:\x00\x43
-# keybind = cmd+D=text:\x00\x44
-# keybind = cmd+E=text:\x00\x45
-# keybind = cmd+F=text:\x00\x46
-# keybind = cmd+G=text:\x00\x47
-# keybind = cmd+H=text:\x00\x48
-# keybind = cmd+I=text:\x00\x49
-# keybind = cmd+J=text:\x00\x4A
-# cmk+shkft+k => <leader>w (show open windows)
-keybind = cmd+K=text:\x00\x77
-# keybind = cmd+L=text:\x00\x4C
-# keybind = cmd+M=text:\x00\x4D
-# keybind = cmd+N=text:\x00\x4E
-# keybind = cmd+O=text:\x00\x4F
-# keybind = cmd+P=text:\x00\x50
-# keybind = cmd+Q=text:\x00\x51
-# keybind = cmd+R=text:\x00\x52
-# keybind = cmd+S=text:\x00\x53
-# keybind = cmd+T=text:\x00\x54
-# keybind = cmd+U=text:\x00\x55
-# keybind = cmd+V=text:\x00\x56
-# keybind = cmd+W=text:\x00\x57
-# keybind = cmd+X=text:\x00\x58
-# keybind = cmd+Y=text:\x00\x59
-# keybind = cmd+Z=text:\x00\x5A
 
