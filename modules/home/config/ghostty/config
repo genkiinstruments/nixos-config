@@ -29,4 +29,4 @@ keybind = cmd+g=text:\x00\x67
 keybind = cmd+k=text:\x00\x6B
 keybind = cmd+n=text:\x00\x6E
 keybind = cmd+p=text:\x00\x70
-
+keybind = cmd+z=text:\x00\x7A
