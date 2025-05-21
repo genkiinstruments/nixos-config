@@ -18,6 +18,7 @@
   # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
+  system.primaryUser = "genki";
   users.users.genki = {
     shell = pkgs.fish;
     isHidden = false;

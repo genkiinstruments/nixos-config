@@ -45,6 +45,7 @@
 
   home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
 
+  system.primaryUser = "olafur";
   users.users.olafur = {
     isHidden = false;
     home = "/Users/olafur";
