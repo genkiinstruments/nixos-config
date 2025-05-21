@@ -5,8 +5,6 @@ _: {
     { pkgs, ... }:
     with pkgs;
     [
-      nodejs # copilot
-      terraform-ls
       pyright
 
       # based on ./suggested-pkgs.json
@@ -26,7 +24,6 @@ _: {
       typos-lsp
       typos
       nixfmt-rfc-style
-      terraform-ls
       clang-tools
       nodePackages.prettier
       stylua
