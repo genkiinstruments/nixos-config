@@ -70,16 +70,19 @@
         pip
         gtts
         dateutil
-        aiohomekit
         pyatv
         getmac
         async-upnp-client
+
+        # homekit
+        aiohomekit
+        python-otbr-api
       ];
     # Includes dependencies for a basic setup: https://www.home-assistant.io/integrations/default_config/
     config.default_config = { };
 
     config.zeroconf = { };
-    config.homekit.filter.include_domains = [ "light" ];
+    config.homekit = { };
     config.logger.default = "info";
   };
   services.avahi = {
@@ -124,7 +127,7 @@
       80
       111
       443
-      1400
+      1400 # sonos
       1883
       2049
       4000
@@ -135,15 +138,12 @@
       8123
       8453
       20048
-      21063
-      21064
+      21063 # homekit
+      21064 # homekit
+      21065
+      21066
+      21067
       51827
-    ];
-    allowedTCPPortRanges = [
-      {
-        from = 21064;
-        to = 21067;
-      }
     ];
     allowedUDPPorts = [
       111
@@ -152,7 +152,7 @@
       4000
       4001
       4002
-      5353
+      5353 # homekit
       5683
       20048
       21324
