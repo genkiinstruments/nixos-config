@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# A reliable clipboard copy script that works over SSH
+
+# Check if TMUX is running
+if [ -n "$TMUX" ]; then
+    # We're in tmux
+    tmux load-buffer -
+    tmux save-buffer -| clipnotify
+else
+    # We're not in tmux, use direct OSC52 method
+    base64 | clipnotify
+fi
