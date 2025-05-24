@@ -15,6 +15,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    rocks = {
+        enabled = false, -- Disable luarocks integration to fix warnings
+    },
     spec = {
         -- add LazyVim and import its plugins
         { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "catppuccin-mocha" } },
@@ -79,6 +82,10 @@ require("lazy").setup({
             opts = {
                 win_options = {
                     conceallevel = { default = 0, rendered = 3 },
+                },
+                -- Disable LaTeX support since latex2text is not installed
+                latex = {
+                    enabled = false,
                 },
             },
         },
