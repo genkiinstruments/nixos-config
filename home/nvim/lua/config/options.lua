@@ -4,105 +4,14 @@
 -- Disable swap files
 vim.opt.swapfile = false
 
--- Configure clipboard with improved OSC52 support for SSH sessions
-vim.opt.clipboard = "unnamedplus"
-
--- Check if tmux-osc52 script exists
-local tmux_osc52_exists = vim.fn.executable("~/.local/bin/tmux-osc52") == 1 or 
-                          vim.fn.filereadable(vim.fn.expand("~/.local/bin/tmux-osc52")) == 1
-
--- Check if the vim.clipboard.osc52 module exists (only in newer Neovim versions)
-local has_osc52 = pcall(require, "vim.clipboard.osc52")
-
--- Always create a custom clipboard handler that uses direct OSC52 sequences
-vim.g.clipboard = {
-    name = "Direct OSC52",
-    copy = {
-        ["+"] = function(lines)
-            -- Join the lines with newlines
-            local text = table.concat(lines, "\n")
-            
-            -- Try to use the built-in OSC52 if available
-            if has_osc52 then
-                local osc52 = require("vim.clipboard.osc52")
-                return osc52.copy("+", {
-                    max_payload = 0,  -- No limit on payload size
-                    timeout_ms = 1000  -- Increased timeout for larger payloads
-                })(lines)
-            else
-                -- Generate OSC52 sequence directly
-                local encoded = vim.fn.system("base64", text)
-                encoded = string.gsub(encoded, "\n", "")
-                
-                -- Special handling for tmux
-                if vim.env.TMUX then
-                    -- Send tmux-wrapped OSC52 sequence
-                    vim.fn.chansend(vim.v.stderr, string.format("\x1bPtmux;\x1b\x1b]52;c;%s\x07\x1b\\", encoded))
-                else
-                    -- Send direct OSC52 sequence
-                    vim.fn.chansend(vim.v.stderr, string.format("\x1b]52;c;%s\x07", encoded))
-                end
-                return 0
-            end
-        end,
-        ["*"] = function(lines)
-            -- Same implementation for * register
-            local text = table.concat(lines, "\n")
-            
-            if has_osc52 then
-                local osc52 = require("vim.clipboard.osc52")
-                return osc52.copy("*", {
-                    max_payload = 0,  -- No limit on payload size
-                    timeout_ms = 1000  -- Increased timeout for larger payloads
-                })(lines)
-            else
-                -- Generate OSC52 sequence directly
-                local encoded = vim.fn.system("base64", text)
-                encoded = string.gsub(encoded, "\n", "")
-                
-                -- Special handling for tmux
-                if vim.env.TMUX then
-                    -- Send tmux-wrapped OSC52 sequence
-                    vim.fn.chansend(vim.v.stderr, string.format("\x1bPtmux;\x1b\x1b]52;c;%s\x07\x1b\\", encoded))
-                else
-                    -- Send direct OSC52 sequence
-                    vim.fn.chansend(vim.v.stderr, string.format("\x1b]52;c;%s\x07", encoded))
-                end
-                return 0
-            end
-        end,
-    },
-    paste = {
-        ["+"] = function()
-            -- First try pbpaste (macOS), then xclip (Linux)
-            local mac_cmd = vim.fn.executable("pbpaste") == 1
-            if mac_cmd then
-                return { vim.fn.system("pbpaste") }
-            else
-                -- Check if xclip is available
-                if vim.fn.executable("xclip") == 1 then
-                    return { vim.fn.system("xclip -selection clipboard -o") }
-                end
-                -- Return empty if no paste command is available
-                return { "" }
-            end
-        end,
-        ["*"] = function()
-            -- First try pbpaste (macOS), then xclip (Linux)
-            local mac_cmd = vim.fn.executable("pbpaste") == 1
-            if mac_cmd then
-                return { vim.fn.system("pbpaste") }
-            else
-                -- Check if xclip is available
-                if vim.fn.executable("xclip") == 1 then
-                    return { vim.fn.system("xclip -selection primary -o") }
-                end
-                -- Return empty if no paste command is available
-                return { "" }
-            end
-        end,
-    },
-}
+-- Use Neovim's built-in OSC52 clipboard support
+if vim.env.SSH_TTY then
+    -- Use built-in OSC52 when in SSH
+    vim.g.clipboard = 'osc52'
+else
+    -- Use system clipboard when not in SSH
+    vim.opt.clipboard = "unnamedplus"
+end
 
 --  https://old.reddit.com/r/neovim/comments/1ajpdrx/lazyvim_weird_live_grep_root_dir_functionality_in/
 -- Type :LazyRoot in the directory you're in and that will show you the root_dir that will be used for the root_dir search commands. The reason you're experiencing this behavior is because your subdirectories contain some kind of root_dir pattern for the LSP server attached to the buffer.
