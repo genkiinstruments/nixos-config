@@ -72,3 +72,8 @@ end
 # Add ~/.local/bin
 set -q PATH; or set PATH ''
 set -gx PATH "$HOME/.local/bin" $PATH
+
+# Set proper TERM for SSH sessions to match tmux configuration
+if set -q SSH_TTY
+    set -gx TERM "tmux-256color"
+end
