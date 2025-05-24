@@ -17,6 +17,10 @@
     file.".config/ghostty/config".source = ./config/ghostty/config;
     file.".hammerspoon/init.lua".source = ./config/hammerspoon/init.lua;
     file.".hushlogin".text = "";
+    file.".local/bin/osc52.sh" = {
+      source = ./config/scripts/osc52.sh;
+      executable = true;
+    };
 
     sessionVariables.EDITOR = "nvim";
 
