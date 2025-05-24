@@ -57,6 +57,18 @@ _: {
       taplo
       vtsls
       xsel # for lazygit copy/paste to clipboard
+
+      # fzf-lua
+      viu
+      chafa
+      ueberzugpp
+
+      # Snacks
+      imagemagick
+      tectonic
+      ghostscript
+      mermaid-cli
+
       ripgrep
       fd
       fzf
