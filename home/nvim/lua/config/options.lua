@@ -11,21 +11,77 @@ vim.opt.clipboard = "unnamedplus"
 local has_osc52 = pcall(require, "vim.clipboard.osc52")
 
 if vim.env.SSH_TTY then
+    -- Create a universal clipboard provider that works in all environments
     vim.g.clipboard = {
-        name = "OSC 52",
+        name = "OSC 52 Universal",
         copy = {
-            ["+"] = require("vim.clipboard.osc52").copy("+", {
-                max_payload = 0, -- No limit to payload size
-                timeout_ms = 100 -- Increase timeout
-            }),
-            ["*"] = require("vim.clipboard.osc52").copy("*", {
-                max_payload = 0,
-                timeout_ms = 100
-            }),
+            ["+"] = function(lines)
+                -- Join the lines with newlines
+                local text = table.concat(lines, "\n")
+                
+                -- Try to use the built-in OSC52 if available
+                if has_osc52 then
+                    local osc52 = require("vim.clipboard.osc52")
+                    return osc52.copy("+", {
+                        max_payload = 0,
+                        timeout_ms = 100
+                    })(lines)
+                else
+                    -- Fallback implementation for older Neovim
+                    local encoded = vim.fn.system("base64", text)
+                    encoded = string.gsub(encoded, "\n", "")
+                    -- Send the OSC52 escape sequence to the terminal
+                    vim.fn.chansend(vim.v.stderr, "\x1b]52;c;" .. encoded .. "\x07")
+                    return 0
+                end
+            end,
+            ["*"] = function(lines)
+                -- Same implementation for * register
+                local text = table.concat(lines, "\n")
+                
+                if has_osc52 then
+                    local osc52 = require("vim.clipboard.osc52")
+                    return osc52.copy("*", {
+                        max_payload = 0,
+                        timeout_ms = 100
+                    })(lines)
+                else
+                    local encoded = vim.fn.system("base64", text)
+                    encoded = string.gsub(encoded, "\n", "")
+                    vim.fn.chansend(vim.v.stderr, "\x1b]52;c;" .. encoded .. "\x07")
+                    return 0
+                end
+            end,
         },
         paste = {
-            ["+"] = { "pbpaste" },
-            ["*"] = { "pbpaste" },
+            ["+"] = function()
+                -- First try pbpaste (macOS), then xclip (Linux)
+                local mac_cmd = vim.fn.executable("pbpaste") == 1
+                if mac_cmd then
+                    return { vim.fn.system("pbpaste") }
+                else
+                    -- Check if xclip is available
+                    if vim.fn.executable("xclip") == 1 then
+                        return { vim.fn.system("xclip -selection clipboard -o") }
+                    end
+                    -- Return empty if no paste command is available
+                    return { "" }
+                end
+            end,
+            ["*"] = function()
+                -- First try pbpaste (macOS), then xclip (Linux)
+                local mac_cmd = vim.fn.executable("pbpaste") == 1
+                if mac_cmd then
+                    return { vim.fn.system("pbpaste") }
+                else
+                    -- Check if xclip is available
+                    if vim.fn.executable("xclip") == 1 then
+                        return { vim.fn.system("xclip -selection primary -o") }
+                    end
+                    -- Return empty if no paste command is available
+                    return { "" }
+                end
+            end,
         },
     }
 end
