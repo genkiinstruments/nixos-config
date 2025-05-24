@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# OSC52 clipboard script specifically for tmux
+# Works through SSH even on headless servers
+
+# Read input from stdin
+text=$(cat)
+
+# Base64 encode the input
+b64=$(echo -n "$text" | base64 | tr -d '\n')
+
+# Send the sequence to tmux using escape sequence the sequence
+printf "\033Ptmux;\033\033]52;c;%s\007\033\\" "$b64"

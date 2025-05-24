@@ -29,6 +29,10 @@
       source = ./config/scripts/pure-osc52;
       executable = true;
     };
+    file.".local/bin/tmux-osc52" = {
+      source = ./config/scripts/tmux-osc52;
+      executable = true;
+    };
 
     sessionVariables.EDITOR = "nvim";
 
