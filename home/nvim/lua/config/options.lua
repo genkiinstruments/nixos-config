@@ -4,18 +4,24 @@
 -- Disable swap files
 vim.opt.swapfile = false
 
--- Configure clipboard with built-in OSC52 support for SSH sessions
+-- Configure clipboard with improved OSC52 support for SSH sessions
 vim.opt.clipboard = "unnamedplus"
 if vim.env.SSH_TTY then
     vim.g.clipboard = {
         name = "OSC 52",
         copy = {
-            ["+"] = require("vim.clipboard.osc52").copy("+"),
-            ["*"] = require("vim.clipboard.osc52").copy("*"),
+            ["+"] = require("vim.clipboard.osc52").copy("+", {
+                max_payload = 0, -- No limit to payload size
+                timeout_ms = 100 -- Increase timeout
+            }),
+            ["*"] = require("vim.clipboard.osc52").copy("*", {
+                max_payload = 0,
+                timeout_ms = 100
+            }),
         },
         paste = {
-            ["+"] = { "xclip", "-selection", "clipboard", "-o" },
-            ["*"] = { "xclip", "-selection", "primary", "-o" },
+            ["+"] = { "pbpaste" },
+            ["*"] = { "pbpaste" },
         },
     }
 end

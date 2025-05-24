@@ -3,6 +3,14 @@ local keymap = vim.keymap.set
 keymap("n", "<C-c>", "<cmd>q<cr>", { noremap = true })
 keymap("n", "<C-x>", "<cmd>x<cr>", { noremap = true })
 
+-- Explicitly set up clipboard copy/paste mappings
+keymap("v", "y", '"+y', { silent = true, desc = "Copy to system clipboard" })
+keymap("v", "Y", '"+Y', { silent = true, desc = "Copy line to system clipboard" })
+keymap("v", "p", '"+p', { silent = true, desc = "Paste from system clipboard" })
+keymap("v", "P", '"+P', { silent = true, desc = "Paste before from system clipboard" })
+keymap("n", "p", '"+p', { silent = true, desc = "Paste from system clipboard" })
+keymap("n", "P", '"+P', { silent = true, desc = "Paste before from system clipboard" })
+
 -- Unmap keymaps that move lines
 for _, val in pairs({ "<A-j>", "<A-k>" }) do
     vim.keymap.del({ "n", "i", "v" }, val)
