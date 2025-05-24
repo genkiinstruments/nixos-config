@@ -26,8 +26,8 @@ vim.g.clipboard = {
             if has_osc52 then
                 local osc52 = require("vim.clipboard.osc52")
                 return osc52.copy("+", {
-                    max_payload = 0,
-                    timeout_ms = 100
+                    max_payload = 0,  -- No limit on payload size
+                    timeout_ms = 1000  -- Increased timeout for larger payloads
                 })(lines)
             else
                 -- Generate OSC52 sequence directly
@@ -52,8 +52,8 @@ vim.g.clipboard = {
             if has_osc52 then
                 local osc52 = require("vim.clipboard.osc52")
                 return osc52.copy("*", {
-                    max_payload = 0,
-                    timeout_ms = 100
+                    max_payload = 0,  -- No limit on payload size
+                    timeout_ms = 1000  -- Increased timeout for larger payloads
                 })(lines)
             else
                 -- Generate OSC52 sequence directly
