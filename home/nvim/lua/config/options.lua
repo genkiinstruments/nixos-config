@@ -14,32 +14,34 @@ local tmux_osc52_exists = vim.fn.executable("~/.local/bin/tmux-osc52") == 1 or
 -- Check if the vim.clipboard.osc52 module exists (only in newer Neovim versions)
 local has_osc52 = pcall(require, "vim.clipboard.osc52")
 
--- Create a universal clipboard provider that works in all environments
+-- Always create a custom clipboard handler that uses direct OSC52 sequences
 vim.g.clipboard = {
-    name = "OSC 52 Universal",
+    name = "Direct OSC52",
     copy = {
         ["+"] = function(lines)
             -- Join the lines with newlines
             local text = table.concat(lines, "\n")
             
-            -- First try using tmux-osc52 script if we're in tmux
-            if vim.env.TMUX and tmux_osc52_exists then
-                -- Use the tmux-osc52 script
-                vim.fn.system("~/.local/bin/tmux-osc52", text)
-                return 0
             -- Try to use the built-in OSC52 if available
-            elseif has_osc52 then
+            if has_osc52 then
                 local osc52 = require("vim.clipboard.osc52")
                 return osc52.copy("+", {
                     max_payload = 0,
                     timeout_ms = 100
                 })(lines)
             else
-                -- Fallback implementation for older Neovim
+                -- Generate OSC52 sequence directly
                 local encoded = vim.fn.system("base64", text)
                 encoded = string.gsub(encoded, "\n", "")
-                -- Send the OSC52 escape sequence to the terminal
-                vim.fn.chansend(vim.v.stderr, "\x1b]52;c;" .. encoded .. "\x07")
+                
+                -- Special handling for tmux
+                if vim.env.TMUX then
+                    -- Send tmux-wrapped OSC52 sequence
+                    vim.fn.chansend(vim.v.stderr, string.format("\x1bPtmux;\x1b\x1b]52;c;%s\x07\x1b\\", encoded))
+                else
+                    -- Send direct OSC52 sequence
+                    vim.fn.chansend(vim.v.stderr, string.format("\x1b]52;c;%s\x07", encoded))
+                end
                 return 0
             end
         end,
@@ -47,21 +49,25 @@ vim.g.clipboard = {
             -- Same implementation for * register
             local text = table.concat(lines, "\n")
             
-            -- First try using tmux-osc52 script if we're in tmux
-            if vim.env.TMUX and tmux_osc52_exists then
-                -- Use the tmux-osc52 script
-                vim.fn.system("~/.local/bin/tmux-osc52", text)
-                return 0
-            elseif has_osc52 then
+            if has_osc52 then
                 local osc52 = require("vim.clipboard.osc52")
                 return osc52.copy("*", {
                     max_payload = 0,
                     timeout_ms = 100
                 })(lines)
             else
+                -- Generate OSC52 sequence directly
                 local encoded = vim.fn.system("base64", text)
                 encoded = string.gsub(encoded, "\n", "")
-                vim.fn.chansend(vim.v.stderr, "\x1b]52;c;" .. encoded .. "\x07")
+                
+                -- Special handling for tmux
+                if vim.env.TMUX then
+                    -- Send tmux-wrapped OSC52 sequence
+                    vim.fn.chansend(vim.v.stderr, string.format("\x1bPtmux;\x1b\x1b]52;c;%s\x07\x1b\\", encoded))
+                else
+                    -- Send direct OSC52 sequence
+                    vim.fn.chansend(vim.v.stderr, string.format("\x1b]52;c;%s\x07", encoded))
+                end
                 return 0
             end
         end,
