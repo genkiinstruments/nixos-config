@@ -11,56 +11,23 @@ vim.opt.clipboard = "unnamedplus"
 local has_osc52 = pcall(require, "vim.clipboard.osc52")
 
 if vim.env.SSH_TTY then
-    if has_osc52 then
-        -- For newer Neovim versions with built-in OSC52 support
-        vim.g.clipboard = {
-            name = "OSC 52",
-            copy = {
-                ["+"] = require("vim.clipboard.osc52").copy("+", {
-                    max_payload = 0, -- No limit to payload size
-                    timeout_ms = 100 -- Increase timeout
-                }),
-                ["*"] = require("vim.clipboard.osc52").copy("*", {
-                    max_payload = 0,
-                    timeout_ms = 100
-                }),
-            },
-            paste = {
-                ["+"] = { "pbpaste" },
-                ["*"] = { "pbpaste" },
-            },
-        }
-    else
-        -- Fallback for older Neovim versions without built-in OSC52
-        vim.g.clipboard = {
-            name = "OSC 52 (custom)",
-            copy = {
-                ["+"] = function(lines)
-                    local text = table.concat(lines, "\n")
-                    local encoded = vim.fn.system("base64", text)
-                    encoded = encoded:gsub("\n", "")
-                    -- Send OSC52 sequence directly
-                    vim.fn.chansend(vim.v.stderr, "\x1b]52;c;" .. encoded .. "\x07")
-                    return 0
-                end,
-                ["*"] = function(lines)
-                    local text = table.concat(lines, "\n")
-                    local encoded = vim.fn.system("base64", text)
-                    encoded = encoded:gsub("\n", "")
-                    vim.fn.chansend(vim.v.stderr, "\x1b]52;c;" .. encoded .. "\x07")
-                    return 0
-                end,
-            },
-            paste = {
-                ["+"] = function()
-                    return { vim.fn.system("xclip -selection clipboard -o") }
-                end,
-                ["*"] = function()
-                    return { vim.fn.system("xclip -selection primary -o") }
-                end,
-            },
-        }
-    end
+    vim.g.clipboard = {
+        name = "OSC 52",
+        copy = {
+            ["+"] = require("vim.clipboard.osc52").copy("+", {
+                max_payload = 0, -- No limit to payload size
+                timeout_ms = 100 -- Increase timeout
+            }),
+            ["*"] = require("vim.clipboard.osc52").copy("*", {
+                max_payload = 0,
+                timeout_ms = 100
+            }),
+        },
+        paste = {
+            ["+"] = { "pbpaste" },
+            ["*"] = { "pbpaste" },
+        },
+    }
 end
 
 --  https://old.reddit.com/r/neovim/comments/1ajpdrx/lazyvim_weird_live_grep_root_dir_functionality_in/
