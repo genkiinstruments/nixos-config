@@ -1,6 +1,6 @@
 {
   "LazyVim": { "branch": "main", "commit": "25abbf546d564dc484cf903804661ba12de45507" },
-  "SchemaStore.nvim": { "branch": "main", "commit": "5ee27f7ac3a362dcfcba40badac222fad87b6aa1" },
+  "SchemaStore.nvim": { "branch": "main", "commit": "5571cd3cbb3f4a1eed78c3e212bd5e7fba2e9e61" },
   "blink.cmp": { "branch": "main", "commit": "022521a8910a5543b0251b21c9e1a1e989745796" },
   "catppuccin": { "branch": "main", "commit": "8162a4bd9afb42837a655e404d1f937a87ba95e6" },
   "clangd_extensions.nvim": { "branch": "main", "commit": "db28f29be928d18cbfb86fbfb9f83f584f658feb" },
@@ -9,7 +9,7 @@
   "crates.nvim": { "branch": "main", "commit": "25f31372ab6f504d4fd7cfee836ad459caed8e68" },
   "flash.nvim": { "branch": "main", "commit": "3c942666f115e2811e959eabbdd361a025db8b63" },
   "friendly-snippets": { "branch": "main", "commit": "572f5660cf05f8cd8834e096d7b4c921ba18e175" },
-  "fzf-lua": { "branch": "main", "commit": "8adf950093af5361621cf52208d64995b1af78b5" },
+  "fzf-lua": { "branch": "main", "commit": "d6b5b801ba26322e6551e39520ff64736a452255" },
   "grug-far.nvim": { "branch": "main", "commit": "f24022147ca4a0fe1d424a520a9437accbeba193" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lazydev.nvim": { "branch": "main", "commit": "2367a6c0a01eb9edb0464731cc0fb61ed9ab9d2c" },
