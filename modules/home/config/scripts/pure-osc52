@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Pure OSC52 clipboard script with no X dependencies
+# Works over SSH even on headless servers
+
+# Read input from stdin
+text=$(cat)
+
+# Base64 encode the input
+b64=$(echo -n "$text" | base64 | tr -d '\n')
+
+# Send directly to terminal's stderr (bypassing tmux)
+printf "\033]52;c;%s\007" "$b64" >/dev/stderr

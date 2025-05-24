@@ -25,6 +25,10 @@
       source = ./config/scripts/clipboard-copy;
       executable = true;
     };
+    file.".local/bin/pure-osc52" = {
+      source = ./config/scripts/pure-osc52;
+      executable = true;
+    };
 
     sessionVariables.EDITOR = "nvim";
 
@@ -36,8 +40,6 @@
       cachix
       claude-code
       sesh
-      # Clipboard utilities
-      clipnotify
     ];
   };
 
