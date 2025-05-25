@@ -11,4 +11,3 @@ b64=$(echo -n "$buf" | base64 | tr -d '\n')
 
 # Send the OSC52 sequence to the terminal
 printf "\033]52;c;%s\007" "$b64"
-

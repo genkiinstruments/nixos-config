@@ -183,7 +183,7 @@
     sqlite
     curl
     jq
-    
+
     # Tools for clipboard support
     xclip
     wl-clipboard

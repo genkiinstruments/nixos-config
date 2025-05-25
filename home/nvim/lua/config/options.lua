@@ -7,7 +7,7 @@ vim.opt.swapfile = false
 -- Use Neovim's built-in OSC52 clipboard support
 if vim.env.SSH_TTY then
     -- Use built-in OSC52 when in SSH
-    vim.g.clipboard = 'osc52'
+    vim.g.clipboard = "osc52"
 else
     -- Use system clipboard when not in SSH
     vim.opt.clipboard = "unnamedplus"
