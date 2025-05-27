@@ -4,13 +4,26 @@
 -- Disable swap files
 vim.opt.swapfile = false
 
--- Use Neovim's built-in OSC52 clipboard support
+-- Clipboard
 if vim.env.SSH_TTY then
-    -- Use built-in OSC52 when in SSH
-    vim.g.clipboard = "osc52"
-else
-    -- Use system clipboard when not in SSH
-    vim.opt.clipboard = "unnamedplus"
+    vim.opt.clipboard:append("unnamedplus")
+    local function paste(_)
+        return function()
+            local content = vim.fn.getreg('"')
+            return vim.split(content, "\n")
+        end
+    end
+    vim.g.clipboard = {
+        name = "OSC 52",
+        copy = {
+            ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+            ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+        },
+        paste = {
+            ["+"] = paste("+"),
+            ["*"] = paste("*"),
+        },
+    }
 end
 
 --  https://old.reddit.com/r/neovim/comments/1ajpdrx/lazyvim_weird_live_grep_root_dir_functionality_in/
