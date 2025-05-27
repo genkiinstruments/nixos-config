@@ -7,11 +7,8 @@ vim.opt.swapfile = false
 -- Clipboard
 if vim.env.SSH_TTY then
     vim.opt.clipboard:append("unnamedplus")
-    local function paste(_)
-        return function()
-            local content = vim.fn.getreg('"')
-            return vim.split(content, "\n")
-        end
+    local function paste()
+        return vim.split(vim.fn.getreg(""), "\n")
     end
     vim.g.clipboard = {
         name = "OSC 52",
@@ -20,12 +17,11 @@ if vim.env.SSH_TTY then
             ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
         },
         paste = {
-            ["+"] = paste("+"),
-            ["*"] = paste("*"),
+            ["+"] = paste,
+            ["*"] = paste,
         },
     }
 end
-
 --  https://old.reddit.com/r/neovim/comments/1ajpdrx/lazyvim_weird_live_grep_root_dir_functionality_in/
 -- Type :LazyRoot in the directory you're in and that will show you the root_dir that will be used for the root_dir search commands. The reason you're experiencing this behavior is because your subdirectories contain some kind of root_dir pattern for the LSP server attached to the buffer.
 vim.g.root_spec = { "cwd" }
