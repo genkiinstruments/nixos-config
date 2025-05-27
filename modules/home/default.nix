@@ -137,11 +137,6 @@
                     value = "chore";
                   }
                   {
-                    name = "Chore: Update lazy-lock";
-                    description = "Update lazy vim lock file";
-                    value = "chore: update lazy-lock.json";
-                  }
-                  {
                     name = "Documentation";
                     description = "Documentation only changes";
                     value = "docs";
@@ -193,11 +188,6 @@
                 title = "Enter the short description of the change.";
                 key = "Description";
               }
-              {
-                type = "input";
-                title = "Enter a longer description of the change (optional).";
-                key = "LongDescription";
-              }
             ];
           }
           {
@@ -206,6 +196,20 @@
             command = "gh repo view --web";
             context = "global";
             loadingText = "Opening GitHub repo in browser...";
+          }
+          {
+            key = "F";
+            description = "auto-commit nix fmt changes";
+            command = "git commit -m \"chore: nix fmt\"";
+            context = "files";
+            loadingText = "Committing nix fmt changes...";
+          }
+          {
+            key = "L";
+            description = "auto-commit lazy-lock.json changes";
+            command = "git commit -m \"chore: update lazy-lock.json\"";
+            context = "files";
+            loadingText = "Committing lazy-lock.json changes...";
           }
         ];
       };
