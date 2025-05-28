@@ -112,7 +112,7 @@
         customCommands = [
           {
             key = "C";
-            command = ''git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}" -m "{{ .Form.LongDescription }}"'';
+            command = ''git commit -m "{{ .Form.Type }}{{if .Form.Scopes}}({{ .Form.Scopes }}){{end}}: {{ .Form.Description }}"'';
             description = "commit with commitizen and long description";
             context = "global";
             prompts = [
