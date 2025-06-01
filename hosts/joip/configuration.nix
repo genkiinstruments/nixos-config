@@ -2,6 +2,7 @@
   inputs,
   lib,
   flake,
+  config,
   ...
 }:
 {
@@ -30,6 +31,7 @@
 
     extraComponents = [
       "apple_tv"
+      "automation"
       "brother"
       "default_config"
       "denonavr"
@@ -84,11 +86,16 @@
     config.zeroconf = { };
     config.homekit = { };
     config.logger.default = "info";
+    config."automation ui" = "!include automations.yaml";
   };
   services.avahi = {
     enable = true;
     reflector = true;
   };
+  # https://nixos.wiki/wiki/Home_Assistant#Combine_declarative_and_UI_defined_automations
+  systemd.tmpfiles.rules = [
+    "f ${config.services.home-assistant.configDir}/automations.yaml 0755 hass hass"
+  ];
 
   services = {
     mosquitto.enable = true;
