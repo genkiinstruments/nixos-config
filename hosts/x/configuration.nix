@@ -14,6 +14,7 @@ in
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
+    inputs.srvos.nixosModules.roles-github-actions-runner
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
@@ -72,6 +73,8 @@ in
 
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
+
+      x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
     };
 
   services.buildbot-nix.master = {
@@ -175,6 +178,17 @@ in
         # The preferred maximum size of a chunk, in bytes
         max-size = 256 * 1024; # 256 KiB
       };
+    };
+  };
+
+  roles.github-actions-runner = {
+    url = "https://github.com/genkiinstruments";
+    name = "x";
+    extraLabels = [ "x-github-runner" ];
+    githubApp = {
+      id = "1369238";
+      login = "genkiinstruments";
+      privateKeyFile = config.age.secrets.x-github-runner-key.path;
     };
   };
 
