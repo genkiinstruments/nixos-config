@@ -20,6 +20,7 @@
     name = "genki";
     shell = pkgs.fish;
   };
+  system.primaryUser = "genki";
 
   # NOTE: Here you can install packages from brew
   homebrew = {
