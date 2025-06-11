@@ -121,10 +121,10 @@
       gtkmm3
     ];
 
+  services.desktopManager.gnome.enable = true;
+
   services.xserver = {
     enable = true;
-    # displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
 
     desktopManager.xterm.enable = false;
     desktopManager.wallpaper.mode = "fill";
@@ -154,7 +154,7 @@
   };
 
   # GNOME power settings - disable auto-suspend completely
-  services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+  services.desktopManager.gnome.extraGSettingsOverrides = ''
     [org.gnome.settings-daemon.plugins.power]
     sleep-inactive-ac-type='nothing'
     sleep-inactive-battery-type='nothing'
