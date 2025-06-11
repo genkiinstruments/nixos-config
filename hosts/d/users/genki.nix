@@ -21,9 +21,9 @@
     magic-wormhole-rs
     gh
     zed-editor
+    claude
   ];
 
-  # THEME
   catppuccin = {
     enable = true;
     flavor = "mocha";
