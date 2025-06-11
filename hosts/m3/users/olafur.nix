@@ -5,8 +5,8 @@
 }:
 {
   imports = [
-    flake.homeModules.default
-    flake.homeModules.nvim
+    flake.modules.home.default
+    flake.modules.home.nvim
   ];
 
   # Configure SSH for clipboard sharing

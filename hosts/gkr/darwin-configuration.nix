@@ -9,7 +9,7 @@
     inputs.srvos.darwinModules.common
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.agenix.darwinModules.default
-    flake.darwinModules.common
+    flake.modules.darwin.default
     flake.modules.shared.default
   ];
 

@@ -5,8 +5,8 @@
 }:
 {
   imports = [
-    flake.modules.darwin.common
-    flake.modules.shared
+    flake.modules.darwin.default
+    flake.modules.shared.default
     flake.modules.shared.home-manager
   ];
 

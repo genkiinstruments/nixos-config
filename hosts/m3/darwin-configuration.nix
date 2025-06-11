@@ -12,7 +12,7 @@
     inputs.agenix.darwinModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager
-    flake.darwinModules.common
+    flake.modules.darwin.default
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";

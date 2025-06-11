@@ -15,7 +15,7 @@
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
-    flake.nixosModules.common
+    flake.modules.nixos.default
     ./disk-config.nix
   ];
 

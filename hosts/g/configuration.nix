@@ -16,9 +16,9 @@
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
     flake.modules.shared.home-manager
-    flake.nixosModules.common
-    flake.nixosModules.pipewire
     flake.modules.shared.builders
+    flake.modules.nixos.default
+    flake.modules.nixos.pipewire
     ./disko.nix
   ];
 

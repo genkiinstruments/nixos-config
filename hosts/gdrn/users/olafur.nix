@@ -1,8 +1,8 @@
 { flake, ... }:
 {
   imports = [
-    flake.homeModules.default
-    flake.homeModules.nvim
+    flake.modules.home.default
+    flake.modules.home.nvim
   ];
 
   programs.ssh = {

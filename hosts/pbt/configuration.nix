@@ -13,8 +13,8 @@
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.agenix.nixosModules.default
     flake.modules.shared.default
-    flake.nixosModules.common
-    flake.nixosModules.ssh-serve
+    flake.modules.nixos.default
+    flake.modules.nixos.ssh-serve
     ./apple-silicon-support
     (modulesPath + "/installer/scan/not-detected.nix")
   ];

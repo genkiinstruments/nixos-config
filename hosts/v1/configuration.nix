@@ -16,9 +16,9 @@
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.modules.shared.builders
-    flake.nixosModules.common
-    flake.nixosModules.ssh-serve
-    flake.nixosModules.pipewire
+    flake.modules.nixos.default
+    flake.modules.nixos.ssh-serve
+    flake.modules.nixos.pipewire
   ];
 
   # Be careful updating this.
