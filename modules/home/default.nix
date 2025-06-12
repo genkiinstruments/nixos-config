@@ -315,7 +315,6 @@
         "WORK.md"
       ];
     };
-
     tmux = {
       enable = true;
       baseIndex = 1;
@@ -345,7 +344,6 @@
         ]
       );
     };
-
     starship.enable = true;
     starship.settings.add_newline = false;
     starship.enableFishIntegration = true;
