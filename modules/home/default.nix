@@ -32,6 +32,7 @@
       cachix
       claude-code
       sesh
+      mediainfo # for mpv / yazi setup
     ];
   };
 
