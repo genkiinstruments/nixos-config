@@ -62,6 +62,7 @@
     ssh.extraConfig = "SetEnv TERM=xterm-256color";
     fzf = {
       enable = true;
+      enableFishIntegration = true;
       defaultCommand = "rg --files --no-ignore --hidden --follow --glob '!.git/*'";
       fileWidgetOptions = [
         "--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
@@ -73,6 +74,7 @@
     };
     eza = {
       enable = true;
+      enableFishIntegration = true;
       icons = "auto";
       git = true;
     };
@@ -223,9 +225,11 @@
     };
     zoxide = {
       enable = true;
+      enableFishIntegration = true;
     };
     direnv = {
       enable = true;
+      enableFishIntegration = true;
       silent = true;
       nix-direnv.enable = true; # Adds FishIntegration automatically
       config.warn_timeout = "30m";
@@ -345,5 +349,6 @@
 
     starship.enable = true;
     starship.settings.add_newline = false;
+    starship.enableFishIntegration = true;
   };
 }
