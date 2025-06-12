@@ -229,7 +229,6 @@
     };
     direnv = {
       enable = true;
-      enableFishIntegration = true;
       silent = true;
       nix-direnv.enable = true; # Adds FishIntegration automatically
       config.warn_timeout = "30m";
