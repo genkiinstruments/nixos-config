@@ -52,6 +52,7 @@
   programs = {
     jq.enable = true;
     yazi.enable = true;
+    mpv.enable = true;
     gh-dash.enable = true;
     btop.enable = true;
     ssh.enable = true;
