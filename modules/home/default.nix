@@ -17,18 +17,6 @@
     file.".config/ghostty/config".source = ./config/ghostty/config;
     file.".hammerspoon/init.lua".source = ./config/hammerspoon/init.lua;
     file.".hushlogin".text = "";
-    file.".local/bin/osc52.sh" = {
-      source = ./config/scripts/osc52.sh;
-      executable = true;
-    };
-    file.".local/bin/clipboard-copy" = {
-      source = ./config/scripts/clipboard-copy;
-      executable = true;
-    };
-    file.".local/bin/pure-osc52" = {
-      source = ./config/scripts/pure-osc52;
-      executable = true;
-    };
     file.".local/bin/tmux-osc52" = {
       source = ./config/scripts/tmux-osc52;
       executable = true;
