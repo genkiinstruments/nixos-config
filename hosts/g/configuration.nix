@@ -71,11 +71,6 @@
 
   facter.reportPath = ./facter.json;
 
-  services.tailscale.enable = true;
-
-  # Reduce the timeout from the default 90 seconds to something shorter
-  systemd.services.tailscale.serviceConfig.TimeoutStopSec = 5;
-
   zramSwap = {
     enable = true;
     algorithm = "zstd";
