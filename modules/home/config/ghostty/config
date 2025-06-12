@@ -26,6 +26,7 @@ mouse-hide-while-typing = true
 # \x02 is ctrl+b (default tmux prefix)
 
 keybind = cmd+b=text:\x00\x62
+keybind = cmd+e=text:\x00\x65
 keybind = cmd+g=text:\x00\x67
 keybind = cmd+k=text:\x00\x6B
 keybind = cmd+l=text:\x00\x6C
