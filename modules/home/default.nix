@@ -53,6 +53,7 @@
   programs = {
     jq.enable = true;
     yazi.enable = true;
+    yazi.enableFishIntegration = true;
     mpv.enable = true;
     gh-dash.enable = true;
     btop.enable = true;
