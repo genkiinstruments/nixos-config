@@ -36,4 +36,23 @@ _: {
       /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
   };
+
+  # Automatic garbage collection and nix store optimization
+  nix.gc = {
+    automatic = true;
+    interval = {
+      Weekday = 1; # Monday
+      Hour = 3; # 3 AM
+      Minute = 0;
+    };
+    options = "--delete-older-than 30d";
+  };
+  nix.optimise = {
+    automatic = true;
+    interval = {
+      Weekday = 1; # Monday
+      Hour = 4; # 4 AM
+      Minute = 0;
+    };
+  };
 }

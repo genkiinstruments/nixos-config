@@ -23,22 +23,6 @@
   system.stateVersion = "25.05"; # Did you read the comment?
   facter.reportPath = ./facter.json;
 
-  # Automatic garbage collection
-  nix = {
-    settings.auto-optimise-store = true;
-    gc = {
-      automatic = true;
-      dates = "weekly";
-      options = "--delete-older-than 30d";
-      persistent = true;
-      randomizedDelaySec = "45min";
-    };
-    extraOptions = ''
-      min-free = ${toString (5 * 1024 * 1024 * 1024)}  # 5 GiB
-      max-free = ${toString (10 * 1024 * 1024 * 1024)} # 10 GiB
-    '';
-  };
-
   hardware.asahi = {
     enable = true;
     extractPeripheralFirmware = true;
