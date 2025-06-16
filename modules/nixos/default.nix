@@ -15,6 +15,4 @@
     automatic = true;
     dates = "monthly";
   };
-
-  services.node-red.enable = true; # test comin
 }
