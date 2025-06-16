@@ -19,6 +19,7 @@
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.pipewire
+    flake.modules.nixos.comin
   ];
 
   # Be careful updating this.

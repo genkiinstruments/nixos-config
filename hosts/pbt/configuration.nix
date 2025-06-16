@@ -15,6 +15,7 @@
     flake.modules.shared.default
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
+    flake.modules.nixos.comin
     ./apple-silicon-support
     (modulesPath + "/installer/scan/not-detected.nix")
   ];

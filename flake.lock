@@ -89,6 +89,26 @@
         "type": "github"
       }
     },
+    "comin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1749365693,
+        "narHash": "sha256-dTDlrXdo0yz6YzNwGgx1R8CV+ktONHfTqaLiVx328c4=",
+        "owner": "nlewo",
+        "repo": "comin",
+        "rev": "4df4e3cdf3d99df282c23c03c87654687389b428",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlewo",
+        "repo": "comin",
+        "type": "github"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -298,6 +318,7 @@
         "blueprint": "blueprint",
         "buildbot-nix": "buildbot-nix",
         "catppuccin": "catppuccin",
+        "comin": "comin",
         "disko": "disko",
         "fod-oracle": "fod-oracle",
         "genki-www": "genki-www",

@@ -22,6 +22,7 @@
     flake.modules.shared.home-manager
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
+    flake.modules.nixos.comin
     ./disko-config.nix
   ];
 
