@@ -27,6 +27,8 @@
     ];
   };
 
+  programs._1password.enable = true;
+
   networking.hostName = "m3";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
