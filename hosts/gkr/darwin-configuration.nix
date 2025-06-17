@@ -13,17 +13,6 @@
     flake.modules.darwin.default
     flake.modules.shared.default
   ];
-
-  services.comin = {
-    enable = true;
-    remotes = [
-      {
-        name = "origin";
-        url = "https://github.com/genkiinstruments/nixos-config";
-        branches.main.name = "main";
-      }
-    ];
-  };
   networking.hostName = "gkr";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
