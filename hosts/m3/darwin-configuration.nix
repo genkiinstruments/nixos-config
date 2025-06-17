@@ -26,7 +26,6 @@
       }
     ];
   };
-
   networking.hostName = "m3";
 
   environment.systemPackages = [ pkgs.cowsay ];
