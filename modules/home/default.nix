@@ -30,7 +30,14 @@
       magic-wormhole-rs
       neofetch
       cachix
-      claude-code
+      (claude-code.overrideAttrs (_old: rec {
+        version = "1.0.24";
+        src = fetchzip {
+          url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
+          hash = "sha256-12nmnVM0/+rhWrkIQXttASKPZgGQMvrzWF/JDwR7If4=";
+        };
+        npmDepsHash = "sha256-0jrARMOuJCU5MEigk0iYspUUHCB6APbCxPpqcp+5ktA=";
+      }))
       sesh
       mediainfo # for mpv / yazi setup
     ];
