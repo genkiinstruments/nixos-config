@@ -98,6 +98,9 @@
     "f ${config.services.home-assistant.configDir}/automations.yaml 0755 hass hass"
   ];
 
+  # Ensure zigbee2mqtt only starts when the USB device is available
+  systemd.services.zigbee2mqtt.unitConfig.ConditionPathExists = "/dev/ttyUSB0";
+
   services = {
     mosquitto.enable = true;
     zigbee2mqtt = {
@@ -109,7 +112,7 @@
           server = "mqtt://localhost:1883";
         };
         serial = {
-          port = "/dev/serial/by-id/usb-SMLIGHT_SMLIGHT_SLZB-06M_d4990940d2acef11a8c0904ba8793231-if00-port0";
+          port = "/dev/ttyUSB0";
           baudrate = 115200;
           adapter = "ember";
         };
@@ -127,6 +130,14 @@
       };
     };
   };
+
+  # Add udev rules for SMLIGHT SLZB-06M to ensure proper device initialization
+  services.udev.extraRules = ''
+    # SMLIGHT SLZB-06M Zigbee coordinator (CP210x USB-to-UART bridge)
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{product}=="SMLIGHT SLZB-06M", SYMLINK+="zigbee", GROUP="dialout", MODE="0666"
+    # Ensure device is ready after insertion
+    ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="/bin/sleep 2"
+  '';
 
   networking.useHostResolvConf = lib.mkForce false;
   networking.firewall = {
