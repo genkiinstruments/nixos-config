@@ -37,7 +37,6 @@ _: {
       gomodifytags
       gotests
       gotestsum
-      gotools
       govulncheck
       iferr
       impl
@@ -45,7 +44,6 @@ _: {
 
       # mvim custom
       sqlite # dadbod
-      gopls
       stdenv.cc # needed to compile and link nl and other packages
       elixir-ls
       emmet-language-server
