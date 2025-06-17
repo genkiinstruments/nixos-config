@@ -9,8 +9,8 @@
     inputs.srvos.darwinModules.common
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.agenix.darwinModules.default
-    inputs.comin.darwinModules.comin
     flake.modules.darwin.default
+    flake.modules.darwin.comin
     flake.modules.shared.default
   ];
   networking.hostName = "gkr";
