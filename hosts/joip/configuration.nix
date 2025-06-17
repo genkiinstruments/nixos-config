@@ -21,6 +21,8 @@
     ./disk-config.nix
   ];
 
+  environment.systemPackages = with pkgs; [ neofetch ];
+
   networking.hostName = "joip";
 
   system.stateVersion = "23.05"; # Did you read the comment?
