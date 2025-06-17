@@ -125,6 +125,9 @@
 
   services.displayManager.defaultSession = "none+i3";
   services.desktopManager.gnome.enable = true;
+  
+  # Disable GNOME's SSH agent to avoid conflict with programs.ssh.startAgent
+  services.gnome.gcr-ssh-agent.enable = false;
 
   services.xserver = {
     enable = true;
