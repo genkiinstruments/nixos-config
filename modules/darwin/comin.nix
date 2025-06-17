@@ -1,7 +1,7 @@
 { inputs, ... }:
 {
   imports = [
-    inputs.comin.darwinsModules.comin
+    inputs.comin.darwinModules.comin
   ];
 
   services.comin = {
