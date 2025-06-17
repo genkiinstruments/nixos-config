@@ -7,7 +7,7 @@ function , --description "Shortcut: nix shell with multiple pkgs: `nix shell nix
         for pkg in $argv
             set -a packages_args "nixpkgs#$pkg"
         end
-        nix shell $packages_args
+        NIXPKGS_ALLOW_UNFREE=1 nix shell --impure $packages_args
     else
         echo "Usage: , package1 package2 ..."
     end
