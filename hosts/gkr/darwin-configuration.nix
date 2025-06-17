@@ -45,6 +45,7 @@
   environment.systemPackages = with pkgs; [
     openssh # needed for fido2 support
     gh # needed for the softwave github run
+    cowsay # test for comin
   ];
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
