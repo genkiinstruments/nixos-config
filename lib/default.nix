@@ -73,7 +73,6 @@ _: {
       cargo
       python3 # sqlfluff
       unzip
-      bash-language-server
       lazygit
       coreutils
     ]
