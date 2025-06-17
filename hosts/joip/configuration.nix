@@ -2,6 +2,7 @@
   inputs,
   lib,
   flake,
+  pkgs,
   config,
   ...
 }:
@@ -136,7 +137,7 @@
     # SMLIGHT SLZB-06M Zigbee coordinator (CP210x USB-to-UART bridge)
     SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", ATTRS{product}=="SMLIGHT SLZB-06M", SYMLINK+="zigbee", GROUP="dialout", MODE="0666"
     # Ensure device is ready after insertion
-    ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="/bin/sleep 2"
+    ACTION=="add", SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", RUN+="${pkgs.coreutils}/bin/sleep 2"
   '';
 
   networking.useHostResolvConf = lib.mkForce false;
