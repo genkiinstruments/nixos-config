@@ -29,6 +29,8 @@
 
   networking.hostName = "m3";
 
+  environment.systemPackages = [ pkgs.cowsay ];
+
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   age = {
