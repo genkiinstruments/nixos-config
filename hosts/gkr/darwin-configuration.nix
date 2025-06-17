@@ -9,9 +9,22 @@
     inputs.srvos.darwinModules.common
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.agenix.darwinModules.default
+    inputs.comin.darwinModules.comin
     flake.modules.darwin.default
     flake.modules.shared.default
   ];
+
+  services.comin = {
+    enable = true;
+    remotes = [
+      {
+        name = "origin";
+        url = "https://github.com/genkiinstruments/nixos-config";
+        branches.main.name = "main";
+      }
+    ];
+  };
+  networking.hostName = "gkr";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
