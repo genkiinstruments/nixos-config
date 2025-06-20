@@ -5,9 +5,6 @@
   ...
 }:
 {
-  imports = [
-    (import ./mvim-system.nix { inherit flake; })
-  ];
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.substituters = [
