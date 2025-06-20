@@ -36,6 +36,7 @@
     gh # needed for the softwave github run
     cowsay
     neofetch
+    perSystem.self.mvim
   ];
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
