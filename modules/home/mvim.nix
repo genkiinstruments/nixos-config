@@ -27,8 +27,10 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = mvimBase.commonPackages;
 
-    # Set up environment variables
-    home.sessionVariables = mvimBase.commonEnvVars;
+    # Set up environment variables (but don't override PATH)
+    home.sessionVariables = {
+      NVIM_APPNAME = mvimBase.commonEnvVars.NVIM_APPNAME;
+    };
 
     # Keep the treesitter grammar source
     xdg.dataFile."mvim/site/parser".source = mvimBase.treesitter-grammars;
