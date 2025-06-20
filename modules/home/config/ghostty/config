@@ -34,3 +34,6 @@ keybind = cmd+n=text:\x00\x6E
 keybind = cmd+o=text:\x00\x6F
 keybind = cmd+p=text:\x00\x70
 keybind = cmd+z=text:\x00\x7A
+
+# For claude-code
+keybind = shift+enter=text:\n
