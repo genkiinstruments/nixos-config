@@ -53,9 +53,11 @@
       "dialout"
       "video"
       "inputs"
+      "uucp"
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
+  nix.settings.trusted-users = [ "genki" ];
 
   security.sudo.wheelNeedsPassword = false;
 
@@ -106,6 +108,7 @@
       dconf-editor
       ghostty
       rofi
+      rkdeveloptool
     ]
     ++ [
       # This is needed for the vmware user tools clipboard to work.
@@ -153,11 +156,25 @@
     [org.gnome.settings-daemon.plugins.power]
     sleep-inactive-ac-type='nothing'
     sleep-inactive-battery-type='nothing'
+    sleep-inactive-ac-timeout=0
+    sleep-inactive-battery-timeout=0
     power-button-action='nothing'
     idle-dim=false
+    idle-brightness=100
+    automatic-suspend=false
+    automatic-suspend-ac=false
+    automatic-suspend-battery=false
 
     [org.gnome.desktop.session]
     idle-delay=uint32 0
+
+    [org.gnome.desktop.screensaver]
+    idle-activation-enabled=false
+    lock-enabled=false
+
+    [org.gnome.SessionManager]
+    logout-prompt=false
+    inhibit-logout-command=\'\'
   '';
   systemd.targets.sleep.enable = false;
   systemd.targets.suspend.enable = false;
@@ -169,4 +186,12 @@
   powerManagement.powertop.enable = false;
   powerManagement.cpuFreqGovernor = "performance";
   services.tlp.enable = false; # Disable TLP if it's enabled elsewhere
+
+  # udev rules for Rockchip devices (rkdeveloptool)
+  services.udev.extraRules = ''
+    # Rockchip devices in maskrom/loader mode
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666", GROUP="plugdev"
+    # Rockchip devices in recovery mode
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", ATTRS{idProduct}=="*", MODE="0666", GROUP="plugdev"
+  '';
 }
