@@ -1,9 +1,6 @@
 { flake, ... }:
 {
-  imports = [
-    flake.modules.home.default
-    flake.modules.home.nvim
-  ];
+  imports = [ flake.modules.home.default ];
 
   programs.ssh = {
     controlMaster = "auto";

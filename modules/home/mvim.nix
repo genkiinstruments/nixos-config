@@ -6,40 +6,51 @@
   ...
 }:
 let
-  nvim-lsp-packages = flake.lib.nvim-lsp-packages { inherit pkgs; };
-  treesitter-grammars = flake.lib.treesitter-grammars { inherit pkgs; };
-  neovim = flake.lib.neovim { inherit pkgs; };
   cfg = config.programs.mvim;
+  mvimBase = flake.lib.mvim-base {
+    inherit flake pkgs lib;
+    configSource = "${cfg.configPath}/home/nvim";
+  };
 in
 {
   options.programs.mvim = {
-    configFullPath = lib.mkOption {
+    enable = lib.mkEnableOption "mvim with home-manager integration";
+
+    configPath = lib.mkOption {
       type = lib.types.str;
-      description = "Full path to nixos-config repository";
+      description = "Path to the nixos-config repository containing nvim config";
       default = "/etc/nixos-config";
+      example = "/Users/username/nixos-config";
     };
   };
 
-  config = {
-    home.packages = nvim-lsp-packages ++ [
-      neovim
-      pkgs.git
-    ];
+  config = lib.mkIf cfg.enable {
+    home.packages = mvimBase.commonPackages;
+
+    # Set up environment variables
+    home.sessionVariables = mvimBase.commonEnvVars;
 
     # Keep the treesitter grammar source
-    xdg.dataFile."nvim/site/parser".source = treesitter-grammars;
+    xdg.dataFile."mvim/site/parser".source = mvimBase.treesitter-grammars;
 
     # Use Home Manager's dag system to ensure proper ordering
-    home.activation.nvimSetup = config.lib.dag.entryAfter [ "writeBoundary" ] ''
-      echo "Setting up Neovim configuration..."
+    home.activation.mvimSetup = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      echo "Setting up mvim configuration..."
       NVIM_CONFIG_PATH="${config.xdg.configHome}/nvim"
-      NVIM_CONFIG_SOURCE="${cfg.configFullPath}/home/nvim"
+      NVIM_CONFIG_SOURCE="${cfg.configPath}/home/nvim"
 
       # Debug information
       echo "NVIM_CONFIG_PATH: $NVIM_CONFIG_PATH"
       echo "NVIM_CONFIG_SOURCE: $NVIM_CONFIG_SOURCE"
 
-      # Check for and remove the circular symlink
+      # Verify the config source exists
+      if [ ! -d "$NVIM_CONFIG_SOURCE" ]; then
+        echo "Error: Neovim config source directory not found at $NVIM_CONFIG_SOURCE"
+        echo "Please check that configPath is set correctly and the directory exists"
+        exit 1
+      fi
+
+      # Check for and remove any circular symlinks
       if [ -L "$NVIM_CONFIG_SOURCE/nvim" ]; then
         echo "Found circular symlink at $NVIM_CONFIG_SOURCE/nvim, removing it"
         TARGET=$(readlink "$NVIM_CONFIG_SOURCE/nvim")
@@ -78,12 +89,12 @@ in
       fi
 
       # Write the treesitter revision
-      echo "${treesitter-grammars.rev}" > "$NVIM_CONFIG_SOURCE/treesitter-rev"
+      echo "${mvimBase.treesitter-grammars.rev}" > "$NVIM_CONFIG_SOURCE/treesitter-rev"
 
       # Update plugins if needed
       if [[ -f "$NVIM_CONFIG_SOURCE/lazy-lock.json" ]]; then
-        if ! ${pkgs.gnugrep}/bin/grep -q "${treesitter-grammars.rev}" "$NVIM_CONFIG_SOURCE/lazy-lock.json"; then
-          ${neovim}/bin/nvim --headless "+Lazy! update" +qa > /dev/null 2>&1
+        if ! ${pkgs.gnugrep}/bin/grep -q "${mvimBase.treesitter-grammars.rev}" "$NVIM_CONFIG_SOURCE/lazy-lock.json"; then
+          ${mvimBase.neovim}/bin/nvim --headless "+Lazy! update" +qa > /dev/null 2>&1
         fi
       fi
 

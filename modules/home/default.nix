@@ -22,7 +22,7 @@
       executable = true;
     };
 
-    sessionVariables.EDITOR = "nvim";
+    sessionVariables.EDITOR = "mvim";
 
     packages = with pkgs; [
       wget
@@ -257,7 +257,7 @@
     fish = {
       enable = true;
       shellAliases = {
-        n = "nvim";
+        n = "mvim";
         da = "direnv allow";
         dr = "direnv reload";
         ga = "git add";

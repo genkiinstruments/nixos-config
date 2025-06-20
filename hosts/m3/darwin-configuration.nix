@@ -2,6 +2,7 @@
   config,
   inputs,
   pkgs,
+  lib,
   flake,
   ...
 }:
@@ -45,6 +46,9 @@
   home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
 
   system.primaryUser = "olafur";
+
+  # Disable system mvim package since m3 uses home-manager integration
+  programs.mvim.enableSystemPackage = lib.mkForce false;
 
   users.users.olafur = {
     isHidden = false;

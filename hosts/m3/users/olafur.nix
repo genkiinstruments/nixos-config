@@ -6,8 +6,14 @@
 {
   imports = [
     flake.modules.home.default
-    flake.modules.home.nvim
+    flake.modules.home.mvim
   ];
+
+  # Enable mvim with home-manager integration and custom config path
+  programs.mvim = {
+    enable = true;
+    configPath = "/private/etc/nixos-config"; # Adjust this path as needed
+  };
 
   # Configure SSH for clipboard sharing
   programs.ssh = {
