@@ -33,7 +33,7 @@
     treefmt-nix.url = "github:numtide/treefmt-nix";
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
+    nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
 
     # The module applies custom patches that only apply to buildbot > 4.0.0.
     # To use buildbot-nix with NixOS 24.05, you should therefore not override the
