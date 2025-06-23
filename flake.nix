@@ -2,7 +2,8 @@
   description = "Genki 🌍🌎🌏";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable&shallow=1";
+    # nixpkgs.url = "github:NixOS/nixpkgs?ref=nixos-unstable&shallow=1";
+    nixpkgs.url = "github:NixOS/nixpkgs?ref=master&shallow=1";
 
     srvos.url = "github:nix-community/srvos";
     srvos.inputs.nixpkgs.follows = "nixpkgs";
