@@ -4,7 +4,10 @@
   lib ? pkgs.lib,
 }:
 let
-  mvimBase = flake.lib.mvim-base { inherit flake pkgs lib; };
+  mvimBase = flake.lib.mvim-base {
+    inherit flake pkgs lib;
+    NVIM_APPNAME = "mvim";
+  };
 
   name = "mvim";
 in
@@ -15,7 +18,7 @@ pkgs.writeShellApplication {
     export PATH="${mvimBase.commonEnvVars.PATH}:$PATH"
     export NVIM_APPNAME="${mvimBase.commonEnvVars.NVIM_APPNAME}"
 
-    ${mvimBase.setupConfigScript "$XDG_CONFIG_HOME/$NVIM_APPNAME"}
+    ${mvimBase.setupConfigScript "$XDG_CONFIG_HOME/${mvimBase.commonEnvVars.NVIM_APPNAME}"}
 
     exec nvim "$@"
   '';

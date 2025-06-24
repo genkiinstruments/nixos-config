@@ -6,6 +6,7 @@ _: {
       flake,
       pkgs,
       configSource ? flake,
+      NVIM_APPNAME,
       ...
     }:
     with pkgs;
@@ -124,7 +125,7 @@ _: {
       # Common environment setup
       commonEnvVars = {
         PATH = "${pkgs.coreutils}/bin:${lspEnv}/bin:${neovim}/bin";
-        NVIM_APPNAME = "mvim";
+        NVIM_APPNAME = NVIM_APPNAME;
       };
 
       # Common packages needed for mvim
@@ -160,7 +161,7 @@ _: {
         echo "${treesitter-grammars.rev}" > "$CONFIG_DIR/treesitter-rev"
 
         # Setup lazy.nvim
-        LAZY_NVIM_DIR="$XDG_DATA_HOME/$NVIM_APPNAME/lazy/lazy.nvim"
+        LAZY_NVIM_DIR="$XDG_DATA_HOME/${NVIM_APPNAME}/lazy/lazy.nvim"
         if [ ! -d "$LAZY_NVIM_DIR" ]; then
           mkdir -p "$(dirname "$LAZY_NVIM_DIR")"
           git clone --filter=blob:none --branch=stable https://github.com/folke/lazy.nvim.git "$LAZY_NVIM_DIR"
@@ -173,9 +174,9 @@ _: {
           nvim --headless -c 'quitall' > /dev/null 2>&1
         fi
 
-        mkdir -p "$XDG_DATA_HOME/$NVIM_APPNAME/lib/" "$XDG_DATA_HOME/$NVIM_APPNAME/site/"
+        mkdir -p "$XDG_DATA_HOME/${NVIM_APPNAME}/lib/" "$XDG_DATA_HOME/${NVIM_APPNAME}/site/"
 
-        PARSER_DIR="$XDG_DATA_HOME/$NVIM_APPNAME/site/parser"
+        PARSER_DIR="$XDG_DATA_HOME/${NVIM_APPNAME}/site/parser"
         if [ -d "$PARSER_DIR" ]; then
           mv "$PARSER_DIR" "$PARSER_DIR.old" 2>/dev/null || true
         fi

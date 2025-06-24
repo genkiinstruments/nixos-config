@@ -13,6 +13,7 @@
   programs.mvim = {
     enable = true;
     configPath = "/private/etc/nixos-config"; # Adjust this path as needed
+    appName = "mvim";
   };
 
   # Configure SSH for clipboard sharing

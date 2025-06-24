@@ -10,6 +10,7 @@ let
   mvimBase = flake.lib.mvim-base {
     inherit flake pkgs lib;
     configSource = "${cfg.configPath}/home/nvim";
+    NVIM_APPNAME = cfg.appName;
   };
 in
 {
@@ -20,6 +21,12 @@ in
       type = lib.types.str;
       description = "Path to the nixos-config repository containing nvim config";
       example = "/Users/username/nixos-config";
+    };
+
+    appName = lib.mkOption {
+      type = lib.types.str;
+      description = "NVIM_APPNAME value - determines where neovim looks for config";
+      example = "mvim";
     };
   };
 
@@ -32,7 +39,7 @@ in
     };
 
     # Keep the treesitter grammar source
-    xdg.dataFile."mvim/site/parser".source = mvimBase.treesitter-grammars;
+    xdg.dataFile."${cfg.appName}/site/parser".source = mvimBase.treesitter-grammars;
 
     # Use Home Manager's dag system to ensure proper ordering
     home.activation.mvimSetup = config.lib.dag.entryAfter [ "writeBoundary" ] ''
@@ -52,22 +59,22 @@ in
       fi
 
       # Check for and remove any circular symlinks
-      if [ -L "$NVIM_CONFIG_SOURCE/nvim" ]; then
-        echo "Found circular symlink at $NVIM_CONFIG_SOURCE/nvim, removing it"
-        TARGET=$(readlink "$NVIM_CONFIG_SOURCE/nvim")
+      if [ -L "$NVIM_CONFIG_SOURCE/${mvimBase.commonEnvVars.NVIM_APPNAME}" ]; then
+        echo "Found circular symlink at $NVIM_CONFIG_SOURCE/${mvimBase.commonEnvVars.NVIM_APPNAME}, removing it"
+        TARGET=$(readlink "$NVIM_CONFIG_SOURCE/${mvimBase.commonEnvVars.NVIM_APPNAME}")
         echo "It points to: $TARGET"
-        rm -f "$NVIM_CONFIG_SOURCE/nvim"
+        rm -f "$NVIM_CONFIG_SOURCE/${mvimBase.commonEnvVars.NVIM_APPNAME}"
         echo "Circular symlink removed"
       fi
 
       # Double-check it's gone
-      if [ -L "$NVIM_CONFIG_SOURCE/nvim" ]; then
+      if [ -L "$NVIM_CONFIG_SOURCE/${mvimBase.commonEnvVars.NVIM_APPNAME}" ]; then
         echo "ERROR: Failed to remove circular symlink!"
         ls -la "$NVIM_CONFIG_SOURCE"
         exit 1
       fi
 
-      # Set up the main symlink from ~/.config/nvim to our config directory
+      # Set up the main symlink from ~/.config/mvim to our config directory
       if [ -e "$NVIM_CONFIG_PATH" ]; then
         if [ -L "$NVIM_CONFIG_PATH" ]; then
           # It's a symlink, check where it points
@@ -100,9 +107,9 @@ in
       fi
 
       # Final check to make sure circular symlink didn't somehow get recreated
-      if [ -L "$NVIM_CONFIG_SOURCE/nvim" ]; then
+      if [ -L "$NVIM_CONFIG_SOURCE/${mvimBase.commonEnvVars.NVIM_APPNAME}" ]; then
         echo "WARNING: Circular symlink was recreated! Removing again..."
-        rm -f "$NVIM_CONFIG_SOURCE/nvim"
+        rm -f "$NVIM_CONFIG_SOURCE/${mvimBase.commonEnvVars.NVIM_APPNAME}"
       fi
     '';
   };

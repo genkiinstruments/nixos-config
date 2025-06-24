@@ -14,6 +14,7 @@
   programs.mvim = {
     enable = true;
     configPath = "/Users/saumavel/genkiinstruments/nixos-config/hosts/saumavel/users";
+    appName = "nvim";
   };
 
   home.file.".config/ghostty/config".source = lib.mkForce ./ghostty;
