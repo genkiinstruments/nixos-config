@@ -19,7 +19,6 @@ in
     configPath = lib.mkOption {
       type = lib.types.str;
       description = "Path to the nixos-config repository containing nvim config";
-      default = "/etc/nixos-config";
       example = "/Users/username/nixos-config";
     };
   };
@@ -38,7 +37,7 @@ in
     # Use Home Manager's dag system to ensure proper ordering
     home.activation.mvimSetup = config.lib.dag.entryAfter [ "writeBoundary" ] ''
       echo "Setting up mvim configuration..."
-      NVIM_CONFIG_PATH="${config.xdg.configHome}/nvim"
+      NVIM_CONFIG_PATH="${config.xdg.configHome}/${mvimBase.commonEnvVars.NVIM_APPNAME}"
       NVIM_CONFIG_SOURCE="${cfg.configPath}/home/nvim"
 
       # Debug information
