@@ -3,6 +3,7 @@
   flake,
   pkgs,
   lib,
+  perSystem,
   ...
 }:
 {
@@ -109,6 +110,7 @@
       ghostty
       rofi
       rkdeveloptool
+      perSystem.self.mvim
     ]
     ++ [
       # This is needed for the vmware user tools clipboard to work.

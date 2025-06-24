@@ -6,6 +6,7 @@
 let
   mvimBase = flake.lib.mvim-base {
     inherit flake pkgs lib;
+    configSource = flake + "/home/nvim";
     NVIM_APPNAME = "mvim";
   };
 
