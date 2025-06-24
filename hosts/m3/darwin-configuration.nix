@@ -65,12 +65,12 @@
 
   homebrew = {
     enable = true;
+    onActivation.cleanup = "uninstall";
     casks = [
       # guis
       "raycast"
       "arc"
       "secretive"
-      "tailscale"
     ];
     brews = [
       # clis and libraries
