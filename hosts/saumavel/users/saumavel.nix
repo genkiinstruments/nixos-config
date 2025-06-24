@@ -16,17 +16,13 @@
     configPath = "/Users/saumavel/genkiinstruments/nixos-config/home/nvim";
   };
 
+  home.file.".config/ghostty/config".source = lib.mkForce ./ghostty;
+  home.file.".config/karabiner/karabiner.json".source = lib.mkForce ./karabiner.json;
+
   # XDG Base Directory specification configuration
   # Manages application configurations and default applications
   xdg = {
     enable = true;
-    # Application-specific configuration files
-    configFile = {
-      # Ghostty configuration
-      "ghostty/config".source = ./ghostty;
-      # Keyboard customization
-      "karabiner/karabiner.json".source = ./karabiner.json;
-    };
     # Default applications for file types;
     mimeApps.defaultApplications = {
       # Web application
