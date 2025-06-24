@@ -5,7 +5,7 @@ _: {
     {
       flake,
       pkgs,
-      configSource ? "${flake}/home/nvim",
+      configSource ? flake,
       ...
     }:
     with pkgs;
