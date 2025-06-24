@@ -321,6 +321,17 @@
         # Work notes
         "WORK.md"
       ];
+      aliases = {
+        co = "checkout";
+        cm = "commit";
+        st = "status";
+        br = "branch";
+        df = "diff";
+        lg = "log";
+        pl = "pull";
+        ps = "push";
+      };
+
     };
     tmux = {
       enable = true;
