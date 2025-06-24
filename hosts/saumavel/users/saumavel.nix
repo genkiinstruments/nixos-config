@@ -13,7 +13,7 @@
   # Enable mvim with home-manager integration and custom config path
   programs.mvim = {
     enable = true;
-    configPath = "/Users/saumavel/genkiinstruments/nixos-config";
+    configPath = "/Users/saumavel/genkiinstruments/nixos-config/hosts/saumavel/users";
   };
 
   home.file.".config/ghostty/config".source = lib.mkForce ./ghostty;
