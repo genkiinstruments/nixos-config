@@ -1,6 +1,7 @@
 {
   pkgs,
   flake,
+  lib,
   ...
 }:
 {
@@ -10,4 +11,9 @@
   home.packages = with pkgs; [
     zed-editor
   ];
+  programs.git = {
+    userEmail = lib.mkForce "daniel@genkiinstruments.com";
+    userName = lib.mkForce "dingari";
+    extraConfig.github.user = lib.mkForce "dingari";
+  };
 }
