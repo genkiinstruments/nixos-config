@@ -143,13 +143,24 @@
 
   # Disable auto-suspend when on AC power
   services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchExternalPower = "ignore";
-    lidSwitchDocked = "ignore";
-    extraConfig = ''
+    lidSwitch = lib.mkForce "ignore";
+    lidSwitchExternalPower = lib.mkForce "ignore";
+    lidSwitchDocked = lib.mkForce "ignore";
+    extraConfig = lib.mkForce ''
       IdleAction=ignore
+      IdleActionSec=0
+      HandlePowerKey=ignore
       HandleSuspendKey=ignore
       HandleSuspendKeyLongPress=ignore
+      HandleHibernateKey=ignore
+      HandleHibernateKeyLongPress=ignore
+      HandleLidSwitch=ignore
+      HandleLidSwitchExternalPower=ignore
+      HandleLidSwitchDocked=ignore
+      PowerKeyIgnoreInhibited=yes
+      SuspendKeyIgnoreInhibited=yes
+      HibernateKeyIgnoreInhibited=yes
+      LidSwitchIgnoreInhibited=yes
     '';
   };
 
@@ -178,16 +189,32 @@
     logout-prompt=false
     inhibit-logout-command=\'\'
   '';
-  systemd.targets.sleep.enable = false;
-  systemd.targets.suspend.enable = false;
-  systemd.targets.hibernate.enable = false;
-  systemd.targets.hybrid-sleep.enable = false;
 
   # Disable automatic sleep from all sources
   powerManagement.enable = true;
   powerManagement.powertop.enable = false;
   powerManagement.cpuFreqGovernor = "performance";
   services.tlp.enable = false; # Disable TLP if it's enabled elsewhere
+
+  # Completely disable systemd suspend services
+  systemd.services."systemd-suspend" = {
+    enable = false;
+    serviceConfig.ExecStart = lib.mkForce "${pkgs.coreutils}/bin/true";
+  };
+  systemd.services."systemd-hibernate" = {
+    enable = false;
+    serviceConfig.ExecStart = lib.mkForce "${pkgs.coreutils}/bin/true";
+  };
+  systemd.services."systemd-hybrid-sleep" = {
+    enable = false;
+    serviceConfig.ExecStart = lib.mkForce "${pkgs.coreutils}/bin/true";
+  };
+
+  # Mask suspend targets with high priority
+  systemd.targets.sleep.enable = lib.mkForce false;
+  systemd.targets.suspend.enable = lib.mkForce false;
+  systemd.targets.hibernate.enable = lib.mkForce false;
+  systemd.targets.hybrid-sleep.enable = lib.mkForce false;
 
   # udev rules for Rockchip devices (rkdeveloptool)
   services.udev.extraRules = ''
