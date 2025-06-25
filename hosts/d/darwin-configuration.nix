@@ -26,47 +26,43 @@
   system.keyboard = {
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
+
+    # Custom key mappings for USB and Apple keyboards
+    userKeyMapping = [
+      # USB keyboards: swap Option and Command
+      {
+        HIDKeyboardModifierMappingSrc = 30064771298; # Left Option (0x7000000E2)
+        HIDKeyboardModifierMappingDst = 30064771299; # Left Command (0x7000000E3)
+      }
+      {
+        HIDKeyboardModifierMappingSrc = 30064771299; # Left Command (0x7000000E3)
+        HIDKeyboardModifierMappingDst = 30064771298; # Left Option (0x7000000E2)
+      }
+      {
+        HIDKeyboardModifierMappingSrc = 30064771302; # Right Option (0x7000000E6)
+        HIDKeyboardModifierMappingDst = 30064771303; # Right Command (0x7000000E7)
+      }
+      {
+        HIDKeyboardModifierMappingSrc = 30064771303; # Right Command (0x7000000E7)
+        HIDKeyboardModifierMappingDst = 30064771302; # Right Option (0x7000000E6)
+      }
+      # Apple keyboards: swap Control and Globe/Fn
+      {
+        HIDKeyboardModifierMappingSrc = 30064771296; # Left Control (0x7000000E0)
+        HIDKeyboardModifierMappingDst = 1879048195; # Globe/Fn key (0x700000063)
+      }
+      {
+        HIDKeyboardModifierMappingSrc = 1879048195; # Globe/Fn key (0x700000063)
+        HIDKeyboardModifierMappingDst = 30064771296; # Left Control (0x7000000E0)
+      }
+    ];
   };
 
-  # Additional keyboard settings via system defaults
+  # System defaults for keyboard behavior
   system.defaults = {
     NSGlobalDomain = {
-      # Swap Option and Command keys for USB keyboards
+      # Function key behavior
       "com.apple.keyboard.fnState" = false;
-    };
-    
-    # Keyboard modifier key mappings
-    ".GlobalPreferences" = {
-      "com.apple.keyboard.modifiermapping.1452-544-0" = [
-        {
-          HIDKeyboardModifierMappingSrc = 30064771296;  # Left Option
-          HIDKeyboardModifierMappingDst = 30064771299;  # Left Command
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 30064771299;  # Left Command  
-          HIDKeyboardModifierMappingDst = 30064771296;  # Left Option
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 30064771300;  # Right Option
-          HIDKeyboardModifierMappingDst = 30064771303;  # Right Command
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 30064771303;  # Right Command
-          HIDKeyboardModifierMappingDst = 30064771300;  # Right Option
-        }
-      ];
-      
-      # Apple keyboard mappings (swap Control and Globe/Fn)
-      "com.apple.keyboard.modifiermapping.1452-0-0" = [
-        {
-          HIDKeyboardModifierMappingSrc = 30064771297;  # Left Control
-          HIDKeyboardModifierMappingDst = 1095216660483; # Globe/Fn key
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 1095216660483; # Globe/Fn key
-          HIDKeyboardModifierMappingDst = 30064771297;  # Left Control
-        }
-      ];
     };
   };
 
