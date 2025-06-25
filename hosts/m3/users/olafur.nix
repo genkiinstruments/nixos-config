@@ -15,6 +15,9 @@
     configPath = "/private/etc/nixos-config"; # Adjust this path as needed
     appName = "mvim";
   };
+  programs.fish.shellAliases.m = "mvim";
+  programs.fish.shellAliases.n = "mvim";
+  home.sessionVariables.EDITOR = "nvim";
 
   # Configure SSH for clipboard sharing
   programs.ssh = {

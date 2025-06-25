@@ -257,7 +257,6 @@
     fish = {
       enable = true;
       shellAliases = {
-        n = "nvim";
         da = "direnv allow";
         dr = "direnv reload";
         ga = "git add";
