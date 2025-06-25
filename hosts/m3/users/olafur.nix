@@ -19,6 +19,12 @@
   programs.fish.shellAliases.n = "mvim";
   home.sessionVariables.EDITOR = "nvim";
 
+  programs.git = {
+    userEmail = "olafur@genkiinstruments.com";
+    userName = "multivac61";
+    extraConfig.github.user = "multivac61";
+  };
+
   # Configure SSH for clipboard sharing
   programs.ssh = {
     controlMaster = "auto";

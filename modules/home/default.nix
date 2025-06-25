@@ -292,8 +292,6 @@
     git = {
       enable = true;
       lfs.enable = true;
-      userEmail = "olafur@genkiinstruments.com";
-      userName = "multivac61";
       extraConfig = {
         init.defaultBranch = "main";
         core.autocrlf = "input";
@@ -302,7 +300,6 @@
         url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
         gpg.format = "ssh";
         color.ui = true;
-        github.user = "multivac61";
       };
       ignores = [
         ".direnv"

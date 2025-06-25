@@ -85,9 +85,9 @@
     };
 
     git = {
-      userName = lib.mkForce "saumavel";
-      userEmail = lib.mkForce "saumavel@gmail.com";
-      extraConfig.github.user = lib.mkForce "saumavel";
+      userName = "saumavel";
+      userEmail = "saumavel@gmail.com";
+      extraConfig.github.user = "saumavel";
       delta.enable = true;
     };
   };
