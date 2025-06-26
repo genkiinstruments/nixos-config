@@ -69,7 +69,6 @@
       "postman"
 
       # TERMINALS
-      "ghostty"
       "kitty"
 
       # WORK

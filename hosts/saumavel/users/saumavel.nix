@@ -17,7 +17,6 @@
     appName = "nvim";
   };
 
-  home.file.".config/ghostty/config".source = lib.mkForce ./ghostty;
   home.file.".config/karabiner/karabiner.json".source = lib.mkForce ./karabiner.json;
 
   # XDG Base Directory specification configuration
