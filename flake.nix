@@ -39,7 +39,7 @@
     # The module applies custom patches that only apply to buildbot > 4.0.0.
     # To use buildbot-nix with NixOS 24.05, you should therefore not override the
     # nixpkgs input to your own stable version of buildbot-nix.
-    buildbot-nix.url = "github:nix-community/buildbot-nix?rev=0bae6ebaf7368974fd419442984a7aebc0239db9";
+    buildbot-nix.url = "github:nix-community/buildbot-nix?rev=d8a24c100e798bf1f938926ccee3d0430f7c3f63";
 
     genki-www.url = "github:genkiinstruments/genki-www";
     genki-www.inputs.nixpkgs.follows = "nixpkgs";
