@@ -51,6 +51,9 @@
         size = 16.0;
         name = "JetBrainsMono Nerd Font";
       };
+      extraConfig = ''
+        shell /run/current-system/sw/bin/fish
+      '';
     };
 
     tmux = {
