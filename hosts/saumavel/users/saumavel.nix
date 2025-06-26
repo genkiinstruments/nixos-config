@@ -37,8 +37,6 @@
   # NOTE: START HERE: Install packages that are only available in your user environment.
   # https://home-manager-options.extranix.com/
   programs = {
-    bash.enable = true;
-
     fish.shellAliases.cppbuild = "g++ -std=c++17 -Wall -Wextra";
 
     kitty = {
