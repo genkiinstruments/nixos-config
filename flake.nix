@@ -37,6 +37,7 @@
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
 
     # The module applies custom patches that only apply to buildbot > 4.0.0.
+    #
     # To use buildbot-nix with NixOS 24.05, you should therefore not override the
     # nixpkgs input to your own stable version of buildbot-nix.
     buildbot-nix.url = "github:nix-community/buildbot-nix?rev=c077f430f3717d41bb303d031398058665315166";
