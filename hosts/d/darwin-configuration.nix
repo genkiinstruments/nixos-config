@@ -6,6 +6,7 @@
 {
   imports = [
     flake.modules.darwin.default
+    flake.modules.darwin.secretive
     flake.modules.shared.default
     flake.modules.shared.home-manager
   ];

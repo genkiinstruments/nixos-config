@@ -13,6 +13,7 @@
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.modules.darwin.default
+    flake.modules.darwin.secretive
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
@@ -58,11 +59,6 @@
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
 
-  environment.etc."ssh/ssh_config.d/secretive.conf".text = ''
-    Host *
-      IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
-  '';
-
   homebrew = {
     enable = true;
     onActivation.cleanup = "uninstall";
@@ -70,7 +66,6 @@
       # guis
       "raycast"
       "arc"
-      "secretive"
     ];
     brews = [
       # clis and libraries
