@@ -32,7 +32,6 @@
     secrets.flake = false;
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
-
     treefmt-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-facter-modules.url = "github:nix-community/nixos-facter-modules";
