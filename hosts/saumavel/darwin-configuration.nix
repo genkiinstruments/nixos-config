@@ -37,7 +37,7 @@
 
   # Modified homebrew configuration to update but not remove packages
   homebrew = {
-    enable = false;
+    enable = true;
     onActivation = {
       autoUpdate = true; # Update Homebrew and formulae
       upgrade = true; # Upgrade outdated packages
