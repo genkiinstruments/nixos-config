@@ -15,12 +15,12 @@
     flake.modules.shared.home-manager
   ];
 
-  # Add the unfree configuration here
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "copilot.vim"
-    ];
+  # # Add the unfree configuration here
+  # nixpkgs.config.allowUnfreePredicate =
+  #   pkg:
+  #   builtins.elem (lib.getName pkg) [
+  #     "copilot.vim"
+  #   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 

@@ -29,8 +29,6 @@
       "text/html" = "arc.desktop";
       # plain text files
       "text/plain" = "nvim.desktop";
-      # PDF
-      "application/pdf" = "mupdf.desktop";
     };
   };
 
@@ -57,31 +55,8 @@
     };
 
     tmux = {
-      prefix = "C-a";
-      keyMode = "vi";
-      extraConfig = ''
-        set -g default-command ${pkgs.fish}/bin/fish
-
-        # remappa " og % í þægilegri takka
-        bind i split-window -h
-        bind u split-window -v
-
-        # alt H & L til að navigatea milli windows
-        bind -n M-H previous-window
-        bind -n M-L previous-window
-
-        # Open panes in current directory
-        bind '"' split-window -v -c "#{pane_current_path}"
-        bind % split-window -h -c "#{pane_current_path}"
-
-        set -g status-position top
-      '';
-      plugins = with pkgs.tmuxPlugins; [
-        tmux-fzf
-        vim-tmux-navigator
-        yank
-        sensible
-      ];
+      shortcut = "a";
+      # status.enable = false;
     };
 
     git = {
