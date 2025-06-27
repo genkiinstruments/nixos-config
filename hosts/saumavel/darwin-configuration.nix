@@ -35,6 +35,61 @@
   # Fix nixbld group ID issue
   ids.gids.nixbld = 350;
 
+  system = {
+    defaults = {
+      NSGlobalDomain = {
+        AppleInterfaceStyle = "Dark";
+        KeyRepeat = 2; # 120, 90, 60, 30, 12, 6, 2
+        InitialKeyRepeat = 15; # 120, 94, 68, 35, 25, 15
+        "com.apple.keyboard.fnState" = true; # Make F1, F2, etc. keys behave as standard function keys
+        NSAutomaticCapitalizationEnabled = false;
+
+        ApplePressAndHoldEnabled = false;
+        "com.apple.trackpad.forceClick" = false; # Disables Force Click
+        "com.apple.trackpad.scaling" = 1.0; # Configures the trackpad tracking speed (0 to 3). The default is “1”.AppleShowAllFiles = true;
+      };
+
+      ".GlobalPreferences" = {
+        "com.apple.mouse.scaling" = 2.0; # Configures the mouse tracking speed (0 to 3). The default is “1.5”.
+      };
+
+      # dock = {
+      #   tilesize = 20;
+      # };
+
+      finder = {
+        AppleShowAllFiles = true;
+        FXPreferredViewStyle = "clmv";
+        FXDefaultSearchScope = "SCcf";
+        FXRemoveOldTrashItems = true;
+        ShowPathbar = true;
+      };
+
+      screencapture = {
+        location = "~/Downloads/";
+        type = "png";
+      };
+
+      trackpad = {
+        TrackpadThreeFingerTapGesture = 0; # Disables the three-finger tap for dictionary lookup
+      };
+
+      magicmouse = {
+        MouseButtonMode = "TwoButton";
+      };
+    };
+
+    keyboard = {
+      enableKeyMapping = true;
+    };
+
+    activationScripts.postActivation.text = ''
+      # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
+      defaults write -g InitialKeyRepeat -int 10 
+      defaults write -g KeyRepeat -int 1
+    '';
+  };
+
   # Modified homebrew configuration to update but not remove packages
   homebrew = {
     enable = true;
