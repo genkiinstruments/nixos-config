@@ -35,6 +35,19 @@
   };
   hardware.graphics.enable32Bit = lib.mkForce false;
 
+  # Pin Rust to 1.86 to fix kernel build compatibility issues
+  nixpkgs.overlays = [
+    (final: prev: {
+      rustc = prev.rustc.overrideAttrs (old: rec {
+        version = "1.86.0";
+        src = prev.fetchurl {
+          url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
+          hash = "sha256-4S+pP4d4dJ+CZhK0+pjYi3aLftS8GhqYLWNp0CGDX+s=";
+        };
+      });
+    })
+  ];
+
   # Disable WiFi module entirely
   boot.extraModprobeConfig = ''blacklist brcmfmac'';
 
