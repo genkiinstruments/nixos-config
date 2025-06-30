@@ -78,7 +78,6 @@ in
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
     };
 
-
   services.buildbot-nix.master = {
     enable = true;
     useHTTPS = true;
