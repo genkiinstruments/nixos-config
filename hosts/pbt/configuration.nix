@@ -31,31 +31,13 @@
     enable = true;
     extractPeripheralFirmware = true;
     peripheralFirmwareDirectory = ./firmware;
-    withRust = true;
+    withRust = false;
     setupAsahiSound = true;
-    useExperimentalGPUDriver = true;
+    useExperimentalGPUDriver = false;
     experimentalGPUInstallMode = "replace";
   };
   hardware.graphics.enable32Bit = lib.mkForce false;
 
-  # Pin Rust to 1.86 only for kernel builds to fix compatibility issues
-  nixpkgs.overlays = [
-    (_final: prev: {
-      linuxKernel = prev.linuxKernel // {
-        kernels = prev.linuxKernel.kernels // {
-          linux_asahi = prev.linuxKernel.kernels.linux_asahi.override {
-            rustc = prev.rustc.overrideAttrs (_old: rec {
-              version = "1.86.0";
-              src = prev.fetchurl {
-                url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
-                hash = "sha256-AionKG32eQCgRNIn2dtp1HMuw9gz5P/CWcRCXtce7YA=";
-              };
-            });
-          };
-        };
-      };
-    })
-  ];
 
   # Disable WiFi module entirely
   boot.extraModprobeConfig = ''blacklist brcmfmac'';
