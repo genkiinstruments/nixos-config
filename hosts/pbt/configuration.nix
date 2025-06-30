@@ -42,7 +42,7 @@
         version = "1.86.0";
         src = prev.fetchurl {
           url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
-          hash = "sha256-4S+pP4d4dJ+CZhK0+pjYi3aLftS8GhqYLWNp0CGDX+s=";
+          hash = "sha256-AionKG32eQCgRNIn2dtp1HMuw9gz5P/CWcRCXtce7YA=";
         };
       });
     })
