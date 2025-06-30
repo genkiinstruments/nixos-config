@@ -78,10 +78,6 @@ in
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
     };
 
-  # Fix SSL deprecation warnings that break GitHub status reporting
-  systemd.services.buildbot-master.environment = {
-    PYTHONWARNINGS = "ignore";
-  };
 
   services.buildbot-nix.master = {
     enable = true;
