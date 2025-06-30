@@ -3,6 +3,7 @@
   flake,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 {
@@ -23,6 +24,8 @@
   networking.hostName = "pbt";
   system.stateVersion = "25.05"; # Did you read the comment?
   facter.reportPath = ./facter.json;
+
+  environment.systemPackages = with pkgs; [ btop ];
 
   hardware.asahi = {
     enable = true;
