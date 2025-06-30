@@ -25,7 +25,10 @@
   system.stateVersion = "25.05"; # Did you read the comment?
   facter.reportPath = ./facter.json;
 
-  environment.systemPackages = with pkgs; [ btop ];
+  environment.systemPackages = with pkgs; [
+    btop
+    lazygit
+  ];
 
   hardware.asahi = {
     enable = true;
