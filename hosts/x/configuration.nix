@@ -79,7 +79,9 @@ in
     };
 
   # Fix SSL deprecation warnings that break GitHub status reporting
-  systemd.services.buildbot-master.environment.PYTHONWARNINGS = "ignore::DeprecationWarning";
+  systemd.services.buildbot-master.environment = {
+    PYTHONWARNINGS = "ignore";
+  };
 
   services.buildbot-nix.master = {
     enable = true;
