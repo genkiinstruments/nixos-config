@@ -37,8 +37,8 @@
 
   # Pin Rust to 1.86 to fix kernel build compatibility issues
   nixpkgs.overlays = [
-    (final: prev: {
-      rustc = prev.rustc.overrideAttrs (old: rec {
+    (_final: prev: {
+      rustc = prev.rustc.overrideAttrs (_old: rec {
         version = "1.86.0";
         src = prev.fetchurl {
           url = "https://static.rust-lang.org/dist/rustc-${version}-src.tar.gz";
