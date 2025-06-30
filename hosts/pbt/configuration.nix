@@ -38,7 +38,6 @@
   };
   hardware.graphics.enable32Bit = lib.mkForce false;
 
-
   # Disable WiFi module entirely
   boot.extraModprobeConfig = ''blacklist brcmfmac'';
 
