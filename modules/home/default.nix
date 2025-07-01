@@ -279,7 +279,6 @@
         ]
       );
     };
-    bash.enable = true;
     bat.enable = true;
     ripgrep.enable = true;
     ripgrep.arguments = [
