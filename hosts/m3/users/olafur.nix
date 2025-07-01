@@ -15,8 +15,7 @@
     configPath = "/private/etc/nixos-config"; # Adjust this path as needed
     appName = "mvim";
   };
-  programs.fish.shellAliases.m = "mvim";
-  programs.fish.shellAliases.n = "mvim";
+  programs.fish.shellAliases.n = "nvim";
   home.sessionVariables.EDITOR = "nvim";
 
   programs.git = {
