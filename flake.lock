@@ -96,11 +96,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1750176275,
-        "narHash": "sha256-QcH/+M++5qP1+6uXSMz616sGfs4KeBjrTLexTgYewPQ=",
+        "lastModified": 1751384019,
+        "narHash": "sha256-VWBKm/uyeGMRoHoeBhYR2Vvj0D2n+eu8RFnu7tG9658=",
         "owner": "multivac61",
         "repo": "comin",
-        "rev": "ec70f5ced48d56fec389283c98eec1ee8adfd59f",
+        "rev": "6c5def5f771cad97f5620afb62cf70f6eb82ecc4",
         "type": "github"
       },
       "original": {
