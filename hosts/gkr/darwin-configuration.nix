@@ -38,6 +38,7 @@
     cowsay
     neofetch
     perSystem.self.mvim
+    cmatrix
   ];
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
