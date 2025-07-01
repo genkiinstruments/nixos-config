@@ -16,7 +16,6 @@
     appName = "mvim";
   };
   programs.fish.shellAliases.n = "nvim";
-  home.sessionVariables.EDITOR = "nvim";
 
   programs.git = {
     userEmail = "olafur@genkiinstruments.com";
