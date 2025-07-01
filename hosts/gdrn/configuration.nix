@@ -160,6 +160,8 @@
     # Tools for clipboard support
     xclip
     wl-clipboard
+
+    perSystem.self.mvim
   ];
 
   # Don't require password for sudo
