@@ -148,6 +148,7 @@
       {
         name = "Push to attic";
         environment.path_to_push = inputs.buildbot-nix.lib.interpolate "%(prop:out_path)s";
+        environment.ATTIC_TOKEN = inputs.buildbot-nix.lib.interpolate "%(secret:attic-auth-token)s";
         command = [
           (pkgs.lib.getExe (
             pkgs.writeShellApplication {
@@ -155,8 +156,7 @@
               runtimeInputs = [ pkgs.attic-client ];
               text = ''
                 # shellcheck disable=SC2101
-                attic login genki http://localhost:8080
-                attic cache configure genki --public
+                attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
 
                 # shellcheck disable=SC2154
                 # Retry push up to 3 times with exponential backoff
@@ -184,6 +184,9 @@
       }
     ];
   };
+  systemd.services.buildbot-master.serviceConfig.LoadCredential = [
+    "attic-auth-token:${config.age.secrets.attic-genki-auth-token.path}"
+  ];
 
   services.buildbot-nix.worker = {
     enable = true;
