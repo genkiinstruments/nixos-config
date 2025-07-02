@@ -38,6 +38,33 @@ in
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.eno1.useDHCP = true;
 
+  # Tailscale funnel/serve via systemd
+  systemd.services.tailscale-funnel-buildbot = {
+    description = "Tailscale Funnel for Buildbot";
+    after = [ "tailscaled.service" ];
+    wants = [ "tailscaled.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.tailscale}/bin/tailscale funnel --bg --https=443 8010";
+      ExecStop = "${pkgs.tailscale}/bin/tailscale funnel --https=443 off";
+    };
+  };
+
+  systemd.services.tailscale-serve-attic = {
+    description = "Tailscale Serve for Attic";
+    after = [ "tailscaled.service" ];
+    wants = [ "tailscaled.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg --https=8443 8080";
+      ExecStop = "${pkgs.tailscale}/bin/tailscale serve --https=8443 off";
+    };
+  };
+
   facter.reportPath = ./facter.json;
 
   users.groups.secrets.members = [

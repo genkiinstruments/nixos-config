@@ -11,7 +11,7 @@ in
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.substituters = [
-    "https://x.${tailnet}:8080/genki"
+    "https://x.${tailnet}:8443/genki"
     "https://nix-community.cachix.org"
     "https://cache.nixos.org"
   ];
