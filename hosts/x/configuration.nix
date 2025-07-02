@@ -191,6 +191,7 @@ in
   # Caddy reverse proxy with Cloudflare DNS for Tailscale-only access
   services.caddy = {
     enable = true;
+    enableReload = true;
     package = pkgs.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
       hash = "sha256-2D7dnG50CwtCho+U+iHmSj2w14zllQXPjmTHr6lJZ/A=";
