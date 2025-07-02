@@ -153,16 +153,6 @@ in
   # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)
   environment.systemPackages = with pkgs; [ attic-client ];
 
-  # Make GitHub token available system-wide for buildbot-nix, comin, etc.
-  environment.sessionVariables = {
-    GH_TOKEN = "$(cat ${config.age.secrets.buildbot-github-token.path})";
-  };
-
-  # Also add to Nix configuration for private repo access
-  nix.extraOptions = ''
-    access-tokens = github.com=$(cat ${config.age.secrets.buildbot-github-token.path})
-  '';
-
   services.atticd = {
     enable = true;
     environmentFile = config.age.secrets.attic-environment-file.path;
