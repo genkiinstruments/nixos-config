@@ -158,7 +158,22 @@
                 attic login genki http://localhost:8080
 
                 # shellcheck disable=SC2154
-                attic push genki "$path_to_push"
+                # Retry push up to 3 times on failure
+                for attempt in 1 2 3; do
+                  echo "Attempt $attempt to push to attic..."
+                  if attic push genki "$path_to_push"; then
+                    echo "Push succeeded on attempt $attempt"
+                    exit 0
+                  else
+                    echo "Push failed on attempt $attempt"
+                    if [ $attempt -lt 3 ]; then
+                      echo "Waiting 10 seconds before retry..."
+                      sleep 10
+                    fi
+                  fi
+                done
+                echo "All push attempts failed"
+                exit 1
               '';
             }
           ))
