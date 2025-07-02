@@ -156,6 +156,7 @@
               text = ''
                 # shellcheck disable=SC2101
                 attic login genki http://localhost:8080
+                attic cache configure genki --public
 
                 # shellcheck disable=SC2154
                 # Retry push up to 3 times with exponential backoff
@@ -167,7 +168,7 @@
                   else
                     echo "Push failed on attempt $attempt"
                     if [ $attempt -lt 3 ]; then
-                      # Exponential backoff: 2s, 4s, 8s
+                      # Exponential backoff: 2s, 6s, 18s
                       wait_time=$((2 * (3 ** (attempt - 1))))
                       echo "Waiting $wait_time seconds before retry..."
                       sleep $wait_time
