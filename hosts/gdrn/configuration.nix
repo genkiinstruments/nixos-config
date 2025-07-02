@@ -151,6 +151,7 @@
     sqlite
     curl
     jq
+    neofetch
 
     # Tools for clipboard support
     xclip
