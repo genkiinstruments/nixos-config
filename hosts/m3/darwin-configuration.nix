@@ -7,7 +7,8 @@
 }:
 {
   imports = [
-    inputs.srvos.darwinModules.common
+    inputs.srvos.darwinModules.desktop
+    inputs.srvos.darwinModules.mixins-trusted-nix-caches
     inputs.srvos.darwinModules.mixins-terminfo
     inputs.agenix.darwinModules.default
     flake.modules.shared.default
@@ -50,7 +51,6 @@
 
   homebrew = {
     enable = true;
-    onActivation.cleanup = "uninstall";
     casks = [
       # guis
       "raycast"

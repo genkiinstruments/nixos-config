@@ -7,8 +7,9 @@
 }:
 {
   imports = [
-    inputs.srvos.darwinModules.common
+    inputs.srvos.darwinModules.server
     inputs.srvos.darwinModules.mixins-terminfo
+    inputs.srvos.darwinModules.mixins-trusted-nix-caches
     inputs.agenix.darwinModules.default
     flake.modules.darwin.default
     flake.modules.darwin.comin
