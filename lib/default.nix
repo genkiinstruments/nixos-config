@@ -1,6 +1,4 @@
 _: {
-  tailnet = "tail01dbd.ts.net";
-
   mvim-base =
     {
       flake,

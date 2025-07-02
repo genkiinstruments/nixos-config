@@ -1,11 +1,8 @@
 {
   lib,
-  flake,
   ...
 }:
 let
-  inherit (flake.lib) tailnet;
-
   mkBuilder =
     {
       hostName,
@@ -29,9 +26,9 @@ let
     };
 
   mkSshConfig = hostName: ''
-    Host ${hostName} ${hostName}.${tailnet}
+    Host ${hostName} ${hostName}.tail01dbd.ts.net
       User nix-ssh
-      HostName ${hostName}.${tailnet}
+      HostName ${hostName}.tail01dbd.ts.net
       StrictHostKeyChecking accept-new
       BatchMode yes
       PubkeyAuthentication yes
