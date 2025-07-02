@@ -75,6 +75,8 @@ in
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
 
+      caddy-cloudflare-env.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
+
       buildbot-github-token.file = "${inputs.secrets}/buildbot-github-token.age";
 
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
@@ -124,7 +126,6 @@ in
       {
         name = "Push to attic";
         environment.path_to_push = inputs.buildbot-nix.lib.interpolate "%(prop:out_path)s";
-        environment.ATTIC_TOKEN = inputs.buildbot-nix.lib.interpolate "%(secret:attic-auth-token)s";
         command = [
           (pkgs.lib.getExe (
             pkgs.writeShellApplication {
@@ -132,7 +133,7 @@ in
               runtimeInputs = [ pkgs.attic-client ];
               text = ''
                 # shellcheck disable=SC2101
-                attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
+                attic login genki http://127.0.0.1:8080
 
                 # shellcheck disable=SC2154
                 attic push genki "$path_to_push"
@@ -143,9 +144,6 @@ in
       }
     ];
   };
-  systemd.services.buildbot-master.serviceConfig.LoadCredential = [
-    "attic-auth-token:${config.age.secrets.attic-genki-auth-token.path}"
-  ];
 
   services.buildbot-nix.worker = {
     enable = true;
@@ -190,9 +188,13 @@ in
     environmentFile = config.age.secrets.attic-environment-file.path;
 
     settings = {
-      listen = "[::]:8080";
+      listen = "127.0.0.1:8080";
 
-      jwt = { };
+      # Allow anonymous push to all caches
+      allowed-hosts = [ "*" ];
+
+      # Disable authentication completely
+      require-proof-of-possession = false;
 
       chunking = {
         # The minimum NAR size to trigger chunking
@@ -209,6 +211,61 @@ in
 
         # The preferred maximum size of a chunk, in bytes
         max-size = 256 * 1024; # 256 KiB
+      };
+    };
+  };
+
+  # Caddy reverse proxy with Cloudflare DNS for Tailscale-only access
+  services.caddy = {
+    enable = true;
+    package = pkgs.caddy.withPlugins {
+      plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
+      hash = "sha256-Gsuo+ripJSgKSYOM9/yl6Kt/6BFCA6BuTDvPdteinAI=";
+    };
+
+    environmentFile = config.age.secrets.caddy-cloudflare-env.path;
+
+    virtualHosts = {
+      "attic.genki.is" = {
+        extraConfig = ''
+          tls {
+            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          }
+
+          # Only allow Tailscale IPs
+          @tailscale {
+            remote_ip 100.64.0.0/10
+          }
+
+          handle @tailscale {
+            reverse_proxy 127.0.0.1:8080
+          }
+
+          handle {
+            respond "Access denied" 403
+          }
+        '';
+      };
+
+      "buildbot.genki.is" = {
+        extraConfig = ''
+          tls {
+            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+          }
+
+          # Only allow Tailscale IPs
+          @tailscale {
+            remote_ip 100.64.0.0/10
+          }
+
+          handle @tailscale {
+            reverse_proxy https://${config.networking.hostName}.${tailnet}
+          }
+
+          handle {
+            respond "Access denied" 403 
+          }
+        '';
       };
     };
   };

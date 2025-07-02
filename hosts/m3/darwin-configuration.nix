@@ -28,18 +28,10 @@
         owner = "olafur";
         group = "staff";
       };
-      cachix_auth_token = {
-        file = "${inputs.secrets}/m3-CACHIX_AUTH_TOKEN.age";
-        mode = "644";
-        owner = "olafur";
-        group = "staff";
-      };
     };
   };
 
   nix.settings = {
-    substituters = [ "https://genki.cachix.org" ];
-    trusted-public-keys = [ "genki.cachix.org-1:5l+wAa4rDwhcd5Wm43eK4N73qJ6GIKmJQ87Nw/bRGfE=" ];
     trusted-users = [ "olafur" ];
   };
 
@@ -53,9 +45,6 @@
     shell = pkgs.fish;
   };
 
-  environment.interactiveShellInit = ''
-    export CACHIX_AUTH_TOKEN="$(cat ${config.age.secrets.cachix_auth_token.path})"
-  '';
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
 

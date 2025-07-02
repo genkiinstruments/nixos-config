@@ -95,7 +95,6 @@
   environment.systemPackages =
     with pkgs;
     [
-      cachix
       gnumake
       killall
       niv
