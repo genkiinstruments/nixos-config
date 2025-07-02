@@ -158,7 +158,7 @@
                 attic login genki http://localhost:8080
 
                 # shellcheck disable=SC2154
-                # Retry push up to 3 times on failure
+                # Retry push up to 3 times with exponential backoff
                 for attempt in 1 2 3; do
                   echo "Attempt $attempt to push to attic..."
                   if attic push genki "$path_to_push"; then
@@ -167,8 +167,10 @@
                   else
                     echo "Push failed on attempt $attempt"
                     if [ $attempt -lt 3 ]; then
-                      echo "Waiting 10 seconds before retry..."
-                      sleep 10
+                      # Exponential backoff: 2s, 4s, 8s
+                      wait_time=$((2 * (3 ** (attempt - 1))))
+                      echo "Waiting $wait_time seconds before retry..."
+                      sleep $wait_time
                     fi
                   fi
                 done
