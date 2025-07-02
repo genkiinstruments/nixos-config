@@ -15,13 +15,6 @@
     flake.modules.shared.home-manager
   ];
 
-  # # Add the unfree configuration here
-  # nixpkgs.config.allowUnfreePredicate =
-  #   pkg:
-  #   builtins.elem (lib.getName pkg) [
-  #     "copilot.vim"
-  #   ];
-
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system.primaryUser = "saumavel";
@@ -52,10 +45,6 @@
       ".GlobalPreferences" = {
         "com.apple.mouse.scaling" = 2.0; # Configures the mouse tracking speed (0 to 3). The default is “1.5”.
       };
-
-      # dock = {
-      #   tilesize = 20;
-      # };
 
       finder = {
         AppleShowAllFiles = true;
@@ -102,19 +91,16 @@
       "nvm"
       "node"
       "clang-format"
-      "hashcat"
-      "qemu"
       "luarocks"
-      "biber"
-      "texlive"
-      "xdotool"
+      # "biber"
+      # "texlive"
+      # "xdotool"
     ];
     casks = [
       # MEGA UTILITIES
       "raycast"
       "alt-tab"
       "karabiner-elements"
-      "shortcat"
       "screen-studio"
 
       # UTILITIES
@@ -122,9 +108,6 @@
       "logi-options+"
       "the-unarchiver"
       "postman"
-
-      # TERMINALS
-      "kitty"
 
       # WORK
       "obsidian"
