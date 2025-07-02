@@ -8,6 +8,7 @@
   imports = [
     flake.modules.home.default
     flake.modules.home.mvim
+    flake.modules.home.fish-ssh-agent
   ];
 
   # Enable mvim with home-manager integration and custom config path
