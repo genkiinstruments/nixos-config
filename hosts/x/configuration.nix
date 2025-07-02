@@ -150,38 +150,18 @@ in
     workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
   };
 
-  # Configure GitHub token for private repository access
-  systemd.services.buildbot-master.serviceConfig = {
-    LoadCredential = [
-      "github-token:${config.age.secrets.buildbot-github-token.path}"
-    ];
-    Environment = [
-      "GH_TOKEN=\${CREDENTIALS_DIRECTORY}/github-token"
-    ];
+  # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)
+  environment.systemPackages = with pkgs; [ attic-client ];
+
+  # Make GitHub token available system-wide for buildbot-nix, comin, etc.
+  environment.sessionVariables = {
+    GH_TOKEN = "$(cat ${config.age.secrets.buildbot-github-token.path})";
   };
 
-  systemd.services.buildbot-worker.serviceConfig = {
-    LoadCredential = [
-      "github-token:${config.age.secrets.buildbot-github-token.path}"
-    ];
-    Environment = [
-      "GH_TOKEN=\${CREDENTIALS_DIRECTORY}/github-token"
-    ];
-  };
-
-  # Configure Nix to use GitHub token for private repos
-  systemd.services.nix-daemon.serviceConfig = {
-    LoadCredential = [
-      "github-token:${config.age.secrets.buildbot-github-token.path}"
-    ];
-    Environment = [
-      "NIX_CONFIG=access-tokens = github.com=$(cat \${CREDENTIALS_DIRECTORY}/github-token)"
-    ];
-  };
-
-  environment.systemPackages = with pkgs; [
-    attic-client # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)
-  ];
+  # Also add to Nix configuration for private repo access
+  nix.extraOptions = ''
+    access-tokens = github.com=$(cat ${config.age.secrets.buildbot-github-token.path})
+  '';
 
   services.atticd = {
     enable = true;
@@ -222,8 +202,6 @@ in
       plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
       hash = "sha256-2D7dnG50CwtCho+U+iHmSj2w14zllQXPjmTHr6lJZ/A=";
     };
-
-    environmentFile = config.age.secrets.caddy-cloudflare-env.path;
 
     virtualHosts = {
       "attic.genki.is" = {
@@ -267,6 +245,18 @@ in
           }
         '';
       };
+    };
+  };
+
+  # Configure Caddy with proper environment file
+  systemd.services.caddy = {
+    serviceConfig = {
+      ExecStartPre = [
+        "${pkgs.coreutils}/bin/mkdir -p /run/caddy"
+        "${pkgs.bash}/bin/bash -c 'echo CLOUDFLARE_API_TOKEN=$(cat ${config.age.secrets.caddy-cloudflare-env.path}) > /run/caddy/env'"
+      ];
+      EnvironmentFile = "/run/caddy/env";
+      RuntimeDirectory = "caddy";
     };
   };
 
