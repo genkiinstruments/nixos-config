@@ -76,6 +76,9 @@ in
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
 
       caddy-cloudflare-env.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
+      caddy-cloudflare-env.owner = "caddy";
+      caddy-cloudflare-env.group = "caddy";
+      caddy-cloudflare-env.mode = "0400";
 
       buildbot-github-token.file = "${inputs.secrets}/buildbot-github-token.age";
 
