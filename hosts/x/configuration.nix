@@ -136,7 +136,7 @@ in
               runtimeInputs = [ pkgs.attic-client ];
               text = ''
                 # shellcheck disable=SC2101
-                attic login genki http://127.0.0.1:8080
+                attic login genki http://localhost:8080
 
                 # shellcheck disable=SC2154
                 attic push genki "$path_to_push"
@@ -161,7 +161,7 @@ in
     environmentFile = config.age.secrets.attic-environment-file.path;
 
     settings = {
-      listen = "127.0.0.1:8080";
+      listen = "[::]:8080";
 
       # Allow anonymous push to all caches
       allowed-hosts = [ "*" ];
