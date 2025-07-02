@@ -75,6 +75,8 @@ in
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
 
+      buildbot-github-token.file = "${inputs.secrets}/buildbot-github-token.age";
+
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
     };
 
@@ -148,6 +150,35 @@ in
   services.buildbot-nix.worker = {
     enable = true;
     workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
+  };
+
+  # Configure GitHub token for private repository access
+  systemd.services.buildbot-master.serviceConfig = {
+    LoadCredential = [
+      "github-token:${config.age.secrets.buildbot-github-token.path}"
+    ];
+    Environment = [
+      "GH_TOKEN=\${CREDENTIALS_DIRECTORY}/github-token"
+    ];
+  };
+
+  systemd.services.buildbot-worker.serviceConfig = {
+    LoadCredential = [
+      "github-token:${config.age.secrets.buildbot-github-token.path}"
+    ];
+    Environment = [
+      "GH_TOKEN=\${CREDENTIALS_DIRECTORY}/github-token"
+    ];
+  };
+
+  # Configure Nix to use GitHub token for private repos
+  systemd.services.nix-daemon.serviceConfig = {
+    LoadCredential = [
+      "github-token:${config.age.secrets.buildbot-github-token.path}"
+    ];
+    Environment = [
+      "NIX_CONFIG=access-tokens = github.com=$(cat \${CREDENTIALS_DIRECTORY}/github-token)"
+    ];
   };
 
   environment.systemPackages = with pkgs; [
