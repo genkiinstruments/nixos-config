@@ -102,6 +102,7 @@
       dconf-editor
       ghostty
       rofi
+      neofetch
 
       # Better clipboard support for VMware
       wl-clipboard
