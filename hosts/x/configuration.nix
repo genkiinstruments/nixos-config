@@ -75,11 +75,6 @@ in
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
 
-      caddy-cloudflare-env.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
-      caddy-cloudflare-env.owner = "caddy";
-      caddy-cloudflare-env.group = "caddy";
-      caddy-cloudflare-env.mode = "0400";
-
       buildbot-github-token.file = "${inputs.secrets}/buildbot-github-token.age";
 
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
@@ -163,9 +158,6 @@ in
     settings = {
       listen = "[::]:8080";
 
-      # Allow anonymous push to all caches
-      allowed-hosts = [ "*" ];
-
       # Disable authentication completely
       require-proof-of-possession = false;
 
@@ -185,72 +177,6 @@ in
         # The preferred maximum size of a chunk, in bytes
         max-size = 256 * 1024; # 256 KiB
       };
-    };
-  };
-
-  # Caddy reverse proxy with Cloudflare DNS for Tailscale-only access
-  services.caddy = {
-    enable = true;
-    enableReload = true;
-    package = pkgs.caddy.withPlugins {
-      plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
-      hash = "sha256-2D7dnG50CwtCho+U+iHmSj2w14zllQXPjmTHr6lJZ/A=";
-    };
-
-    virtualHosts = {
-      "attic.genki.is" = {
-        extraConfig = ''
-          tls {
-            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-          }
-
-          # Only allow Tailscale IPs
-          @tailscale {
-            remote_ip 100.64.0.0/10
-          }
-
-          handle @tailscale {
-            reverse_proxy 127.0.0.1:8080
-          }
-
-          handle {
-            respond "Access denied" 403
-          }
-        '';
-      };
-
-      "buildbot.genki.is" = {
-        extraConfig = ''
-          tls {
-            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-          }
-
-          # Only allow Tailscale IPs
-          @tailscale {
-            remote_ip 100.64.0.0/10
-          }
-
-          handle @tailscale {
-            reverse_proxy https://${config.networking.hostName}.${tailnet}
-          }
-
-          handle {
-            respond "Access denied" 403 
-          }
-        '';
-      };
-    };
-  };
-
-  # Configure Caddy with proper environment file
-  systemd.services.caddy = {
-    serviceConfig = {
-      ExecStartPre = [
-        "${pkgs.coreutils}/bin/mkdir -p /run/caddy"
-        "${pkgs.bash}/bin/bash -c 'echo CLOUDFLARE_API_TOKEN=$(cat ${config.age.secrets.caddy-cloudflare-env.path}) > /run/caddy/env'"
-      ];
-      EnvironmentFile = "/run/caddy/env";
-      RuntimeDirectory = "caddy";
     };
   };
 

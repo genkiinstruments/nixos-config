@@ -4,11 +4,14 @@
   flake,
   ...
 }:
+let
+  inherit (flake.lib) tailnet;
+in
 {
   nixpkgs.config.allowUnfree = true;
 
   nix.settings.substituters = [
-    "https://attic.genki.is/genki"
+    "https://x.${tailnet}:8080/genki"
     "https://nix-community.cachix.org"
     "https://cache.nixos.org"
   ];
