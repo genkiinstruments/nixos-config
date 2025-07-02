@@ -36,7 +36,34 @@
   # NOTE: START HERE: Install packages that are only available in your user environment.
   # https://home-manager-options.extranix.com/
   programs = {
-    fish.shellAliases.cppbuild = "g++ -std=c++17 -Wall -Wextra";
+    fish = {
+      interactiveShellInit = ''
+        # -------------------------------------------------------------------------------
+        # SSH Agent - Use Secretive App
+        # -------------------------------------------------------------------------------
+        # This points the shell to the SSH agent socket provided by the Secretive app,
+        # which stores keys in the Secure Enclave.
+        set -x SSH_AUTH_SOCK $HOME/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
+
+        # -------------------------------------------------------------------------------
+        # Lazygit Wrapper Function
+        # -------------------------------------------------------------------------------
+        # This can remain, it is not related to the SSH agent.
+        function lg
+          set -x LAZYGIT_NEW_DIR_FILE ~/.lazygit/newdir
+
+          lazygit $argv
+
+          if test -f $LAZYGIT_NEW_DIR_FILE
+              cd (cat $LAZYGIT_NEW_DIR_FILE)
+              rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+          end
+        end
+      '';
+      shellAliases = {
+        ktmux = "~/development/scripts/tmux-katla";
+      };
+    };
 
     kitty = {
       enable = true;
@@ -55,11 +82,6 @@
       '';
     };
 
-    tmux = {
-      shortcut = "a";
-      # status.enable = false;
-    };
-
     git = {
       userName = "saumavel";
       userEmail = "saumavel@gmail.com";
@@ -73,5 +95,6 @@
   # https://search.nixos.org/packages
   home.packages = with pkgs; [
     pstree # Display running processes as a tree
+    tldr
   ];
 }
