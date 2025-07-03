@@ -9,8 +9,8 @@
 let
   mkWebshippyStripeSyncSecret = name: {
     file = "${inputs.secrets}/${name}.age";
-    owner = config.services.stripe-webshippy-sync.user;
-    group = config.services.stripe-webshippy-sync.group;
+    mode = "440";
+    group = "keys";
   };
 in
 {
@@ -142,6 +142,9 @@ in
       bucketNameFile = config.age.secrets.r2-bucket-name.path;
     };
   };
+
+  # Add stripe-webshippy-sync user to keys group for secret access
+  systemd.services.stripe-webshippy-sync.serviceConfig.SupplementaryGroups = [ "keys" ];
 
   # Tailscale funnel for stripe-webshippy-sync webhook
   systemd.services.tailscale-funnel-stripe-webhook = {
