@@ -6,6 +6,13 @@
   pkgs,
   ...
 }:
+let
+  mkWebshippyStripeSyncSecret = name: {
+    file = "${inputs.secrets}/${name}.age";
+    owner = config.services.stripe-webshippy-sync.user;
+    group = config.services.stripe-webshippy-sync.group;
+  };
+in
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -112,13 +119,13 @@
   age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
 
   # Stripe-Webshippy-Sync secrets
-  age.secrets.stripe-secret-key.file = "${inputs.secrets}/stripe-secret-key.age";
-  age.secrets.stripe-webhook-secret.file = "${inputs.secrets}/stripe-webhook-secret.age";
-  age.secrets.webshippy-api-key.file = "${inputs.secrets}/webshippy-api-key.age";
-  age.secrets.r2-access-key-id.file = "${inputs.secrets}/r2-access-key-id.age";
-  age.secrets.r2-secret-access-key.file = "${inputs.secrets}/r2-secret-access-key.age";
-  age.secrets.r2-endpoint-url.file = "${inputs.secrets}/r2-endpoint-url.age";
-  age.secrets.r2-bucket-name.file = "${inputs.secrets}/r2-bucket-name.age";
+  age.secrets.stripe-secret-key = mkWebshippyStripeSyncSecret "stripe-secret-key";
+  age.secrets.stripe-webhook-secret = mkWebshippyStripeSyncSecret "stripe-webhook-secret";
+  age.secrets.webshippy-api-key = mkWebshippyStripeSyncSecret "webshippy-api-key";
+  age.secrets.r2-access-key-id = mkWebshippyStripeSyncSecret "r2-access-key-id";
+  age.secrets.r2-secret-access-key = mkWebshippyStripeSyncSecret "r2-secret-access-key";
+  age.secrets.r2-endpoint-url = mkWebshippyStripeSyncSecret "r2-endpoint-url";
+  age.secrets.r2-bucket-name = mkWebshippyStripeSyncSecret "r2-bucket-name";
 
   # Stripe-Webshippy-Sync service configuration
   services.stripe-webshippy-sync = {
