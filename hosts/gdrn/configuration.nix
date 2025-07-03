@@ -126,6 +126,7 @@ in
   age.secrets.r2-secret-access-key = mkWebshippyStripeSyncSecret "r2-secret-access-key";
   age.secrets.r2-endpoint-url = mkWebshippyStripeSyncSecret "r2-endpoint-url";
   age.secrets.r2-bucket-name = mkWebshippyStripeSyncSecret "r2-bucket-name";
+  age.secrets.r2-public-url = mkWebshippyStripeSyncSecret "r2-public-url";
 
   # Stripe-Webshippy-Sync service configuration
   services.stripe-webshippy-sync = {
@@ -140,6 +141,7 @@ in
       secretAccessKeyFile = config.age.secrets.r2-secret-access-key.path;
       endpointUrlFile = config.age.secrets.r2-endpoint-url.path;
       bucketNameFile = config.age.secrets.r2-bucket-name.path;
+      publicUrlFile = config.age.secrets.r2-public-url.path;
     };
   };
 
