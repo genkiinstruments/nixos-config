@@ -28,6 +28,9 @@
     catppuccin.url = "github:catppuccin/nix";
     catppuccin.inputs.nixpkgs.follows = "nixpkgs";
 
+    stripe-webshippy-sync.url = "github:genkiinstruments/stripe-webshippy-sync";
+    stripe-webshippy-sync.inputs.nixpkgs.follows = "nixpkgs";
+
     secrets.url = "github:genkiinstruments/nix-secrets";
     secrets.flake = false;
 

@@ -17,6 +17,7 @@
     inputs.agenix.nixosModules.default
     inputs.fod-oracle.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
+    inputs.stripe-webshippy-sync.nixosModules.default
     flake.modules.shared.default
     flake.modules.shared.builders
     flake.modules.shared.home-manager
@@ -110,6 +111,53 @@
 
   age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
 
+  # Stripe-Webshippy-Sync secrets
+  age.secrets.stripe-secret-key.file = "${inputs.secrets}/stripe-secret-key.age";
+  age.secrets.stripe-webhook-secret.file = "${inputs.secrets}/stripe-webhook-secret.age";
+  age.secrets.webshippy-api-key.file = "${inputs.secrets}/webshippy-api-key.age";
+  age.secrets.r2-access-key-id.file = "${inputs.secrets}/r2-access-key-id.age";
+  age.secrets.r2-secret-access-key.file = "${inputs.secrets}/r2-secret-access-key.age";
+  age.secrets.r2-endpoint-url.file = "${inputs.secrets}/r2-endpoint-url.age";
+  age.secrets.r2-bucket-name.file = "${inputs.secrets}/r2-bucket-name.age";
+
+  # Stripe-Webshippy-Sync service configuration
+  services.stripe-webshippy-sync = {
+    enable = true;
+
+    stripeSecretKeyFile = config.age.secrets.stripe-secret-key.path;
+    stripeWebhookSecretFile = config.age.secrets.stripe-webhook-secret.path;
+    webshippyApiKeyFile = config.age.secrets.webshippy-api-key.path;
+
+    s3 = {
+      accessKeyIdFile = config.age.secrets.r2-access-key-id.path;
+      secretAccessKeyFile = config.age.secrets.r2-secret-access-key.path;
+      endpointUrlFile = config.age.secrets.r2-endpoint-url.path;
+      bucketNameFile = config.age.secrets.r2-bucket-name.path;
+    };
+  };
+
+  # Tailscale funnel for stripe-webshippy-sync webhook
+  systemd.services.tailscale-funnel-stripe-webhook = {
+    description = "Tailscale funnel for Stripe webhook";
+    wantedBy = [ "multi-user.target" ];
+    after = [
+      "tailscaled.service"
+      "stripe-webshippy-sync.service"
+    ];
+    wants = [
+      "tailscaled.service"
+      "stripe-webshippy-sync.service"
+    ];
+
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.tailscale}/bin/tailscale funnel --https=443 ${toString config.services.stripe-webshippy-sync.port}";
+      ExecStop = "${pkgs.tailscale}/bin/tailscale funnel --https=443 off";
+      Restart = "on-failure";
+      RestartSec = "5s";
+    };
+  };
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
   services.cloudflared = {

@@ -56,11 +56,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1751224287,
-        "narHash": "sha256-8o40VtEBUyWP5rEMZ/siE8lBo2TSipLq+sLlG15G1dY=",
+        "lastModified": 1751515480,
+        "narHash": "sha256-vCYcc/b8WizF6vnjuRVxSiU8hy9L3vOTWDVKpWM7xRE=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "69d14a5a9f82bd4ffc0303de25a5efdd1c13aa1b",
+        "rev": "47ad4c7afb169df6f9d48d0df3d7e2f71d9ddd8f",
         "type": "github"
       },
       "original": {
@@ -137,11 +137,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1749398372,
-        "narHash": "sha256-tYBdgS56eXYaWVW3fsnPQ/nFlgWi/Z2Ymhyu21zVM98=",
+        "lastModified": 1751413152,
+        "narHash": "sha256-Tyw1RjYEsp5scoigs1384gIg6e0GoBVjms4aXFfRssQ=",
         "owner": "hercules-ci",
         "repo": "flake-parts",
-        "rev": "9305fe4e5c2a6fcf5ba6a3ff155720fbe4076569",
+        "rev": "77826244401ea9de6e3bac47c2db46005e1f30b5",
         "type": "github"
       },
       "original": {
@@ -230,11 +230,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751500614,
-        "narHash": "sha256-mYiYNsTJkbQouC5YHOTgqVpjpELoNf9f4z5ZeY4NfPg=",
+        "lastModified": 1751513147,
+        "narHash": "sha256-idSXM3Y0KNf/WDDqGfthiOSQMwZYwis1JZhTkdWrr6A=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a5b56720841121d2189c011e445c4be4c943bab5",
+        "rev": "426b405d979d893832549b95f23c13537c65d244",
         "type": "github"
       },
       "original": {
@@ -281,10 +281,10 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1751203939,
-        "narHash": "sha256-omYD+H5LlSihz2DRfv90I8Oeo7JNEwvcHPHX+6nMIM4=",
+        "lastModified": 1751461431,
+        "narHash": "sha256-wzJps3ZoaLMYYW7tCIhw1a625/kYuJ9s0MbkCxBi3VE=",
         "ref": "nixos-unstable-small",
-        "rev": "650e71cbf76de8dd16f5648a96981b726c4ef8fe",
+        "rev": "12d516726903aae3c89fe2b6b65a6880c7101c25",
         "shallow": true,
         "type": "git",
         "url": "https://github.com/NixOS/nixpkgs"
@@ -312,6 +312,56 @@
         "type": "github"
       }
     },
+    "pyproject-build-systems": {
+      "inputs": {
+        "nixpkgs": [
+          "stripe-webshippy-sync",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "stripe-webshippy-sync",
+          "pyproject-nix"
+        ],
+        "uv2nix": [
+          "stripe-webshippy-sync",
+          "uv2nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1749519371,
+        "narHash": "sha256-UJONN7mA2stweZCoRcry2aa1XTTBL0AfUOY84Lmqhos=",
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "rev": "7c06967eca687f3482624250428cc12f43c92523",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "build-system-pkgs",
+        "type": "github"
+      }
+    },
+    "pyproject-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "stripe-webshippy-sync",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1746540146,
+        "narHash": "sha256-QxdHGNpbicIrw5t6U3x+ZxeY/7IEJ6lYbvsjXmcxFIM=",
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "rev": "e09c10c24ebb955125fda449939bfba664c467fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "pyproject.nix",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -328,17 +378,18 @@
         "nixpkgs": "nixpkgs_2",
         "secrets": "secrets",
         "srvos": "srvos",
-        "treefmt-nix": "treefmt-nix_4"
+        "stripe-webshippy-sync": "stripe-webshippy-sync",
+        "treefmt-nix": "treefmt-nix_5"
       }
     },
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1751471064,
-        "narHash": "sha256-Iv16diaHvN/1q1zyc0O+gKS1158mSuWkIKcK4KM0rw0=",
+        "lastModified": 1751544845,
+        "narHash": "sha256-aJfKOFLeroDDWYDhhr7ccKCLhia1kJJTxgDtv4bDJYo=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "acf0550733fd54bcf5fba927e199b14e50a99df6",
+        "rev": "9e8f243a5dca4109cf907e7be701bc7e07736c07",
         "type": "github"
       },
       "original": {
@@ -364,6 +415,31 @@
       "original": {
         "owner": "nix-community",
         "repo": "srvos",
+        "type": "github"
+      }
+    },
+    "stripe-webshippy-sync": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "pyproject-build-systems": "pyproject-build-systems",
+        "pyproject-nix": "pyproject-nix",
+        "systems": "systems_3",
+        "treefmt-nix": "treefmt-nix_4",
+        "uv2nix": "uv2nix"
+      },
+      "locked": {
+        "lastModified": 1751546050,
+        "narHash": "sha256-+MnU861gY++zGnDstz3b7Lz7yDp63OJ67Cnflp7msjw=",
+        "owner": "genkiinstruments",
+        "repo": "stripe-webshippy-sync",
+        "rev": "a0a8d712b978278d25cbbe576e4ca29aff27ca9e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "genkiinstruments",
+        "repo": "stripe-webshippy-sync",
         "type": "github"
       }
     },
@@ -395,6 +471,20 @@
         "owner": "nix-systems",
         "repo": "default",
         "type": "github"
+      }
+    },
+    "systems_3": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "id": "systems",
+        "type": "indirect"
       }
     },
     "treefmt-nix": {
@@ -463,6 +553,27 @@
     "treefmt-nix_4": {
       "inputs": {
         "nixpkgs": [
+          "stripe-webshippy-sync",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1749194973,
+        "narHash": "sha256-eEy8cuS0mZ2j/r/FE0/LYBSBcIs/MKOIVakwHVuqTfk=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "a05be418a1af1198ca0f63facb13c985db4cb3c5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "treefmt-nix_5": {
+      "inputs": {
+        "nixpkgs": [
           "nixpkgs"
         ]
       },
@@ -477,6 +588,31 @@
       "original": {
         "owner": "numtide",
         "repo": "treefmt-nix",
+        "type": "github"
+      }
+    },
+    "uv2nix": {
+      "inputs": {
+        "nixpkgs": [
+          "stripe-webshippy-sync",
+          "nixpkgs"
+        ],
+        "pyproject-nix": [
+          "stripe-webshippy-sync",
+          "pyproject-nix"
+        ]
+      },
+      "locked": {
+        "lastModified": 1749170547,
+        "narHash": "sha256-zOptuFhTr9P0A+unFaOBFx5E5T6yx0qE8VrUGVrM96U=",
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
+        "rev": "7ae60727d4fc2e41aefd30da665e4f92ba8298f1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "pyproject-nix",
+        "repo": "uv2nix",
         "type": "github"
       }
     }
