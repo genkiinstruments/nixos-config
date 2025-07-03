@@ -86,7 +86,6 @@
       buildbot-github-oauth-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-github-oauth-secret.age";
       buildbot-github-webhook-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-github-webhook-secret.age";
       buildbot-nix-worker-password = mkBuildbotSecret "${inputs.secrets}/buildbot-nix-worker-password.age";
-      buildbot-gh-token-for-private-repos = mkBuildbotSecret "${inputs.secrets}/buildbot-gh-token-for-private-repos.age";
       buildbot-nix-workers-json = mkBuildbotSecret "${inputs.secrets}/buildbot-nix-workers-json.age";
 
       buildbot-client-secret = mkOauth2ProxySecret "${inputs.secrets}/buildbot-client-secret.age";
@@ -96,6 +95,10 @@
       buildbot-http-basic-auth-password.owner = config.services.buildbot-master.user;
       buildbot-http-basic-auth-password.group = "secrets";
       buildbot-http-basic-auth-password.mode = "0440";
+
+      buildbot-gh-token-for-private-repos.file = "${inputs.secrets}/buildbot-gh-token-for-private-repos.age";
+      buildbot-gh-token-for-private-repos.mode = "0440";
+      buildbot-gh-token-for-private-repos.owner = "buildbot-worker";
 
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
