@@ -9,8 +9,8 @@
 let
   mkWebshippyStripeSyncSecret = name: {
     file = "${inputs.secrets}/${name}.age";
-    mode = "440";
-    group = "keys";
+    owner = config.services.stripe-webshippy-sync.user;
+    group = config.services.stripe-webshippy-sync.group;
   };
 in
 {
@@ -142,14 +142,6 @@ in
       bucketNameFile = config.age.secrets.r2-bucket-name.path;
     };
   };
-
-  # Ensure stripe-webshippy-sync user exists before secrets are decrypted
-  users.users.stripe-webshippy-sync = {
-    isSystemUser = true;
-    group = "stripe-webshippy-sync";
-    extraGroups = [ "keys" ];
-  };
-  users.groups.stripe-webshippy-sync = { };
 
   # Tailscale funnel for stripe-webshippy-sync webhook
   systemd.services.tailscale-funnel-stripe-webhook = {
