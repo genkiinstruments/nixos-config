@@ -143,8 +143,13 @@ in
     };
   };
 
-  # Add stripe-webshippy-sync user to keys group for secret access
-  systemd.services.stripe-webshippy-sync.serviceConfig.SupplementaryGroups = [ "keys" ];
+  # Ensure stripe-webshippy-sync user exists before secrets are decrypted
+  users.users.stripe-webshippy-sync = {
+    isSystemUser = true;
+    group = "stripe-webshippy-sync";
+    extraGroups = [ "keys" ];
+  };
+  users.groups.stripe-webshippy-sync = { };
 
   # Tailscale funnel for stripe-webshippy-sync webhook
   systemd.services.tailscale-funnel-stripe-webhook = {
