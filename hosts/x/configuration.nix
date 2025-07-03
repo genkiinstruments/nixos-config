@@ -105,6 +105,8 @@
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
     };
 
+  nix.extraOptions = "!include ${config.age.secrets.buildbot-gh-token-for-private-repos.path}";
+
   services.buildbot-nix.master = {
     enable = true;
     useHTTPS = true;
@@ -192,7 +194,6 @@
   services.buildbot-nix.worker = {
     enable = true;
     workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
-    nix.accessTokens."github.com" = config.age.secrets.buildbot-gh-token-for-private-repos.path;
   };
 
   # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)
