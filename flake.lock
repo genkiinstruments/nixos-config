@@ -56,15 +56,15 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1751515480,
-        "narHash": "sha256-vCYcc/b8WizF6vnjuRVxSiU8hy9L3vOTWDVKpWM7xRE=",
-        "owner": "nix-community",
+        "lastModified": 1751568634,
+        "narHash": "sha256-fkpEtUxlfGRuWHLEpzm+hEDs/cs4pl3hh1jfzrIzDX4=",
+        "owner": "multivac61",
         "repo": "buildbot-nix",
-        "rev": "47ad4c7afb169df6f9d48d0df3d7e2f71d9ddd8f",
+        "rev": "50ae79a5e55a942dd2430ff35cb3630d9686e703",
         "type": "github"
       },
       "original": {
-        "owner": "nix-community",
+        "owner": "multivac61",
         "repo": "buildbot-nix",
         "type": "github"
       }
@@ -385,11 +385,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1751554360,
-        "narHash": "sha256-r+yWZAcNh34y8CHlvyiLKDDVupJavKVoKekhiJxMyQo=",
+        "lastModified": 1751568875,
+        "narHash": "sha256-OHut9Wq+Olz5dcxtGz1Qcz2jIMo/t4mlHQilQWGtBAo=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "74a0547d3a046eda1d2b0867e93634d18b17d6c2",
+        "rev": "dbeb51d1ed3b0c1ca31d74bdd8d248e8f1010aaa",
         "type": "github"
       },
       "original": {
@@ -405,11 +405,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751245728,
-        "narHash": "sha256-0UHOzDW5yRgNL0AyHgN0r0B6XehzLFKZ00HBSjX8BWM=",
+        "lastModified": 1751564530,
+        "narHash": "sha256-DybnqQMmkMEbNQhrbMGFijZCa9g5mtYIMPACVNMJ5u8=",
         "owner": "nix-community",
         "repo": "srvos",
-        "rev": "c877dc6f7920b373e5943f77377e6ef816f4dc30",
+        "rev": "6bb452f0b31058ffe64241bcf092ebf1c7758be1",
         "type": "github"
       },
       "original": {

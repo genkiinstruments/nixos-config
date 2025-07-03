@@ -86,6 +86,7 @@
       buildbot-github-oauth-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-github-oauth-secret.age";
       buildbot-github-webhook-secret = mkBuildbotSecret "${inputs.secrets}/buildbot-github-webhook-secret.age";
       buildbot-nix-worker-password = mkBuildbotSecret "${inputs.secrets}/buildbot-nix-worker-password.age";
+      buildbot-gh-token-for-private-repos = mkBuildbotSecret "${inputs.secrets}/buildbot-gh-token-for-private-repos.age";
       buildbot-nix-workers-json = mkBuildbotSecret "${inputs.secrets}/buildbot-nix-workers-json.age";
 
       buildbot-client-secret = mkOauth2ProxySecret "${inputs.secrets}/buildbot-client-secret.age";
@@ -191,6 +192,7 @@
   services.buildbot-nix.worker = {
     enable = true;
     workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
+    nix.accessTokens."github.com" = config.age.secrets.buildbot-gh-token-for-private-repos.path;
   };
 
   # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)

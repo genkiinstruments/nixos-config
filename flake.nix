@@ -43,7 +43,7 @@
     #
     # To use buildbot-nix with NixOS 24.05, you should therefore not override the
     # nixpkgs input to your own stable version of buildbot-nix.
-    buildbot-nix.url = "github:nix-community/buildbot-nix";
+    buildbot-nix.url = "github:multivac61/buildbot-nix";
 
     genki-www.url = "github:genkiinstruments/genki-www";
     genki-www.inputs.nixpkgs.follows = "nixpkgs";
