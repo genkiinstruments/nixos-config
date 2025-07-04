@@ -131,7 +131,7 @@ in
   age.secrets.genki-is-cloudflare-api-token.mode = "0400";
 
   services.uptime-kuma.enable = true;
-  caddy = {
+  services.caddy = {
     enable = true;
     package = pkgs.caddy.withPlugins {
       plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
