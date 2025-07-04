@@ -132,9 +132,6 @@ in
     };
 
     virtualHosts."uptime-kuma.tail01dbd.ts.net".extraConfig = ''
-      tls {
-          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-      }
       reverse_proxy http://localhost:3001
     '';
     virtualHosts."uptime-kuma.genki.is".extraConfig = ''
