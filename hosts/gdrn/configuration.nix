@@ -131,9 +131,6 @@ in
       hash = "sha256-2D7dnG50CwtCho+U+iHmSj2w14zllQXPjmTHr6lJZ/A=";
     };
 
-    virtualHosts."uptime-kuma.tail01dbd.ts.net".extraConfig = ''
-      reverse_proxy http://localhost:3001
-    '';
     virtualHosts."uptime-kuma.genki.is".extraConfig = ''
       tls {
           dns cloudflare {env.CLOUDFLARE_API_TOKEN}
@@ -173,7 +170,6 @@ in
     };
   };
 
-  # Tailscale funnel for stripe-webshippy-sync webhook
   systemd.services.tailscale-funnel-stripe-webhook = {
     description = "Tailscale funnel for Stripe webhook";
     wantedBy = [ "multi-user.target" ];
@@ -195,6 +191,7 @@ in
       RestartSec = "5s";
     };
   };
+
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
 
   services.cloudflared = {
