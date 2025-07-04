@@ -12,68 +12,6 @@ let
     owner = config.services.stripe-webshippy-sync.user;
     group = config.services.stripe-webshippy-sync.group;
   };
-  mkAppContainer =
-    {
-      name,
-      localAddress,
-      port,
-    }:
-    {
-      inherit localAddress;
-      autoStart = true;
-      privateNetwork = true;
-      hostAddress = "192.168.100.10";
-      nixpkgs = pkgs.path;
-      enableTun = true;
-      config =
-        {
-          config,
-          lib,
-          options,
-          ...
-        }:
-        {
-          nixpkgs.config.allowUnfree = true;
-          system.stateVersion = "24.05";
-
-          networking = {
-            firewall = {
-              enable = true;
-              trustedInterfaces = [ "tailscale0" ];
-            };
-            useHostResolvConf = lib.mkForce false;
-          };
-
-          services = {
-            "${name}" =
-              {
-                enable = true;
-              }
-              // lib.optionalAttrs (lib.hasAttrByPath [ "services" name "openFirewall" ] options) {
-                openFirewall = true;
-              };
-
-            caddy = {
-              enable = true;
-              virtualHosts."${name}.tail01dbd.ts.net".extraConfig = ''
-                reverse_proxy http://localhost:${port}
-              '';
-              virtualHosts."${name}.genki.is".extraConfig = ''
-                reverse_proxy http://localhost:${port}
-              '';
-            };
-
-            tailscale = {
-              enable = true;
-              openFirewall = true;
-              useRoutingFeatures = "both";
-              permitCertUid = "caddy";
-            };
-
-            resolved.enable = true;
-          };
-        };
-    };
 in
 {
   imports = [
@@ -100,12 +38,6 @@ in
 
   networking.firewall.trustedInterfaces = [ "enp1s0" ];
   networking.interfaces.enp1s0.useDHCP = true;
-
-  containers.uptime-kuma = mkAppContainer {
-    name = "uptime-kuma";
-    localAddress = "192.168.100.11";
-    port = "3001";
-  };
 
   # Enable NAT for containers to access internet
   networking.nat = {
@@ -192,6 +124,37 @@ in
   age.secrets.gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
 
   age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
+
+  age.secrets.genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
+  age.secrets.genki-is-cloudflare-api-token.owner = "caddy";
+  age.secrets.genki-is-cloudflare-api-token.group = "caddy";
+  age.secrets.genki-is-cloudflare-api-token.mode = "0400";
+
+  services.uptime-kuma.enable = true;
+  caddy = {
+    enable = true;
+    package = pkgs.caddy.withPlugins {
+      plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
+      hash = "sha256-2D7dnG50CwtCho+U+iHmSj2w14zllQXPjmTHr6lJZ/A=";
+    };
+
+    virtualHosts."uptime-kuma.tail01dbd.ts.net".extraConfig = ''
+      tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      }
+      reverse_proxy http://localhost:3001
+    '';
+    virtualHosts."uptime-kuma.genki.is".extraConfig = ''
+      tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      }
+      reverse_proxy http://localhost:3001
+    '';
+  };
+  systemd.services.caddy.serviceConfig.EnvironmentFile =
+    config.age.secrets.genki-is-cloudflare-api-token.path;
+
+  tailscale.permitCertUid = "caddy";
 
   # Stripe-Webshippy-Sync secrets
   age.secrets.stripe-secret-key = mkWebshippyStripeSyncSecret "stripe-secret-key";
