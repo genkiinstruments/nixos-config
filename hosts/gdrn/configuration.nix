@@ -147,7 +147,7 @@ in
   systemd.services.caddy.serviceConfig.EnvironmentFile =
     config.age.secrets.genki-is-cloudflare-api-token.path;
 
-  tailscale.permitCertUid = "caddy";
+  services.tailscale.permitCertUid = "caddy";
 
   # Stripe-Webshippy-Sync secrets
   age.secrets.stripe-secret-key = mkWebshippyStripeSyncSecret "stripe-secret-key";
