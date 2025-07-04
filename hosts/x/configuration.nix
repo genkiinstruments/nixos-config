@@ -108,6 +108,7 @@
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
     };
 
+  # Allows buildbot-worker to pull from private github repositories
   nix.extraOptions = "!include ${config.age.secrets.buildbot-gh-token-for-private-repos.path}";
 
   services.buildbot-nix.master = {
