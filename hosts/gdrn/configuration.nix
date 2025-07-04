@@ -24,6 +24,7 @@ let
       privateNetwork = true;
       hostAddress = "192.168.100.10";
       nixpkgs = pkgs.path;
+      enableTun = true;
       config =
         {
           config,
