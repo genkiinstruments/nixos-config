@@ -170,6 +170,7 @@ in
     };
   };
 
+  # Tailscale funnel for public webhook access on port 8443
   systemd.services.tailscale-funnel-stripe-webhook = {
     description = "Tailscale funnel for Stripe webhook";
     wantedBy = [ "multi-user.target" ];
@@ -185,8 +186,8 @@ in
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStart = "${pkgs.tailscale}/bin/tailscale funnel --https=443 ${toString config.services.stripe-webshippy-sync.port}";
-      ExecStop = "${pkgs.tailscale}/bin/tailscale funnel --https=443 off";
+      ExecStart = "${pkgs.tailscale}/bin/tailscale funnel --https=8443 ${toString config.services.stripe-webshippy-sync.port}";
+      ExecStop = "${pkgs.tailscale}/bin/tailscale funnel --https=8443 off || true";
       Restart = "on-failure";
       RestartSec = "5s";
     };
