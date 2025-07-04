@@ -12,6 +12,67 @@ let
     owner = config.services.stripe-webshippy-sync.user;
     group = config.services.stripe-webshippy-sync.group;
   };
+  mkAppContainer =
+    {
+      name,
+      localAddress,
+      port,
+    }:
+    {
+      inherit localAddress;
+      autoStart = true;
+      privateNetwork = true;
+      hostAddress = "192.168.100.10";
+      nixpkgs = pkgs.path;
+      config =
+        {
+          config,
+          lib,
+          options,
+          ...
+        }:
+        {
+          nixpkgs.config.allowUnfree = true;
+          system.stateVersion = "24.05";
+
+          networking = {
+            firewall = {
+              enable = true;
+              trustedInterfaces = [ "tailscale0" ];
+            };
+            useHostResolvConf = lib.mkForce false;
+          };
+
+          services = {
+            "${name}" =
+              {
+                enable = true;
+              }
+              // lib.optionalAttrs (lib.hasAttrByPath [ "services" name "openFirewall" ] options) {
+                openFirewall = true;
+              };
+
+            caddy = {
+              enable = true;
+              virtualHosts."${name}.tail01dbd.ts.net".extraConfig = ''
+                reverse_proxy http://localhost:${port}
+              '';
+              virtualHosts."${name}.genki.is".extraConfig = ''
+                reverse_proxy http://localhost:${port}
+              '';
+            };
+
+            tailscale = {
+              enable = true;
+              openFirewall = true;
+              useRoutingFeatures = "both";
+              permitCertUid = "caddy";
+            };
+
+            resolved.enable = true;
+          };
+        };
+    };
 in
 {
   imports = [
@@ -38,6 +99,12 @@ in
 
   networking.firewall.trustedInterfaces = [ "enp1s0" ];
   networking.interfaces.enp1s0.useDHCP = true;
+
+  containers.uptime-kuma = mkAppContainer {
+    name = "uptime-kuma";
+    localAddress = "192.168.100.11";
+    port = "3001";
+  };
 
   # Hardware optimizations
   boot = {
