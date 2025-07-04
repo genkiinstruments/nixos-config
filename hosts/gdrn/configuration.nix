@@ -107,6 +107,13 @@ in
     port = "3001";
   };
 
+  # Enable NAT for containers to access internet
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "ve-+" ];
+    externalInterface = "enp1s0";
+  };
+
   # Hardware optimizations
   boot = {
     # Kernel settings
