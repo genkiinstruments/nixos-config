@@ -81,11 +81,11 @@
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
       genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
-      genki-is-cloudflare-api-token.owner = config.users.users.caddy.name;
+      genki-is-cloudflare-api-token.owner = config.services.caddy.user;
       genki-is-cloudflare-api-token.mode = "0600";
 
       genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/genki-is-cloudflare-tunnel-secret.age";
-      genki-is-cloudflare-tunnel-secret.owner = config.users.users.cloudflared.name;
+      genki-is-cloudflare-tunnel-secret.owner = config.services.cloudflared.user;
       genki-is-cloudflare-tunnel-secret.mode = "0600";
     };
 
