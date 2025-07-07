@@ -85,6 +85,8 @@
       genki-is-cloudflare-api-token.mode = "0600";
 
       genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/genki-is-cloudflare-tunnel-secret.age";
+      genki-is-cloudflare-tunnel-secret.owner = config.services.cloudflared.user;
+      genki-is-cloudflare-tunnel-secret.mode = "0600";
     };
 
   # Allows buildbot-worker to pull from private github repositories
