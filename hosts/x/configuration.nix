@@ -86,8 +86,6 @@
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
       genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/genki-is-cloudflare-tunnel-secret.age";
-      genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
-      genki-is-cloudflare-api-token.mode = "0444";
     };
 
   # Allows buildbot-worker to pull from private github repositories
@@ -212,10 +210,6 @@
         hostPath = config.age.secrets.attic-environment-file.path;
         isReadOnly = true;
       };
-      "/run/secrets/genki-is-cloudflare-api-token" = {
-        hostPath = config.age.secrets.genki-is-cloudflare-api-token.path;
-        isReadOnly = true;
-      };
     };
 
     config =
@@ -251,14 +245,7 @@
 
           caddy = {
             enable = true;
-            package = pkgs.caddy.withPlugins {
-              plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
-              hash = "sha256-2D7dnG50CwtCho+U+iHmSj2w14zllQXPjmTHr6lJZ/A=";
-            };
             virtualHosts."attic.genki.is".extraConfig = ''
-              tls {
-                dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-              }
               reverse_proxy http://localhost:8080
             '';
           };
@@ -272,8 +259,6 @@
 
           resolved.enable = true;
         };
-        
-        systemd.services.caddy.serviceConfig.EnvironmentFile = "/run/secrets/genki-is-cloudflare-api-token";
       };
   };
 
