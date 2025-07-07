@@ -32,17 +32,10 @@
     "enp5s0"
     "eno1"
   ];
-  networking.firewall.allowedTCPPorts = [ 80 ];
   networking.nat = {
     enable = true;
     internalInterfaces = [ "ve-+" ];
-    externalInterface = "tailscale0";
-    forwardPorts = [
-      {
-        destination = "192.168.100.11:80";
-        sourcePort = 80;
-      }
-    ];
+    externalInterface = "eno1";
   };
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.eno1.useDHCP = true;
@@ -219,17 +212,9 @@
       };
     };
 
-    config = { config, lib, ... }: {
+    config = { ... }: {
       system.stateVersion = "24.11";
-      nixpkgs.config.allowUnfree = true;
-
-      networking = {
-        firewall = {
-          enable = true;
-          trustedInterfaces = [ "tailscale0" ];
-        };
-        useHostResolvConf = lib.mkForce false;
-      };
+      networking.firewall.allowedTCPPorts = [ 80 ];
 
       services = {
         atticd = {
@@ -255,15 +240,6 @@
             reverse_proxy http://localhost:8080
           '';
         };
-
-        tailscale = {
-          enable = true;
-          openFirewall = true;
-          useRoutingFeatures = "both";
-          permitCertUid = "caddy";
-        };
-
-        resolved.enable = true;
       };
     };
   };
