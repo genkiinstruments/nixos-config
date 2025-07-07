@@ -273,10 +273,7 @@
           resolved.enable = true;
         };
         
-        systemd.services = {
-          atticd.serviceConfig.DynamicUser = lib.mkForce false;
-          caddy.serviceConfig.EnvironmentFile = "/run/secrets/genki-is-cloudflare-api-token";
-        };
+        systemd.services.caddy.serviceConfig.EnvironmentFile = "/run/secrets/genki-is-cloudflare-api-token";
       };
   };
 
