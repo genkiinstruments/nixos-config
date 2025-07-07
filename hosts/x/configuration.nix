@@ -216,6 +216,7 @@
       { lib, ... }:
       {
         system.stateVersion = "24.11";
+        networking.firewall.allowedTCPPorts = [ 80 ];
         networking = {
           firewall = {
             enable = true;
