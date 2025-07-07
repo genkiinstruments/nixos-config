@@ -35,6 +35,20 @@
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.eno1.useDHCP = true;
 
+  # Tailscale funnel/serve via systemd
+  systemd.services.tailscale-funnel-buildbot = {
+    description = "Tailscale Funnel for Buildbot";
+    after = [ "tailscaled.service" ];
+    wants = [ "tailscaled.service" ];
+    wantedBy = [ "multi-user.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      ExecStart = "${pkgs.tailscale}/bin/tailscale funnel --bg --https=443 8010";
+      ExecStop = "${pkgs.tailscale}/bin/tailscale funnel --https=443 off";
+    };
+  };
+
   facter.reportPath = ./facter.json;
 
   users.groups.secrets.members = [
@@ -81,12 +95,9 @@
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
       genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
-      genki-is-cloudflare-api-token.owner = config.users.users.caddy.name;
-      genki-is-cloudflare-api-token.mode = "0600";
-
-      genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/genki-is-cloudflare-tunnel-secret.age";
-      genki-is-cloudflare-tunnel-secret.owner = config.users.users.cloudflared.name;
-      genki-is-cloudflare-tunnel-secret.mode = "0600";
+      genki-is-cloudflare-api-token.owner = "caddy";
+      genki-is-cloudflare-api-token.group = "caddy";
+      genki-is-cloudflare-api-token.mode = "0400";
     };
 
   # Allows buildbot-worker to pull from private github repositories
@@ -184,17 +195,6 @@
   # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)
   environment.systemPackages = with pkgs; [ attic-client ];
 
-  services.cloudflared = {
-    enable = true;
-    tunnels = {
-      "acaed7af-8935-4e33-b303-49c3dc6e55e6" = {
-        credentialsFile = config.age.secrets."genki-is-cloudflare-tunnel-secret".path;
-        default = "http_status:404";
-        ingress."buildbot.genki.is".service = "http://localhost:8010";
-      };
-    };
-  };
-
   services.atticd = {
     enable = true;
     environmentFile = config.age.secrets.attic-environment-file.path;
@@ -235,6 +235,13 @@
           dns cloudflare {env.CLOUDFLARE_API_TOKEN}
       }
       reverse_proxy http://${config.services.atticd.settings.listen}
+    '';
+
+    virtualHosts."buildbot.genki.is".extraConfig = ''
+      tls {
+          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+      }
+      reverse_proxy http://localhost:8010
     '';
   };
   systemd.services.caddy.serviceConfig.EnvironmentFile =
