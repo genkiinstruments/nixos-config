@@ -80,10 +80,6 @@
 
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
-      genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
-      genki-is-cloudflare-api-token.owner = config.services.caddy.user;
-      genki-is-cloudflare-api-token.mode = "0600";
-
       genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/genki-is-cloudflare-tunnel-secret.age";
     };
 
@@ -189,6 +185,7 @@
         credentialsFile = config.age.secrets."genki-is-cloudflare-tunnel-secret".path;
         default = "http_status:404";
         ingress."buildbot.genki.is".service = "http://localhost:8010";
+        ingress."attic.genki.is".service = "http://localhost:8080";
       };
     };
   };
@@ -221,23 +218,6 @@
       };
     };
   };
-  services.caddy = {
-    enable = true;
-    package = pkgs.caddy.withPlugins {
-      plugins = [ "github.com/caddy-dns/cloudflare@v0.2.1" ];
-      hash = "sha256-2D7dnG50CwtCho+U+iHmSj2w14zllQXPjmTHr6lJZ/A=";
-    };
-
-    virtualHosts."attic.genki.is".extraConfig = ''
-      tls {
-          dns cloudflare {env.CLOUDFLARE_API_TOKEN}
-      }
-      reverse_proxy http://localhost:8080
-    '';
-  };
-  systemd.services.caddy.serviceConfig.EnvironmentFile =
-    config.age.secrets.genki-is-cloudflare-api-token.path;
-  services.tailscale.permitCertUid = "caddy";
 
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
