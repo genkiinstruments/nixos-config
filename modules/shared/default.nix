@@ -7,10 +7,10 @@
   nixpkgs.config.allowUnfree = true;
 
   # Primary substituters used by default
-  nix.settings.substituters = [ "https://x.tail01dbd.ts.net:8443/genki" ];
+  nix.settings.substituters = [ "https://attic.genki.is/genki" ];
 
   # Caches in trusted-substituters can be used by unprivileged users i.e. in flakes but are not enabled by default.
-  nix.settings.trusted-substituters = [ "https://x.tail01dbd.ts.net:8443/genki" ];
+  nix.settings.trusted-substituters = [ "https://attic.genki.is/genki" ];
   nix.settings.trusted-public-keys = [ "genki:S03n+SoctaWEOjLRWLFTbd898DdDMn5r/L2T+cj1IHE=" ];
 
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
