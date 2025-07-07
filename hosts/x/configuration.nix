@@ -232,7 +232,7 @@
       tls {
           dns cloudflare {env.CLOUDFLARE_API_TOKEN}
       }
-      reverse_proxy http://${config.services.atticd.settings.listen}
+      reverse_proxy http://localhost:8080
     '';
   };
   systemd.services.caddy.serviceConfig.EnvironmentFile =
