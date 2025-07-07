@@ -150,7 +150,7 @@
               runtimeInputs = [ pkgs.attic-client ];
               text = ''
                 # shellcheck disable=SC2101
-                attic login genki https://attic.genki.is/genki "$ATTIC_TOKEN"
+                attic login genki http://192.168.100.11:80/genki "$ATTIC_TOKEN"
 
                 # shellcheck disable=SC2154
                 # Retry push up to 3 times with exponential backoff
@@ -206,7 +206,6 @@
     privateNetwork = true;
     hostAddress = "192.168.100.10";
     localAddress = "192.168.100.11";
-    enableTun = true;
 
     bindMounts = {
       "/var/lib/atticd" = {
@@ -219,25 +218,20 @@
       };
     };
 
-    config = { config, lib, ... }: {
-      system.stateVersion = "24.11";
-      nixpkgs.config.allowUnfree = true;
+    config =
+      { ... }:
+      {
+        system.stateVersion = "24.11";
+        networking.firewall.allowedTCPPorts = [ 80 ];
 
-      networking = {
-        firewall = {
-          enable = true;
-          trustedInterfaces = [ "tailscale0" ];
-        };
-        useHostResolvConf = lib.mkForce false;
-      };
-
-      services = {
-        atticd = {
+        services.atticd = {
           enable = true;
           environmentFile = "/run/secrets/attic-environment-file";
 
           settings = {
             listen = "127.0.0.1:8080";
+
+            # Disable authentication completely
             require-proof-of-possession = false;
 
             chunking = {
@@ -249,23 +243,13 @@
           };
         };
 
-        caddy = {
+        services.caddy = {
           enable = true;
           virtualHosts."attic.genki.is".extraConfig = ''
             reverse_proxy http://localhost:8080
           '';
         };
-
-        tailscale = {
-          enable = true;
-          openFirewall = true;
-          useRoutingFeatures = "both";
-          permitCertUid = "caddy";
-        };
-
-        resolved.enable = true;
       };
-    };
   };
 
   roles.github-actions-runner = {
