@@ -212,54 +212,36 @@
       };
     };
 
-    config =
-      { lib, ... }:
-      {
-        system.stateVersion = "24.11";
-        networking.firewall.allowedTCPPorts = [ 80 ];
-        networking = {
-          firewall = {
-            enable = true;
-            trustedInterfaces = [ "tailscale0" ];
-          };
-          useHostResolvConf = lib.mkForce false;
-        };
+    config = { ... }: {
+      system.stateVersion = "24.11";
+      networking.firewall.allowedTCPPorts = [ 80 ];
 
-        services = {
-          atticd = {
-            enable = true;
-            environmentFile = "/run/secrets/attic-environment-file";
+      services = {
+        atticd = {
+          enable = true;
+          environmentFile = "/run/secrets/attic-environment-file";
 
-            settings = {
-              listen = "localhost:8080";
-              require-proof-of-possession = false;
+          settings = {
+            listen = "127.0.0.1:8080";
+            require-proof-of-possession = false;
 
-              chunking = {
-                nar-size-threshold = 64 * 1024; # 64 KiB
-                min-size = 16 * 1024; # 16 KiB
-                avg-size = 64 * 1024; # 64 KiB
-                max-size = 256 * 1024; # 256 KiB
-              };
+            chunking = {
+              nar-size-threshold = 64 * 1024; # 64 KiB
+              min-size = 16 * 1024; # 16 KiB
+              avg-size = 64 * 1024; # 64 KiB
+              max-size = 256 * 1024; # 256 KiB
             };
           };
+        };
 
-          caddy = {
-            enable = true;
-            virtualHosts."attic.genki.is".extraConfig = ''
-              reverse_proxy http://localhost:8080
-            '';
-          };
-
-          tailscale = {
-            enable = true;
-            openFirewall = true;
-            useRoutingFeatures = "both";
-            permitCertUid = "caddy";
-          };
-
-          resolved.enable = true;
+        caddy = {
+          enable = true;
+          virtualHosts."attic.genki.is".extraConfig = ''
+            reverse_proxy http://localhost:8080
+          '';
         };
       };
+    };
   };
 
   roles.github-actions-runner = {
