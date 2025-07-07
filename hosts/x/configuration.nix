@@ -35,7 +35,7 @@
   networking.nat = {
     enable = true;
     internalInterfaces = [ "ve-+" ];
-    externalInterface = "eno1";
+    externalInterface = "enp5s0";
   };
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.eno1.useDHCP = true;
