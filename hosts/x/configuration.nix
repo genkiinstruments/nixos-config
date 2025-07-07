@@ -231,8 +231,7 @@
             environmentFile = "/run/secrets/attic-environment-file";
 
             settings = {
-              listen = "[::]:8080";
-
+              listen = "localhost:8080";
               require-proof-of-possession = false;
 
               chunking = {
