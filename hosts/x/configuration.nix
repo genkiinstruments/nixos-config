@@ -32,6 +32,18 @@
     "enp5s0"
     "eno1"
   ];
+  networking.firewall.allowedTCPPorts = [ 80 ];
+  networking.nat = {
+    enable = true;
+    internalInterfaces = [ "ve-+" ];
+    externalInterface = "tailscale0";
+    forwardPorts = [
+      {
+        destination = "192.168.100.11:80";
+        sourcePort = 80;
+      }
+    ];
+  };
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.eno1.useDHCP = true;
 
@@ -138,7 +150,7 @@
               runtimeInputs = [ pkgs.attic-client ];
               text = ''
                 # shellcheck disable=SC2101
-                attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
+                attic login genki http://192.168.100.11:80/genki "$ATTIC_TOKEN"
 
                 # shellcheck disable=SC2154
                 # Retry push up to 3 times with exponential backoff
@@ -185,38 +197,59 @@
         credentialsFile = config.age.secrets."genki-is-cloudflare-tunnel-secret".path;
         default = "http_status:404";
         ingress."buildbot.genki.is".service = "http://localhost:8010";
-        ingress."attic.genki.is".service = "http://localhost:8080";
       };
     };
   };
 
-  services.atticd = {
-    enable = true;
-    environmentFile = config.age.secrets.attic-environment-file.path;
+  containers.attic = {
+    autoStart = true;
+    privateNetwork = true;
+    hostAddress = "192.168.100.10";
+    localAddress = "192.168.100.11";
 
-    settings = {
-      listen = "[::]:8080";
-
-      # Disable authentication completely
-      require-proof-of-possession = false;
-
-      chunking = {
-        # The minimum NAR size to trigger chunking
-        #
-        # If 0, chunking is disabled entirely for newly-uploaded NARs.
-        # If 1, all NARs are chunked.
-        nar-size-threshold = 64 * 1024; # 64 KiB
-
-        # The preferred minimum size of a chunk, in bytes
-        min-size = 16 * 1024; # 16 KiB
-
-        # The preferred average size of a chunk, in bytes
-        avg-size = 64 * 1024; # 64 KiB
-
-        # The preferred maximum size of a chunk, in bytes
-        max-size = 256 * 1024; # 256 KiB
+    bindMounts = {
+      "/var/lib/atticd" = {
+        hostPath = "/var/lib/atticd";
+        isReadOnly = false;
+      };
+      "/run/secrets/attic-environment-file" = {
+        hostPath = config.age.secrets.attic-environment-file.path;
+        isReadOnly = true;
       };
     };
+
+    config =
+      { ... }:
+      {
+        system.stateVersion = "24.11";
+        networking.firewall.allowedTCPPorts = [ 80 ];
+
+        services.atticd = {
+          enable = true;
+          environmentFile = "/run/secrets/attic-environment-file";
+
+          settings = {
+            listen = "127.0.0.1:8080";
+
+            # Disable authentication completely
+            require-proof-of-possession = false;
+
+            chunking = {
+              nar-size-threshold = 64 * 1024; # 64 KiB
+              min-size = 16 * 1024; # 16 KiB
+              avg-size = 64 * 1024; # 64 KiB
+              max-size = 256 * 1024; # 256 KiB
+            };
+          };
+        };
+
+        services.caddy = {
+          enable = true;
+          virtualHosts."attic.genki.is".extraConfig = ''
+            reverse_proxy http://localhost:8080
+          '';
+        };
+      };
   };
 
   roles.github-actions-runner = {
