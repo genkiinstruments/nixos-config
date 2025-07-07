@@ -93,7 +93,7 @@
   services.buildbot-nix.master = {
     enable = true;
     useHTTPS = true;
-    domain = "x.tail01dbd.ts.net";
+    domain = "buildbot.genki.is";
     outputsPath = "/var/www/buildbot/nix-outputs/";
     workersFile = config.age.secrets.buildbot-nix-workers-json.path;
     buildSystems = [
