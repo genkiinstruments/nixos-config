@@ -27,7 +27,6 @@
 
   environment.systemPackages = with pkgs; [
     btop
-    lazygit
   ];
 
   hardware.asahi = {
