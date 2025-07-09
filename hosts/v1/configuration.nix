@@ -95,7 +95,6 @@
       xclip
       magic-wormhole-rs
       git
-      alacritty
       open-vm-tools
       networkmanagerapplet
       gnome-tweaks
