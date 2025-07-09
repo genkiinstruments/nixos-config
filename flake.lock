@@ -76,11 +76,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751670728,
-        "narHash": "sha256-lh+Fjz110EZVsg72qWAE7yCtSOJiTnYCv14OgyCoRZw=",
+        "lastModified": 1751880463,
+        "narHash": "sha256-aSQllMKqsTYAUp4yhpspZn0Hj5yIj7Mh4UD5iyk5iMM=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "f07078deae3c9f896ed3aa8bd4b114d9ab59dce8",
+        "rev": "9474347c69e93e392f194dda7a57c641ba4b998e",
         "type": "github"
       },
       "original": {
@@ -116,11 +116,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751607816,
-        "narHash": "sha256-5PtrwjqCIJ4DKQhzYdm8RFePBuwb+yTzjV52wWoGSt4=",
+        "lastModified": 1751854533,
+        "narHash": "sha256-U/OQFplExOR1jazZY4KkaQkJqOl59xlh21HP9mI79Vc=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "da6109c917b48abc1f76dd5c9bf3901c8c80f662",
+        "rev": "16b74a1e304197248a1bc663280f2548dbfcae3c",
         "type": "github"
       },
       "original": {
@@ -230,11 +230,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1751676893,
-        "narHash": "sha256-kXlkCJcws234u4gLjtl07/U+8FV8/TBYoR14gXVRv0g=",
+        "lastModified": 1751990210,
+        "narHash": "sha256-krWErNDl9ggMLSfK00Q2BcoSk3+IRTSON/DiDgUzzMw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "57d1027e1eaf1220342248ff18d34f42b0beea7b",
+        "rev": "218da00bfa73f2a61682417efe74549416c16ba6",
         "type": "github"
       },
       "original": {
@@ -298,11 +298,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1751271578,
-        "narHash": "sha256-P/SQmKDu06x8yv7i0s8bvnnuJYkxVGBWLWHaU+tt4YY=",
+        "lastModified": 1751792365,
+        "narHash": "sha256-J1kI6oAj25IG4EdVlg2hQz8NZTBNYvIS0l4wpr9KcUo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3016b4b15d13f3089db8a41ef937b13a9e33a8df",
+        "rev": "1fd8bada0b6117e6c7eb54aad5813023eed37ccb",
         "type": "github"
       },
       "original": {
@@ -385,11 +385,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1751654566,
-        "narHash": "sha256-Kva/18YpAIFuCCFp0H4m4tR1DbEA8nu89eOKpkwaL1A=",
+        "lastModified": 1751924678,
+        "narHash": "sha256-f6CGuyTpV3yzo2cqjVP5GufsxLFHBxXmrHcQk+nDjA4=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "3dd96c24fdb47fd2b6e0aefc76199150301736ae",
+        "rev": "79e4380ce9c6b22d3aaa46c395aa1204a3fa5bf1",
         "type": "github"
       },
       "original": {
