@@ -53,7 +53,7 @@
     fod-oracle.inputs.nixpkgs.follows = "nixpkgs";
     fod-oracle.inputs.blueprint.follows = "blueprint";
 
-    comin.url = "github:multivac61/comin";
+    comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
