@@ -58,3 +58,13 @@ debug
 data
 
 treesitter-rev
+
+# Henda þessu í draaslið?
+# Claude temporary/working files (but keep CLAUDE.md)
+  .claude/
+  *.claude
+  claude-*
+  .claude-*
+  claude_temp/
+  claude_workspace/
+  .claude_history

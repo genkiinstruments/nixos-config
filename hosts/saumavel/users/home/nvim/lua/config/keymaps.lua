@@ -55,6 +55,19 @@ keymap("n", "<leader>oc", function()
     require("obsidian").util.toggle_checkbox()
 end, { desc = "Toggle checkbox" })
 
+-- To map leader t and T to terminal
+-- Safely delete existing mappings (ignore errors if they don't exist)
+pcall(vim.keymap.del, "n", "<leader>t")
+pcall(vim.keymap.del, "n", "<leader>T")
+
+-- Set new terminal mappings
+keymap("n", "<leader>T", function()
+    Snacks.terminal()
+end, { desc = "Terminal (cwd)" })
+keymap("n", "<leader>t", function()
+    Snacks.terminal(nil, { cwd = LazyVim.root() })
+end, { desc = "Terminal (Root Dir)" })
+
 -- Open Oil in Obsidian vault directory
 keymap("n", "<leader>oe", function()
     local expanded_path = vim.fn.expand(vault_config.path)

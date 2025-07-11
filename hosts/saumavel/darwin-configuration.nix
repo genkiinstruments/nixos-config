@@ -92,9 +92,8 @@
       "node"
       "clang-format"
       "luarocks"
-      # "biber"
-      # "texlive"
-      # "xdotool"
+      # for area ocr
+      "tesseract"
     ];
     casks = [
       # MEGA UTILITIES
