@@ -49,10 +49,6 @@
     genki-www.inputs.nixpkgs.follows = "nixpkgs";
     genki-www.inputs.blueprint.follows = "blueprint";
 
-    fod-oracle.url = "github:multivac61/fod-oracle";
-    fod-oracle.inputs.nixpkgs.follows = "nixpkgs";
-    fod-oracle.inputs.blueprint.follows = "blueprint";
-
     comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs";
   };

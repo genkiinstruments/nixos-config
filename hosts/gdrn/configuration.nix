@@ -2,7 +2,6 @@
   config,
   inputs,
   flake,
-  perSystem,
   pkgs,
   ...
 }:
@@ -22,7 +21,6 @@ in
     inputs.srvos.nixosModules.roles-github-actions-runner
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
-    inputs.fod-oracle.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.stripe-webshippy-sync.nixosModules.default
     flake.modules.shared.default
@@ -194,39 +192,6 @@ in
   };
 
   users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
-
-  services.cloudflared = {
-    enable = true;
-    tunnels."d148fd83-41dd-4e16-8ac8-4460c16b0258" = {
-      credentialsFile = config.age.secrets.gdrn-cloudflared-tunnel.path;
-      default = "http_status:404";
-      ingress = {
-        "fod-oracle.org" = "http://localhost:5173";
-        # API endpoints go to the fod-oracle service
-        "api.fod-oracle.org" = "http://localhost:${toString config.services.fod-oracle.port}";
-      };
-    };
-  };
-
-  # Use static file server instead of Caddy to avoid certificate warnings
-  systemd.services.static-file-server = {
-    description = "Simple static file server for docs";
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-
-    serviceConfig = {
-      ExecStart = "${pkgs.python3}/bin/python3 -m http.server 5173 --directory ${perSystem.fod-oracle.docs}/share/doc/docs";
-      Restart = "always";
-      RestartSec = "5";
-      DynamicUser = true;
-    };
-  };
-
-  # Enable the FOD Oracle API service
-  services.fod-oracle = {
-    enable = true;
-    port = 8081;
-  };
 
   # System packages
   environment.systemPackages = with pkgs; [
