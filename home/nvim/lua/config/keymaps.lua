@@ -74,17 +74,15 @@ keymap("n", "gx", function()
     vim.cmd("call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote())")
 end, { noremap = true, silent = true, desc = "Open URL" })
 
-vim.api.nvim_buf_set_var(0, "cmp", false)
-
+-- Toggle completion using blink.cmp
 keymap({ "n", "v" }, "<leader>uU", function()
-    if vim.fn.exists("b:cmp") == 0 or vim.api.nvim_buf_get_var(0, "cmp") then
-        vim.api.nvim_buf_set_var(0, "cmp", false)
-        require("cmp").setup.buffer({ enabled = false })
-        vim.notify("Disabled auto cmpletion")
+    local blink_cmp = require("blink.cmp")
+    if blink_cmp.is_enabled() then
+        blink_cmp.hide()
+        vim.notify("Disabled auto completion")
     else
-        vim.api.nvim_buf_set_var(0, "cmp", true)
-        require("cmp").setup.buffer({ enabled = true })
-        vim.notify("Enabled auto cmpletion")
+        blink_cmp.show()
+        vim.notify("Enabled auto completion")
     end
 end, { desc = "Toggle suggestions" })
 
