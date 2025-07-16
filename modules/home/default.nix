@@ -29,7 +29,6 @@
       zip
       magic-wormhole-rs
       neofetch
-      cachix
       (claude-code.overrideAttrs (
         finalAttrs: prevAttrs: {
           version = "1.0.53";
