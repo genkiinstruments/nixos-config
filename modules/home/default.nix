@@ -30,14 +30,36 @@
       magic-wormhole-rs
       neofetch
       cachix
-      (claude-code.overrideAttrs (_old: rec {
-        version = "1.0.24";
-        src = fetchzip {
-          url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${version}.tgz";
-          hash = "sha256-12nmnVM0/+rhWrkIQXttASKPZgGQMvrzWF/JDwR7If4=";
-        };
-        npmDepsHash = "sha256-0jrARMOuJCU5MEigk0iYspUUHCB6APbCxPpqcp+5ktA=";
-      }))
+      (claude-code.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          version = "1.0.53";
+
+          src = fetchurl {
+            url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${finalAttrs.version}.tgz";
+            hash = "sha256-P5cD3OPIbgAwvh5Iwm0hFUeTa+nDR/cu/hg1x6BlEAw=";
+          };
+        }
+      ))
+      (gemini-cli.overrideAttrs (
+        finalAttrs: prevAttrs: {
+          version = "0.1.12";
+
+          src = fetchFromGitHub {
+            owner = "google-gemini";
+            repo = "gemini-cli";
+            tag = "v${finalAttrs.version}";
+            hash = "sha256-7StuYqKGnTTZY3BKK3X1kWNReRUfyvhfH3wGw0Pz2zM=";
+            postFetch = ''
+              ${lib.getExe npm-lockfile-fix} $out/package-lock.json
+            '';
+          };
+
+          npmDeps = fetchNpmDeps {
+            inherit (finalAttrs) src;
+            hash = "sha256-yt1Z/atE07vt27OdiLHPV1ZSHJ80zkGkcuro7rJxOrc=";
+          };
+        }
+      ))
       sesh
       mediainfo # for mpv / yazi setup
     ];
