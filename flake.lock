@@ -360,11 +360,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1752742586,
-        "narHash": "sha256-+OUtE96JVuF7FSj4XGXOeayj6Lqy97MIgUJZDMNFWY4=",
+        "lastModified": 1752746215,
+        "narHash": "sha256-aajICSJgKjzAp8SEnliY4SgI3UL1ivHSmUaQm8WgRTU=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "5f1a5e5923fdbd92a0eb0e8e9418cf0589a0c2e5",
+        "rev": "4346e7563d65df0a5541d88c216d55b7a1728f03",
         "type": "github"
       },
       "original": {

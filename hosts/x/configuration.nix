@@ -35,30 +35,24 @@
   networking.interfaces.enp5s0.useDHCP = true;
   networking.interfaces.eno1.useDHCP = true;
 
-  # Tailscale funnel/serve via systemd
-  systemd.services.tailscale-funnel-buildbot = {
-    description = "Tailscale Funnel for Buildbot";
-    after = [ "tailscaled.service" ];
-    wants = [ "tailscaled.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.tailscale}/bin/tailscale funnel --bg --https=443 8010";
-      ExecStop = "${pkgs.tailscale}/bin/tailscale funnel --https=443 off";
+  services.cloudflared = {
+    enable = true;
+    tunnels = {
+      "9c376bb1-4ca6-49d7-8c36-93908b752ae8" = {
+        credentialsFile = config.age.secrets.x-cloudflare-tunnel-secret.path;
+        ingress = {
+          # Point to nginx (buildbot-nix configures nginx on port 80)
+          "buildbot.genki.is" = "http://localhost:80";
+        };
+        default = "http_status:404";
+      };
     };
   };
 
-  systemd.services.tailscale-serve-attic = {
-    description = "Tailscale Serve for Attic";
-    after = [ "tailscaled.service" ];
-    wants = [ "tailscaled.service" ];
-    wantedBy = [ "multi-user.target" ];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.tailscale}/bin/tailscale serve --bg --https=8443 8080";
-      ExecStop = "${pkgs.tailscale}/bin/tailscale serve --https=8443 off";
+  # Configure nginx virtual hosts (buildbot-nix handles the main config)
+  services.nginx.virtualHosts."attic.genki.is" = {
+    locations."/" = {
+      proxyPass = "http://localhost:8080";
     };
   };
 
@@ -106,6 +100,8 @@
       buildbot-github-token.file = "${inputs.secrets}/buildbot-github-token.age";
 
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
+
+      x-cloudflare-tunnel-secret.file = "${inputs.secrets}/x-cloudflare-tunnel-secret.age";
     };
 
   # Allows buildbot-worker to pull from private github repositories
@@ -114,7 +110,7 @@
   services.buildbot-nix.master = {
     enable = true;
     useHTTPS = true;
-    domain = "x.tail01dbd.ts.net";
+    domain = "buildbot.genki.is";
     outputsPath = "/var/www/buildbot/nix-outputs/";
     workersFile = config.age.secrets.buildbot-nix-workers-json.path;
     buildSystems = [
