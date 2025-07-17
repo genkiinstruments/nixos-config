@@ -116,6 +116,10 @@ in
 
   age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
 
+  age.secrets.genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/genki-is-cloudflare-tunnel-secret.age";
+
+  age.secrets.stripe-webhook-genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/stripe-webhook-genki-is-cloudflare-tunnel-secret.age";
+
   age.secrets.genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
   age.secrets.genki-is-cloudflare-api-token.owner = "caddy";
   age.secrets.genki-is-cloudflare-api-token.group = "caddy";
@@ -168,26 +172,16 @@ in
     };
   };
 
-  # Tailscale funnel for public webhook access on port 8443
-  systemd.services.tailscale-funnel-stripe-webhook = {
-    description = "Tailscale funnel for Stripe webhook";
-    wantedBy = [ "multi-user.target" ];
-    after = [
-      "tailscaled.service"
-      "stripe-webshippy-sync.service"
-    ];
-    wants = [
-      "tailscaled.service"
-      "stripe-webshippy-sync.service"
-    ];
-
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-      ExecStart = "${pkgs.tailscale}/bin/tailscale funnel --https=8443 ${toString config.services.stripe-webshippy-sync.port}";
-      ExecStop = "${pkgs.tailscale}/bin/tailscale funnel --https=8443 off || true";
-      Restart = "on-failure";
-      RestartSec = "5s";
+  # Cloudflare tunnel for Stripe webhook
+  services.cloudflared = {
+    enable = true;
+    tunnels = {
+      "76c2b04c-4171-48fb-92a3-1312b9cc1b98" = {
+        credentialsFile = config.age.secrets.stripe-webhook-genki-is-cloudflare-tunnel-secret.path;
+        ingress."stripe-webhook.genki.is" =
+          "http://localhost:${toString config.services.stripe-webshippy-sync.port}";
+        default = "http_status:404";
+      };
     };
   };
 
