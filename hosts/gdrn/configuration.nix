@@ -204,6 +204,7 @@ in
     # Tools for clipboard support
     xclip
     wl-clipboard
+    btop
   ];
 
   # Don't require password for sudo
