@@ -116,8 +116,6 @@ in
 
   age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
 
-  age.secrets.genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/genki-is-cloudflare-tunnel-secret.age";
-
   age.secrets.stripe-webhook-genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/stripe-webhook-genki-is-cloudflare-tunnel-secret.age";
 
   age.secrets.genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
