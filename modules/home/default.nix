@@ -30,7 +30,7 @@
       magic-wormhole-rs
       neofetch
       (claude-code.overrideAttrs (
-        finalAttrs: prevAttrs: {
+        finalAttrs: _prevAttrs: {
           version = "1.0.53";
 
           src = fetchurl {
@@ -40,7 +40,7 @@
         }
       ))
       (gemini-cli.overrideAttrs (
-        finalAttrs: prevAttrs: {
+        finalAttrs: _prevAttrs: {
           version = "0.1.12";
 
           src = fetchFromGitHub {
