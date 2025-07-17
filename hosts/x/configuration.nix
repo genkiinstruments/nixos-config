@@ -197,7 +197,10 @@
   };
 
   # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)
-  environment.systemPackages = with pkgs; [ attic-client ];
+  environment.systemPackages = with pkgs; [
+    attic-client
+    btop
+  ];
 
   services.atticd = {
     enable = true;
