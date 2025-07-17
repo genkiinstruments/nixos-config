@@ -40,6 +40,7 @@
     neofetch
     perSystem.self.mvim
     cmatrix
+    btop
   ];
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
