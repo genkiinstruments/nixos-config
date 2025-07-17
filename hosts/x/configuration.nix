@@ -51,8 +51,22 @@
 
   # Configure nginx virtual hosts (buildbot-nix handles the main config)
   services.nginx.virtualHosts."attic.genki.is" = {
+    enableACME = true;
+    forceSSL = true;
+    acmeRoot = null; # Force DNS challenge instead of webroot
     locations."/" = {
       proxyPass = "http://localhost:8080";
+    };
+  };
+
+  # Configure ACME to use Cloudflare DNS challenge by default
+  security.acme = {
+    acceptTerms = true;
+    defaults = {
+      email = "olafur@genkiinstruments.com";
+      dnsProvider = "cloudflare";
+      environmentFile = "/etc/cloudflared/test";
+      webroot = null; # Disable HTTP challenge
     };
   };
 
@@ -98,6 +112,7 @@
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
 
       buildbot-github-token.file = "${inputs.secrets}/buildbot-github-token.age";
+      genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
 
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
