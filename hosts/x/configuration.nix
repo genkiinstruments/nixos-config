@@ -116,8 +116,6 @@
       attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
       attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
 
-      genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
-
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
       x-cloudflare-tunnel-secret.file = "${inputs.secrets}/x-cloudflare-tunnel-secret.age";
