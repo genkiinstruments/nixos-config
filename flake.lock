@@ -405,11 +405,11 @@
         "uv2nix": "uv2nix"
       },
       "locked": {
-        "lastModified": 1751554240,
-        "narHash": "sha256-DDN9KCh1TQoO6phtQyDjKyY6jF3fN1kruX4uEoluuwo=",
+        "lastModified": 1753115377,
+        "narHash": "sha256-3+4l7rszhE1F+zqYuHravnKKuQ9jLB/4LRYMN2q9Js0=",
         "owner": "genkiinstruments",
         "repo": "stripe-webshippy-sync",
-        "rev": "f6ca01a75ea644fdddcef868a3ef823fbda8b367",
+        "rev": "efe07db04a1aac03b599e12914c760f79073da19",
         "type": "github"
       },
       "original": {
