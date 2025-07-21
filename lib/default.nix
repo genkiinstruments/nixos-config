@@ -84,7 +84,8 @@ _: {
         unzip
         lazygit
         coreutils
-      ] ++ lib.optional (stdenv.hostPlatform.system != "aarch64-linux") ast-grep;
+      ]
+      ++ lib.optional (stdenv.hostPlatform.system != "aarch64-linux") ast-grep;
 
       treesitter-grammars =
         let
