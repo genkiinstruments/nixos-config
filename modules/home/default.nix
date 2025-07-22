@@ -31,11 +31,10 @@
       neofetch
       (claude-code.overrideAttrs (
         finalAttrs: _prevAttrs: {
-          version = "1.0.53";
-
-          src = fetchurl {
+          version = "1.0.56";
+          src = fetchzip {
             url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${finalAttrs.version}.tgz";
-            hash = "sha256-P5cD3OPIbgAwvh5Iwm0hFUeTa+nDR/cu/hg1x6BlEAw=";
+            hash = "sha256-q/17LfP5MWeKpt8akPXwMvkZ6Qhc+9IGpM6N34JuExY=";
           };
         }
       ))
