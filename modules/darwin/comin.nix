@@ -1,9 +1,6 @@
 { inputs, ... }:
 {
-  imports = [
-    inputs.comin.darwinModules.comin
-    inputs.agenix.nixosModules.default
-  ];
+  imports = [ inputs.comin.darwinModules.comin ];
 
   services.comin = {
     enable = true;
