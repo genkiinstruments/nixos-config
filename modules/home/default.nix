@@ -29,37 +29,10 @@
       zip
       magic-wormhole-rs
       neofetch
-      (claude-code.overrideAttrs (
-        finalAttrs: _prevAttrs: {
-          version = "1.0.56";
-          src = fetchzip {
-            url = "https://registry.npmjs.org/@anthropic-ai/claude-code/-/claude-code-${finalAttrs.version}.tgz";
-            hash = "sha256-q/17LfP5MWeKpt8akPXwMvkZ6Qhc+9IGpM6N34JuExY=";
-          };
-        }
-      ))
-      (gemini-cli.overrideAttrs (
-        finalAttrs: _prevAttrs: {
-          version = "0.1.12";
-
-          src = fetchFromGitHub {
-            owner = "google-gemini";
-            repo = "gemini-cli";
-            tag = "v${finalAttrs.version}";
-            hash = "sha256-7StuYqKGnTTZY3BKK3X1kWNReRUfyvhfH3wGw0Pz2zM=";
-            postFetch = ''
-              ${lib.getExe npm-lockfile-fix} $out/package-lock.json
-            '';
-          };
-
-          npmDeps = fetchNpmDeps {
-            inherit (finalAttrs) src;
-            hash = "sha256-yt1Z/atE07vt27OdiLHPV1ZSHJ80zkGkcuro7rJxOrc=";
-          };
-        }
-      ))
       sesh
       mediainfo # for mpv / yazi setup
+      gemini-cli
+      claude-code
     ];
   };
 
