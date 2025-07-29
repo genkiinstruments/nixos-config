@@ -34,7 +34,6 @@ _: {
         nixfmt-rfc-style
         clang-tools
         nodejs
-        nodePackages.prettier
         stylua
 
         # based on https://github.com/ray-x/go.nvim#go-binaries-install-and-update
