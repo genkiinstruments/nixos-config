@@ -50,7 +50,8 @@
 
   # USB device access for katla-frontpanel
   services.udev.extraRules = ''
-    # Genki katla-frontpanel USB device
+    # Genki katla-frontpanel USB device (both product IDs)
     SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="plugdev", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="20b1", MODE="0664", GROUP="plugdev", TAG+="uaccess"
   '';
 }
