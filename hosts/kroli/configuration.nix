@@ -42,6 +42,7 @@
       "dialout"
       "video"
       "inputs"
+      "audio"
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
