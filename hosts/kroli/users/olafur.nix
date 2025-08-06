@@ -1,6 +1,15 @@
-{ flake, ... }:
+{
+  flake,
+  perSystem,
+  lib,
+  ...
+}:
 {
   imports = [ flake.modules.home.default ];
+
+  programs.fish.shellAliases.n = "mvim";
+  home.sessionVariables.EDITOR = lib.mkDefault "mvim";
+  home.packages = [ perSystem.self.mvim ];
 
   programs.ssh = {
     controlMaster = "auto";
