@@ -3,7 +3,7 @@
   disko.devices = {
     disk = {
       main = {
-        device = "nvme-nvme.1e4b-4d513138423335353036323332-353132474220535344-00000001";
+        device = "/dev/disk/by-id/nvme-nvme.1e4b-4d513138423335353036323332-353132474220535344-00000001";
         type = "disk";
         content = {
           type = "gpt";
