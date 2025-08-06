@@ -28,6 +28,7 @@
 
   security.sudo.wheelNeedsPassword = false;
   users.mutableUsers = false;
+
   # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
   home-manager.users.olafur.programs.atuin.daemon.enable = true;
   users.users.olafur = {
@@ -38,7 +39,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "plugdev"
       "dialout"
       "video"
       "inputs"
@@ -50,8 +50,8 @@
 
   # USB device access for katla-frontpanel
   services.udev.extraRules = ''
-    # Genki katla-frontpanel USB device (both product IDs)
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="plugdev", TAG+="uaccess"
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="20b1", MODE="0664", GROUP="plugdev", TAG+="uaccess"
+    # Genki katla-frontpanel USB device (both product IDs) - NixOS style
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="users", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="20b1", MODE="0664", GROUP="users", TAG+="uaccess"
   '';
 }
