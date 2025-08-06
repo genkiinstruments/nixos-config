@@ -47,4 +47,10 @@
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
   nix.settings.trusted-users = [ "olafur" ];
+
+  # USB device access for katla-frontpanel
+  services.udev.extraRules = ''
+    # Genki katla-frontpanel USB device
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="plugdev", TAG+="uaccess"
+  '';
 }
