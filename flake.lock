@@ -261,11 +261,11 @@
         "treefmt-nix": "treefmt-nix_3"
       },
       "locked": {
-        "lastModified": 1754488701,
-        "narHash": "sha256-zTQSYUNDLQvG7ORNRRTgtlUrZp7uto2weSUyqCeVDPw=",
+        "lastModified": 1754564034,
+        "narHash": "sha256-jqwao3DJyCRB+BOwpcturMJMuj+jCGjvSzZYc6PfJZU=",
         "ref": "pipewire",
-        "rev": "5d6753d86ed02b7f9c3f1809e2b31c707c6f3862",
-        "revCount": 506,
+        "rev": "5a4f6734381185e73935b6e3d100687dbe6694cf",
+        "revCount": 508,
         "type": "git",
         "url": "ssh://git@github.com/genkiinstruments/katla.git"
       },
@@ -345,11 +345,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1754393734,
-        "narHash": "sha256-fbnmAwTQkuXHKBlcL5Nq1sMAzd3GFqCOQgEQw6Hy0Ak=",
+        "lastModified": 1745377448,
+        "narHash": "sha256-jhZDfXVKdD7TSEGgzFJQvEEZ2K65UMiqW5YJ2aIqxMA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "a683adc19ff5228af548c6539dbc3440509bfed3",
+        "rev": "507b63021ada5fee621b6ca371c4fca9ca46f52c",
         "type": "github"
       },
       "original": {
