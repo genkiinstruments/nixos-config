@@ -51,6 +51,8 @@
 
     comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs";
+
+    katla.url = "git+ssh://git@github.com/genkiinstruments/katla.git?ref=pipewire";
   };
 
   outputs =
