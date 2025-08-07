@@ -35,6 +35,7 @@
     enable = true;
     socketActivation = false;
     alsa.enable = true;
+    alsa.support32Bit = true;
     audio.enable = true;
     extraConfig.pipewire."92-low-latency" = {
       "context.properties" = {
@@ -50,47 +51,43 @@
   };
 
   systemd.services.pipewire.serviceConfig = {
-    CPUAffinity = "6,7";
+    CPUAffinity = "2,10";
     IOSchedulingClass = "realtime";
     IOSchedulingPriority = "0";
     CPUSchedulingPolicy = "fifo";
     CPUSchedulingPriority = "99";
+    Nice = "-15";
+    LimitRTPRIO = "99";
+    LimitMEMLOCK = "infinity";
   };
 
   systemd.services.katla = {
     enable = true;
-    wantedBy = [ "default.target" ];
-    after = [
-      "pipewire.service"
-      "wireplumber.service"
-    ];
-    wants = [
-      "pipewire.service"
-      "wireplumber.service"
-    ];
+    wantedBy = [ "sound.target" ];
+    after = [ "wireplumber.service" "pipewire.service" ];
+    requires = [ "wireplumber.service" ];
+    partOf = [ "pipewire.service" ];
 
+    path = [ pkgs.coreutils ];
+    
     serviceConfig = {
-      ConditionPathExists = [
-        "/run/pipewire/pipewire-0.lock"
-        "/run/pipewire/pipewire-0-manager.lock"
+      Type = "simple";
+      ExecStartPre = [
+        "${pkgs.coreutils}/bin/timeout 30 ${pkgs.bash}/bin/bash -c 'until ${pkgs.pipewire}/bin/pw-cli ls Node 2>/dev/null | grep -q .; do sleep 0.5; done'"
       ];
-      ExecStartPre = "${pkgs.writeShellScript "" ''
-        while true; do
-          ${pkgs.wireplumber}/bin/wpctl inspect @DEFAULT_AUDIO_SINK@ >/dev/null 2>&1
-          if [ $? -eq 0 ]; then
-            echo "@DEFAULT_AUDIO_SINK@ is available."
-            break
-          fi
-        done
-      ''}";
+      Environment = "PIPEWIRE_RUNTIME_DIR=/run/pipewire";
       ExecStart = "${perSystem.katla.katla}/bin/katla";
       Restart = "always";
-      User = "root";
-      CPUAffinity = "4,5";
+      RestartSec = 3;
+      User = "genki";
+      CPUAffinity = "14,22";
       IOSchedulingClass = "realtime";
       IOSchedulingPriority = "0";
       CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = "97";
+      CPUSchedulingPriority = "98";
+      Nice = "-15";
+      LimitRTPRIO = "99";
+      LimitMEMLOCK = "infinity";
     };
   };
 
@@ -112,10 +109,12 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      "audio"
       "dialout"
       "video"
       "inputs"
       "uucp"
+      "pipewire"
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
@@ -170,7 +169,8 @@
       ghostty
       rofi
       rkdeveloptool
-      perSystem.self.mvim
+      alsa-utils
+      systemctl-tui
     ]
     ++ [
       # This is needed for the vmware user tools clipboard to work.
@@ -282,5 +282,10 @@
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666", GROUP="users"
     # Rockchip devices in recovery mode
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", ATTRS{idProduct}=="*", MODE="0666", GROUP="users"
+
+    # USB device access for katla-frontpanel
+    # Genki katla-frontpanel USB device (both product IDs) - NixOS style
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="users", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="20b1", MODE="0664", GROUP="users", TAG+="uaccess"
   '';
 }

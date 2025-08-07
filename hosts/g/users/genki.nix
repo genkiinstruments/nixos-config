@@ -1,4 +1,4 @@
-{ flake, ... }:
+{ flake, lib, perSystem, ... }:
 {
   imports = [ flake.modules.home.default ];
 
@@ -9,5 +9,14 @@
     forwardAgent = true;
     addKeysToAgent = "yes";
     serverAliveInterval = 900;
+  };
+
+  programs.fish.shellAliases.n = "mvim";
+  home.sessionVariables.EDITOR = lib.mkDefault "mvim";
+  home.packages = [ perSystem.self.mvim ];
+  programs.git = {
+    userEmail = "olafur@genkiinstruments.com";
+    userName = "multivac61";
+    extraConfig.github.user = "multivac61";
   };
 }
