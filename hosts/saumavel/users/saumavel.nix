@@ -62,6 +62,8 @@
       '';
       shellAliases = {
         ktmux = "~/development/scripts/tmux-katla";
+        n = "nvim";
+        vim = "nvim";
       };
     };
 
