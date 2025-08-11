@@ -16,6 +16,7 @@
     flake.modules.shared.home-manager
     flake.modules.nixos.default
     flake.modules.shared.builders
+    flake.modules.nixos.comin
     ./disk-config.nix
   ];
 
