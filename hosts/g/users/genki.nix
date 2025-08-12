@@ -1,4 +1,9 @@
-{ flake, lib, perSystem, ... }:
+{
+  flake,
+  lib,
+  perSystem,
+  ...
+}:
 {
   imports = [ flake.modules.home.default ];
 

@@ -64,12 +64,15 @@
   systemd.services.katla = {
     enable = true;
     wantedBy = [ "sound.target" ];
-    after = [ "wireplumber.service" "pipewire.service" ];
+    after = [
+      "wireplumber.service"
+      "pipewire.service"
+    ];
     requires = [ "wireplumber.service" ];
     partOf = [ "pipewire.service" ];
 
     path = [ pkgs.coreutils ];
-    
+
     serviceConfig = {
       Type = "simple";
       ExecStartPre = [
