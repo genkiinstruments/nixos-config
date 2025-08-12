@@ -25,10 +25,10 @@
   users.users.root.initialHashedPassword = "$y$j9T$xA3OJK4WPx3Gu80.nTV6h/$DsBKf3OL11/d9bOAQmSVbgf2H2Ue4FAwhPLcatF0tX3";
 
   boot.extraModprobeConfig = "options kvm_intel nested=1";
-  
+
   # USB compatibility fixes for katla-frontpanel
   boot.kernelParams = [
-    "usbcore.quirks=16c0:27dd:b"  # Disable USB autosuspend for katla device
+    "usbcore.quirks=16c0:27dd:b" # Disable USB autosuspend for katla device
   ];
   boot.initrd.availableKernelModules = [
     # General
