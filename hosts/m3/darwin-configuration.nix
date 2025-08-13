@@ -23,19 +23,16 @@
   age = {
     # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, nixos use builtin /etc/ssh/ssh_host_ed25519_key
     identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    secrets = {
-      atuin-key = {
-        file = "${inputs.secrets}/atuin-key.age";
-        mode = "644";
-        owner = "olafur";
-        group = "staff";
-      };
+    secrets.atuin-key = {
+      file = "${inputs.secrets}/atuin-key.age";
+      mode = "644";
+      owner = "olafur";
+      group = "staff";
     };
+
   };
 
-  nix.settings = {
-    trusted-users = [ "olafur" ];
-  };
+  nix.settings.trusted-users = [ "olafur" ];
 
   home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
 
