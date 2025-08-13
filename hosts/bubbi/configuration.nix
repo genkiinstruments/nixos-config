@@ -28,8 +28,8 @@
 
   # USB compatibility fixes for katla-frontpanel
   boot.kernelParams = [
-    "usbcore.quirks=16c0:27dd:bki"  # Disable autosuspend + reset quirks
-    "usbcore.autosuspend=-1"        # Disable global USB autosuspend
+    "usbcore.quirks=16c0:27dd:bki" # Disable autosuspend + reset quirks
+    "usbcore.autosuspend=-1" # Disable global USB autosuspend
   ];
   boot.initrd.availableKernelModules = [
     # General
