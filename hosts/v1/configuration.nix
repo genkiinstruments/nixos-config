@@ -181,7 +181,6 @@
     extraGroups = [
       "networkmanager"
       "wheel"
-      "plugdev"
       "dialout"
       "video"
       "inputs"

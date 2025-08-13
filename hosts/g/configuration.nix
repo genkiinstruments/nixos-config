@@ -51,7 +51,6 @@
     extraGroups = [
       "wheel"
       "networkmanager"
-      "plugdev"
       "dialout"
       "video"
       "inputs"
@@ -221,7 +220,7 @@
   # udev rules for Rockchip devices (rkdeveloptool)
   services.udev.extraRules = ''
     # Rockchip devices in maskrom/loader mode
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666", GROUP="plugdev"
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666"
     # Rockchip devices in recovery mode
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", ATTRS{idProduct}=="*", MODE="0666", GROUP="users"
 
