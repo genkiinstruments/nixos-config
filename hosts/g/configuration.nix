@@ -20,79 +20,18 @@
     flake.modules.shared.home-manager
     flake.modules.shared.builders
     flake.modules.nixos.default
+    flake.modules.nixos.pipewire
     ./disko.nix
   ];
 
+  # As of kernel version 6.6.72, amdgpu throws a fatal error during init, resulting in a barely-working display
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
+
   boot.kernelParams = [
-    "mitigations=off"
-    "quiet"
     # The GPD Pocket 4 uses a tablet LTPS display, that is mounted rotated 90° counter-clockwise
     "fbcon=rotate:1"
     "video=eDP-1:panel_orientation=right_side_up"
   ];
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    socketActivation = false;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    audio.enable = true;
-    extraConfig.pipewire."92-low-latency" = {
-      "context.properties" = {
-        "default.clock.rate" = 48000;
-        "default.clock.quantum" = 512;
-        "default.clock.min-quantum" = 512;
-        "default.clock.max-quantum" = 512;
-      };
-    };
-    systemWide = true;
-    jack.enable = true;
-    pulse.enable = lib.mkForce false;
-  };
-
-  systemd.services.pipewire.serviceConfig = {
-    CPUAffinity = "2,10";
-    IOSchedulingClass = "realtime";
-    IOSchedulingPriority = "0";
-    CPUSchedulingPolicy = "fifo";
-    CPUSchedulingPriority = "99";
-    Nice = "-15";
-    LimitRTPRIO = "99";
-    LimitMEMLOCK = "infinity";
-  };
-
-  systemd.services.katla = {
-    enable = true;
-    wantedBy = [ "sound.target" ];
-    after = [
-      "wireplumber.service"
-      "pipewire.service"
-    ];
-    requires = [ "wireplumber.service" ];
-    partOf = [ "pipewire.service" ];
-
-    path = [ pkgs.coreutils ];
-
-    serviceConfig = {
-      Type = "simple";
-      ExecStartPre = [
-        "${pkgs.coreutils}/bin/timeout 30 ${pkgs.bash}/bin/bash -c 'until ${pkgs.pipewire}/bin/pw-cli ls Node 2>/dev/null | grep -q .; do sleep 0.5; done'"
-      ];
-      Environment = "PIPEWIRE_RUNTIME_DIR=/run/pipewire";
-      ExecStart = "${perSystem.katla.katla}/bin/katla";
-      Restart = "always";
-      RestartSec = 3;
-      User = "genki";
-      CPUAffinity = "14,22";
-      IOSchedulingClass = "realtime";
-      IOSchedulingPriority = "0";
-      CPUSchedulingPolicy = "fifo";
-      CPUSchedulingPriority = "98";
-      Nice = "-15";
-      LimitRTPRIO = "99";
-      LimitMEMLOCK = "infinity";
-    };
-  };
 
   fonts.fontconfig = {
     subpixel.rgba = "vbgr"; # Pixel order for rotated screen
@@ -112,7 +51,7 @@
     extraGroups = [
       "wheel"
       "networkmanager"
-      "audio"
+      "plugdev"
       "dialout"
       "video"
       "inputs"
@@ -282,7 +221,7 @@
   # udev rules for Rockchip devices (rkdeveloptool)
   services.udev.extraRules = ''
     # Rockchip devices in maskrom/loader mode
-    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666", GROUP="users"
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666", GROUP="plugdev"
     # Rockchip devices in recovery mode
     SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", ATTRS{idProduct}=="*", MODE="0666", GROUP="users"
 
