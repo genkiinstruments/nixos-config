@@ -13,6 +13,7 @@
     inputs.agenix.darwinModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager
+    flake.modules.shared.builders
     flake.modules.darwin.default
     flake.modules.darwin.secretive
   ];
