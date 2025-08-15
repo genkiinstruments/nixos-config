@@ -96,15 +96,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1755069910,
-        "narHash": "sha256-g/9W1Cn0gsawDCgaqz2j2ZASCf2Y2Fb/nMCdwgGVVb0=",
-        "owner": "nlewo",
+        "lastModified": 1755257559,
+        "narHash": "sha256-y3F96BoRg9UKSZ+pG1M35f3ZSw43M0bkp6Pp98vO1Is=",
+        "owner": "multivac61",
         "repo": "comin",
-        "rev": "ab7eb8963df9fcaaef427f55d1e755cffcc7c43e",
+        "rev": "bf609c74673d8ce66905f853b36757577a733222",
         "type": "github"
       },
       "original": {
-        "owner": "nlewo",
+        "owner": "multivac61",
+        "ref": "darwin-service-fix",
         "repo": "comin",
         "type": "github"
       }
