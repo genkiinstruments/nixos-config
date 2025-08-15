@@ -107,7 +107,7 @@
     zigbee2mqtt = {
       enable = true;
 
-      settings = {
+      settings = lib.mkForce {
         homeassistant = true;
         mqtt = {
           server = "mqtt://localhost:1883";
