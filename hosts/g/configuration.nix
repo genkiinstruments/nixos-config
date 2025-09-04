@@ -141,29 +141,6 @@
     # Add other GNOME packages you want to exclude
   ];
 
-  # Disable auto-suspend when on AC power
-  services.logind = {
-    lidSwitch = lib.mkForce "ignore";
-    lidSwitchExternalPower = lib.mkForce "ignore";
-    lidSwitchDocked = lib.mkForce "ignore";
-    extraConfig = lib.mkForce ''
-      IdleAction=ignore
-      IdleActionSec=0
-      HandlePowerKey=ignore
-      HandleSuspendKey=ignore
-      HandleSuspendKeyLongPress=ignore
-      HandleHibernateKey=ignore
-      HandleHibernateKeyLongPress=ignore
-      HandleLidSwitch=ignore
-      HandleLidSwitchExternalPower=ignore
-      HandleLidSwitchDocked=ignore
-      PowerKeyIgnoreInhibited=yes
-      SuspendKeyIgnoreInhibited=yes
-      HibernateKeyIgnoreInhibited=yes
-      LidSwitchIgnoreInhibited=yes
-    '';
-  };
-
   # GNOME power settings - disable auto-suspend completely
   services.desktopManager.gnome.extraGSettingsOverrides = ''
     [org.gnome.settings-daemon.plugins.power]
