@@ -57,9 +57,20 @@
     mpv.enable = true;
     gh-dash.enable = true;
     btop.enable = true;
-    ssh.enable = true;
-    ssh.package = pkgs.openssh;
-    ssh.extraConfig = "SetEnv TERM=xterm-256color";
+    ssh = {
+      enable = true;
+      package = pkgs.openssh;
+      extraConfig = "SetEnv TERM=xterm-256color";
+      matchBlocks."*" = {
+        controlMaster = "auto";
+        controlPath = "/tmp/ssh-%u-%r@%h:%p";
+        controlPersist = "1800";
+        forwardAgent = true;
+        addKeysToAgent = "yes";
+        serverAliveInterval = 900;
+      };
+    };
+
     fzf = {
       enable = true;
       enableFishIntegration = true;
@@ -264,6 +275,7 @@
         c = "clear";
         lg = "lazygit";
         cat = "bat";
+        n = "nvim";
       };
       interactiveShellInit = lib.strings.concatStrings (
         lib.strings.intersperse "\n" [
