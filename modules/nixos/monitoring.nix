@@ -151,12 +151,18 @@ in
     # Caddy reverse proxy
     services.caddy.virtualHosts."prometheus.${cfg.domain}" = {
       extraConfig = ''
+        tls {
+            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        }
         reverse_proxy localhost:${toString cfg.prometheusPort}
       '';
     };
 
     services.caddy.virtualHosts."grafana.${cfg.domain}" = {
       extraConfig = ''
+        tls {
+            dns cloudflare {env.CLOUDFLARE_API_TOKEN}
+        }
         reverse_proxy localhost:${toString cfg.grafanaPort}
       '';
     };
