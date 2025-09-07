@@ -49,7 +49,7 @@
     genki-www.inputs.nixpkgs.follows = "nixpkgs";
     genki-www.inputs.blueprint.follows = "blueprint";
 
-    comin.url = "github:multivac61/comin?ref=darwin-service-fix&shallow=1";
+    comin.url = "github:nlewo/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs";
   };
 
