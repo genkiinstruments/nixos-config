@@ -1,7 +1,6 @@
 # the Asahi Linux kernel and options that must go along with it
 {
   config,
-  pkgs,
   lib,
   ...
 }:
