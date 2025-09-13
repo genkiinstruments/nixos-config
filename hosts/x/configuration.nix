@@ -181,24 +181,66 @@
                 attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
 
                 # shellcheck disable=SC2154
-                # Retry push up to 3 times with exponential backoff
-                for attempt in 1 2 3; do
-                  echo "Attempt $attempt to push to attic..."
-                  if attic push genki "$path_to_push"; then
+                # More robust retry logic with connection health checks
+                MAX_RETRIES=5
+                BASE_DELAY=2
+                MAX_DELAY=60
+
+                # Test connection first
+                echo "Testing connection to attic server..."
+                if ! curl -sf -m 5 "http://${config.services.atticd.settings.listen}/api/v1/cache/genki" >/dev/null 2>&1; then
+                  echo "Warning: Initial connection test failed, but proceeding..."
+                fi
+
+                # Function to calculate delay with jitter
+                calculate_delay() {
+                  local attempt=$1
+                  local base_delay=$((BASE_DELAY * (2 ** (attempt - 1))))
+                  local delay=$((base_delay < MAX_DELAY ? base_delay : MAX_DELAY))
+                  # Add 10-30% jitter
+                  local jitter=$((delay * (10 + RANDOM % 20) / 100))
+                  echo $((delay + jitter))
+                }
+
+                # Retry push with enhanced error handling
+                for attempt in $(seq 1 $MAX_RETRIES); do
+                  echo "Attempt $attempt/$MAX_RETRIES to push to attic..."
+                  
+                  # Set timeout for the push operation
+                  export ATTIC_TIMEOUT=300  # 5 minutes
+                  
+                  # Try push with error capture
+                  if output=$(attic push genki "$path_to_push" 2>&1); then
                     echo "Push succeeded on attempt $attempt"
                     exit 0
                   else
-                    echo "Push failed on attempt $attempt"
-                    if [ $attempt -lt 3 ]; then
-                      # Exponential backoff: 2s, 6s, 18s
-                      wait_time=$((2 * (3 ** (attempt - 1))))
-                      echo "Waiting $wait_time seconds before retry..."
-                      sleep $wait_time
+                    exit_code=$?
+                    echo "Push failed on attempt $attempt (exit code: $exit_code)"
+                    echo "Error output: $output"
+                    
+                    # Check for specific error patterns
+                    if echo "$output" | grep -q "connection closed before message completed"; then
+                      echo "Connection was interrupted - this is recoverable"
+                    elif echo "$output" | grep -q "error sending request"; then
+                      echo "Network error detected - will retry"
+                    fi
+                    
+                    if [ $attempt -lt $MAX_RETRIES ]; then
+                      delay=$(calculate_delay $attempt)
+                      echo "Waiting $delay seconds before retry..."
+                      sleep $delay
+                      
+                      # Test connection before next attempt
+                      if ! curl -sf -m 5 "http://${config.services.atticd.settings.listen}/api/v1/cache/genki" >/dev/null 2>&1; then
+                        echo "Connection test failed, but continuing with retry..."
+                      fi
                     fi
                   fi
                 done
-                echo "All push attempts failed"
-                exit 1
+
+                echo "All $MAX_RETRIES push attempts failed"
+                # Exit with special code to indicate retry exhaustion
+                exit 111
               '';
             }
           ))
@@ -247,6 +289,24 @@
     };
   };
 
+  # Increase system limits for atticd
+  systemd.services.atticd = {
+    serviceConfig = {
+      # Increase file descriptor limits
+      LimitNOFILE = 65536;
+
+      # Restart on failure with delay
+      Restart = "on-failure";
+      RestartSec = "5s";
+
+      # Kill only the main process, not children
+      KillMode = "mixed";
+
+      # Give more time for graceful shutdown
+      TimeoutStopSec = "30s";
+    };
+  };
+
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
     name = "x";
@@ -262,6 +322,31 @@
     enable = true;
     algorithm = "zstd";
     memoryPercent = 90;
+  };
+
+  # Network tuning for better connection stability
+  boot.kernel.sysctl = {
+    # Increase TCP buffer sizes for better throughput
+    "net.core.rmem_max" = 134217728; # 128MB
+    "net.core.wmem_max" = 134217728; # 128MB
+    "net.ipv4.tcp_rmem" = "4096 87380 134217728";
+    "net.ipv4.tcp_wmem" = "4096 65536 134217728";
+
+    # Increase connection backlog
+    "net.core.somaxconn" = 4096;
+    "net.ipv4.tcp_max_syn_backlog" = 4096;
+
+    # Better connection handling
+    "net.ipv4.tcp_fin_timeout" = 15;
+    "net.ipv4.tcp_keepalive_time" = 300;
+    "net.ipv4.tcp_keepalive_probes" = 5;
+    "net.ipv4.tcp_keepalive_intvl" = 15;
+
+    # Enable TCP Fast Open
+    "net.ipv4.tcp_fastopen" = 3;
+
+    # Increase local port range
+    "net.ipv4.ip_local_port_range" = "1024 65535";
   };
 
   system.stateVersion = "24.11";
