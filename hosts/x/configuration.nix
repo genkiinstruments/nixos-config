@@ -295,9 +295,8 @@
       # Increase file descriptor limits
       LimitNOFILE = 65536;
 
-      # Restart on failure with delay
-      Restart = "on-failure";
-      RestartSec = "5s";
+      # Override the default RestartSec with mkForce
+      RestartSec = pkgs.lib.mkForce 5;
 
       # Kill only the main process, not children
       KillMode = "mixed";
