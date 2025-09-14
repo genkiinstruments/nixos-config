@@ -175,12 +175,16 @@
           (pkgs.lib.getExe (
             pkgs.writeShellApplication {
               name = "push-to-attic";
-              runtimeInputs = [ pkgs.attic-client ];
+              runtimeInputs = [
+                pkgs.attic-client
+                pkgs.curl
+              ];
               text = ''
                 # shellcheck disable=SC2101
                 attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
 
                 # shellcheck disable=SC2154
+                # path_to_push is provided by buildbot-nix environment
                 # More robust retry logic with connection health checks
                 MAX_RETRIES=5
                 BASE_DELAY=2
@@ -210,6 +214,7 @@
                   export ATTIC_TIMEOUT=300  # 5 minutes
                   
                   # Try push with error capture
+                  # shellcheck disable=SC2154
                   if output=$(attic push genki "$path_to_push" 2>&1); then
                     echo "Push succeeded on attempt $attempt"
                     exit 0
@@ -225,10 +230,10 @@
                       echo "Network error detected - will retry"
                     fi
                     
-                    if [ $attempt -lt $MAX_RETRIES ]; then
-                      delay=$(calculate_delay $attempt)
+                    if [ "$attempt" -lt "$MAX_RETRIES" ]; then
+                      delay=$(calculate_delay "$attempt")
                       echo "Waiting $delay seconds before retry..."
-                      sleep $delay
+                      sleep "$delay"
                       
                       # Test connection before next attempt
                       if ! curl -sf -m 5 "http://${config.services.atticd.settings.listen}/api/v1/cache/genki" >/dev/null 2>&1; then
