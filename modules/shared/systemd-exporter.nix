@@ -6,8 +6,8 @@
       enable = true;
       port = 9558;
       extraFlags = [
-        "--collector.enable-ip-accounting"
-        "--collector.enable-restart-count"
+        "--systemd.collector.enable-ip-accounting"
+        "--systemd.collector.enable-restart-count"
       ];
     };
 
