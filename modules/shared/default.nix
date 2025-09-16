@@ -13,6 +13,8 @@
   nix.settings.trusted-substituters = [ "https://attic.genki.is/genki" ];
   nix.settings.trusted-public-keys = [ "genki:S03n+SoctaWEOjLRWLFTbd898DdDMn5r/L2T+cj1IHE=" ];
 
+  nix.package = pkgs.nixVersions.latest;
+
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
   # Disallow IFDs by default. IFDs can too easily sneak in and cause trouble.
