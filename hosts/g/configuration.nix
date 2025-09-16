@@ -17,11 +17,39 @@
     flake.modules.nixos.comin
     flake.modules.shared.default
     flake.modules.shared.home-manager
-    flake.modules.shared.builders
     flake.modules.nixos.default
     flake.modules.nixos.pipewire
     ./disko.nix
   ];
+
+  nix = {
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "pbt";
+        systems = [ "aarch64-linux" ];
+        maxJobs = 8;
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+      }
+    ];
+  };
+
+  programs.ssh.extraConfig = ''
+    Host pbt pbt.tail01dbd.ts.net
+      User nix-ssh
+      HostName pbt.tail01dbd.ts.net
+      StrictHostKeyChecking accept-new
+      BatchMode yes
+      PubkeyAuthentication yes
+      IdentitiesOnly yes
+  '';
 
   # As of kernel version 6.6.72, amdgpu throws a fatal error during init, resulting in a barely-working display
   # boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -58,7 +86,10 @@
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
-  nix.settings.trusted-users = [ "genki" ];
+  nix.settings.trusted-users = [
+    "genki"
+    "nix-ssh"
+  ];
 
   security.sudo.wheelNeedsPassword = false;
 
