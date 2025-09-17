@@ -34,7 +34,7 @@
         AppleInterfaceStyle = "Dark";
         KeyRepeat = 2; # 120, 90, 60, 30, 12, 6, 2
         InitialKeyRepeat = 15; # 120, 94, 68, 35, 25, 15
-        "com.apple.keyboard.fnState" = true; # Make F1, F2, etc. keys behave as standard function keys
+        # "com.apple.keyboard.fnState" = true; # Make F1, F2, etc. keys behave as standard function keys
         NSAutomaticCapitalizationEnabled = false;
 
         ApplePressAndHoldEnabled = false;
@@ -113,6 +113,7 @@
       "obsidian"
       "slack"
       "linear-linear"
+      "libreoffice"
 
       # BROWSERS
       "arc"
