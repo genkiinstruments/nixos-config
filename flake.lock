@@ -52,15 +52,17 @@
       "inputs": {
         "flake-parts": "flake-parts",
         "hercules-ci-effects": "hercules-ci-effects",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1758013444,
-        "narHash": "sha256-fYRTQqFNbFn6tGSkC+GIUfl/ejh4Oen7Gqq5ah1C3PE=",
+        "lastModified": 1758102499,
+        "narHash": "sha256-KGQCEcSPzk4ni8rSi5k7MlLFQMt2RxX3qfGfBzwJAnE=",
         "owner": "nix-community",
         "repo": "buildbot-nix",
-        "rev": "201ae35c51726ef1a0903207fdb11c1f5579eef2",
+        "rev": "3a7d6741841aa940da0933948165d4c68f2fc228",
         "type": "github"
       },
       "original": {
@@ -150,30 +152,6 @@
         "type": "github"
       }
     },
-    "genki-www": {
-      "inputs": {
-        "blueprint": [
-          "blueprint"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "treefmt-nix": "treefmt-nix_2"
-      },
-      "locked": {
-        "lastModified": 1756891715,
-        "narHash": "sha256-TJG+bRgdDs66GljHjWSpE1LSP5OfSWY76pa49fAvLjk=",
-        "owner": "genkiinstruments",
-        "repo": "genki-www",
-        "rev": "23da3a5ae44dd944cd5997938af55fd2a3777219",
-        "type": "github"
-      },
-      "original": {
-        "owner": "genkiinstruments",
-        "repo": "genki-www",
-        "type": "github"
-      }
-    },
     "hercules-ci-effects": {
       "inputs": {
         "flake-parts": [
@@ -206,11 +184,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1758077428,
-        "narHash": "sha256-p6jpqsfed426hVxP9Oy+K63tqy4p+IbVmrgmmoOV8S4=",
+        "lastModified": 1758085625,
+        "narHash": "sha256-D0KVKNgWSDVjYFgPLEtSQvSKchTBT0YqSbNlH7OQ+bo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "6efc49be7c6115a0e07b3a2fa042cd41d9195545",
+        "rev": "fb928abb67bd4df99040721ed48c3b42e24b1d08",
         "type": "github"
       },
       "original": {
@@ -226,11 +204,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1757430124,
-        "narHash": "sha256-MhDltfXesGH8VkGv3hmJ1QEKl1ChTIj9wmGAFfWj/Wk=",
+        "lastModified": 1758102940,
+        "narHash": "sha256-wwqf3+A8EiqwWpcAaPN20QXJLlpGPpwtLTrzgnngI2o=",
         "owner": "LnL7",
         "repo": "nix-darwin",
-        "rev": "830b3f0b50045cf0bcfd4dab65fad05bf882e196",
+        "rev": "ebd0bfc11fc2b5cff37401e9b3703881ad5fabbd",
         "type": "github"
       },
       "original": {
@@ -256,23 +234,6 @@
       }
     },
     "nixpkgs": {
-      "locked": {
-        "lastModified": 1757752761,
-        "narHash": "sha256-HBM2YTKSegLZjdamfqH9KADj2zQBQBNQHmwdrYkatpg=",
-        "ref": "nixos-unstable-small",
-        "rev": "4b46c744cbd5f9336027dff287e74ead84d80041",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      },
-      "original": {
-        "ref": "nixos-unstable-small",
-        "shallow": true,
-        "type": "git",
-        "url": "https://github.com/NixOS/nixpkgs"
-      }
-    },
-    "nixpkgs_2": {
       "locked": {
         "lastModified": 1757745802,
         "narHash": "sha256-hLEO2TPj55KcUFUU1vgtHE9UEIOjRcH/4QbmfHNF820=",
@@ -346,15 +307,14 @@
         "catppuccin": "catppuccin",
         "comin": "comin",
         "disko": "disko",
-        "genki-www": "genki-www",
         "home-manager": "home-manager",
         "nix-darwin": "nix-darwin",
         "nixos-facter-modules": "nixos-facter-modules",
-        "nixpkgs": "nixpkgs_2",
+        "nixpkgs": "nixpkgs",
         "secrets": "secrets",
         "srvos": "srvos",
         "stripe-webshippy-sync": "stripe-webshippy-sync",
-        "treefmt-nix": "treefmt-nix_4"
+        "treefmt-nix": "treefmt-nix_3"
       }
     },
     "secrets": {
@@ -401,7 +361,7 @@
         "pyproject-build-systems": "pyproject-build-systems",
         "pyproject-nix": "pyproject-nix",
         "systems": "systems_3",
-        "treefmt-nix": "treefmt-nix_3",
+        "treefmt-nix": "treefmt-nix_2",
         "uv2nix": "uv2nix"
       },
       "locked": {
@@ -486,27 +446,6 @@
     "treefmt-nix_2": {
       "inputs": {
         "nixpkgs": [
-          "genki-www",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1746989248,
-        "narHash": "sha256-uoQ21EWsAhyskNo8QxrTVZGjG/dV4x5NM1oSgrmNDJY=",
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "rev": "708ec80ca82e2bbafa93402ccb66a35ff87900c5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "treefmt-nix",
-        "type": "github"
-      }
-    },
-    "treefmt-nix_3": {
-      "inputs": {
-        "nixpkgs": [
           "stripe-webshippy-sync",
           "nixpkgs"
         ]
@@ -525,7 +464,7 @@
         "type": "github"
       }
     },
-    "treefmt-nix_4": {
+    "treefmt-nix_3": {
       "inputs": {
         "nixpkgs": [
           "nixpkgs"
