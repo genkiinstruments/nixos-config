@@ -58,6 +58,11 @@
     # The GPD Pocket 4 uses a tablet LTPS display, that is mounted rotated 90° counter-clockwise
     "fbcon=rotate:1"
     "video=eDP-1:panel_orientation=right_side_up"
+
+    # Real-time audio optimization
+    "threadirqs"
+    "preempt=voluntary"
+    "mitigations=off" # Disable CPU mitigations for lower latency (security tradeoff)
   ];
 
   fonts.fontconfig = {
@@ -83,6 +88,8 @@
       "inputs"
       "uucp"
       "pipewire"
+      "audio"
+      "rtkit"
     ];
     openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
   };
@@ -203,6 +210,9 @@
   powerManagement.powertop.enable = false;
   powerManagement.cpuFreqGovernor = "performance";
   services.tlp.enable = false; # Disable TLP if it's enabled elsewhere
+
+  # Real-time audio optimizations
+  security.rtkit.enable = true;
 
   # Completely disable systemd suspend services
   systemd.services."systemd-suspend" = {
