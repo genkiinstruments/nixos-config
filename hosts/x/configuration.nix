@@ -52,9 +52,24 @@
   };
 
   # Fix DNS resolution timing issue on boot
-  systemd.services."cloudflared-tunnel-9c376bb1-4ca6-49d7-8c36-93908b752ae8".after = [
-    "nss-lookup.target"
-  ];
+  systemd.services."cloudflared-tunnel-9c376bb1-4ca6-49d7-8c36-93908b752ae8" = {
+    after = [
+      "network-online.target"
+      "nss-lookup.target"
+    ];
+    wants = [
+      "network-online.target"
+    ];
+    serviceConfig = {
+      # Add retry with exponential backoff
+      Restart = "on-failure";
+      RestartSec = "10s";
+      # Give it more time to start
+      TimeoutStartSec = "90s";
+      # Add a pre-start delay to ensure DNS is ready
+      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
+    };
+  };
 
   # Configure nginx virtual hosts (buildbot-nix handles the main config)
   services.nginx.virtualHosts."attic.genki.is" = {
