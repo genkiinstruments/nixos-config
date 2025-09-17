@@ -27,6 +27,35 @@
   };
   system.primaryUser = "genki";
 
+  nix = {
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "pbt";
+        systems = [ "aarch64-linux" ];
+        maxJobs = 8;
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+      }
+    ];
+  };
+
+  programs.ssh.extraConfig = ''
+    Host pbt pbt.tail01dbd.ts.net
+      User nix-ssh
+      HostName pbt.tail01dbd.ts.net
+      StrictHostKeyChecking accept-new
+      BatchMode yes
+      PubkeyAuthentication yes
+      IdentitiesOnly yes
+  '';
+
   # Keyboard remapping configuration
   system.keyboard = {
     enableKeyMapping = true;
