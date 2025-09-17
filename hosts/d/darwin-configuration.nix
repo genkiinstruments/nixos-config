@@ -37,7 +37,7 @@
     enableKeyMapping = true;
     remapCapsLockToEscape = true;
 
-    # Custom key mappings for USB and Apple keyboards
+    # Only apply Option/Command swap for USB keyboards
     userKeyMapping = [
       # USB keyboards: swap Option and Command
       {
@@ -55,15 +55,6 @@
       {
         HIDKeyboardModifierMappingSrc = 30064771303; # Right Command (0x7000000E7)
         HIDKeyboardModifierMappingDst = 30064771302; # Right Option (0x7000000E6)
-      }
-      # Apple keyboards: swap Control and Globe/Fn
-      {
-        HIDKeyboardModifierMappingSrc = 30064771296; # Left Control (0x7000000E0)
-        HIDKeyboardModifierMappingDst = 1879048195; # Globe/Fn key (0x700000063)
-      }
-      {
-        HIDKeyboardModifierMappingSrc = 1879048195; # Globe/Fn key (0x700000063)
-        HIDKeyboardModifierMappingDst = 30064771296; # Left Control (0x7000000E0)
       }
     ];
   };
@@ -124,6 +115,7 @@
       "raycast"
       "arc"
       "zed"
+      "ghostty"
     ];
     brews = [
       # clis and libraries
