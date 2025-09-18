@@ -24,7 +24,6 @@
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
-    flake.modules.nixos.comin
     ./disko.nix
   ];
 
