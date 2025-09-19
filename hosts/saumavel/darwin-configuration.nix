@@ -87,15 +87,14 @@
       upgrade = true; # Upgrade outdated packages
       cleanup = "none"; # Don't remove any packages not in the list
     };
+
     brews = [
       "nvm"
       "node"
       "clang-format"
       "luarocks"
-      # "biber"
-      # "texlive"
-      # "xdotool"
     ];
+
     casks = [
       # MEGA UTILITIES
       "raycast"
@@ -107,7 +106,6 @@
       "keyboardcleantool"
       "logi-options+"
       "the-unarchiver"
-      "postman"
 
       # WORK
       "obsidian"
@@ -122,13 +120,12 @@
       "messenger"
 
       # FUN
-      "bitwig-studio"
       "plex"
 
       # IDE´s
       "zed"
-      "visual-studio-code"
     ];
+
     masApps = {
       # `nix run nixpkgs #mas -- search <app name>`
       "Keynote" = 409183694;
