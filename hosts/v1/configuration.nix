@@ -83,7 +83,6 @@
     enable = true;
     headless = false; # Set to true if this is a headless server
   };
-  virtualisation.lxd.enable = true;
   virtualisation.docker.enable = true;
 
   # List packages installed in system profile. To search, run:
