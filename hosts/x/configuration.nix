@@ -163,8 +163,8 @@
       oauthId = "Ov23liztqfvRnVaEz57V";
       oauthSecretFile = config.age.secrets.buildbot-github-oauth-secret.path;
       topic = "build-with-buildbot";
-      authType.app.secretKeyFile = config.age.secrets.buildbot-github-app-secret-key.path;
-      authType.app.id = 1163488;
+      appSecretKeyFile = config.age.secrets.buildbot-github-app-secret-key.path;
+      appId = 1163488;
     };
     accessMode.fullyPrivate = {
       backend = "github";
