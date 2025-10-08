@@ -39,7 +39,7 @@ bind \cL clear
 # Use Ctrl-f to complete a suggestion in vi mode
 bind -M insert \cf accept-autosuggestion
 
-fish_vi_key_bindings
+set -g fish_key_bindings fish_vi_key_bindings
 set fish_vi_force_cursor
 set fish_cursor_default block blink
 set fish_cursor_insert line blink
