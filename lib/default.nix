@@ -28,7 +28,6 @@ _: {
         ruff
         python3Packages.python-lsp-server
         python3Packages.python-lsp-ruff
-        basedpyright
         typos-lsp
         typos
         nixfmt-rfc-style
