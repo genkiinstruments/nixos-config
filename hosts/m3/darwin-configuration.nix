@@ -9,7 +9,6 @@
   imports = [
     inputs.srvos.darwinModules.desktop
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
-    inputs.srvos.darwinModules.mixins-terminfo
     inputs.agenix.darwinModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager
