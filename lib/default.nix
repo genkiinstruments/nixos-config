@@ -17,7 +17,6 @@ _: {
         golangci-lint
         nodePackages.bash-language-server
         taplo-lsp
-        marksman
         selene
         rust-analyzer
         yaml-language-server
