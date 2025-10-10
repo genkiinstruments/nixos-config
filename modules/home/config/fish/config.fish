@@ -26,18 +26,18 @@ end
 # Atuin keybindings
 #-------------------------------------------------------------------------------
 # bind to ctrl-p in normal and insert mode
-bind \cp _atuin_search
-bind -M insert \cp _atuin_search
-bind \cr _atuin_search
-bind -M insert \cr _atuin_search
+bind -M normal ctrl-p _atuin_search
+bind -M insert ctrl-p _atuin_search
+bind -M normal ctrl-r _atuin_search
+bind -M insert ctrl-r _atuin_search
 
-bind \cL clear
+bind ctrl-l clear
 
 #-------------------------------------------------------------------------------
 # VI keybindings
 #-------------------------------------------------------------------------------
 # Use Ctrl-f to complete a suggestion in vi mode
-bind -M insert \cf accept-autosuggestion
+bind -M insert ctrl-f accept-autosuggestion
 
 set -g fish_key_bindings fish_vi_key_bindings
 set fish_vi_force_cursor
