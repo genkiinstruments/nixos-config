@@ -49,13 +49,17 @@
     };
   };
 
-  # Fix DNS resolution timing issue on boot
+  # Fix DNS resolution timing issue on boot and ensure nginx is ready
   systemd.services."cloudflared-tunnel-9c376bb1-4ca6-49d7-8c36-93908b752ae8" = {
     after = [
+      "nginx.service"
+      "buildbot-master.service"
       "network-online.target"
       "nss-lookup.target"
     ];
     wants = [
+      "nginx.service"
+      "buildbot-master.service"
       "network-online.target"
     ];
     serviceConfig = {
@@ -322,6 +326,20 @@
       # Give more time for graceful shutdown
       TimeoutStopSec = "30s";
     };
+    wantedBy = [ "multi-user.target" ];
+    before = [ "nginx.service" ];
+  };
+
+  # Ensure nginx waits for atticd and buildbot-master
+  systemd.services.nginx = {
+    after = [
+      "atticd.service"
+      "buildbot-master.service"
+    ];
+    wants = [
+      "atticd.service"
+      "buildbot-master.service"
+    ];
   };
 
   roles.github-actions-runner = {
