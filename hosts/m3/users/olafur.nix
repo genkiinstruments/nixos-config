@@ -13,6 +13,8 @@
     cargo
     nodejs
     nixfmt
+    rust-analyzer
+    ast-grep
   ];
   home.sessionVariables.NVIM_APPNAME = "mvim2";
 
