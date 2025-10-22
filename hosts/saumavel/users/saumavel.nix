@@ -171,16 +171,13 @@
     };
 
     git = {
-      enable = true; # It's good practice to explicitly enable it
+      enable = true;
       settings = {
-        user = {
-          name = "saumavel";
-          email = "saumavel@gmail.com";
-        };
-        github = {
-          user = "saumavel";
-        };
+        user.name = "saumavel";
+        user.email = "saumavel@gmail.com";
+        github.user = "saumavel";
       };
+      delta.enable = true;
     };
   };
 

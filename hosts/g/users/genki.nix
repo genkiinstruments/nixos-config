@@ -10,9 +10,9 @@
   home.sessionVariables.EDITOR = lib.mkDefault "mvim";
   home.packages = [ perSystem.self.mvim ];
 
-  programs.git = {
-    userEmail = "olafur@genkiinstruments.com";
-    userName = "multivac61";
-    extraConfig.github.user = "multivac61";
+  programs.git.settings = {
+    user.email = "olafur@genkiinstruments.com";
+    user.name = "multivac61";
+    github.user = "multivac61";
   };
 }
