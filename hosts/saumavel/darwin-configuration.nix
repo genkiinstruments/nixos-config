@@ -88,7 +88,7 @@
     };
 
     brews = [
-      "nvm"
+      # "nvm"
       "node"
       "clang-format"
       "luarocks"
