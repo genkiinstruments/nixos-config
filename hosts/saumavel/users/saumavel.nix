@@ -84,9 +84,11 @@
     };
 
     git = {
-      userName = "saumavel";
-      userEmail = "saumavel@gmail.com";
-      extraConfig.github.user = "saumavel";
+      settings = {
+        user.name = "saumavel";
+        user.email = "saumavel@gmail.com";
+        github.user = "saumavel";
+      };
       delta.enable = true;
     };
   };

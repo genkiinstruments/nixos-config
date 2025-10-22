@@ -297,7 +297,7 @@
     git = {
       enable = true;
       lfs.enable = true;
-      extraConfig = {
+      settings = {
         init.defaultBranch = "main";
         core.autocrlf = "input";
         pull.rebase = true;
@@ -305,6 +305,16 @@
         url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
         gpg.format = "ssh";
         color.ui = true;
+        alias = {
+          co = "checkout";
+          cm = "commit";
+          st = "status";
+          br = "branch";
+          df = "diff";
+          lg = "log";
+          pl = "pull";
+          ps = "push";
+        };
       };
       ignores = [
         ".direnv"
@@ -322,16 +332,6 @@
         # Work notes
         "WORK.md"
       ];
-      aliases = {
-        co = "checkout";
-        cm = "commit";
-        st = "status";
-        br = "branch";
-        df = "diff";
-        lg = "log";
-        pl = "pull";
-        ps = "push";
-      };
 
     };
     tmux = {
