@@ -30,9 +30,9 @@ jobs:
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "git+https://github.com/"
           git config --global url."https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/".insteadOf "github:"
 
-          # Set Git identity for commits
-          git config --global user.name "GitHub Actions Bot"
-          git config --global user.email "actions@github.com"
+          # Set Git identity for commits (using official github-actions bot)
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - uses: cachix/install-nix-action@master
         with:
@@ -49,13 +49,17 @@ jobs:
         uses: peter-evans/create-pull-request@main
         with:
           token: ${{ steps.app-token.outputs.token }}
-          commit-message: "flake.lock: Update"
-          title: "Update flake.lock"
-          body: "Updated flake.lock with the latest dependency versions"
+          commit-message: "chore: update flake.lock"
+          title: "Update flake dependencies (flake.lock)"
+          body: |
+            Automated dependency updates:
+            - Updated flake.lock with latest nix dependencies
           branch: "update-flake-lock"
           labels: |
             dependencies
             auto-merge
+          committer: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+          author: github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
 
       - name: PR Output
         if: steps.create-pr.outputs.pull-request-number
