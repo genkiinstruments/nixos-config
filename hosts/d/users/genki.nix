@@ -12,9 +12,9 @@
   home.packages = with pkgs; [
     zed-editor
   ];
-  programs.git = {
-    userEmail = "daniel@genkiinstruments.com";
-    userName = "dingari";
-    extraConfig.github.user = "dingari";
+  programs.git.settings = {
+    user.email = "daniel@genkiinstruments.com";
+    user.name = "dingari";
+    github.user = "dingari";
   };
 }

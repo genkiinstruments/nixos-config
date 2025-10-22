@@ -15,6 +15,9 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+    rocks = {
+        enabled = false, -- Disable luarocks integration to fix warnings
+    },
     spec = {
         -- add LazyVim and import its plugins
         { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "catppuccin-mocha" } },
@@ -34,7 +37,9 @@ require("lazy").setup({
         },
         -- Lua
         { import = "lazyvim.plugins.extras.lang.sql" },
+        { import = "lazyvim.plugins.extras.lang.zig" },
         { import = "lazyvim.plugins.extras.lang.go" },
+        { import = "lazyvim.plugins.extras.lang.clangd" },
         { import = "lazyvim.plugins.extras.coding.mini-surround" },
         { import = "lazyvim.plugins.extras.editor.mini-diff" },
         { import = "lazyvim.plugins.extras.editor.mini-move" },
@@ -79,6 +84,10 @@ require("lazy").setup({
                     conceallevel = { default = 0, rendered = 3 },
                 },
             },
+            -- Disable LaTeX support since latex2text is not installed
+            latex = {
+                enabled = false,
+            },
         },
         { "nvim-neo-tree/neo-tree.nvim", enabled = false },
         { "akinsho/bufferline.nvim", enabled = false },
@@ -91,7 +100,6 @@ require("lazy").setup({
         -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
         -- have outdated releases, which may break your Neovim install.
         version = false, -- always use the latest git commit
-        -- version = "*", -- try installing the latest stable version for plugins that support semver
     },
     checker = {
         enabled = true, -- check for plugin updates periodically
@@ -102,9 +110,6 @@ require("lazy").setup({
             -- disable some rtp plugins
             disabled_plugins = {
                 "gzip",
-                -- "matchit",
-                -- "matchparen",
-                -- "netrwPlugin",
                 "tarPlugin",
                 "tohtml",
                 "tutor",

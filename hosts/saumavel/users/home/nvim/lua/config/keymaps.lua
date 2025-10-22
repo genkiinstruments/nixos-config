@@ -1,5 +1,4 @@
 local keymap = vim.keymap.set
-local vault_config = require("config.vault")
 
 -- Unmap keymaps that move lines
 for _, val in pairs({ "<A-j>", "<A-k>" }) do
@@ -37,34 +36,3 @@ keymap("n", "<C-c>", "<cmd>q<cr>", { noremap = true })
 keymap("n", "<C-x>", "<cmd>x<cr>", { noremap = true })
 
 keymap("n", "<leader>cw", ":%s/^\\s\\+$//e<CR>", { desc = "Clear whitespace-only lines" })
-
--- Obsidian keymappings
-keymap("n", "<leader>oo", "<cmd>ObsidianOpen<CR>", { desc = "Open in Obsidian" })
-keymap("n", "<leader>on", "<cmd>ObsidianNew<CR>", { desc = "New note" })
-keymap("n", "<leader>oq", "<cmd>ObsidianQuickSwitch<CR>", { desc = "Quick switch" })
-keymap("n", "<leader>os", "<cmd>ObsidianSearch<CR>", { desc = "Search" })
-keymap("n", "<leader>of", "<cmd>ObsidianFollowLink<CR>", { desc = "Follow link" })
-keymap("n", "<leader>ob", "<cmd>ObsidianBacklinks<CR>", { desc = "Backlinks" })
-keymap("n", "<leader>ot", "<cmd>ObsidianToday<CR>", { desc = "Today's note" })
-keymap("n", "<leader>oi", "<cmd>ObsidianTemplate<CR>", { desc = "Insert template" })
-keymap("n", "<leader>ol", "<cmd>ObsidianLink<CR>", { desc = "Link to note" })
-keymap("n", "<leader>oL", "<cmd>ObsidianLinkNew<CR>", { desc = "New note with link" })
-keymap("n", "<leader>op", "<cmd>ObsidianPasteImg<CR>", { desc = "Paste image" })
-keymap("n", "<leader>og", "<cmd>ObsidianTags<CR>", { desc = "Tags" })
-keymap("n", "<leader>or", "<cmd>ObsidianRename<CR>", { desc = "Rename note" })
-
--- For toggle checkbox, we need to use the function directly
-keymap("n", "<leader>oc", function()
-    require("obsidian").util.toggle_checkbox()
-end, { desc = "Toggle checkbox" })
-
--- Open Oil in Obsidian vault directory
-keymap("n", "<leader>oe", function()
-    local expanded_path = vim.fn.expand(vault_config.path)
-
-    if vim.fn.isdirectory(expanded_path) == 1 then
-        vim.cmd("Oil " .. expanded_path)
-    else
-        vim.notify("Obsidian vault directory not found: " .. expanded_path, vim.log.levels.WARN)
-    end
-end, { desc = "Open Oil in Obsidian vault" })
