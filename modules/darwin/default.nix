@@ -34,8 +34,6 @@
       defaults write -g InitialKeyRepeat -int 8
       defaults write -g KeyRepeat -int 1
       sudo chsh -s ${pkgs.fish}/bin/fish $USER
-
-      /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
     '';
   };
 
