@@ -49,15 +49,29 @@
     };
   };
 
+  # Ensure PostgreSQL starts with buildbot-master
+  systemd.services.buildbot-master = {
+    wants = [ "postgresql.service" ];
+    after = [ "postgresql.service" ];
+  };
+
+  # Ensure oauth2-proxy waits for buildbot-master to be ready
+  systemd.services.oauth2-proxy = {
+    wants = [ "buildbot-master.service" ];
+    after = [ "buildbot-master.service" ];
+  };
+
   # Fix DNS resolution timing issue on boot and ensure nginx is ready
   systemd.services."cloudflared-tunnel-9c376bb1-4ca6-49d7-8c36-93908b752ae8" = {
     after = [
+      "oauth2-proxy.service"
       "nginx.service"
       "buildbot-master.service"
       "network-online.target"
       "nss-lookup.target"
     ];
     wants = [
+      "oauth2-proxy.service"
       "nginx.service"
       "buildbot-master.service"
       "network-online.target"
@@ -330,15 +344,17 @@
     before = [ "nginx.service" ];
   };
 
-  # Ensure nginx waits for atticd and buildbot-master
+  # Ensure nginx waits for all backend services
   systemd.services.nginx = {
     after = [
       "atticd.service"
       "buildbot-master.service"
+      "oauth2-proxy.service"
     ];
     wants = [
       "atticd.service"
       "buildbot-master.service"
+      "oauth2-proxy.service"
     ];
   };
 
