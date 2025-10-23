@@ -22,6 +22,41 @@ function . --description "Shortcut for `nix run nixpkgs#foo`"
     end
 end
 
+function mkcd --description "Create directory and cd into it"
+    if test (count $argv) -eq 1
+        mkdir -p $argv[1] && cd $argv[1]
+    else
+        echo "Usage: mkcd directory_name"
+    end
+end
+
+function td --description "Create temporary directory and cd into it"
+    cd (mktemp -d)
+end
+
+function mksh --description "Create executable shell script with bash shebang and open in editor"
+    if test (count $argv) -eq 1
+        set script_name $argv[1]
+
+        # Create the script with bash shebang and common options
+        echo '#!/usr/bin/env bash' > $script_name
+        echo 'set -euo pipefail' >> $script_name
+        echo '' >> $script_name
+
+        # Make it executable
+        chmod u+x $script_name
+
+        # Open in editor (prefer $EDITOR, fallback to nvim)
+        if set -q EDITOR
+            $EDITOR $script_name
+        else
+            nvim $script_name
+        end
+    else
+        echo "Usage: mksh script_name.sh"
+    end
+end
+
 #-------------------------------------------------------------------------------
 # Atuin keybindings
 #-------------------------------------------------------------------------------
