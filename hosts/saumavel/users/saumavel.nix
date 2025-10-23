@@ -7,7 +7,6 @@
 {
   imports = [
     flake.modules.home.default
-    flake.modules.darwin.secretive
   ];
 
   home.packages = with pkgs; [
