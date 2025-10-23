@@ -72,7 +72,10 @@
     extraPackages =
       python3Packages: with python3Packages; [
         pip
-        gtts
+        # Override gtts to disable strict dependency checking for click compatibility
+        (gtts.overridePythonAttrs (_old: {
+          pythonRuntimeDepsCheck = false;
+        }))
         dateutil
         pyatv
         getmac
