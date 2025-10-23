@@ -221,6 +221,7 @@
     };
     atuin = {
       enable = true;
+      enableFishIntegration = false; # Manual keybindings in config.fish
       settings = {
         exit_mode = "return-query";
         keymap_mode = "auto";
