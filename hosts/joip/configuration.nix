@@ -72,9 +72,13 @@
     extraPackages =
       python3Packages: with python3Packages; [
         pip
-        # Override gtts to disable strict dependency checking for click compatibility
-        (gtts.overridePythonAttrs (_old: {
-          pythonRuntimeDepsCheck = false;
+        # Override gtts to patch metadata and remove strict click version constraint
+        (gtts.overridePythonAttrs (old: {
+          postPatch = (old.postPatch or "") + ''
+            # Remove strict click version constraint from pyproject.toml
+            substituteInPlace pyproject.toml \
+              --replace-fail '"click >=7.1, <8.2",' '"click >=7.1",'
+          '';
         }))
         dateutil
         pyatv
