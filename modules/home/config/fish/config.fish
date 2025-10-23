@@ -58,9 +58,12 @@ function mksh --description "Create executable shell script with bash shebang an
 end
 
 #-------------------------------------------------------------------------------
-# Atuin keybindings
+# Atuin manual initialization and keybindings
 #-------------------------------------------------------------------------------
-# bind to ctrl-p in normal and insert mode
+# Initialize atuin, filtering out deprecated bind -k syntax
+atuin init fish | sed "s/-k up/up/g" | source
+
+# bind to ctrl-p and ctrl-r in normal and insert mode
 bind -M normal ctrl-p _atuin_search
 bind -M insert ctrl-p _atuin_search
 bind -M normal ctrl-r _atuin_search
