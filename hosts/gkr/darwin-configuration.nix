@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   flake,
-  perSystem,
   ...
 }:
 {
@@ -38,7 +37,6 @@
     gh # needed for the softwave github run
     cowsay
     neofetch
-    perSystem.self.mvim
     cmatrix
     btop
   ];

@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  perSystem,
   ...
 }:
 {
@@ -22,7 +23,10 @@
       executable = true;
     };
 
-    sessionVariables.EDITOR = "nvim";
+    sessionVariables = {
+      NVIM_APPNAME = "mvim";
+      EDITOR = "mvim";
+    };
 
     packages = with pkgs; [
       wget
@@ -33,6 +37,7 @@
       mediainfo # for mpv / yazi setup
       gemini-cli
       claude-code
+      perSystem.self.mvim
     ];
   };
 
@@ -277,7 +282,7 @@
         c = "clear";
         lg = "lazygit";
         cat = "bat";
-        n = "nvim";
+        n = "mvim";
       };
       interactiveShellInit = lib.strings.concatStrings (
         lib.strings.intersperse "\n" [

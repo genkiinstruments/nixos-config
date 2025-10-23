@@ -1,31 +1,44 @@
 {
   pkgs,
+  pname,
   flake,
-  lib ? pkgs.lib,
+  ...
 }:
-let
-  mvimBase = flake.lib.mvim-base {
-    inherit flake pkgs lib;
-    configSource = flake + "/home/nvim";
-    NVIM_APPNAME = "mvim";
-  };
-
-  name = "mvim";
-in
 pkgs.writeShellApplication {
-  inherit name;
+  name = pname;
+  runtimeInputs = with pkgs; [
+    neovim
+    go
+    cargo
+    nodejs
+    nixfmt
+    rust-analyzer
+    ast-grep
+  ];
   text = ''
-    unset VIMINIT
-    export PATH="${mvimBase.commonEnvVars.PATH}:$PATH"
-    export NVIM_APPNAME="${mvimBase.commonEnvVars.NVIM_APPNAME}"
+    # Set NVIM_APPNAME to use custom config
+    export NVIM_APPNAME=${pname}
 
-    ${mvimBase.setupConfigScript "$XDG_CONFIG_HOME/${mvimBase.commonEnvVars.NVIM_APPNAME}"}
+    # Set up config symlink if it doesn't exist
+    NVIM_CONFIG_PATH="''${XDG_CONFIG_HOME:-$HOME/.config}/$NVIM_APPNAME"
 
+    # Determine config source: use MVIM_CONFIG_SOURCE if set, otherwise nix store
+    if [ -n "''${MVIM_CONFIG_SOURCE:-}" ]; then
+      NVIM_CONFIG_SOURCE="$MVIM_CONFIG_SOURCE"
+    else
+      NVIM_CONFIG_SOURCE="${flake}/home/nvim"
+    fi
+
+    if [ ! -e "$NVIM_CONFIG_PATH" ]; then
+      echo "Creating config symlink at $NVIM_CONFIG_PATH"
+      ln -sfn "$NVIM_CONFIG_SOURCE" "$NVIM_CONFIG_PATH"
+    fi
+
+    # Launch neovim with all arguments passed through
     exec nvim "$@"
   '';
-
   meta = {
-    description = "Standalone mvim with configuration stored in nix store";
-    mainProgram = name;
+    description = "Multivacs Meovim";
+    mainProgram = pname;
   };
 }

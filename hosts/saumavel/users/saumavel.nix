@@ -6,10 +6,7 @@
   ...
 }:
 {
-  imports = [
-    flake.modules.home.default
-    flake.modules.home.mvim
-  ];
+  imports = [ flake.modules.home.default ];
 
   home.packages = with pkgs; [
     neovim
@@ -23,18 +20,8 @@
     ast-grep
   ];
 
-  # Enable mvim with home-manager integration and custom config path
-  # programs.mvim = {
-  #   enable = true;
-  #   configPath = "/Users/saumavel/genkiinstruments/nixos-config/hosts/saumavel/users";
-  #   appName = "nvim";
-  # };
-
   home = {
     file.".config/karabiner/karabiner.json".source = lib.mkForce ./karabiner.json;
-
-    # XDG Base Directory specification configuration
-    # Manages application configurations and default applications
 
     sessionVariables.NVIM_APPNAME = "nvim";
     activation.mvimSetup =
