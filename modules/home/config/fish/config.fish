@@ -39,9 +39,9 @@ function mksh --description "Create executable shell script with bash shebang an
         set script_name $argv[1]
 
         # Create the script with bash shebang and common options
-        echo '#!/usr/bin/env bash' > $script_name
-        echo 'set -euo pipefail' >> $script_name
-        echo '' >> $script_name
+        echo '#!/usr/bin/env bash' >$script_name
+        echo 'set -euo pipefail' >>$script_name
+        echo '' >>$script_name
 
         # Make it executable
         chmod u+x $script_name
