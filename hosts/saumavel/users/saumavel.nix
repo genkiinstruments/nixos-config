@@ -10,11 +10,15 @@
   ];
 
   home.packages = with pkgs; [
+    go
+    neovim
     nixfmt
     nodejs
+    mermaid-cli
     imagemagick
     pstree # Display running processes as a tree
     rust-analyzer
+    tectonic
     tree-sitter
     tldr
     ast-grep

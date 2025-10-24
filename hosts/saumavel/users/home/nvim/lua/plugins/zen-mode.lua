@@ -1,22 +1,34 @@
+-- ============================================================================
+-- Zen Mode Configuration
+-- ============================================================================
+-- Distraction-free coding with Twilight and Zen Mode
 return {
+    -- Twilight: Dim inactive portions of code
     "folke/twilight.nvim",
+    -- Zen Mode: Focus on current buffer
     {
         "folke/zen-mode.nvim",
         cmd = "ZenMode",
         opts = {
+            -- ================================================================
+            -- Plugin Integrations
+            -- ================================================================
             plugins = {
+                -- Vim options to apply in zen mode
                 options = {
                     enabled = true,
-                    ruler = false, -- disables the ruler text in the cmd line area
-                    showcmd = false, -- disables the command in the last line of the screen
-                    -- you may turn on/off statusline in zen mode by setting 'laststatus'
-                    -- statusline will be shown only if 'laststatus' == 3
-                    laststatus = 0, -- turn off the statusline in zen mode
+                    ruler = false, -- Disable ruler text in command line
+                    showcmd = false, -- Disable command display in last line
+                    laststatus = 0, -- Turn off statusline (0 = never shown)
                 },
-                gitsigns = true,
-                tmux = true,
+                -- Integration with other plugins
+                gitsigns = true, -- Keep gitsigns enabled
+                tmux = true, -- Resize tmux pane if inside tmux
             },
         },
-        keys = { { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" } },
+        -- Keybinding
+        keys = {
+            { "<leader>z", "<cmd>ZenMode<cr>", desc = "Zen Mode" },
+        },
     },
 }

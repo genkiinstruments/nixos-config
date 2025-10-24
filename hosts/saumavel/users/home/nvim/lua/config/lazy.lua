@@ -1,4 +1,16 @@
+-- ============================================================================
+-- Lazy.nvim Configuration
+-- ============================================================================
+-- Plugin manager setup and configuration for LazyVim
+
+-- ============================================================================
+-- Bootstrap Lazy.nvim
+-- ============================================================================
+
+-- Set up the lazy.nvim installation path
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+-- Clone lazy.nvim if it doesn't exist
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
     local lazyrepo = "https://github.com/folke/lazy.nvim.git"
     local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
@@ -12,18 +24,49 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
         os.exit(1)
     end
 end
+
+-- Add lazy.nvim to the runtime path
 vim.opt.rtp:prepend(lazypath)
 
+-- ============================================================================
+-- Plugin Configuration
+-- ============================================================================
+
 require("lazy").setup({
+    -- ========================================================================
+    -- Core Settings
+    -- ========================================================================
+
     rocks = {
         enabled = false, -- Disable luarocks integration to fix warnings
     },
+
+    -- ========================================================================
+    -- Plugin Specifications
+    -- ========================================================================
+
     spec = {
-        -- add LazyVim and import its plugins
+        -- --------------------------------------------------------------------
+        -- LazyVim Base
+        -- --------------------------------------------------------------------
+
+        -- Core LazyVim with Catppuccin Mocha colorscheme
         { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = { colorscheme = "catppuccin-mocha" } },
-        -- import/override with your plugins
+
+        -- --------------------------------------------------------------------
+        -- Testing
+        -- --------------------------------------------------------------------
+
         { import = "lazyvim.plugins.extras.test.core" },
+
+        -- --------------------------------------------------------------------
+        -- Language Support
+        -- --------------------------------------------------------------------
+
+        -- Nix
         { import = "lazyvim.plugins.extras.lang.nix" },
+
+        -- Python with custom test runner configuration
         {
             import = "lazyvim.plugins.extras.lang.python",
             opts = {
@@ -35,31 +78,76 @@ require("lazy").setup({
                 },
             },
         },
-        -- Lua
+
+        -- SQL
         { import = "lazyvim.plugins.extras.lang.sql" },
+
+        -- Zig
         { import = "lazyvim.plugins.extras.lang.zig" },
+
+        -- Go
         { import = "lazyvim.plugins.extras.lang.go" },
+
+        -- C/C++ (clangd)
         { import = "lazyvim.plugins.extras.lang.clangd" },
+
+        -- Svelte
+        { import = "lazyvim.plugins.extras.lang.svelte" },
+
+        -- Rust
+        { import = "lazyvim.plugins.extras.lang.rust" },
+
+        -- Elixir
+        { import = "lazyvim.plugins.extras.lang.elixir" },
+
+        -- Tailwind CSS
+        { import = "lazyvim.plugins.extras.lang.tailwind" },
+
+        -- --------------------------------------------------------------------
+        -- Coding Enhancements
+        -- --------------------------------------------------------------------
+
         { import = "lazyvim.plugins.extras.coding.mini-surround" },
+
+        -- --------------------------------------------------------------------
+        -- Editor Enhancements
+        -- --------------------------------------------------------------------
+
         { import = "lazyvim.plugins.extras.editor.mini-diff" },
         { import = "lazyvim.plugins.extras.editor.mini-move" },
-        { import = "lazyvim.plugins.extras.lang.svelte" },
-        { import = "lazyvim.plugins.extras.lang.rust" },
-        { import = "lazyvim.plugins.extras.lang.elixir" },
-        { import = "lazyvim.plugins.extras.lang.tailwind" },
-        { import = "lazyvim.plugins.extras.util.mini-hipatterns" }, -- Tailwind
+
+        -- --------------------------------------------------------------------
+        -- Utilities
+        -- --------------------------------------------------------------------
+
+        -- Mini hipatterns for Tailwind color highlighting
+        { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
+
+        -- --------------------------------------------------------------------
+        -- Custom Plugins
+        -- --------------------------------------------------------------------
+
+        -- Import custom plugins from lua/plugins directory
         { import = "plugins" },
+
+        -- --------------------------------------------------------------------
+        -- Plugin Overrides
+        -- --------------------------------------------------------------------
+
+        -- Noice.nvim: Disable hover messages when not available
         {
             "folke/noice.nvim",
             opts = {
                 lsp = {
                     hover = {
-                        -- Set not show a message if hover is not available, ex: shift+k on Typescript code
+                        -- Don't show message if hover is not available (e.g., shift+k on TypeScript)
                         silent = true,
                     },
                 },
             },
         },
+
+        -- Tmux Navigator: Seamless navigation between vim and tmux panes
         {
             "christoomey/vim-tmux-navigator",
             cmd = {
@@ -77,37 +165,62 @@ require("lazy").setup({
                 { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
             },
         },
+
+        -- Render Markdown: Enhanced markdown rendering
         {
             "MeanderingProgrammer/render-markdown.nvim",
             opts = {
                 win_options = {
                     conceallevel = { default = 0, rendered = 3 },
                 },
-            },
-            -- Disable LaTeX support since latex2text is not installed
-            latex = {
-                enabled = false,
+                -- Disable LaTeX support since latex2text is not installed
+                latex = {
+                    enabled = false,
+                },
             },
         },
+
+        -- --------------------------------------------------------------------
+        -- Disabled Plugins
+        -- --------------------------------------------------------------------
+
         { "nvim-neo-tree/neo-tree.nvim", enabled = false },
         { "akinsho/bufferline.nvim", enabled = false },
         { "nvimdev/dashboard-nvim", enabled = false },
     },
+
+    -- ========================================================================
+    -- Plugin Defaults
+    -- ========================================================================
+
     defaults = {
-        -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
-        -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
+        -- By default, only LazyVim plugins will be lazy-loaded
+        -- Custom plugins will load during startup
+        -- Set to true to have all custom plugins lazy-loaded by default
         lazy = false,
-        -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
-        -- have outdated releases, which may break your Neovim install.
-        version = false, -- always use the latest git commit
+
+        -- Always use the latest git commit
+        -- It's recommended to leave version=false since many plugins
+        -- have outdated releases that may break Neovim
+        version = false,
     },
+
+    -- ========================================================================
+    -- Update Checker
+    -- ========================================================================
+
     checker = {
-        enabled = true, -- check for plugin updates periodically
-        notify = false, -- notify on update
-    }, -- automatically check for plugin updates
+        enabled = true,  -- Check for plugin updates periodically
+        notify = false,  -- Don't notify on update
+    },
+
+    -- ========================================================================
+    -- Performance Optimizations
+    -- ========================================================================
+
     performance = {
         rtp = {
-            -- disable some rtp plugins
+            -- Disable unused runtime path plugins
             disabled_plugins = {
                 "gzip",
                 "tarPlugin",
