@@ -210,8 +210,8 @@ require("lazy").setup({
     -- ========================================================================
 
     checker = {
-        enabled = true,  -- Check for plugin updates periodically
-        notify = false,  -- Don't notify on update
+        enabled = true, -- Check for plugin updates periodically
+        notify = false, -- Don't notify on update
     },
 
     -- ========================================================================
