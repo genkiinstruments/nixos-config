@@ -1,6 +1,4 @@
-{
-  pkgs,
-}:
+{ pkgs }:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     git
@@ -8,7 +6,5 @@ pkgs.mkShellNoCC {
     nh
   ];
 
-  env = { };
-
-  shellHook = ''export EDITOR=nvim'';
+  env.EDITOR = "nvim";
 }
