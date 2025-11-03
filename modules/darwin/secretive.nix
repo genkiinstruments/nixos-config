@@ -8,8 +8,8 @@ _: {
       # After one authentication, reuse the connection for 10 minutes
       # This reduces the need for repeated Touch ID confirmations
       ControlMaster auto
-      ControlPath ~/.ssh/sockets/%r@%h:%p
-      ControlPersist 10m
+      ControlPath none
+      ControlPersist 30m
 
       # Forward agent to remote hosts
       ForwardAgent yes
