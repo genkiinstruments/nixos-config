@@ -80,7 +80,7 @@
               --replace-fail '"click >=7.1, <8.2",' '"click >=7.1",'
           '';
         }))
-        dateutil
+        python-dateutil
         pyatv
         getmac
         async-upnp-client
