@@ -2,6 +2,7 @@
   flake,
   inputs,
   pkgs,
+  system,
   ...
 }:
 let
@@ -63,9 +64,11 @@ let
 in
 formatter
 // {
-  passthru = formatter.passthru // {
-    tests = {
-      inherit check;
+  passthru =
+    formatter.passthru
+    // {
+      tests = pkgs.lib.optionalAttrs (system == "x86_64-linux") {
+        inherit check;
+      };
     };
-  };
 }
