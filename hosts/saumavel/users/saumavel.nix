@@ -77,7 +77,6 @@
         user.email = "saumavel@gmail.com";
         github.user = "saumavel";
       };
-      delta.enable = true;
     };
   };
 
