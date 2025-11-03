@@ -66,13 +66,6 @@
       enable = true;
       package = pkgs.openssh;
       enableDefaultConfig = false;
-      matchBlocks."*" = {
-        forwardAgent = true;
-        extraOptions = {
-          StrictHostKeyChecking = "accept-new";
-          AddKeysToAgent = "yes";
-        };
-      };
     };
 
     fzf = {
