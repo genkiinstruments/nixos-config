@@ -11,6 +11,7 @@ jobs:
       - uses: actions/checkout@main
         with:
           submodules: true
+          persist-credentials: false
       - uses: cachix/install-nix-action@master
         with:
           github_access_token: ${{ secrets.GITHUB_TOKEN }}

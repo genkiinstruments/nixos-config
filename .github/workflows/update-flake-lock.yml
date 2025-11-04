@@ -23,6 +23,7 @@ jobs:
           submodules: true
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Configure Git for private repositories
         run: |
