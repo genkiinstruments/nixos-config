@@ -89,7 +89,7 @@
     lazygit = {
       enable = true;
       settings = {
-        git.paging.pager = "${pkgs.diff-so-fancy}/bin/diff-so-fancy";
+        git.pagers = [ { pager = "${pkgs.diff-so-fancy}/bin/diff-so-fancy"; } ];
         git.truncateCopiedCommitHashesTo = 40;
         gui = {
           language = "en";
