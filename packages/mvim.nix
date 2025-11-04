@@ -14,6 +14,8 @@ pkgs.writeShellApplication {
     nixfmt
     rust-analyzer
     ast-grep
+    lua5_1
+    luarocks
   ];
   text = ''
     # Set NVIM_APPNAME to use custom config
