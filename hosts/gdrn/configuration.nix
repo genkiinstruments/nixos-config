@@ -26,11 +26,9 @@ in
     flake.modules.shared.default
     flake.modules.shared.builders
     flake.modules.shared.home-manager
-    flake.modules.shared.comin-exporter
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
-    flake.modules.nixos.comin
     flake.modules.nixos.monitoring
     ./disko-config.nix
   ];
