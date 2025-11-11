@@ -2,7 +2,6 @@
   inputs,
   flake,
   lib,
-  pkgs,
   ...
 }:
 {
