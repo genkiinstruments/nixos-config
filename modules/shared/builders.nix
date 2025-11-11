@@ -37,6 +37,11 @@ let
 
   builders = [
     (mkBuilder {
+      hostName = "m2";
+      systems = [ "aarch64-linux" ];
+      maxJobs = 24;
+    })
+    (mkBuilder {
       hostName = "gdrn";
       systems = [ "x86_64-linux" ];
       maxJobs = 32;
