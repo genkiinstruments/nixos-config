@@ -199,96 +199,42 @@
         clientSecretFile = config.age.secrets.buildbot-client-secret.path;
         clientId = "Iv23lioyXvbIN5gVi6KN";
       };
-      postBuildSteps = [
-        {
-          name = "Push to attic";
-          environment.path_to_push = inputs.buildbot-nix.lib.interpolate "%(prop:out_path)s";
-          environment.ATTIC_TOKEN = inputs.buildbot-nix.lib.interpolate "%(secret:attic-auth-token)s";
-          command = [
-            (pkgs.lib.getExe (
-              pkgs.writeShellApplication {
-                name = "push-to-attic";
-                runtimeInputs = [
-                  pkgs.attic-client
-                  pkgs.curl
-                ];
-                text = ''
-                  # shellcheck disable=SC2101
-                  attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
-
-                  # shellcheck disable=SC2154
-                  # path_to_push is provided by buildbot-nix environment
-                  # More robust retry logic with connection health checks
-                  MAX_RETRIES=5
-                  BASE_DELAY=2
-                  MAX_DELAY=60
-
-                  # Test connection first
-                  echo "Testing connection to attic server..."
-                  if ! curl -sf -m 5 "http://${config.services.atticd.settings.listen}/api/v1/cache/genki" >/dev/null 2>&1; then
-                    echo "Warning: Initial connection test failed, but proceeding..."
-                  fi
-
-                  # Function to calculate delay with jitter
-                  calculate_delay() {
-                    local attempt=$1
-                    local base_delay=$((BASE_DELAY * (2 ** (attempt - 1))))
-                    local delay=$((base_delay < MAX_DELAY ? base_delay : MAX_DELAY))
-                    # Add 10-30% jitter
-                    local jitter=$((delay * (10 + RANDOM % 20) / 100))
-                    echo $((delay + jitter))
-                  }
-
-                  # Retry push with enhanced error handling
-                  for attempt in $(seq 1 $MAX_RETRIES); do
-                    echo "Attempt $attempt/$MAX_RETRIES to push to attic..."
-                    
-                    # Set timeout for the push operation
-                    export ATTIC_TIMEOUT=300  # 5 minutes
-                    
-                    # Try push with error capture
-                    # shellcheck disable=SC2154
-                    if output=$(attic push genki "$path_to_push" 2>&1); then
-                      echo "Push succeeded on attempt $attempt"
-                      exit 0
-                    else
-                      exit_code=$?
-                      echo "Push failed on attempt $attempt (exit code: $exit_code)"
-                      echo "Error output: $output"
-                      
-                      # Check for specific error patterns
-                      if echo "$output" | grep -q "connection closed before message completed"; then
-                        echo "Connection was interrupted - this is recoverable"
-                      elif echo "$output" | grep -q "error sending request"; then
-                        echo "Network error detected - will retry"
-                      fi
-                      
-                      if [ "$attempt" -lt "$MAX_RETRIES" ]; then
-                        delay=$(calculate_delay "$attempt")
-                        echo "Waiting $delay seconds before retry..."
-                        sleep "$delay"
-                        
-                        # Test connection before next attempt
-                        if ! curl -sf -m 5 "http://${config.services.atticd.settings.listen}/api/v1/cache/genki" >/dev/null 2>&1; then
-                          echo "Connection test failed, but continuing with retry..."
-                        fi
-                      fi
-                    fi
-                  done
-
-                  echo "All $MAX_RETRIES push attempts failed"
-                  # Exit with special code to indicate retry exhaustion
-                  exit 111
-                '';
-              }
-            ))
-          ];
-        }
-      ];
     };
-  systemd.services.buildbot-master.serviceConfig.LoadCredential = [
-    "attic-auth-token:${config.age.secrets.attic-genki-auth-token.path}"
-  ];
+
+  systemd.services.attic-watch-store = {
+    description = "Upload all store paths to attic";
+    wantedBy = [ "multi-user.target" ];
+    environment.HOME = "/var/lib/attic-watch-store";
+    after = [
+      "network-online.target"
+      "atticd.service"
+    ];
+    wants = [ "network-online.target" ];
+
+    serviceConfig = {
+      Type = "simple";
+      Restart = "on-failure";
+      RestartSec = "5s";
+      MemoryHigh = "5%";
+      MemoryMax = "10%";
+      DynamicUser = true;
+      StateDirectory = "attic-watch-store";
+      LoadCredential = [ "attic-token:${config.age.secrets.attic-genki-auth-token.path}" ];
+    };
+
+    path = [ pkgs.attic-client ];
+    script = ''
+      set -euo pipefail
+
+      # Read token from credentials
+      ATTIC_TOKEN=$(< "$CREDENTIALS_DIRECTORY/attic-token")
+      export ATTIC_TOKEN
+
+      attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
+      attic use genki
+      exec attic watch-store genki:genki
+    '';
+  };
 
   services.buildbot-nix.worker = {
     enable = true;
