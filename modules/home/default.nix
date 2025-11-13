@@ -279,6 +279,7 @@
         lg = "lazygit";
         cat = "bat";
         n = "mvim";
+        nssh = "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
       };
       interactiveShellInit = lib.strings.concatStrings (
         lib.strings.intersperse "\n" [
