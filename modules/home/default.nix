@@ -28,17 +28,22 @@
       EDITOR = "mvim";
     };
 
-    packages = with pkgs; [
-      wget
-      zip
-      magic-wormhole-rs
-      neofetch
-      sesh
-      mediainfo # for mpv / yazi setup
-      gemini-cli
-      claude-code
-      perSystem.self.mvim
-    ];
+    packages =
+      with pkgs;
+      [
+        wget
+        zip
+        magic-wormhole-rs
+        neofetch
+        sesh
+        mediainfo # for mpv / yazi setup
+        perSystem.self.mvim
+      ]
+      ++ (with perSystem.nix-ai-tools; [
+        gemini-cli
+        claude-code
+        claude-code-acp
+      ]);
   };
 
   catppuccin = {
