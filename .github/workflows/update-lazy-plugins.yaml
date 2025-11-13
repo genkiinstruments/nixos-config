@@ -20,6 +20,9 @@ jobs:
 
       - name: Update vim plugins
         run: |
+          # Pull latest main to avoid conflicts
+          git fetch origin main
+          git rebase origin/main || git rebase --abort
           # Create writable config directory and copy files
           # (prevents mvim wrapper from creating read-only symlink to nix store)
           mkdir -p $HOME/.config/mvim

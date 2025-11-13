@@ -43,6 +43,9 @@ jobs:
 
       - name: Update flake.lock
         run: |
+          # Pull latest main to avoid conflicts
+          git fetch origin main
+          git rebase origin/main || git rebase --abort
           nix flake update
 
       - name: Create Pull Request
