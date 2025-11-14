@@ -22,6 +22,7 @@
     tree-sitter
     tldr
     ast-grep
+    ghostscript
   ];
 
   home.file.".config/karabiner/karabiner.json".source = lib.mkForce ./karabiner.json;
