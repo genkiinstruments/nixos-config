@@ -28,6 +28,8 @@
 
   networking.hostName = "x";
 
+  nix.distributedBuilds = true;
+
   networking.firewall.trustedInterfaces = [
     "enp5s0"
     "eno1"
