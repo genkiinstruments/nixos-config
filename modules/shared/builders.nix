@@ -69,7 +69,6 @@ in
 {
   nix = {
     settings.trusted-users = [ "nix-ssh" ];
-    distributedBuilds = true;
     buildMachines = builders;
   };
 
