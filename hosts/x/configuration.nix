@@ -51,10 +51,16 @@
     };
   };
 
-  # Ensure PostgreSQL starts with buildbot-master
+  # Ensure PostgreSQL and network are ready before buildbot-master starts
   systemd.services.buildbot-master = {
-    wants = [ "postgresql.service" ];
-    after = [ "postgresql.service" ];
+    wants = [
+      "postgresql.service"
+      "network-online.target"
+    ];
+    after = [
+      "postgresql.service"
+      "network-online.target"
+    ];
   };
 
   # Ensure oauth2-proxy waits for buildbot-master to be ready

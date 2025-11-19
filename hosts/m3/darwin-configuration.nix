@@ -52,6 +52,7 @@
       # guis
       "raycast"
       "arc"
+      "google-drive"
     ];
     brews = [
       # clis and libraries
