@@ -8,6 +8,7 @@
 {
   imports = [
     inputs.srvos.nixosModules.server
+    inputs.srvos.nixosModules.roles-nix-remote-builder
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.nixos-facter-modules.nixosModules.facter
@@ -23,6 +24,10 @@
   networking.hostName = "pbt";
   system.stateVersion = "25.05"; # Did you read the comment?
   facter.reportPath = ./facter.json;
+
+  roles.nix-remote-builder.schedulerPublicKeys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBtnJ1eS+mI4EASAWk7NXin5Hln0ylYUPHe2ovQAa8G root@x"
+  ];
 
   # the issue is that logind allocates 25% of your system memory to /run rather than more by default, we need to increase that so that builds don't fail
   services.logind.settings.Login.RuntimeDirectorySize = "50%";
