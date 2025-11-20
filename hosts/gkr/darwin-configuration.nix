@@ -10,7 +10,6 @@
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
     inputs.agenix.darwinModules.default
     flake.modules.darwin.default
-    flake.modules.darwin.comin
     flake.modules.shared.default
     flake.modules.shared.home-manager
   ];
