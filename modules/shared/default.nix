@@ -1,6 +1,7 @@
 {
   pkgs,
   flake,
+  hostName,
   ...
 }:
 {
@@ -14,6 +15,9 @@
   nix.settings.trusted-public-keys = [ "genki:S03n+SoctaWEOjLRWLFTbd898DdDMn5r/L2T+cj1IHE=" ];
 
   nix.package = pkgs.nixVersions.latest;
+
+  # This is not set by default in blueprint
+  networking.hostName = hostName;
 
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
