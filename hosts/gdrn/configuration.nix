@@ -5,13 +5,6 @@
   pkgs,
   ...
 }:
-let
-  mkWebshippyStripeSyncSecret = name: {
-    file = "${inputs.secrets}/${name}.age";
-    owner = config.services.stripe-webshippy-sync.user;
-    group = config.services.stripe-webshippy-sync.group;
-  };
-in
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -114,17 +107,6 @@ in
     cachix.cacheName = "genki";
     cachix.tokenFile = config.age.secrets.gdrn-github-runner-cachixToken.path;
   };
-  age.secrets.gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
-  age.secrets.gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
-
-  age.secrets.gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
-
-  age.secrets.stripe-webhook-genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/stripe-webhook-genki-is-cloudflare-tunnel-secret.age";
-
-  age.secrets.genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
-  age.secrets.genki-is-cloudflare-api-token.owner = "caddy";
-  age.secrets.genki-is-cloudflare-api-token.group = "caddy";
-  age.secrets.genki-is-cloudflare-api-token.mode = "0400";
 
   services.uptime-kuma.enable = true;
   services.caddy = {
@@ -151,16 +133,37 @@ in
     config.age.secrets.genki-is-cloudflare-api-token.path;
 
   services.tailscale.permitCertUid = "caddy";
+  age.secrets =
+    let
+      mkWebshippyStripeSyncSecret = name: {
+        file = "${inputs.secrets}/${name}.age";
+        owner = config.services.stripe-webshippy-sync.user;
+        group = config.services.stripe-webshippy-sync.group;
+      };
+    in
+    {
+      gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
+      gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
 
-  # Stripe-Webshippy-Sync secrets
-  age.secrets.stripe-secret-key = mkWebshippyStripeSyncSecret "stripe-secret-key";
-  age.secrets.stripe-webhook-secret = mkWebshippyStripeSyncSecret "stripe-webhook-secret";
-  age.secrets.webshippy-api-key = mkWebshippyStripeSyncSecret "webshippy-api-key";
-  age.secrets.r2-access-key-id = mkWebshippyStripeSyncSecret "r2-access-key-id";
-  age.secrets.r2-secret-access-key = mkWebshippyStripeSyncSecret "r2-secret-access-key";
-  age.secrets.r2-endpoint-url = mkWebshippyStripeSyncSecret "r2-endpoint-url";
-  age.secrets.r2-bucket-name = mkWebshippyStripeSyncSecret "r2-bucket-name";
-  age.secrets.r2-public-url = mkWebshippyStripeSyncSecret "r2-public-url";
+      gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
+
+      stripe-webhook-genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/stripe-webhook-genki-is-cloudflare-tunnel-secret.age";
+
+      genki-is-cloudflare-api-token.file = "${inputs.secrets}/genki-is-cloudflare-api-token.age";
+      genki-is-cloudflare-api-token.owner = "caddy";
+      genki-is-cloudflare-api-token.group = "caddy";
+      genki-is-cloudflare-api-token.mode = "0400";
+
+      # Stripe-Webshippy-Sync secrets
+      stripe-secret-key = mkWebshippyStripeSyncSecret "stripe-secret-key";
+      stripe-webhook-secret = mkWebshippyStripeSyncSecret "stripe-webhook-secret";
+      webshippy-api-key = mkWebshippyStripeSyncSecret "webshippy-api-key";
+      r2-access-key-id = mkWebshippyStripeSyncSecret "r2-access-key-id";
+      r2-secret-access-key = mkWebshippyStripeSyncSecret "r2-secret-access-key";
+      r2-endpoint-url = mkWebshippyStripeSyncSecret "r2-endpoint-url";
+      r2-bucket-name = mkWebshippyStripeSyncSecret "r2-bucket-name";
+      r2-public-url = mkWebshippyStripeSyncSecret "r2-public-url";
+    };
 
   # Stripe-Webshippy-Sync service configuration
   services.stripe-webshippy-sync = {
