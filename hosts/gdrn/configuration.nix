@@ -25,7 +25,6 @@ in
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.stripe-webshippy-sync.nixosModules.default
     flake.modules.shared.default
-    flake.modules.shared.builders
     flake.modules.shared.home-manager
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
@@ -33,8 +32,6 @@ in
     flake.modules.nixos.monitoring
     ./disko-config.nix
   ];
-
-  networking.hostName = "gdrn";
 
   networking.firewall.trustedInterfaces = [ "enp1s0" ];
   networking.interfaces.enp1s0.useDHCP = true;

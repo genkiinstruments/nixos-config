@@ -18,9 +18,9 @@
     inputs.buildbot-nix.nixosModules.buildbot-master
     inputs.buildbot-nix.nixosModules.buildbot-worker
     flake.modules.shared.default
-    flake.modules.shared.builders
     flake.modules.shared.home-manager
     flake.modules.shared.systemd-exporter
+    flake.modules.shared.builders
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
     ./disko.nix
@@ -28,7 +28,28 @@
 
   networking.hostName = "x";
 
-  nix.distributedBuilds = true;
+  genki.builders.builders = [
+    {
+      hostName = "m2";
+      system = "aarch64-linux";
+      maxJobs = 24;
+    }
+    {
+      hostName = "gdrn";
+      system = "x86_64-linux";
+      maxJobs = 32;
+    }
+    {
+      hostName = "pbt";
+      system = "aarch64-linux";
+      maxJobs = 8;
+    }
+    {
+      hostName = "gkr";
+      system = "aarch64-darwin";
+      maxJobs = 8;
+    }
+  ];
 
   networking.firewall.trustedInterfaces = [
     "enp5s0"
