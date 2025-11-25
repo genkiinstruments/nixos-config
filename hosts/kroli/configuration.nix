@@ -17,12 +17,9 @@
     flake.modules.shared.comin-exporter
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
-    flake.modules.shared.builders
     flake.modules.nixos.comin
     ./disk-config.nix
   ];
-
-  networking.hostName = "kroli";
 
   system.stateVersion = "23.05"; # Did you read the comment?
 

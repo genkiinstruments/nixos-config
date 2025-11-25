@@ -17,7 +17,6 @@
     flake.modules.shared.home-manager
     flake.modules.shared.comin-exporter
     flake.modules.shared.systemd-exporter
-    flake.modules.shared.builders
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.pipewire
@@ -27,7 +26,6 @@
   # Be careful updating this.
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  networking.hostName = "v1"; # Define your hostname.
   system.stateVersion = "24.11"; # Did you read the comment?
 
   # VMware, Parallels both only support this being 0 otherwise you see "error switching console mode" on boot.

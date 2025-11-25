@@ -10,8 +10,8 @@
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
     flake.modules.darwin.default
     flake.modules.darwin.secretive
-    flake.modules.shared.builders
     flake.modules.shared.default
+    flake.modules.shared.builders
     flake.modules.shared.home-manager
     flake.modules.darwin.secretive
   ];
@@ -25,6 +25,14 @@
     home = "/Users/saumavel";
     shell = pkgs.fish;
   };
+
+  genki.builders.builders = [
+    {
+      hostName = "m2";
+      system = "aarch64-linux";
+      maxJobs = 24;
+    }
+  ];
 
   # Fix nixbld group ID issue
   ids.gids.nixbld = 350;

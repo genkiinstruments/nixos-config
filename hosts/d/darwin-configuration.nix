@@ -11,12 +11,11 @@
     flake.modules.darwin.default
     flake.modules.darwin.secretive
     flake.modules.shared.default
+    flake.modules.shared.builders
     flake.modules.shared.home-manager
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
-
-  networking.hostName = "d";
 
   users.users.genki = {
     isHidden = false;
@@ -26,34 +25,18 @@
   };
   system.primaryUser = "genki";
 
-  nix = {
-    distributedBuilds = true;
-    buildMachines = [
-      {
-        hostName = "pbt";
-        systems = [ "aarch64-linux" ];
-        maxJobs = 8;
-        sshUser = "nix-ssh";
-        protocol = "ssh-ng";
-        supportedFeatures = [
-          "nixos-test"
-          "benchmark"
-          "big-parallel"
-          "kvm"
-        ];
-      }
-    ];
-  };
-
-  programs.ssh.extraConfig = ''
-    Host pbt pbt.tail01dbd.ts.net
-      User nix-ssh
-      HostName pbt.tail01dbd.ts.net
-      StrictHostKeyChecking accept-new
-      BatchMode yes
-      PubkeyAuthentication yes
-      IdentitiesOnly yes
-  '';
+  genki.builders.builders = [
+    {
+      hostName = "x";
+      system = "x86_64-linux";
+      maxJobs = 32;
+    }
+    {
+      hostName = "m2";
+      system = "aarch64-linux";
+      maxJobs = 24;
+    }
+  ];
 
   # Keyboard remapping configuration
   system.keyboard = {

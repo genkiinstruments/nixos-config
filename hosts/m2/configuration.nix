@@ -12,12 +12,29 @@
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.agenix.nixosModules.default
     flake.modules.shared.default
+    flake.modules.shared.builders
     flake.modules.nixos.default
     flake.modules.nixos.ssh-serve
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
-  networking.hostName = "m2";
+  genki.builders.builders = [
+    {
+      hostName = "x";
+      system = "x86_64-linux";
+      maxJobs = 32;
+    }
+    {
+      hostName = "m2";
+      system = "aarch64-linux";
+      maxJobs = 24;
+    }
+    {
+      hostName = "gkr";
+      system = "aarch64-darwin";
+      maxJobs = 8;
+    }
+  ];
   system.stateVersion = "25.11"; # Did you read the comment?
   facter.reportPath = ./facter.json;
 
