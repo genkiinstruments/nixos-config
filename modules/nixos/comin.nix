@@ -1,8 +1,10 @@
-{ inputs, ... }:
+{ inputs, hostName, ... }:
 {
   imports = [
     inputs.comin.nixosModules.comin
   ];
+
+  networking.hostName = hostName;
 
   services.comin = {
     enable = true;

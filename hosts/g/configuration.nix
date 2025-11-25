@@ -104,8 +104,6 @@
       X11UseLocalhost yes
     '';
   };
-  networking.hostName = "g";
-
   facter.reportPath = ./facter.json;
 
   zramSwap = {

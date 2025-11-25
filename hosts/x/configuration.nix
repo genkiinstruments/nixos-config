@@ -26,8 +26,6 @@
     ./disko.nix
   ];
 
-  networking.hostName = "x";
-
   genki.builders.builders = [
     {
       hostName = "m2";

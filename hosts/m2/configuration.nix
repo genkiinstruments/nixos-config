@@ -18,7 +18,6 @@
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
-  networking.hostName = "m2";
   genki.builders.builders = [
     {
       hostName = "x";

@@ -21,8 +21,6 @@
     ./disk-config.nix
   ];
 
-  networking.hostName = "kroli";
-
   system.stateVersion = "23.05"; # Did you read the comment?
 
   facter.reportPath = ./facter.json;

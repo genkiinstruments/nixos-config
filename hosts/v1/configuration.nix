@@ -26,7 +26,6 @@
   # Be careful updating this.
   nixpkgs.hostPlatform = lib.mkDefault "aarch64-linux";
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  networking.hostName = "v1"; # Define your hostname.
   system.stateVersion = "24.11"; # Did you read the comment?
 
   # VMware, Parallels both only support this being 0 otherwise you see "error switching console mode" on boot.

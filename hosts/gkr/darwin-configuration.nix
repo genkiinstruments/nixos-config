@@ -13,7 +13,6 @@
     flake.modules.shared.default
     flake.modules.shared.home-manager
   ];
-  networking.hostName = "gkr";
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
