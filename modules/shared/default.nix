@@ -20,7 +20,6 @@
   networking.hostName = hostName;
 
   users.users.root.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-  users.users.root.initialHashedPassword = "$y$j9T$xA3OJK4WPx3Gu80.nTV6h/$DsBKf3OL11/d9bOAQmSVbgf2H2Ue4FAwhPLcatF0tX3";
 
   # Disallow IFDs by default. IFDs can too easily sneak in and cause trouble.
   # https://nix.dev/manual/nix/2.22/language/import-from-derivation
