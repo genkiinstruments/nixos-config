@@ -14,6 +14,7 @@
     flake.modules.shared.default
     flake.modules.shared.builders
     flake.modules.nixos.default
+    flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
@@ -48,13 +49,6 @@
     peripheralFirmwareDirectory = ./firmware;
   };
   hardware.graphics.enable32Bit = lib.mkForce false;
-
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    # This refers to the uncompressed size, actual memory usage will be lower.
-    memoryPercent = 50;
-  };
 
   boot = {
     # https://rdx.overdevs.com/comments.html?url=https://www.reddit.com/r/AsahiLinux/comments/1gy0t86/psa_transitioning_from_zramswap_to_zswap/

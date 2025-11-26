@@ -16,6 +16,7 @@
     flake.modules.shared.default
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
+    flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     ./apple-silicon-support
     (modulesPath + "/installer/scan/not-detected.nix")
@@ -45,13 +46,6 @@
 
   # Disable WiFi module entirely
   boot.extraModprobeConfig = ''blacklist brcmfmac'';
-
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    # This refers to the uncompressed size, actual memory usage will be lower.
-    memoryPercent = 50;
-  };
 
   boot = {
     # https://rdx.overdevs.com/comments.html?url=https://www.reddit.com/r/AsahiLinux/comments/1gy0t86/psa_transitioning_from_zramswap_to_zswap/

@@ -20,6 +20,7 @@
     flake.modules.shared.builders
     flake.modules.nixos.default
     flake.modules.nixos.pipewire
+    flake.modules.nixos.zram-swap
     ./disko.nix
   ];
 
@@ -105,12 +106,6 @@
     '';
   };
   facter.reportPath = ./facter.json;
-
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 90;
-  };
 
   system.stateVersion = "24.11";
 

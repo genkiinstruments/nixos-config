@@ -21,6 +21,7 @@
     flake.modules.shared.home-manager
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
+    flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.monitoring
     flake.modules.nixos.olafur
@@ -77,13 +78,6 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   facter.reportPath = ./facter.json;
-
-  # Optimized memory configuration for AMD Ryzen
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 90;
-  };
 
   # CPU optimization settings for AMD processors
   hardware.cpu.amd.updateMicrocode = true;

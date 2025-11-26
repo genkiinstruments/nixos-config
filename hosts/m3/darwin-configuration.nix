@@ -41,7 +41,6 @@
       owner = "olafur";
       group = "staff";
     };
-
   };
 
   home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;

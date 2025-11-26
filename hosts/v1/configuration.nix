@@ -18,6 +18,7 @@
     flake.modules.shared.comin-exporter
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
+    flake.modules.nixos.zram-swap
     flake.modules.nixos.olafur
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.pipewire
@@ -63,13 +64,6 @@
   # VM performance tuning
   services.fstrim.enable = true; # Enables periodic TRIM for better disk performance
   services.fstrim.interval = "daily";
-
-  # Optimize VM memory usage
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50; # Allocate half of RAM for compressed swap
-  };
 
   # Set vm.swappiness for better VM memory management
   boot.kernel.sysctl = {

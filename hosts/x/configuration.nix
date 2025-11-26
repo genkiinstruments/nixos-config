@@ -22,6 +22,7 @@
     flake.modules.shared.systemd-exporter
     flake.modules.shared.builders
     flake.modules.nixos.default
+    flake.modules.nixos.zram-swap
     flake.modules.nixos.olafur
     flake.modules.nixos.ssh-serve
     ./disko.nix
@@ -343,12 +344,6 @@
       login = "genkiinstruments";
       privateKeyFile = config.age.secrets.x-github-runner-key.path;
     };
-  };
-
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 90;
   };
 
   # Network tuning for better connection stability
