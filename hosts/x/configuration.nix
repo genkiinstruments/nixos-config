@@ -260,7 +260,6 @@
       export ATTIC_TOKEN
 
       attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
-      attic use genki
       exec attic watch-store genki:genki
     '';
   };
