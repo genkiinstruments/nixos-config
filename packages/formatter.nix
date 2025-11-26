@@ -54,7 +54,6 @@ let
       "hosts/pbt/apple-silicon-support/packages/linux-asahi/config"
       "hosts/pbt/firmware/all_firmware.tar.gz"
       "hosts/pbt/firmware/kernelcache.release.mac14g"
-      "hosts/t1/ssh_host_ed25519_key.pub"
       "modules/home/config/ghostty/config"
       "modules/home/config/tmux/tmux.conf"
     ];
