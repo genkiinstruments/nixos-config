@@ -25,15 +25,39 @@ mouse-hide-while-typing = true
 # \x01 is ctrl+a (common alternative tmux prefix)
 # \x02 is ctrl+b (default tmux prefix)
 
+# Window/pane management (override ghostty defaults for tmux)
+keybind = cmd+t=unbind
+keybind = cmd+t=text:\x00\x74
+keybind = cmd+backslash=text:\x00\x5C
+keybind = cmd+minus=unbind
+keybind = cmd+minus=text:\x00\x2D
+keybind = cmd+w=unbind
+keybind = cmd+w=text:\x00\x77
+
+# Ghostty native actions moved to shift variants
+keybind = cmd+shift+t=new_tab
+keybind = cmd+shift+w=close_surface
+keybind = cmd+shift+minus=decrease_font_size:1
+
+# Window selection
+keybind = cmd+1=text:\x00\x31
+keybind = cmd+2=text:\x00\x32
+keybind = cmd+3=text:\x00\x33
+keybind = cmd+4=text:\x00\x34
+keybind = cmd+5=text:\x00\x35
+
+# Navigation
+keybind = cmd+n=text:\x00\x6E
+keybind = cmd+p=text:\x00\x70
+keybind = cmd+l=text:\x00\x6C
+keybind = cmd+k=text:\x00\x6B
+keybind = cmd+z=text:\x00\x7A
+keybind = cmd+o=text:\x00\x6F
+
+# App toggles
+keybind = cmd+g=text:\x00\x67
 keybind = cmd+b=text:\x00\x62
 keybind = cmd+e=text:\x00\x65
-keybind = cmd+g=text:\x00\x67
-keybind = cmd+k=text:\x00\x6B
-keybind = cmd+l=text:\x00\x6C
-keybind = cmd+n=text:\x00\x6E
-keybind = cmd+o=text:\x00\x6F
-keybind = cmd+p=text:\x00\x70
-keybind = cmd+z=text:\x00\x7A
 keybind = cmd+s=text:\x00\x73
 
 # For claude-code
