@@ -3,9 +3,6 @@
   system = {
     stateVersion = 4;
 
-    # Remove darwin-rebuild and darwin-option from system closure (we use nh instead)
-    tools.enable = false;
-
     defaults = {
       NSGlobalDomain = {
         AppleShowAllExtensions = true;
