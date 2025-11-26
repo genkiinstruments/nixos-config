@@ -86,7 +86,7 @@ in
         {
           hostName = "gdrn";
           system = "x86_64-linux";
-          maxJobs = 32;
+          maxJobs = 12; # Reduced - with 60GB RAM, 12 jobs = ~5GB per job
         }
         {
           hostName = "x";
