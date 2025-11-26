@@ -20,8 +20,6 @@
 
   facter.reportPath = ./facter.json;
 
-  users.users.root.initialHashedPassword = "$y$j9T$xA3OJK4WPx3Gu80.nTV6h/$DsBKf3OL11/d9bOAQmSVbgf2H2Ue4FAwhPLcatF0tX3";
-
   boot.extraModprobeConfig = "options kvm_intel nested=1";
   boot.initrd.availableKernelModules = [
     # General
@@ -37,11 +35,6 @@
     "sdhci_acpi"
   ];
 
-  # [TODO]: Remember to comment out (August 12, 2025 14:23, )
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  security.sudo.wheelNeedsPassword = false;
-  # USB device access for katla-frontpanel
   services.udev.extraRules = ''
     # Genki katla-frontpanel USB device (both product IDs) - NixOS style
     SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="users", TAG+="uaccess"
