@@ -41,15 +41,12 @@
       owner = "olafur";
       group = "staff";
     };
-
   };
-
-  nix.settings.trusted-users = [ "olafur" ];
 
   home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
 
+  nix.settings.trusted-users = [ "olafur" ];
   system.primaryUser = "olafur";
-
   users.users.olafur = {
     isHidden = false;
     home = "/Users/olafur";

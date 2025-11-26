@@ -21,8 +21,10 @@
     flake.modules.shared.home-manager
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
+    flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.monitoring
+    flake.modules.nixos.olafur
     ./disko-config.nix
   ];
 
@@ -76,13 +78,6 @@
   system.stateVersion = "23.05"; # Did you read the comment?
 
   facter.reportPath = ./facter.json;
-
-  # Optimized memory configuration for AMD Ryzen
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 90;
-  };
 
   # CPU optimization settings for AMD processors
   hardware.cpu.amd.updateMicrocode = true;
@@ -195,41 +190,6 @@
     };
   };
 
-  users.users.root.initialHashedPassword = "$y$j9T$.Vjug8ygtDyb2DVz36qXb/$avXNbHp8sYL2jEY5IGEAr4xNXTra69sHxWzf9MEdYlD";
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    # Tools for database management and debugging
-    sqlite
-    curl
-    jq
-    cmatrix
-
-    # Tools for clipboard support
-    xclip
-    wl-clipboard
-    btop
-  ];
-
-  # Don't require password for sudo
-  security.sudo.wheelNeedsPassword = false;
-
-  users.mutableUsers = false;
   # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
   home-manager.users.olafur.programs.atuin.daemon.enable = true;
-  users.users.olafur = {
-    isNormalUser = true;
-    description = "olafur";
-    shell = pkgs.fish;
-    hashedPassword = "$6$UIOsLjI24UeaovvG$SVVrXdpnepj/w1jhmYNdpPpmcgkcXsMBcAkqrcIL5yCCYDAkc/8kblyzuBLyK6PnJqR1JxZ7XtlWyCJwWhGrw.";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "dialout"
-      "video"
-      "inputs"
-    ];
-    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-  };
-  nix.settings.trusted-users = [ "olafur" ];
 }

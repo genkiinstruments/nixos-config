@@ -13,7 +13,6 @@
     flake.modules.shared.default
     flake.modules.shared.builders
     flake.modules.shared.home-manager
-    flake.modules.darwin.secretive
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";

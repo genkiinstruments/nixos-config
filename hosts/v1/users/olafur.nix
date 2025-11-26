@@ -1,4 +1,7 @@
 { flake, ... }:
 {
-  imports = [ flake.modules.home.default ];
+  imports = [
+    flake.modules.home.default
+    flake.modules.home.olafur
+  ];
 }

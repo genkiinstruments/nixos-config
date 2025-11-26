@@ -20,8 +20,6 @@
 
   facter.reportPath = ./facter.json;
 
-  users.users.root.initialHashedPassword = "$y$j9T$xA3OJK4WPx3Gu80.nTV6h/$DsBKf3OL11/d9bOAQmSVbgf2H2Ue4FAwhPLcatF0tX3";
-
   boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   # USB compatibility fixes for katla-frontpanel

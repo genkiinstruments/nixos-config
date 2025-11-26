@@ -18,6 +18,8 @@
     flake.modules.shared.comin-exporter
     flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
+    flake.modules.nixos.zram-swap
+    flake.modules.nixos.olafur
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.pipewire
     flake.modules.nixos.comin
@@ -62,13 +64,6 @@
   # VM performance tuning
   services.fstrim.enable = true; # Enables periodic TRIM for better disk performance
   services.fstrim.interval = "daily";
-
-  # Optimize VM memory usage
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 50; # Allocate half of RAM for compressed swap
-  };
 
   # Set vm.swappiness for better VM memory management
   boot.kernel.sysctl = {
@@ -168,27 +163,6 @@
   # Set your time zone.
   time.timeZone = "Atlantic/Reykjavik";
 
-  # Don't require password for sudo
-  security.sudo.wheelNeedsPassword = false;
-
-  users.mutableUsers = false;
-  users.users.olafur = {
-    isNormalUser = true;
-    description = "olafur";
-    shell = pkgs.fish;
-    hashedPassword = "$6$UIOsLjI24UeaovvG$SVVrXdpnepj/w1jhmYNdpPpmcgkcXsMBcAkqrcIL5yCCYDAkc/8kblyzuBLyK6PnJqR1JxZ7XtlWyCJwWhGrw.";
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "dialout"
-      "video"
-      "inputs"
-    ];
-    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-  };
-  nix.settings.trusted-users = [ "olafur" ];
-
-  #
   # For now, we need this since hardware acceleration does not work.
   environment.variables.LIBGL_ALWAYS_SOFTWARE = "1";
 }
