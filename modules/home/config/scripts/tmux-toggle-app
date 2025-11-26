@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# Toggle or jump to a named tmux window running a specific app
+# Usage: tmux-toggle-app <window-name> [command]
+# If command is omitted, window-name is used as the command
+
+set -euo pipefail
+
+APP_NAME="${1:-}"
+APP_CMD="${2:-$APP_NAME}"
+
+if [[ -z "$APP_NAME" ]]; then
+  echo "Usage: tmux-toggle-app <window-name> [command]" >&2
+  exit 1
+fi
+
+CURR_WIN="$(tmux display-message -p '#{window_name}')"
+
+if [[ "$CURR_WIN" == "$APP_NAME" ]]; then
+  tmux kill-window
+else
+  WIN="$(tmux list-windows -F '#{window_index}:#{window_name}' | grep ":${APP_NAME}$" | head -n1 | cut -d: -f1 || true)"
+  if [[ -n "$WIN" ]]; then
+    tmux select-window -t "$WIN"
+  else
+    # Extract the base command (first word) for checking if it exists
+    BASE_CMD="${APP_CMD%% *}"
+    if command -v "$BASE_CMD" >/dev/null 2>&1; then
+      tmux new-window -c '#{pane_current_path}' -n "$APP_NAME" "$APP_CMD"
+    else
+      tmux display-message "$BASE_CMD not found in PATH"
+    fi
+  fi
+fi

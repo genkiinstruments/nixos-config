@@ -22,6 +22,10 @@
       source = ./config/scripts/tmux-osc52;
       executable = true;
     };
+    file.".local/bin/tmux-toggle-app" = {
+      source = ./config/scripts/tmux-toggle-app;
+      executable = true;
+    };
 
     sessionVariables = {
       NVIM_APPNAME = "mvim";
