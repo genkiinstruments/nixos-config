@@ -30,11 +30,12 @@
   services.tailscale.enable = true; # Deploy tailscale everywhere
 
   programs.fish.shellInit = ''
-    # Nix
-    if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
+    # Nix - prefer nix-darwin managed nix, fall back to default profile
+    if test -e '/run/current-system/sw/etc/profile.d/nix-daemon.fish'
+      source '/run/current-system/sw/etc/profile.d/nix-daemon.fish'
+    else if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
       source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
     end
-    # End Nix
   '';
 
   environment.shells = with pkgs; [
