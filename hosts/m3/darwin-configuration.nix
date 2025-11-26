@@ -12,11 +12,25 @@
     inputs.agenix.darwinModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager
+    flake.modules.shared.builders
     flake.modules.darwin.default
     flake.modules.darwin.secretive
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+
+  genki.builders.builders = [
+    {
+      hostName = "x";
+      system = "x86_64-linux";
+      maxJobs = 32;
+    }
+    {
+      hostName = "m2";
+      system = "aarch64-linux";
+      maxJobs = 24;
+    }
+  ];
 
   age = {
     # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, nixos use builtin /etc/ssh/ssh_host_ed25519_key
