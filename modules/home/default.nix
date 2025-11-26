@@ -361,7 +361,11 @@
       );
     };
     starship.enable = true;
-    starship.settings.add_newline = false;
     starship.enableFishIntegration = true;
+    starship.settings = {
+      add_newline = false;
+      scan_timeout = 200;
+      command_timeout = 1000;
+    };
   };
 }
