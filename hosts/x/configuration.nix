@@ -242,7 +242,7 @@
 
     serviceConfig = {
       Type = "simple";
-      Restart = "on-failure";
+      Restart = "always";
       RestartSec = "5s";
       MemoryHigh = "5%";
       MemoryMax = "10%";
