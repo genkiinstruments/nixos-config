@@ -19,7 +19,6 @@
     inputs.buildbot-nix.nixosModules.buildbot-worker
     flake.modules.shared.default
     flake.modules.shared.home-manager
-    flake.modules.shared.systemd-exporter
     flake.modules.shared.builders
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
