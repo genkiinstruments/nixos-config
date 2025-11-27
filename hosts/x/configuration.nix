@@ -18,7 +18,6 @@
     inputs.buildbot-nix.nixosModules.buildbot-master
     inputs.buildbot-nix.nixosModules.buildbot-worker
     flake.modules.shared.default
-    flake.modules.shared.home-manager
     flake.modules.shared.builders
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
@@ -370,7 +369,4 @@
   };
 
   system.stateVersion = "24.11";
-
-  # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
-  home-manager.users.olafur.programs.atuin.daemon.enable = true;
 }

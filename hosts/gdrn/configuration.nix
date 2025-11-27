@@ -17,7 +17,6 @@
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.stripe-webshippy-sync.nixosModules.default
     flake.modules.shared.default
-    flake.modules.shared.home-manager
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
@@ -184,7 +183,4 @@
       };
     };
   };
-
-  # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
-  home-manager.users.olafur.programs.atuin.daemon.enable = true;
 }
