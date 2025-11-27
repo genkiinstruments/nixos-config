@@ -36,7 +36,7 @@
     {
       hostName = "gdrn";
       system = "x86_64-linux";
-      maxJobs = 15;
+      maxJobs = 13;
     }
     {
       hostName = "pbt";
