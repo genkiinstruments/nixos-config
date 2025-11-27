@@ -5,8 +5,6 @@
   ...
 }:
 {
-  nixpkgs.config.allowUnfree = true;
-
   # Primary substituters used by default
   nix.settings.substituters = [ "https://attic.genki.is/genki" ];
 
@@ -25,22 +23,5 @@
   # https://nix.dev/manual/nix/2.22/language/import-from-derivation
   nix.settings.allow-import-from-derivation = false;
 
-  fonts.packages = [ pkgs.nerd-fonts.jetbrains-mono ];
-
   services.tailscale.enable = true; # Deploy tailscale everywhere
-
-  programs.fish.shellInit = ''
-    # Nix - prefer nix-darwin managed nix, fall back to default profile
-    if test -e '/run/current-system/sw/etc/profile.d/nix-daemon.fish'
-      source '/run/current-system/sw/etc/profile.d/nix-daemon.fish'
-    else if test -e '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
-      source '/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.fish'
-    end
-  '';
-
-  environment.shells = with pkgs; [
-    bashInteractive
-    zsh
-    fish
-  ];
 }
