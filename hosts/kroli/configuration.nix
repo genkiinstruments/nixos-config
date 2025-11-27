@@ -13,8 +13,6 @@
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
     flake.modules.shared.home-manager
-    flake.modules.shared.comin-exporter
-    flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
     flake.modules.nixos.olafur
     flake.modules.nixos.comin

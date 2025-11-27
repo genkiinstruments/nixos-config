@@ -19,7 +19,6 @@
     inputs.stripe-webshippy-sync.nixosModules.default
     flake.modules.shared.default
     flake.modules.shared.home-manager
-    flake.modules.shared.systemd-exporter
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve

@@ -29,7 +29,7 @@
     {
       hostName = "m2";
       system = "aarch64-linux";
-      maxJobs = 24;
+      maxJobs = 15;
     }
   ];
 
