@@ -37,14 +37,19 @@
 
   genki.builders.builders = [
     {
+      hostName = "m2";
+      system = "aarch64-linux";
+      maxJobs = 15;
+    }
+    {
       hostName = "pbt";
       system = "aarch64-linux";
-      maxJobs = 8;
+      maxJobs = 3;
     }
     {
       hostName = "gkr";
       system = "aarch64-darwin";
-      maxJobs = 8;
+      maxJobs = 3;
     }
   ];
 

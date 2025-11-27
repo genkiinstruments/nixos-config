@@ -23,12 +23,12 @@
     {
       hostName = "x";
       system = "x86_64-linux";
-      maxJobs = 32;
+      maxJobs = 23;
     }
     {
       hostName = "m2";
       system = "aarch64-linux";
-      maxJobs = 24;
+      maxJobs = 15;
     }
   ];
 

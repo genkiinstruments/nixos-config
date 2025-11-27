@@ -32,22 +32,22 @@
     {
       hostName = "m2";
       system = "aarch64-linux";
-      maxJobs = 24;
+      maxJobs = 15;
     }
     {
       hostName = "gdrn";
       system = "x86_64-linux";
-      maxJobs = 12; # Reduced from 32 - with 60GB RAM, 12 jobs = ~5GB per job
+      maxJobs = 15;
     }
     {
       hostName = "pbt";
       system = "aarch64-linux";
-      maxJobs = 8;
+      maxJobs = 3;
     }
     {
       hostName = "gkr";
       system = "aarch64-darwin";
-      maxJobs = 8;
+      maxJobs = 3;
     }
   ];
 
