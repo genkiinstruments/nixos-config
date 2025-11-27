@@ -12,7 +12,6 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.srvos.nixosModules.roles-github-actions-runner
-    inputs.srvos.nixosModules.roles-nix-remote-builder
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
@@ -29,9 +28,12 @@
   networking.firewall.trustedInterfaces = [ "enp1s0" ];
   networking.interfaces.enp1s0.useDHCP = true;
 
-  roles.nix-remote-builder.schedulerPublicKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBtnJ1eS+mI4EASAWk7NXin5Hln0ylYUPHe2ovQAa8G root@x"
-  ];
+  # Run GC at 3am to avoid blocking builds
+  nix.gc = {
+    automatic = true;
+    dates = "03:00";
+    options = "--delete-older-than 7d";
+  };
 
   # Hardware optimizations
   boot = {

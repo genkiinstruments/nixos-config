@@ -9,7 +9,6 @@
     inputs.srvos.nixosModules.server
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-systemd-boot
-    inputs.srvos.nixosModules.roles-nix-remote-builder
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.agenix.nixosModules.default
     flake.modules.shared.default
@@ -19,9 +18,12 @@
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
-  roles.nix-remote-builder.schedulerPublicKeys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBtnJ1eS+mI4EASAWk7NXin5Hln0ylYUPHe2ovQAa8G root@x"
-  ];
+  # Run GC at 3am to avoid blocking builds
+  nix.gc = {
+    automatic = true;
+    dates = "03:00";
+    options = "--delete-older-than 7d";
+  };
 
   system.stateVersion = "25.11"; # Did you read the comment?
   facter.reportPath = ./facter.json;
