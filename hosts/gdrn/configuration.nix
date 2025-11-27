@@ -22,7 +22,6 @@
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
-    flake.modules.nixos.monitoring
     flake.modules.nixos.olafur
     ./disko-config.nix
   ];
@@ -118,11 +117,6 @@
     '';
   };
 
-  # Enable monitoring stack
-  services.monitoring = {
-    enable = true;
-    domain = "genki.is";
-  };
   systemd.services.caddy.serviceConfig.EnvironmentFile =
     config.age.secrets.genki-is-cloudflare-api-token.path;
 
