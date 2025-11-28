@@ -19,6 +19,7 @@
     inputs.buildbot-nix.nixosModules.buildbot-worker
     flake.modules.shared.default
     flake.modules.shared.builders
+    flake.modules.shared.home-manager
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
     flake.modules.nixos.olafur
