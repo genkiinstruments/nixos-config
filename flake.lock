@@ -100,11 +100,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1763974424,
-        "narHash": "sha256-jPpxBhrBOAKrXPxdrdXnq4w7x3UIkUZjarNLNYkb7Zo=",
+        "lastModified": 1764250936,
+        "narHash": "sha256-fwwd6/j9QsL++TiNHZy2258NDkJiTi9B5cUyOntlR2g=",
         "owner": "catppuccin",
         "repo": "nix",
-        "rev": "931c6465c3eac4709684dbc320bca243252927df",
+        "rev": "c11bfcf5671358a12fa2d906e7c859d0644d9b2d",
         "type": "github"
       },
       "original": {
@@ -243,11 +243,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1764212628,
-        "narHash": "sha256-e5pt4pq3M2DANUGA1Uz+SXzJrNI8JNB9JnlyYQCktCg=",
+        "lastModified": 1764297690,
+        "narHash": "sha256-V784bD26OaYzDPuIUoXqxv7njM+ML9UM/J3rkEqyw8U=",
         "owner": "numtide",
         "repo": "nix-ai-tools",
-        "rev": "e28400d56889815c7b47ee435bbf9d2ed87d3f31",
+        "rev": "5db8b4f9ffba05c6daf3bb06a3a85f89aef79735",
         "type": "github"
       },
       "original": {
@@ -300,11 +300,11 @@
     },
     "nixos-facter-modules": {
       "locked": {
-        "lastModified": 1762264948,
-        "narHash": "sha256-iaRf6n0KPl9hndnIft3blm1YTAyxSREV1oX0MFZ6Tk4=",
+        "lastModified": 1764252389,
+        "narHash": "sha256-3bbuneTKZBkYXlm0bE36kUjiDsasoIC1GWBw/UEJ9T4=",
         "owner": "nix-community",
         "repo": "nixos-facter-modules",
-        "rev": "fa695bff9ec37fd5bbd7ee3181dbeb5f97f53c96",
+        "rev": "5ea68886d95218646d11d3551a476d458df00778",
         "type": "github"
       },
       "original": {
