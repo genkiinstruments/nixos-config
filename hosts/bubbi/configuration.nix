@@ -40,7 +40,6 @@
     "usbhid" # USB HID support
   ];
 
-  security.sudo.wheelNeedsPassword = false;
   # USB device access for katla-frontpanel
   services.udev.extraRules = ''
     # Genki katla-frontpanel USB device (both product IDs) - NixOS style
