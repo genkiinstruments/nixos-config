@@ -1,10 +1,10 @@
-{ pkgs }:
+{ pkgs, perSystem }:
 pkgs.mkShellNoCC {
   packages = with pkgs; [
     git
     nixos-anywhere
     nh
-    deploy-rs
+    perSystem.deploy-rs.deploy-rs
   ];
 
   env.EDITOR = "nvim";

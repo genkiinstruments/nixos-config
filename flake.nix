@@ -51,6 +51,9 @@
 
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
     nix-ai-tools.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
@@ -104,7 +107,7 @@
           };
 
           # This is highly advised, and will prevent many possible mistakes
-          checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks deploy) inputs.deploy-rs.lib;
+          checks = builtins.mapAttrs (_system: deployLib: deployLib.deployChecks deploy) inputs.deploy-rs.lib;
         in
         {
           inherit deploy checks;
