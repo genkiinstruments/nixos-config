@@ -15,6 +15,7 @@
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
     flake.modules.nixos.default
+    flake.modules.nixos.yggdrasil
   ];
 
   system.stateVersion = "23.05"; # Did you read the comment?
