@@ -1,6 +1,7 @@
 {
   inputs,
   flake,
+  config,
   ...
 }:
 {
@@ -20,20 +21,25 @@
 
   facter.reportPath = ./facter.json;
 
+  networking.interfaces.enp3s0.useDHCP = true;
+
+  hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
+
   boot.extraModprobeConfig = "options kvm_intel nested=1";
 
   boot.initrd.availableKernelModules = [
     # General
+    "ahci" # SATA support
     "ata_piix"
+    "nvme" # NVMe support
     "sd_mod"
+    "sdhci_pci"
     "sr_mod"
     "usb_storage"
-    "sdhci_acpi"
-    "nvme" # NVMe support
-    "xhci_pci" # USB 3.0 support
-    "ahci" # SATA support
     "usbhid" # USB HID support
+    "xhci_pci" # USB 3.0 support
   ];
+  boot.kernelModules = [ "kvm-intel" ];
 
   # USB compatibility fixes for katla-frontpanel
   boot.kernelParams = [
