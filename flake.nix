@@ -57,7 +57,7 @@
   };
 
   outputs =
-    { self, ... }@inputs:
+    inputs:
 
     # Call a library function to do a recursive merge to blueprint
     # with my own attributes.
@@ -77,20 +77,23 @@
       # blueprint so they don't overwrite each other.
       (
         {
-          colmenaHive = inputs.colmena.lib.makeHive self.outputs.colmena;
+          colmenaHive = inputs.colmena.lib.makeHive inputs.self.outputs.colmena;
           colmena = {
             meta = {
-              description = "My personal machines";
               nixpkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
               specialArgs = {
                 inherit inputs;
+                inherit (inputs.self) outputs;
               };
             };
-          }
-          // builtins.mapAttrs (name: value: {
-            nixpkgs.system = value.config.nixpkgs.system;
-            imports = value._module.args.modules;
-          }) (self.nixosConfigurations);
+            lab = {
+              x = {
+                targetHost = "x";
+                targetUser = "root";
+              };
+              # imports = nixosSystems.lab.modules;
+            };
+          };
         }
       );
 }
