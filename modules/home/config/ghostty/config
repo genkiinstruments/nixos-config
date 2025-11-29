@@ -56,6 +56,7 @@ keybind = cmd+o=text:\x00\x6F
 
 # App toggles
 keybind = cmd+g=text:\x00\x67
+keybind = cmd+shift+g=text:\x00\x47
 keybind = cmd+b=text:\x00\x62
 keybind = cmd+e=text:\x00\x65
 keybind = cmd+s=text:\x00\x73

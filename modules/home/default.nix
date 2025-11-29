@@ -69,7 +69,29 @@
     yazi.enable = true;
     yazi.enableFishIntegration = true;
     mpv.enable = true;
-    gh-dash.enable = true;
+    gh-dash = {
+      enable = true;
+      settings = {
+        theme.colors = {
+          text = {
+            primary = "#cdd6f4";
+            secondary = "#a6e3a1";
+            inverted = "#1e1e2e";
+            faint = "#bac2de";
+            warning = "#f38ba8";
+            success = "#a6e3a1";
+          };
+          background = {
+            selected = "#313244";
+          };
+          border = {
+            primary = "#a6e3a1";
+            secondary = "#6c7086";
+            faint = "#313244";
+          };
+        };
+      };
+    };
     btop.enable = true;
     ssh = {
       enable = true;
