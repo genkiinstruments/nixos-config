@@ -52,12 +52,12 @@
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
     nix-ai-tools.inputs.nixpkgs.follows = "nixpkgs";
 
-    deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
+    colmena.url = "github:zhaofengli/colmena";
+    colmena.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
-    inputs:
+    { self, ... }@inputs:
 
     # Call a library function to do a recursive merge to blueprint
     # with my own attributes.
@@ -73,44 +73,24 @@
         ];
       })
 
-      # And depclare my own things that gets recursivly merged with
+      # And declare my own things that get recursively merged with
       # blueprint so they don't overwrite each other.
       (
-        let
-          # Functions to create deplayable nodes with deploy-rs
-          mkDeploy =
-            {
-              name,
-              sshUser ? "root",
-              system ? "x86_64-linux",
-            }:
-            {
-              inherit sshUser;
-              hostname = "${name}.tail01dbd.ts.net";
-              profiles.system.path =
-                inputs.deploy-rs.lib.${system}.activate.nixos
-                  inputs.self.nixosConfigurations.${name};
-            };
-
-          # Declare deployable nodes
-          deploy.nodes = {
-            gdrn = mkDeploy { name = "gdrn"; };
-            x = mkDeploy { name = "x"; };
-            m2 = mkDeploy {
-              name = "m2";
-              system = "aarch64-linux";
-            };
-            pbt = mkDeploy {
-              name = "pbt";
-              system = "aarch64-linux";
-            };
-          };
-
-          # This is highly advised, and will prevent many possible mistakes
-          checks = builtins.mapAttrs (_system: deployLib: deployLib.deployChecks deploy) inputs.deploy-rs.lib;
-        in
         {
-          inherit deploy checks;
+          colmenaHive = inputs.colmena.lib.makeHive self.outputs.colmena;
+          colmena = {
+            meta = {
+              description = "My personal machines";
+              nixpkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+              specialArgs = {
+                inherit inputs;
+              };
+            };
+          }
+          // builtins.mapAttrs (name: value: {
+            nixpkgs.system = value.config.nixpkgs.system;
+            imports = value._module.args.modules;
+          }) (self.nixosConfigurations);
         }
       );
 }
