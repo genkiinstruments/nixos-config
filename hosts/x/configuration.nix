@@ -48,6 +48,18 @@
       system = "aarch64-darwin";
       maxJobs = 3;
     }
+    {
+      hostName = "om";
+      system = "x86_64-linux";
+      maxJobs = 8;
+      supportedFeatures = [
+        "nixos-test"
+        "benchmark"
+        "big-parallel"
+        "kvm"
+        "cm5-io-board"
+      ];
+    }
   ];
 
   networking.firewall.trustedInterfaces = [
