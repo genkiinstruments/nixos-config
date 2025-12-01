@@ -128,7 +128,7 @@
   };
 
   services.harmonia.enable = true;
-  services.harmonia.signKeyPaths = [ "/var/lib/secrets/harmonia.secret" ];
+  services.harmonia.signKeyPaths = [ config.age.secrets.x-harmonia-secret.path ];
 
   services.nginx = {
     enable = true;
