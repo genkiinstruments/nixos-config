@@ -148,6 +148,10 @@
       '';
     };
   };
+  # use more cores for compression
+  services.nginx.appendConfig = ''
+    worker_processes auto;
+  '';
 
   # Configure nginx virtual hosts (buildbot-nix handles the main config)
   services.nginx.virtualHosts."attic.genki.is" = {
