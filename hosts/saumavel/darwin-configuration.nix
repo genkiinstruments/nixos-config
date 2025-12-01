@@ -19,6 +19,26 @@
 
   system.primaryUser = "saumavel";
 
+  # DANNI SAGÐI MÉR AÐ SETJA ÞETTA INN ÓLI!!!
+  nix = {
+    distributedBuilds = true;
+    buildMachines = [
+      {
+        hostName = "pbt";
+        systems = [ "aarch64-linux" ];
+        maxJobs = 8;
+        sshUser = "nix-ssh";
+        protocol = "ssh-ng";
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+      }
+    ];
+  };
+
   users.users.saumavel = {
     isHidden = false;
     home = "/Users/saumavel";
