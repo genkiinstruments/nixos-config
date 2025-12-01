@@ -127,6 +127,27 @@
     };
   };
 
+  services.harmonia.enable = true;
+  services.harmonia.signKeyPaths = [ "/var/lib/secrets/harmonia.secret" ];
+
+  services.nginx = {
+    enable = true;
+    recommendedTlsSettings = true;
+    virtualHosts."harmonia.genki.is" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/".extraConfig = ''
+        proxy_pass http://127.0.0.1:5000;
+        proxy_set_header Host $host;
+        proxy_redirect http:// https://;
+        proxy_http_version 1.1;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+      '';
+    };
+  };
+
   # Configure nginx virtual hosts (buildbot-nix handles the main config)
   services.nginx.virtualHosts."attic.genki.is" = {
     enableACME = true;
@@ -192,6 +213,8 @@
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
       x-cloudflare-tunnel-secret.file = "${inputs.secrets}/x-cloudflare-tunnel-secret.age";
+
+      x-harmonia-secret.file = "${inputs.secrets}/x-harmonia-secret.age";
     };
 
   # Allows buildbot-worker to pull from private github repositories
@@ -280,9 +303,6 @@
     workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
   };
 
-  # the coordinator sends the postBuildStep script over to workers, which doesn’t ensure that the paths are present)
-  environment.systemPackages = with pkgs; [ attic-client ];
-
   services.atticd = {
     enable = true;
     environmentFile = config.age.secrets.attic-environment-file.path;
@@ -335,11 +355,13 @@
   systemd.services.nginx = {
     after = [
       "atticd.service"
+      "harmonia.service"
       "buildbot-master.service"
       "oauth2-proxy.service"
     ];
     wants = [
       "atticd.service"
+      "harmonia.service"
       "buildbot-master.service"
       "oauth2-proxy.service"
     ];
