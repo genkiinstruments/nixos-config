@@ -136,6 +136,7 @@
     virtualHosts."harmonia.genki.is" = {
       enableACME = true;
       forceSSL = true;
+      acmeRoot = null; # Force DNS challenge (HTTP challenge won't work for Tailscale IPs)
       locations."/".extraConfig = ''
         proxy_pass http://127.0.0.1:5000;
         proxy_set_header Host $host;
