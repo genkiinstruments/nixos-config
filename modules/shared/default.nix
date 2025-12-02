@@ -6,11 +6,11 @@
 }:
 {
   # Primary substituters used by default
-  nix.settings.substituters = [ "https://attic.genki.is/genki" ];
-
-  # Caches in trusted-substituters can be used by unprivileged users i.e. in flakes but are not enabled by default.
-  nix.settings.trusted-substituters = [ "https://attic.genki.is/genki" ];
-  nix.settings.trusted-public-keys = [ "genki:S03n+SoctaWEOjLRWLFTbd898DdDMn5r/L2T+cj1IHE=" ];
+  nix.settings.substituters = [ "https://harmonia.genki.is" ];
+  nix.settings.trusted-substituters = [ "https://harmonia.genki.is" ]; # Caches in trusted-substituters can be used by unprivileged users i.e. in flakes but are not enabled by default.
+  nix.settings.trusted-public-keys = [
+    "harmonia.genki.is:qrZRBDHwHxClL6tsMgFhcFrA61YzyP/ATE2JHDYB5iQ="
+  ];
 
   nix.package = pkgs.nixVersions.latest;
 

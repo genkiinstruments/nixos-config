@@ -153,16 +153,6 @@
     worker_processes auto;
   '';
 
-  # Configure nginx virtual hosts (buildbot-nix handles the main config)
-  services.nginx.virtualHosts."attic.genki.is" = {
-    enableACME = true;
-    forceSSL = true;
-    acmeRoot = null; # Force DNS challenge instead of webroot
-    locations."/" = {
-      proxyPass = "http://localhost:8080";
-    };
-  };
-
   # Configure ACME to use Cloudflare DNS challenge by default
   security.acme = {
     acceptTerms = true;
@@ -211,9 +201,6 @@
       buildbot-gh-token-for-private-repos.file = "${inputs.secrets}/buildbot-gh-token-for-private-repos.age";
       buildbot-gh-token-for-private-repos.mode = "0440";
       buildbot-gh-token-for-private-repos.owner = "buildbot-worker";
-
-      attic-genki-auth-token.file = "${inputs.secrets}/attic-genki-auth-token.age";
-      attic-environment-file.file = "${inputs.secrets}/attic-environment-file.age";
 
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
 
@@ -269,103 +256,19 @@
       };
     };
 
-  systemd.services.attic-watch-store = {
-    description = "Upload all store paths to attic";
-    wantedBy = [ "multi-user.target" ];
-    environment.HOME = "/var/lib/attic-watch-store";
-    after = [
-      "network-online.target"
-      "atticd.service"
-    ];
-    wants = [ "network-online.target" ];
-
-    serviceConfig = {
-      Type = "simple";
-      Restart = "always";
-      RestartSec = "5s";
-      MemoryHigh = "5%";
-      MemoryMax = "10%";
-      DynamicUser = true;
-      StateDirectory = "attic-watch-store";
-      LoadCredential = [ "attic-token:${config.age.secrets.attic-genki-auth-token.path}" ];
-    };
-
-    path = [ pkgs.attic-client ];
-    script = ''
-      set -euo pipefail
-
-      # Read token from credentials
-      ATTIC_TOKEN=$(< "$CREDENTIALS_DIRECTORY/attic-token")
-      export ATTIC_TOKEN
-
-      attic login genki http://${config.services.atticd.settings.listen} "$ATTIC_TOKEN"
-      exec attic watch-store genki:genki
-    '';
-  };
-
   services.buildbot-nix.worker = {
     enable = true;
     workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
   };
 
-  services.atticd = {
-    enable = true;
-    environmentFile = config.age.secrets.attic-environment-file.path;
-
-    settings = {
-      listen = "[::]:8080";
-
-      # Disable authentication completely
-      require-proof-of-possession = false;
-
-      chunking = {
-        # The minimum NAR size to trigger chunking
-        #
-        # If 0, chunking is disabled entirely for newly-uploaded NARs.
-        # If 1, all NARs are chunked.
-        nar-size-threshold = 64 * 1024; # 64 KiB
-
-        # The preferred minimum size of a chunk, in bytes
-        min-size = 16 * 1024; # 16 KiB
-
-        # The preferred average size of a chunk, in bytes
-        avg-size = 64 * 1024; # 64 KiB
-
-        # The preferred maximum size of a chunk, in bytes
-        max-size = 256 * 1024; # 256 KiB
-      };
-    };
-  };
-
-  # Increase system limits for atticd
-  systemd.services.atticd = {
-    serviceConfig = {
-      # Increase file descriptor limits
-      LimitNOFILE = 65536;
-
-      # Override the default RestartSec with mkForce
-      RestartSec = pkgs.lib.mkForce 5;
-
-      # Kill only the main process, not children
-      KillMode = "mixed";
-
-      # Give more time for graceful shutdown
-      TimeoutStopSec = "30s";
-    };
-    wantedBy = [ "multi-user.target" ];
-    before = [ "nginx.service" ];
-  };
-
   # Ensure nginx waits for all backend services
   systemd.services.nginx = {
     after = [
-      "atticd.service"
       "harmonia.service"
       "buildbot-master.service"
       "oauth2-proxy.service"
     ];
     wants = [
-      "atticd.service"
       "harmonia.service"
       "buildbot-master.service"
       "oauth2-proxy.service"
