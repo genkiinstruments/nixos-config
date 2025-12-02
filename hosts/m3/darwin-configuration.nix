@@ -63,6 +63,8 @@
       "raycast"
       "arc"
       "google-drive"
+      "qlvideo" # video preview in macOS Finder
+      "vlc"
     ];
     brews = [
       # clis and libraries
