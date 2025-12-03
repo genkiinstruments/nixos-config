@@ -73,15 +73,9 @@
   };
   nix.settings.trusted-users = [ "genki" ];
 
-  security.sudo.wheelNeedsPassword = false;
+  facter.reportPath = ./facter.json;
 
-  services.openssh = {
-    enable = true;
-    extraConfig = ''
-      X11Forwarding yes
-      X11UseLocalhost yes
-    '';
-  };
+  system.stateVersion = "24.11";
 
   programs.nix-ld.enable = true;
 
@@ -92,62 +86,60 @@
     gnumake
     killall
     niv
-    xclip
-    xsel
     magic-wormhole-rs
     git
-    alacritty
-    networkmanagerapplet
-    gnome-tweaks
-    dconf-editor
     ghostty
-    rofi
     rkdeveloptool
     alsa-utils
     systemctl-tui
-    shared-mime-info
-    xdg-utils
-    gtkmm3
+    xwayland-satellite
+    fuzzel # app launcher
+    waybar # status bar
+    mako # notifications
+    wl-clipboard # clipboard
+    swayidle
+    swaylock
+    swaybg
   ];
 
-  services.desktopManager.gnome.enable = true;
+  # Niri - scrollable tiling Wayland compositor
+  programs.niri.enable = true;
+  security.polkit.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.swaylock = { };
 
-  services.xserver = {
+  # greetd for login
+  services.greetd = {
     enable = true;
-    desktopManager.wallpaper.mode = "fill";
-    dpi = 343; # The display has √(2560² + 1600²) px / 8.8in ≃ 343 dpi
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
+        user = "greeter";
+      };
+    };
   };
 
-  environment.gnome.excludePackages = with pkgs; [
-    epiphany
-    totem
-    geary
-    evince
-  ];
-
-  services.desktopManager.gnome.extraGSettingsOverrides = ''
-    [org.gnome.settings-daemon.plugins.power]
-    sleep-inactive-ac-type='nothing'
-    sleep-inactive-battery-type='nothing'
-    sleep-inactive-ac-timeout=0
-    sleep-inactive-battery-timeout=0
-    power-button-action='nothing'
-    idle-dim=false
-
-    [org.gnome.desktop.session]
-    idle-delay=uint32 0
-
-    [org.gnome.desktop.screensaver]
-    idle-activation-enabled=false
-    lock-enabled=false
-  '';
-
+  # Power management
+  powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "performance";
 
   security.rtkit.enable = true;
 
+  # Disable suspend
   systemd.targets.sleep.enable = lib.mkForce false;
   systemd.targets.suspend.enable = lib.mkForce false;
   systemd.targets.hibernate.enable = lib.mkForce false;
   systemd.targets.hybrid-sleep.enable = lib.mkForce false;
+
+  # udev rules for Rockchip devices (rkdeveloptool)
+  services.udev.extraRules = ''
+    # Rockchip devices in maskrom/loader mode
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666"
+    # Rockchip devices in recovery mode
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", ATTRS{idProduct}=="*", MODE="0666", GROUP="users"
+
+    # USB device access for katla-frontpanel
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="users", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="20b1", MODE="0664", GROUP="users", TAG+="uaccess"
+  '';
 }
