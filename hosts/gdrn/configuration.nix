@@ -28,13 +28,7 @@
   networking.firewall.trustedInterfaces = [ "enp1s0" ];
   networking.interfaces.enp1s0.useDHCP = true;
 
-  # Hardware optimizations
   boot = {
-    # Kernel settings
-    # [TODO]: Broken in nixpkgs (March 31, 2025 15:57, )
-    # kernelPackages = pkgs.linuxPackages_latest; # Use latest kernel for AMD CPU optimizations
-
-    # Hardware-specific optimizations
     kernelParams = [
       # CPU optimizations
       "amd_pstate=active" # Enable AMD pstate driver for better power management
