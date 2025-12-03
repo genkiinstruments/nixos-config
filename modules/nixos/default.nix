@@ -6,4 +6,14 @@
   systemd.services.tailscale.serviceConfig.TimeoutStopSec = 5; # Reduce the timeout from the default 90 seconds to something shorter
   systemd.services.tailscaled.restartIfChanged = false; # Prevent SSH disconnects during deploys over Tailscale
   users.users.root.initialHashedPassword = "$y$j9T$xA3OJK4WPx3Gu80.nTV6h/$DsBKf3OL11/d9bOAQmSVbgf2H2Ue4FAwhPLcatF0tX3";
+
+  nix.gc = {
+    automatic = true;
+    dates = "03:00"; # Run GC at 3am to avoid blocking builds
+    options = "--delete-older-than 7d";
+  };
+  nix.optimise = {
+    automatic = true;
+    dates = "weekly";
+  };
 }

@@ -18,13 +18,6 @@
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
-  # Run GC at 3am to avoid blocking builds
-  nix.gc = {
-    automatic = true;
-    dates = "03:00";
-    options = "--delete-older-than 7d";
-  };
-
   system.stateVersion = "25.11"; # Did you read the comment?
   facter.reportPath = ./facter.json;
 

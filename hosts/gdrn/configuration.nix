@@ -28,13 +28,6 @@
   networking.firewall.trustedInterfaces = [ "enp1s0" ];
   networking.interfaces.enp1s0.useDHCP = true;
 
-  # Run GC at 3am to avoid blocking builds
-  nix.gc = {
-    automatic = true;
-    dates = "03:00";
-    options = "--delete-older-than 7d";
-  };
-
   # Hardware optimizations
   boot = {
     # Kernel settings

@@ -23,13 +23,6 @@
   system.stateVersion = "25.05"; # Did you read the comment?
   facter.reportPath = ./facter.json;
 
-  # Run GC at 3am to avoid blocking builds
-  nix.gc = {
-    automatic = true;
-    dates = "03:00";
-    options = "--delete-older-than 7d";
-  };
-
   # the issue is that logind allocates 25% of your system memory to /run rather than more by default, we need to increase that so that builds don't fail
   services.logind.settings.Login.RuntimeDirectorySize = "50%";
   boot.runSize = "50%";

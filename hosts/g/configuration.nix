@@ -24,17 +24,6 @@
     ./disko.nix
   ];
 
-  # Automatic garbage collection and nix store optimization
-  nix.gc = {
-    automatic = true;
-    dates = "monthly";
-    options = "--delete-older-than 30d";
-  };
-  nix.optimise = {
-    automatic = true;
-    dates = "monthly";
-  };
-
   genki.builders.builders = [
     {
       hostName = "m2";
