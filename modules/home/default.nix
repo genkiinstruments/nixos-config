@@ -39,7 +39,6 @@
         zip
         magic-wormhole-rs
         neofetch
-        sesh
         mediainfo # for mpv / yazi setup
         perSystem.self.mvim
       ]
@@ -65,6 +64,11 @@
   };
 
   programs = {
+    sesh = {
+      enable = true;
+      enableTmuxIntegration = false; # using custom keybind in tmux.conf
+      settings.dir_length = 2;
+    };
     jq.enable = true;
     yazi.enable = true;
     yazi.enableFishIntegration = true;
