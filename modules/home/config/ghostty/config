@@ -25,18 +25,16 @@ mouse-hide-while-typing = true
 # \x01 is ctrl+a (common alternative tmux prefix)
 # \x02 is ctrl+b (default tmux prefix)
 
-# Window/pane management (override ghostty defaults for tmux)
-keybind = cmd+t=unbind
-keybind = cmd+t=text:\x00\x74
+# Window/pane management
+# cmd+t/w are native Ghostty (new tab, close tab)
+# cmd+j/x are tmux (new window, kill pane)
+keybind = cmd+j=text:\x00\x74
+keybind = cmd+x=text:\x00\x78
 keybind = cmd+backslash=text:\x00\x5C
 keybind = cmd+minus=unbind
 keybind = cmd+minus=text:\x00\x2D
-keybind = cmd+w=unbind
-keybind = cmd+w=text:\x00\x77
 
-# Ghostty native actions moved to shift variants
-keybind = cmd+shift+t=new_tab
-keybind = cmd+shift+w=close_surface
+# Shift variants for less common actions
 keybind = cmd+shift+minus=decrease_font_size:1
 
 # Window selection
