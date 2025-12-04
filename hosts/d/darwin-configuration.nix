@@ -92,6 +92,7 @@
       # guis
       "raycast"
       "arc"
+      "zed"
     ];
     brews = [
       # clis and libraries
