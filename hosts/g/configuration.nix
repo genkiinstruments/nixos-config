@@ -120,7 +120,7 @@
   services.xserver = {
     enable = true;
     desktopManager.wallpaper.mode = "fill";
-    xserver.dpi = 343; # The display has √(2560² + 1600²) px / 8.8in ≃ 343 dpi
+    dpi = 343; # The display has √(2560² + 1600²) px / 8.8in ≃ 343 dpi
   };
 
   environment.gnome.excludePackages = with pkgs; [
