@@ -27,6 +27,9 @@
     ./disko.nix
   ];
 
+  system.stateVersion = "24.11";
+  facter.reportPath = ./facter.json;
+
   genki.builders.builders = [
     {
       hostName = "m2";
@@ -62,28 +65,25 @@
     }
   ];
 
+  networking.useDHCP = false;
+  networking.interfaces.enp5s0.useDHCP = true;
+  networking.interfaces.eno1.useDHCP = true;
   networking.firewall.trustedInterfaces = [
     "enp5s0"
     "eno1"
   ];
-  networking.interfaces.enp5s0.useDHCP = true;
-  networking.interfaces.eno1.useDHCP = true;
 
   services.cloudflared = {
     enable = true;
     tunnels = {
       "9c376bb1-4ca6-49d7-8c36-93908b752ae8" = {
         credentialsFile = config.age.secrets.x-cloudflare-tunnel-secret.path;
-        ingress = {
-          # Point to nginx (buildbot-nix configures nginx on port 80)
-          "buildbot.genki.is" = "http://localhost:80";
-        };
+        ingress."buildbot.genki.is" = "http://localhost:80";
         default = "http_status:404";
       };
     };
   };
 
-  # Ensure PostgreSQL and network are ready before buildbot-master starts
   systemd.services.buildbot-master = {
     wants = [
       "postgresql.service"
@@ -95,13 +95,11 @@
     ];
   };
 
-  # Ensure oauth2-proxy waits for buildbot-master to be ready
   systemd.services.oauth2-proxy = {
     wants = [ "buildbot-master.service" ];
     after = [ "buildbot-master.service" ];
   };
 
-  # Fix DNS resolution timing issue on boot and ensure nginx is ready
   systemd.services."cloudflared-tunnel-9c376bb1-4ca6-49d7-8c36-93908b752ae8" = {
     after = [
       "oauth2-proxy.service"
@@ -117,12 +115,9 @@
       "network-online.target"
     ];
     serviceConfig = {
-      # Add retry with exponential backoff
       Restart = "on-failure";
       RestartSec = "10s";
-      # Give it more time to start
       TimeoutStartSec = "90s";
-      # Add a pre-start delay to ensure DNS is ready
       ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
     };
   };
@@ -133,6 +128,7 @@
   services.nginx = {
     enable = true;
     recommendedTlsSettings = true;
+    appendConfig = "worker_processes auto;"; # use more cores for compression
     virtualHosts."harmonia.genki.is" = {
       enableACME = true;
       forceSSL = true;
@@ -148,10 +144,6 @@
       '';
     };
   };
-  # use more cores for compression
-  services.nginx.appendConfig = ''
-    worker_processes auto;
-  '';
 
   # Configure ACME to use Cloudflare DNS challenge by default
   security.acme = {
@@ -160,11 +152,9 @@
       email = "olafur@genkiinstruments.com";
       dnsProvider = "cloudflare";
       environmentFile = "/etc/cloudflared/test";
-      webroot = null; # Disable HTTP challenge
+      webroot = null;
     };
   };
-
-  facter.reportPath = ./facter.json;
 
   users.groups.secrets.members = [
     "oauth2-proxy"
@@ -203,13 +193,10 @@
       buildbot-gh-token-for-private-repos.owner = "buildbot-worker";
 
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
-
       x-cloudflare-tunnel-secret.file = "${inputs.secrets}/x-cloudflare-tunnel-secret.age";
-
       x-harmonia-secret.file = "${inputs.secrets}/x-harmonia-secret.age";
     };
 
-  # Allows buildbot-worker to pull from private github repositories
   nix.extraOptions = "!include ${config.age.secrets.buildbot-gh-token-for-private-repos.path}";
 
   services.buildbot-nix.master =
@@ -234,7 +221,6 @@
         "x86_64-linux"
       ];
       admins = buildbotAdmins;
-      # this is a randomly generated secret, which is only used to authenticate requests from the oauth2 proxy to buildbot
       httpBasicAuthPasswordFile = config.age.secrets.buildbot-http-basic-auth-password.path;
       github = {
         enable = true;
@@ -249,7 +235,6 @@
         backend = "github";
         teams = [ "genkiinstruments" ];
         users = buildbotAdmins;
-        # this is a randomly generated alphanumeric secret, which is used to encrypt the cookies set by oauth2-proxy, it must be 8, 16, or 32 characters long
         cookieSecretFile = config.age.secrets.buildbot-github-cookie-secret.path;
         clientSecretFile = config.age.secrets.buildbot-client-secret.path;
         clientId = "Iv23lioyXvbIN5gVi6KN";
@@ -261,7 +246,6 @@
     workerPasswordFile = config.age.secrets.buildbot-nix-worker-password.path;
   };
 
-  # Ensure nginx waits for all backend services
   systemd.services.nginx = {
     after = [
       "harmonia.service"
@@ -286,30 +270,4 @@
     };
   };
 
-  # Network tuning for better connection stability
-  boot.kernel.sysctl = {
-    # Increase TCP buffer sizes for better throughput
-    "net.core.rmem_max" = 134217728; # 128MB
-    "net.core.wmem_max" = 134217728; # 128MB
-    "net.ipv4.tcp_rmem" = "4096 87380 134217728";
-    "net.ipv4.tcp_wmem" = "4096 65536 134217728";
-
-    # Increase connection backlog
-    "net.core.somaxconn" = 4096;
-    "net.ipv4.tcp_max_syn_backlog" = 4096;
-
-    # Better connection handling
-    "net.ipv4.tcp_fin_timeout" = 15;
-    "net.ipv4.tcp_keepalive_time" = 300;
-    "net.ipv4.tcp_keepalive_probes" = 5;
-    "net.ipv4.tcp_keepalive_intvl" = 15;
-
-    # Enable TCP Fast Open
-    "net.ipv4.tcp_fastopen" = 3;
-
-    # Increase local port range
-    "net.ipv4.ip_local_port_range" = "1024 65535";
-  };
-
-  system.stateVersion = "24.11";
 }

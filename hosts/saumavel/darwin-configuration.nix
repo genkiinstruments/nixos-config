@@ -33,18 +33,15 @@
     }
   ];
 
-  # Fix nixbld group ID issue
   ids.gids.nixbld = 350;
 
   system = {
     defaults = {
       NSGlobalDomain = {
         AppleInterfaceStyle = "Dark";
-        KeyRepeat = 2; # 120, 90, 60, 30, 12, 6, 2
-        InitialKeyRepeat = 15; # 120, 94, 68, 35, 25, 15
-        # "com.apple.keyboard.fnState" = true; # Make F1, F2, etc. keys behave as standard function keys
+        KeyRepeat = 2;
+        InitialKeyRepeat = 15;
         NSAutomaticCapitalizationEnabled = false;
-
         ApplePressAndHoldEnabled = false;
         "com.apple.trackpad.forceClick" = false; # Disables Force Click
         "com.apple.trackpad.scaling" = 1.0; # Configures the trackpad tracking speed (0 to 3). The default is “1”.AppleShowAllFiles = true;
@@ -67,17 +64,9 @@
         type = "png";
       };
 
-      trackpad = {
-        TrackpadThreeFingerTapGesture = 0; # Disables the three-finger tap for dictionary lookup
-      };
+      trackpad.TrackpadThreeFingerTapGesture = 0;
 
-      magicmouse = {
-        MouseButtonMode = "TwoButton";
-      };
-    };
-
-    keyboard = {
-      enableKeyMapping = true;
+      magicmouse.MouseButtonMode = "TwoButton";
     };
 
     activationScripts.postActivation.text = ''
@@ -85,15 +74,15 @@
       defaults write -g InitialKeyRepeat -int 10 
       defaults write -g KeyRepeat -int 1
     '';
+
+    keyboard.enableKeyMapping = true;
   };
 
-  # Modified homebrew configuration to update but not remove packages
   homebrew = {
     enable = true;
     onActivation = {
-      autoUpdate = true; # Update Homebrew and formulae
-      upgrade = true; # Upgrade outdated packages
-      cleanup = "none"; # Don't remove any packages not in the list
+      autoUpdate = true;
+      upgrade = true;
     };
 
     brews = [

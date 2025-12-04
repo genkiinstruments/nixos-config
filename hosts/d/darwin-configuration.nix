@@ -74,13 +74,7 @@
     ];
   };
 
-  # System defaults for keyboard behavior
-  system.defaults = {
-    NSGlobalDomain = {
-      # Function key behavior
-      "com.apple.keyboard.fnState" = false;
-    };
-  };
+  system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = false;
 
   # NOTE: Here you can install packages from brew
   homebrew = {

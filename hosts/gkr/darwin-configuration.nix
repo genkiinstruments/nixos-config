@@ -30,15 +30,11 @@
     "genki"
     "nix-ssh"
   ];
+
   environment.systemPackages = with pkgs; [
-    openssh # needed for fido2 support
-    gh # needed for the softwave github run
-    cowsay
-    neofetch
-    cmatrix
-    btop
+    openssh
+    gh
   ];
-  programs.fish.enable = true; # Otherwise our shell won't be installed correctly
 
   # Create the nix-ssh user for remote builds - rely on Tailscale SSH for authentication
   # NOTE: Have to manually create the user on macOS. Does not need to be an administrator
@@ -70,7 +66,6 @@
       Label = "github-runner";
       KeepAlive = true;
       RunAtLoad = true;
-
       StandardErrorPath = "/Users/genki/actions-runner/err.log";
       StandardOutPath = "/Users/genki/actions-runner/ok.log";
       WorkingDirectory = "/Users/genki/actions-runner/";

@@ -25,12 +25,12 @@
     ./disko-config.nix
   ];
 
-  system.stateVersion = "23.05"; # Did you read the comment?
-
+  system.stateVersion = "23.05";
   facter.reportPath = ./facter.json;
 
-  networking.firewall.trustedInterfaces = [ "enp1s0" ];
+  networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
+  networking.firewall.trustedInterfaces = [ "enp1s0" ];
 
   services.zfs = {
     autoScrub.enable = true;
