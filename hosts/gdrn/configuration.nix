@@ -25,57 +25,17 @@
     ./disko-config.nix
   ];
 
-  networking.firewall.trustedInterfaces = [ "enp1s0" ];
-  networking.interfaces.enp1s0.useDHCP = true;
-
-  boot = {
-    kernelParams = [
-      # CPU optimizations
-      "amd_pstate=active" # Enable AMD pstate driver for better power management
-      "processor.max_cstate=5" # Limit C-states for better latency
-
-      # I/O optimizations
-      "elevator=none" # Use the multi-queue scheduler for NVMe
-      "transparent_hugepage=madvise" # Set THP to madvise for server workloads
-
-      # Memory optimizations
-      "default_hugepagesz=2M" # Default huge page size
-      "hugepagesz=1G" # Support for 1GB huge pages
-    ];
-
-    initrd.availableKernelModules = [
-      "nvme" # NVMe support
-      "xhci_pci" # USB 3.0 support
-      "ahci" # SATA support
-      "usbhid" # USB HID support
-    ];
-  };
-
-  # NVMe and disk optimizations
-  services.fstrim.enable = true; # Enable TRIM for SSDs
-  services.fstrim.interval = "daily"; # Run TRIM daily
-
-  # ZFS optimizations
-  services.zfs = {
-    autoScrub.enable = true;
-    autoScrub.interval = "weekly";
-    trim.enable = true;
-  };
-
   system.stateVersion = "23.05"; # Did you read the comment?
 
   facter.reportPath = ./facter.json;
 
-  # CPU optimization settings for AMD processors
-  hardware.cpu.amd.updateMicrocode = true;
+  networking.firewall.trustedInterfaces = [ "enp1s0" ];
+  networking.interfaces.enp1s0.useDHCP = true;
 
-  # Enable specific performance governors
-  powerManagement = {
-    enable = true;
-    cpuFreqGovernor = "performance";
+  services.zfs = {
+    autoScrub.enable = true;
+    trim.enable = true;
   };
-
-  programs.ssh.startAgent = true;
 
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
@@ -86,8 +46,6 @@
       login = "genkiinstruments";
       privateKeyFile = config.age.secrets.gdrn-github-runner-key.path;
     };
-    cachix.cacheName = "genki";
-    cachix.tokenFile = config.age.secrets.gdrn-github-runner-cachixToken.path;
   };
 
   services.uptime-kuma.enable = true;
@@ -120,9 +78,6 @@
     in
     {
       gdrn-github-runner-key.file = "${inputs.secrets}/gdrn-github-runner-key.age";
-      gdrn-github-runner-cachixToken.file = "${inputs.secrets}/gdrn-github-runner-cachixToken.age";
-
-      gdrn-cloudflared-tunnel.file = "${inputs.secrets}/gdrn-cloudflared-tunnel.age";
 
       stripe-webhook-genki-is-cloudflare-tunnel-secret.file = "${inputs.secrets}/stripe-webhook-genki-is-cloudflare-tunnel-secret.age";
 
@@ -131,7 +86,6 @@
       genki-is-cloudflare-api-token.group = "caddy";
       genki-is-cloudflare-api-token.mode = "0400";
 
-      # Stripe-Webshippy-Sync secrets
       stripe-secret-key = mkWebshippyStripeSyncSecret "stripe-secret-key";
       stripe-webhook-secret = mkWebshippyStripeSyncSecret "stripe-webhook-secret";
       webshippy-api-key = mkWebshippyStripeSyncSecret "webshippy-api-key";
@@ -142,7 +96,6 @@
       r2-public-url = mkWebshippyStripeSyncSecret "r2-public-url";
     };
 
-  # Stripe-Webshippy-Sync service configuration
   services.stripe-webshippy-sync = {
     enable = true;
 
