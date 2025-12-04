@@ -30,7 +30,10 @@
 
   networking.useDHCP = false;
   networking.interfaces.enp1s0.useDHCP = true;
-  networking.firewall.trustedInterfaces = [ "enp1s0" ];
+  networking.firewall.trustedInterfaces = [
+    "enp1s0"
+    "enp12s0"
+  ];
 
   services.zfs = {
     autoScrub.enable = true;
