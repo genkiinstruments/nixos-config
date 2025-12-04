@@ -16,6 +16,16 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
+  nix.gc = {
+    automatic = true;
+    dates = "Sun 03:00"; # Weekly instead of daily
+    options = "--delete-older-than 30d"; # Keep for 30 days
+  };
+  nix.optimise = {
+    automatic = true;
+    dates = "monthly"; # Less frequent
+  };
+
   # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
