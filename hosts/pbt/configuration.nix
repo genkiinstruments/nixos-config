@@ -20,7 +20,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
-  system.stateVersion = "25.05"; # Did you read the comment?
+  system.stateVersion = "25.05";
   facter.reportPath = ./facter.json;
 
   # the issue is that logind allocates 25% of your system memory to /run rather than more by default, we need to increase that so that builds don't fail
@@ -38,31 +38,15 @@
   };
   hardware.graphics.enable32Bit = lib.mkForce false;
 
-  # Disable WiFi module entirely
-  boot.extraModprobeConfig = ''blacklist brcmfmac'';
-
   boot = {
-    # https://rdx.overdevs.com/comments.html?url=https://www.reddit.com/r/AsahiLinux/comments/1gy0t86/psa_transitioning_from_zramswap_to_zswap/
-    kernelParams = [
-      "zswap.zpool=zsmalloc"
-      # Disable WiFi to prevent issues
-      "module_blacklist=brcmfmac"
-    ];
+    extraModprobeConfig = "blacklist brcmfmac";
+    kernelParams = [ "zswap.zpool=zsmalloc" ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = lib.mkForce false;
     };
-    initrd.availableKernelModules = [
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-    ];
-    initrd.kernelModules = [
-      "usbhid"
-      "dm-snapshot"
-    ];
   };
-  # Disable wireless networking entirely
+
   networking.wireless.enable = false;
   networking.wireless.iwd.enable = false;
 

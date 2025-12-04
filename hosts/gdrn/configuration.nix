@@ -25,8 +25,7 @@
     ./disko-config.nix
   ];
 
-  system.stateVersion = "23.05"; # Did you read the comment?
-
+  system.stateVersion = "23.05";
   facter.reportPath = ./facter.json;
 
   networking.firewall.trustedInterfaces = [ "enp1s0" ];

@@ -21,8 +21,7 @@
     ./disk-config.nix
   ];
 
-  system.stateVersion = "23.05"; # Did you read the comment?
-
+  system.stateVersion = "23.05";
   facter.reportPath = ./facter.json;
 
   services.home-assistant = {
@@ -70,10 +69,8 @@
     extraPackages =
       python3Packages: with python3Packages; [
         pip
-        # Override gtts to patch metadata and remove strict click version constraint
         (gtts.overridePythonAttrs (old: {
           postPatch = (old.postPatch or "") + ''
-            # Remove strict click version constraint from pyproject.toml
             substituteInPlace pyproject.toml \
               --replace-fail '"click >=7.1, <8.2",' '"click >=7.1",'
           '';
@@ -82,24 +79,21 @@
         pyatv
         getmac
         async-upnp-client
-
-        # homekit
         aiohomekit
         python-otbr-api
       ];
-    # Includes dependencies for a basic setup: https://www.home-assistant.io/integrations/default_config/
     config.default_config = { };
-
     config.zeroconf = { };
     config.homekit = { };
     config.logger.default = "info";
     config."automation ui" = "!include automations.yaml";
   };
+
   services.avahi = {
     enable = true;
     reflector = true;
   };
-  # https://nixos.wiki/wiki/Home_Assistant#Combine_declarative_and_UI_defined_automations
+
   systemd.tmpfiles.rules = [
     "f ${config.services.home-assistant.configDir}/automations.yaml 0755 hass hass"
   ];
@@ -107,33 +101,28 @@
   # Ensure zigbee2mqtt only starts when the USB device is available
   systemd.services.zigbee2mqtt.unitConfig.ConditionPathExists = "/dev/ttyUSB0";
 
-  services = {
-    mosquitto.enable = true;
-    zigbee2mqtt = {
-      enable = true;
-
-      settings = lib.mkForce {
-        homeassistant = true;
-        mqtt = {
-          server = "mqtt://localhost:1883";
-        };
-        serial = {
-          port = "/dev/ttyUSB0";
-          baudrate = 115200;
-          adapter = "ember";
-        };
-        frontend = {
-          host = "0.0.0.0";
-          port = 8453;
-        };
-        advanced = {
-          homeassistant_legacy_entity_attributes = false;
-          homeassistant_legacy_triggers = false;
-          legacy_api = false;
-          legacy_availability_payload = false;
-        };
-        device_options.legacy = false;
+  services.mosquitto.enable = true;
+  services.zigbee2mqtt = {
+    enable = true;
+    settings = lib.mkForce {
+      homeassistant = true;
+      mqtt.server = "mqtt://localhost:1883";
+      serial = {
+        port = "/dev/ttyUSB0";
+        baudrate = 115200;
+        adapter = "ember";
       };
+      frontend = {
+        host = "0.0.0.0";
+        port = 8453;
+      };
+      advanced = {
+        homeassistant_legacy_entity_attributes = false;
+        homeassistant_legacy_triggers = false;
+        legacy_api = false;
+        legacy_availability_payload = false;
+      };
+      device_options.legacy = false;
     };
   };
 
