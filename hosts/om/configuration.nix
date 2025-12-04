@@ -23,7 +23,9 @@
   system.stateVersion = "23.05";
   facter.reportPath = ./facter.json;
 
+  networking.useDHCP = false;
   networking.interfaces.enp3s0.useDHCP = true;
+  networking.firewall.trustedInterfaces = [ "enp3s0" ];
 
   hardware.cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
 }

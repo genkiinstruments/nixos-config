@@ -66,12 +66,12 @@
   ];
 
   networking.useDHCP = false;
+  networking.interfaces.enp5s0.useDHCP = true;
+  networking.interfaces.eno1.useDHCP = true;
   networking.firewall.trustedInterfaces = [
     "enp5s0"
     "eno1"
   ];
-  networking.interfaces.enp5s0.useDHCP = true;
-  networking.interfaces.eno1.useDHCP = true;
 
   services.cloudflared = {
     enable = true;
