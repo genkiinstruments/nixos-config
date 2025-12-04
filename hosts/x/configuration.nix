@@ -37,31 +37,9 @@
       maxJobs = 15;
     }
     {
-      hostName = "gdrn";
-      system = "x86_64-linux";
-      maxJobs = 13;
-    }
-    {
-      hostName = "pbt";
-      system = "aarch64-linux";
-      maxJobs = 3;
-    }
-    {
       hostName = "gkr";
       system = "aarch64-darwin";
       maxJobs = 3;
-    }
-    {
-      hostName = "om";
-      system = "x86_64-linux";
-      maxJobs = 8;
-      supportedFeatures = [
-        "nixos-test"
-        "benchmark"
-        "big-parallel"
-        "kvm"
-        "cm5-io-board"
-      ];
     }
   ];
 
