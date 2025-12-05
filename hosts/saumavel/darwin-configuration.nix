@@ -19,7 +19,7 @@
 
   genki.user = "saumavel";
 
-  genki.builders.builders = [
+  genki.builders = [
     {
       hostName = "m2";
       system = "aarch64-linux";

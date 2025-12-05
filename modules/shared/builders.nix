@@ -4,7 +4,8 @@
   ...
 }:
 let
-  cfg = config.genki.builders;
+  cfg = config.genki.builderConfig;
+  builders = config.genki.builders;
 
   mkBuilder =
     {
@@ -37,17 +38,13 @@ let
         IdentitiesOnly yes
     '';
 
-  processedBuilders = map mkBuilder cfg.builders;
+  processedBuilders = map mkBuilder builders;
   sshConfigs = lib.concatMapStrings (
     builder: mkSshConfig { inherit (builder) hostName; }
   ) processedBuilders;
 in
 {
-  options.genki.builders = {
-    enable = lib.mkEnableOption "distributed builders" // {
-      default = true;
-    };
-
+  options.genki = {
     builders = lib.mkOption {
       type = lib.types.listOf (
         lib.types.submodule {
@@ -107,27 +104,33 @@ in
       description = "List of distributed builders";
     };
 
-    sshUser = lib.mkOption {
-      type = lib.types.str;
-      default = "nix-ssh";
-      description = "Default SSH user for builders";
-    };
+    builderConfig = {
+      enable = lib.mkEnableOption "distributed builders" // {
+        default = true;
+      };
 
-    tailnetDomain = lib.mkOption {
-      type = lib.types.str;
-      default = "tail01dbd.ts.net";
-      description = "Tailscale domain for builders";
-    };
+      sshUser = lib.mkOption {
+        type = lib.types.str;
+        default = "nix-ssh";
+        description = "Default SSH user for builders";
+      };
 
-    defaultSupportedFeatures = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [
-        "nixos-test"
-        "benchmark"
-        "big-parallel"
-        "kvm"
-      ];
-      description = "Default supported features for builders";
+      tailnetDomain = lib.mkOption {
+        type = lib.types.str;
+        default = "tail01dbd.ts.net";
+        description = "Tailscale domain for builders";
+      };
+
+      defaultSupportedFeatures = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        default = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+        description = "Default supported features for builders";
+      };
     };
   };
 
