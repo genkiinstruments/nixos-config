@@ -21,6 +21,7 @@
 
   system.primaryUser = "olafur";
   users.users.${config.system.primaryUser} = {
+    uid = 501;
     isHidden = false;
     home = "/Users/${config.system.primaryUser}";
     shell = pkgs.fish;

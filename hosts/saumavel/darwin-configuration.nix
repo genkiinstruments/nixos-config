@@ -19,6 +19,7 @@
 
   system.primaryUser = "saumavel";
   users.users.saumavel = {
+    uid = 501;
     isHidden = false;
     home = "/Users/saumavel";
     shell = pkgs.fish;

@@ -18,6 +18,7 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   users.users.genki = {
+    uid = 501;
     isHidden = false;
     home = "/Users/genki";
     name = "genki";
