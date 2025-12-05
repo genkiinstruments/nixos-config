@@ -53,9 +53,6 @@
     shell = pkgs.fish;
   };
 
-  # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
-  ids.gids.nixbld = 350;
-
   homebrew = {
     enable = true;
     casks = [

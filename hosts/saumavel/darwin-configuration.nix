@@ -33,8 +33,6 @@
     }
   ];
 
-  ids.gids.nixbld = 350;
-
   system = {
     defaults = {
       NSGlobalDomain = {
