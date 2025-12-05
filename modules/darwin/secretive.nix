@@ -1,4 +1,4 @@
-_: {
+{
   environment.etc."ssh/ssh_config.d/secretive.conf".text = ''
     # GitHub hosts - use ControlMaster for reduced Touch ID prompts
     Host github.com *.github.com
