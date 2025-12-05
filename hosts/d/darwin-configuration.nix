@@ -1,6 +1,5 @@
 {
   flake,
-  pkgs,
   inputs,
   ...
 }:
@@ -10,6 +9,7 @@
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
     flake.modules.darwin.default
     flake.modules.darwin.secretive
+    flake.modules.darwin.user
     flake.modules.shared.default
     flake.modules.shared.builders
     flake.modules.shared.home-manager
@@ -17,17 +17,9 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  users.users.genki = {
-    uid = 501;
-    isHidden = false;
-    home = "/Users/genki";
-    name = "genki";
-    shell = pkgs.fish;
-  };
-  system.primaryUser = "genki";
-  users.knownUsers = [ "genki" ];
+  genki.user = "genki";
 
-  genki.builders.builders = [
+  genki.builders = [
     {
       hostName = "x";
       system = "x86_64-linux";

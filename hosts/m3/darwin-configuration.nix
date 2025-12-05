@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  pkgs,
   flake,
   ...
 }:
@@ -14,22 +13,15 @@
     flake.modules.shared.home-manager
     flake.modules.shared.builders
     flake.modules.darwin.default
+    flake.modules.darwin.user
     flake.modules.darwin.secretive
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  system.primaryUser = "olafur";
-  users.users.${config.system.primaryUser} = {
-    uid = 501;
-    isHidden = false;
-    home = "/Users/${config.system.primaryUser}";
-    shell = pkgs.fish;
-  };
-  nix.settings.trusted-users = [ "${config.system.primaryUser}" ];
-  users.knownUsers = [ "${config.system.primaryUser}" ];
+  genki.user = "olafur";
 
-  genki.builders.builders = [
+  genki.builders = [
     {
       hostName = "x";
       system = "x86_64-linux";
