@@ -1,6 +1,5 @@
 {
   flake,
-  pkgs,
   inputs,
   ...
 }:
@@ -9,6 +8,7 @@
     inputs.srvos.darwinModules.desktop
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
     flake.modules.darwin.default
+    flake.modules.darwin.user
     flake.modules.darwin.secretive
     flake.modules.shared.default
     flake.modules.shared.builders
@@ -17,15 +17,7 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
-  system.primaryUser = "saumavel";
-  users.users.saumavel = {
-    uid = 501;
-    isHidden = false;
-    home = "/Users/saumavel";
-    shell = pkgs.fish;
-  };
-  nix.settings.trusted-users = [ "saumavel" ];
-  users.knownUsers = [ "saumavel" ];
+  genki.user = "saumavel";
 
   genki.builders.builders = [
     {

@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   flake,
+  config,
   ...
 }:
 {
@@ -10,11 +11,15 @@
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
     inputs.agenix.darwinModules.default
     flake.modules.darwin.default
+    flake.modules.darwin.user
     flake.modules.shared.default
     flake.modules.shared.home-manager
   ];
 
   nixpkgs.hostPlatform = "aarch64-darwin";
+
+  genki.user = "genki";
+  users.users.${config.genki.user}.openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
 
   nix.gc.automatic = true;
   nix.gc.options = "--delete-older-than 30d";
@@ -23,20 +28,7 @@
   # Generate manually via `sudo ssh-keygen -A /etc/ssh/` on macOS, using the host key for decryption
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
-  system.primaryUser = "genki";
-  users.knownUsers = [ "genki" ];
-  users.users.genki = {
-    uid = 501;
-    shell = pkgs.fish;
-    isHidden = false;
-    home = "/Users/genki";
-    openssh.authorizedKeys.keyFiles = [ "${flake}/authorized_keys" ];
-  };
-  nix.settings.trusted-users = [
-    "genki"
-    "nix-ssh"
-  ];
-
+  # Needed for Github runner?
   environment.systemPackages = with pkgs; [
     openssh
     gh
@@ -50,6 +42,7 @@
     home = "/Users/nix-ssh";
     createHome = true;
   };
+  nix.settings.trusted-users = [ "nix-ssh" ]; # genki added by module
 
   # TODO: This really is a hack to run actions-runner that was
   # manually installed using: https://github.com/organizations/genkiinstruments/settings/actions/runners/new?arch=arm64&os=osx
