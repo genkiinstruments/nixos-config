@@ -30,6 +30,7 @@
   age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   system.primaryUser = "genki";
+  users.knownUsers = [ "genki" ];
   users.users.genki = {
     shell = pkgs.fish;
     isHidden = false;

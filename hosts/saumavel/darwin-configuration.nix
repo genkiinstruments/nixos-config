@@ -18,12 +18,13 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   system.primaryUser = "saumavel";
-
   users.users.saumavel = {
     isHidden = false;
     home = "/Users/saumavel";
     shell = pkgs.fish;
   };
+  nix.settings.trusted-users = [ "saumavel" ];
+  users.knownUsers = [ "saumavel" ];
 
   genki.builders.builders = [
     {

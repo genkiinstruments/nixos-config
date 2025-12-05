@@ -24,6 +24,7 @@
     shell = pkgs.fish;
   };
   system.primaryUser = "genki";
+  users.knownUsers = [ "genki" ];
 
   genki.builders.builders = [
     {

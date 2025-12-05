@@ -19,6 +19,15 @@
 
   nixpkgs.hostPlatform = "aarch64-darwin";
 
+  system.primaryUser = "olafur";
+  users.users.${config.system.primaryUser} = {
+    isHidden = false;
+    home = "/Users/${config.system.primaryUser}";
+    shell = pkgs.fish;
+  };
+  nix.settings.trusted-users = [ "${config.system.primaryUser}" ];
+  users.knownUsers = [ "${config.system.primaryUser}" ];
+
   genki.builders.builders = [
     {
       hostName = "x";
@@ -38,20 +47,13 @@
     secrets.atuin-key = {
       file = "${inputs.secrets}/atuin-key.age";
       mode = "644";
-      owner = "olafur";
+      owner = "${config.system.primaryUser}";
       group = "staff";
     };
   };
 
-  home-manager.users.olafur.programs.atuin.settings.key_path = config.age.secrets.atuin-key.path;
-
-  nix.settings.trusted-users = [ "olafur" ];
-  system.primaryUser = "olafur";
-  users.users.olafur = {
-    isHidden = false;
-    home = "/Users/olafur";
-    shell = pkgs.fish;
-  };
+  home-manager.users.${config.system.primaryUser}.programs.atuin.settings.key_path =
+    config.age.secrets.atuin-key.path;
 
   # TODO: Failed to update: https://github.com/LnL7/nix-darwin/blob/a6746213b138fe7add88b19bafacd446de574ca7/modules/system/checks.nix#L93
   ids.gids.nixbld = 350;
