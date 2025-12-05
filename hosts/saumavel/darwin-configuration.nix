@@ -27,7 +27,7 @@
   nix.settings.trusted-users = [ "saumavel" ];
   users.knownUsers = [ "saumavel" ];
 
-  genki.builders.builders = [
+  genki.builders = [
     {
       hostName = "m2";
       system = "aarch64-linux";

@@ -29,7 +29,7 @@
   nix.settings.trusted-users = [ "${config.system.primaryUser}" ];
   users.knownUsers = [ "${config.system.primaryUser}" ];
 
-  genki.builders.builders = [
+  genki.builders = [
     {
       hostName = "x";
       system = "x86_64-linux";
