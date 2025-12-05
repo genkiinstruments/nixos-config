@@ -24,6 +24,16 @@
   services.logind.settings.Login.RuntimeDirectorySize = "75%";
   boot.runSize = "75%";
 
+  nix.gc = {
+    automatic = true;
+    dates = "Sun 03:00"; # Weekly instead of daily
+    options = "--delete-older-than 30d"; # Keep for 30 days
+  };
+  nix.optimise = {
+    automatic = true;
+    dates = "monthly"; # Less frequent
+  };
+
   hardware.asahi = {
     enable = true;
     extractPeripheralFirmware = true;
