@@ -18,12 +18,14 @@
   nixpkgs.hostPlatform = "aarch64-darwin";
 
   users.users.genki = {
+    uid = 501;
     isHidden = false;
     home = "/Users/genki";
     name = "genki";
     shell = pkgs.fish;
   };
   system.primaryUser = "genki";
+  users.knownUsers = [ "genki" ];
 
   genki.builders.builders = [
     {
