@@ -1,4 +1,4 @@
-_: {
+{
   programs = {
     git.settings.user.email = "olafur@genkiinstruments.com";
     git.settings.user.name = "multivac61";
