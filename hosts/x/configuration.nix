@@ -30,7 +30,7 @@
   system.stateVersion = "24.11";
   facter.reportPath = ./facter.json;
 
-  genki.builders.builders = [
+  genki.builders = [
     {
       hostName = "m2";
       system = "aarch64-linux";
