@@ -21,7 +21,7 @@
 
   genki.user = "olafur";
 
-  genki.builders = [
+  genki.builders.builders = [
     {
       hostName = "x";
       system = "x86_64-linux";
