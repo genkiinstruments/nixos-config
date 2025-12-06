@@ -31,11 +31,8 @@ mouse-hide-while-typing = true
 keybind = cmd+j=text:\x00\x74
 keybind = cmd+x=text:\x00\x78
 keybind = cmd+backslash=text:\x00\x5C
-keybind = cmd+minus=unbind
-keybind = cmd+minus=text:\x00\x2D
-
 # Shift variants for less common actions
-keybind = cmd+shift+minus=decrease_font_size:1
+keybind = cmd+shift+minus=text:\x00\x2D
 
 # Window selection
 keybind = cmd+1=text:\x00\x31
@@ -51,6 +48,19 @@ keybind = cmd+l=text:\x00\x6C
 keybind = cmd+k=text:\x00\x6B
 keybind = cmd+z=text:\x00\x7A
 keybind = cmd+o=text:\x00\x6F
+keybind = cmd+semicolon=text:\x00\x3B
+
+# Copy mode
+keybind = cmd+left_bracket=text:\x00\x5B
+keybind = cmd+right_bracket=text:\x00\x5D
+
+# Session/pane info
+keybind = cmd+u=text:\x00\x73
+keybind = cmd+i=text:\x00\x71
+
+# Rename
+keybind = cmd+r=text:\x00\x2C
+keybind = cmd+shift+r=text:\x00\x24
 
 # App toggles
 keybind = cmd+g=text:\x00\x67
