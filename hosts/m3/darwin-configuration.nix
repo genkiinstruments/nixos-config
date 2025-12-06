@@ -23,9 +23,9 @@
 
   genki.builders = [
     {
-      hostName = "x";
+      hostName = "gdrn";
       system = "x86_64-linux";
-      maxJobs = 23;
+      maxJobs = 13;
     }
     {
       hostName = "m2";
