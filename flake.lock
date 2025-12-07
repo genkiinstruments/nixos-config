@@ -113,6 +113,26 @@
         "type": "github"
       }
     },
+    "comin": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1765136128,
+        "narHash": "sha256-lrI+RB6lLaj9C4iSqqSjhvNKID0IJVNl5yXCfjkIEhk=",
+        "owner": "nlewo",
+        "repo": "comin",
+        "rev": "955b06db5cb95db9cc1ad69d67b90e4fd450d9a2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nlewo",
+        "repo": "comin",
+        "type": "github"
+      }
+    },
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -261,11 +281,11 @@
         "treefmt-nix": "treefmt-nix_2"
       },
       "locked": {
-        "lastModified": 1765075548,
-        "narHash": "sha256-lkNykREVQDlvZg5zLwFG/jTcKJTapX5dg64D84cN7m8=",
+        "lastModified": 1765116482,
+        "narHash": "sha256-FKWFpk937KfmCK3/qQBs1P5JRWIvSIc3xvhZ1mjhsck=",
         "owner": "numtide",
         "repo": "nix-ai-tools",
-        "rev": "22f4a113cde2d4212480114e004cfe1d7a92e6b8",
+        "rev": "e2b2ff4cf805cda9a8c3b290e6c33f1a5bb47f60",
         "type": "github"
       },
       "original": {
@@ -403,6 +423,7 @@
         "blueprint": "blueprint",
         "buildbot-nix": "buildbot-nix",
         "catppuccin": "catppuccin",
+        "comin": "comin",
         "deploy-rs": "deploy-rs",
         "disko": "disko",
         "home-manager": "home-manager",

@@ -12,11 +12,12 @@
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.agenix.nixosModules.default
+    inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
     flake.modules.shared.default
     flake.modules.nixos.default
+    flake.modules.nixos.comin
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
-    inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
   ];
 
   system.stateVersion = "25.11";

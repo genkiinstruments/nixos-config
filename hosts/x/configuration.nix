@@ -20,6 +20,7 @@
     flake.modules.shared.builders
     flake.modules.shared.home-manager
     flake.modules.nixos.default
+    flake.modules.nixos.comin
     flake.modules.nixos.zram-swap
     flake.modules.nixos.olafur
     flake.modules.nixos.ssh-serve

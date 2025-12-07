@@ -18,6 +18,7 @@
     flake.modules.shared.home-manager
     flake.modules.shared.builders
     flake.modules.nixos.default
+    flake.modules.nixos.comin
     flake.modules.nixos.pipewire
     flake.modules.nixos.zram-swap
     flake.modules.nixos.katla-udev
