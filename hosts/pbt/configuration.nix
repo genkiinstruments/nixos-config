@@ -11,10 +11,9 @@
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.agenix.nixosModules.default
-    inputs.comin.nixosModules.comin
-    flake.modules.shared.comin
     flake.modules.shared.default
     flake.modules.nixos.default
+    flake.modules.nixos.comin
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     ./apple-silicon-support

@@ -14,12 +14,11 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
-    inputs.comin.nixosModules.comin
     flake.modules.shared.default
-    flake.modules.shared.comin
     flake.modules.shared.home-manager
     flake.modules.shared.builders
     flake.modules.nixos.default
+    flake.modules.nixos.comin
     flake.modules.nixos.pipewire
     flake.modules.nixos.zram-swap
     flake.modules.nixos.katla-udev

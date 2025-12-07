@@ -13,10 +13,9 @@
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.agenix.nixosModules.default
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
-    inputs.comin.nixosModules.comin
-    flake.modules.shared.comin
     flake.modules.shared.default
     flake.modules.nixos.default
+    flake.modules.nixos.comin
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
   ];

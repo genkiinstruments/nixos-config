@@ -11,11 +11,10 @@
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
     inputs.nixos-facter-modules.nixosModules.facter
-    inputs.comin.nixosModules.comin
     flake.modules.shared.default
     flake.modules.shared.home-manager
-    flake.modules.shared.comin
     flake.modules.nixos.default
+    flake.modules.nixos.comin
     flake.modules.nixos.olafur
     flake.modules.nixos.katla-udev
     ./disk-config.nix
