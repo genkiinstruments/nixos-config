@@ -36,7 +36,10 @@
     automatic = true;
     dates = "monthly"; # Less frequent
   };
-  environment.systemPackages = with pkgs; [ cowsay ];
+  environment.systemPackages = with pkgs; [
+    cowsay
+    cmatrix
+  ];
 
   hardware.asahi = {
     enable = true;
