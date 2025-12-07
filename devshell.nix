@@ -5,7 +5,8 @@ pkgs.mkShellNoCC {
     nixos-anywhere
     nh
     perSystem.deploy-rs.deploy-rs
+    perSystem.self.deploy-all
+    perSystem.self.comin-all
   ];
-
-  env.EDITOR = "nvim";
+  env.EDITOR = "mvim";
 }
