@@ -113,26 +113,6 @@
         "type": "github"
       }
     },
-    "comin": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1765119238,
-        "narHash": "sha256-7gTk1fEIrW3lok1CQ9S8+8rPJU2K4BTcCXgdb1olVgc=",
-        "owner": "genkiinstruments",
-        "repo": "comin",
-        "rev": "f399f03189516df5b56df74b7f6634d8630be008",
-        "type": "github"
-      },
-      "original": {
-        "owner": "genkiinstruments",
-        "repo": "comin",
-        "type": "github"
-      }
-    },
     "deploy-rs": {
       "inputs": {
         "flake-compat": "flake-compat",
@@ -423,7 +403,6 @@
         "blueprint": "blueprint",
         "buildbot-nix": "buildbot-nix",
         "catppuccin": "catppuccin",
-        "comin": "comin",
         "deploy-rs": "deploy-rs",
         "disko": "disko",
         "home-manager": "home-manager",

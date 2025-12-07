@@ -23,8 +23,6 @@
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.olafur
     flake.modules.nixos.cloudflared
-    flake.modules.nixos.comin
-    flake.modules.shared.comin-check-buildbot
     ./disko-config.nix
   ];
 

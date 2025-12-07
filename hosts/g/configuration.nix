@@ -14,7 +14,6 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
-    flake.modules.nixos.comin
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.modules.shared.builders

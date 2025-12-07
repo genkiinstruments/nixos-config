@@ -15,8 +15,6 @@
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
-    flake.modules.nixos.comin
-    flake.modules.shared.comin-check-buildbot
     ./apple-silicon-support
   ];
 

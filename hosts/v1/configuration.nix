@@ -20,7 +20,6 @@
     flake.modules.nixos.olafur
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.pipewire
-    flake.modules.nixos.comin
   ];
 
   system.stateVersion = "24.11";
