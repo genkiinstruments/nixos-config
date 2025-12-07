@@ -2,7 +2,6 @@
   inputs,
   flake,
   lib,
-  modulesPath,
   ...
 }:
 {
@@ -16,8 +15,9 @@
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
+    flake.modules.nixos.comin
+    flake.modules.shared.comin-check-buildbot
     ./apple-silicon-support
-    (modulesPath + "/installer/scan/not-detected.nix")
   ];
 
   system.stateVersion = "25.05";
