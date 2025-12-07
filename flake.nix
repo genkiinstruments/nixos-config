@@ -42,7 +42,7 @@
     buildbot-nix.url = "github:nix-community/buildbot-nix";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    comin.url = "github:nlewo/comin";
+    comin.url = "github:genkiinstruments/comin";
     comin.inputs.nixpkgs.follows = "nixpkgs";
 
     # Apple Silicon support for m2

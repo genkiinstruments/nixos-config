@@ -120,15 +120,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1764355943,
-        "narHash": "sha256-ong0HRmdxO+Mqasi/Zi6hJP5N5o6OD6IC7Sj6xDCdtc=",
-        "owner": "nlewo",
+        "lastModified": 1765119238,
+        "narHash": "sha256-7gTk1fEIrW3lok1CQ9S8+8rPJU2K4BTcCXgdb1olVgc=",
+        "owner": "genkiinstruments",
         "repo": "comin",
-        "rev": "7186ec4b9d0d86554a3dadb54f8c9b1e101f3fa1",
+        "rev": "f399f03189516df5b56df74b7f6634d8630be008",
         "type": "github"
       },
       "original": {
-        "owner": "nlewo",
+        "owner": "genkiinstruments",
         "repo": "comin",
         "type": "github"
       }
