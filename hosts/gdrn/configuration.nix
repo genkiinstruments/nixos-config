@@ -43,6 +43,11 @@
     trim.enable = true;
   };
 
+  environment.systemPackages = with pkgs; [
+    cowsay
+    cmatrix
+  ];
+
   roles.github-actions-runner = {
     url = "https://github.com/genkiinstruments";
     count = 4;
