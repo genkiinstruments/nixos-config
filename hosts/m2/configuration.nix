@@ -16,6 +16,8 @@
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     inputs.nixos-apple-silicon.nixosModules.apple-silicon-support
+    flake.modules.nixos.comin
+    flake.modules.shared.comin-check-buildbot
   ];
 
   system.stateVersion = "25.11";
