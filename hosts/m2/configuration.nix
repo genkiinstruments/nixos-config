@@ -2,6 +2,7 @@
   inputs,
   flake,
   lib,
+  pkgs,
   ...
 }:
 {
@@ -35,6 +36,7 @@
     automatic = true;
     dates = "monthly"; # Less frequent
   };
+  environment.systemPackages = with pkgs; [ cowsay ];
 
   hardware.asahi = {
     enable = true;
