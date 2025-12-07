@@ -74,20 +74,6 @@ keymap("n", "gx", function()
     vim.cmd("call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote())")
 end, { noremap = true, silent = true, desc = "Open URL" })
 
--- Toggle completion using blink.cmp
-keymap({ "n", "v" }, "<leader>uU", function()
-    local blink_cmp = require("blink.cmp")
-    if blink_cmp.is_enabled() then
-        blink_cmp.hide()
-        vim.notify("Disabled auto completion")
-    else
-        blink_cmp.show()
-        vim.notify("Enabled auto completion")
-    end
-end, { desc = "Toggle suggestions" })
-
-keymap("v", "<leader>ml", "<Esc>`>a](<C-r>*)<C-o>`<[<Esc>")
-
 keymap({ "n", "v" }, "<leader>e", "<cmd>LazyExtra<CR>", { desc = "Open Lazy Extra menu" })
 
 keymap({ "n", "v" }, "<leader>r", "<cmd>source $MYVIMRC<CR>", { desc = "Reload vim config" })
