@@ -46,6 +46,7 @@
   environment.systemPackages = with pkgs; [
     cowsay
     cmatrix
+    asciiquarium
   ];
 
   roles.github-actions-runner = {
