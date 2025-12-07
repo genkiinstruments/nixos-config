@@ -2,7 +2,6 @@
   inputs,
   flake,
   config,
-  pkgs,
   ...
 }:
 {
@@ -24,6 +23,7 @@
     flake.modules.nixos.zram-swap
     flake.modules.nixos.olafur
     flake.modules.nixos.ssh-serve
+    flake.modules.nixos.cloudflared
     ./disko.nix
   ];
 
@@ -78,26 +78,18 @@
     after = [ "buildbot-master.service" ];
   };
 
+  # Wait for backend services before starting tunnel
   systemd.services."cloudflared-tunnel-9c376bb1-4ca6-49d7-8c36-93908b752ae8" = {
     after = [
       "oauth2-proxy.service"
       "nginx.service"
       "buildbot-master.service"
-      "network-online.target"
-      "nss-lookup.target"
     ];
     wants = [
       "oauth2-proxy.service"
       "nginx.service"
       "buildbot-master.service"
-      "network-online.target"
     ];
-    serviceConfig = {
-      Restart = "on-failure";
-      RestartSec = "10s";
-      TimeoutStartSec = "90s";
-      ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
-    };
   };
 
   services.harmonia.enable = true;

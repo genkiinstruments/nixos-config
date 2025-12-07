@@ -22,6 +22,7 @@
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     flake.modules.nixos.olafur
+    flake.modules.nixos.cloudflared
     ./disko-config.nix
   ];
 
@@ -126,5 +127,11 @@
         default = "http_status:404";
       };
     };
+  };
+
+  # Wait for backend service before starting tunnel
+  systemd.services."cloudflared-tunnel-76c2b04c-4171-48fb-92a3-1312b9cc1b98" = {
+    after = [ "stripe-webshippy-sync.service" ];
+    wants = [ "stripe-webshippy-sync.service" ];
   };
 }
