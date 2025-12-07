@@ -13,6 +13,8 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-systemd-boot
     inputs.agenix.nixosModules.default
+    inputs.comin.nixosModules.comin
+    flake.modules.shared.comin
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.modules.nixos.default
