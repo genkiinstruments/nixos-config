@@ -24,7 +24,7 @@
         exit 0
       fi
 
-      exec ${perSystem.comin.default}/bin/comin "$@"
+      exec ${perSystem.comin.default}/bin/comin run "$@"
     ''}"
   ];
 }
