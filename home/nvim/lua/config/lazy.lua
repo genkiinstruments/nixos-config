@@ -88,6 +88,7 @@ require("lazy").setup({
             },
         },
         { "akinsho/bufferline.nvim", enabled = false }, -- Disable tabs
+        { "nvim-neo-tree/neo-tree.nvim", enabled = false }, -- Disable neo-tree
     },
     checker = {
         enabled = true, -- check for plugin updates periodically
