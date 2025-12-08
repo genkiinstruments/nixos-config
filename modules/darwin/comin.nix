@@ -1,10 +1,20 @@
 {
   pkgs,
+  config,
   inputs,
   flake,
   perSystem,
   ...
 }:
+let
+  cfg = config.services.comin;
+  cominConfigYaml = (pkgs.formats.yaml { }).generate "comin.yaml" {
+    hostname = cfg.hostname;
+    state_dir = "/var/lib/comin";
+    remotes = cfg.remotes;
+    exporter = cfg.exporter;
+  };
+in
 {
   imports = [
     inputs.comin.darwinModules.comin
@@ -24,7 +34,7 @@
         exit 0
       fi
 
-      exec ${perSystem.comin.default}/bin/comin run "$@"
+      exec ${perSystem.comin.default}/bin/comin run --config ${cominConfigYaml}
     ''}"
   ];
 }
