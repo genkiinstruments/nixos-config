@@ -4,9 +4,7 @@ pkgs.mkShellNoCC {
     git
     nixos-anywhere
     nh
-    perSystem.deploy-rs.deploy-rs
-    perSystem.self.deploy-all
-    perSystem.self.comin-all
+    perSystem.self.all
   ];
   env.EDITOR = "mvim";
 }
