@@ -15,8 +15,11 @@ in
 
   # Create symlink to Secretive socket accessible by nix-daemon
   system.activationScripts.postActivation.text = ''
-    mkdir -p /var/run/secretive ~/.ssh/sockets
+    mkdir -p /var/run/secretive
     ln -sfn ${userSocketPath} ${sharedSocketPath}
+
+    # Create SSH control socket directory with correct ownership
+    install -d -o ${user} -m 700 /Users/${user}/.ssh/sockets
   '';
 
   homebrew = {
