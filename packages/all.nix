@@ -11,9 +11,11 @@ let
 
   domain = "tail01dbd.ts.net";
 
-  mkMprocsCmd = hosts: builtins.concatStringsSep " \\\n      " (
-    map (h: ''"ssh -At root@${h}.${domain} '$REMOTE_PATH $CMD; exec bash'"'') hosts
-  );
+  mkMprocsCmd =
+    hosts:
+    builtins.concatStringsSep " \\\n      " (
+      map (h: ''"ssh -At root@${h}.${domain} '$REMOTE_PATH $CMD; exec bash'"'') hosts
+    );
 in
 pkgs.writeShellApplication {
   name = pname;
