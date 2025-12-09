@@ -60,46 +60,7 @@
   };
 
   # System defaults for keyboard behavior
-  system.defaults = {
-    NSGlobalDomain = {
-      # Function key behavior
-      "com.apple.keyboard.fnState" = false;
-    };
-
-    # Keyboard modifier key mappings
-    ".GlobalPreferences" = {
-      "com.apple.keyboard.modifiermapping.1452-544-0" = [
-        {
-          HIDKeyboardModifierMappingSrc = 30064771296;  # Left Option
-          HIDKeyboardModifierMappingDst = 30064771299;  # Left Command
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 30064771299;  # Left Command
-          HIDKeyboardModifierMappingDst = 30064771296;  # Left Option
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 30064771300;  # Right Option
-          HIDKeyboardModifierMappingDst = 30064771303;  # Right Command
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 30064771303;  # Right Command
-          HIDKeyboardModifierMappingDst = 30064771300;  # Right Option
-        }
-      ];
-
-      # Apple keyboard mappings (swap Control and Globe/Fn)
-      "com.apple.keyboard.modifiermapping.1452-0-0" = [
-        {
-          HIDKeyboardModifierMappingSrc = 30064771297;  # Left Control
-          HIDKeyboardModifierMappingDst = 1095216660483; # Globe/Fn key
-        }
-        {
-          HIDKeyboardModifierMappingSrc = 1095216660483; # Globe/Fn key
-          HIDKeyboardModifierMappingDst = 30064771297;  # Left Control
-        }
-      ];
-    };
-  };
+  system.defaults.NSGlobalDomain."com.apple.keyboard.fnState" = false;
 
   # Fix nixbld group ID issue
   ids.gids.nixbld = 350;
