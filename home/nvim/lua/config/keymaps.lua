@@ -74,7 +74,7 @@ keymap("n", "gx", function()
     vim.cmd("call netrw#BrowseX(netrw#GX(),netrw#CheckIfRemote())")
 end, { noremap = true, silent = true, desc = "Open URL" })
 
-keymap({ "n", "v" }, "<leader>e", "<cmd>LazyExtra<CR>", { desc = "Open Lazy Extra menu" })
+keymap("n", "<leader>e", "<cmd>e!<CR>", { desc = "Reload current file" })
 
 keymap({ "n", "v" }, "<leader>r", "<cmd>source $MYVIMRC<CR>", { desc = "Reload vim config" })
 
