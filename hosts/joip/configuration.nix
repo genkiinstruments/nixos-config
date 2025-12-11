@@ -111,6 +111,7 @@
         port = "/dev/ttyUSB0";
         baudrate = 115200;
         adapter = "ember";
+        rtscts = false;
       };
       frontend = {
         host = "0.0.0.0";
