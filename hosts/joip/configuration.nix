@@ -6,19 +6,6 @@
   config,
   ...
 }:
-let
-  # Pin zigbee2mqtt to 2.7.0 due to HOST_FATAL_ERROR with SLZB-06M on 2.7.1
-  # https://github.com/Koenkk/zigbee2mqtt/issues/30062
-  zigbee2mqtt = pkgs.zigbee2mqtt.overrideAttrs (old: rec {
-    version = "2.7.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "Koenkk";
-      repo = "zigbee2mqtt";
-      rev = version;
-      hash = "sha256-Hqkqx1LCHD56Ir6pH5GuXnWvLRJYRYqFKE6BTKfp4mI=";
-    };
-  });
-in
 {
   imports = [
     inputs.srvos.nixosModules.server
@@ -117,7 +104,6 @@ in
   services.mosquitto.enable = true;
   services.zigbee2mqtt = {
     enable = true;
-    package = zigbee2mqtt;
     settings = lib.mkForce {
       homeassistant = true;
       mqtt.server = "mqtt://localhost:1883";
