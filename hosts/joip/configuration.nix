@@ -124,6 +124,7 @@
         legacy_availability_payload = false;
       };
       device_options.legacy = false;
+      version = 4;
     };
   };
 
