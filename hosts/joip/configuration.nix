@@ -14,14 +14,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "Koenkk";
       repo = "zigbee2mqtt";
-      tag = version;
+      rev = version;
       hash = "sha256-s37nI4dTzyZHQ7SS9CtpysbGpYXbCkprJxzMEXIu9BE=";
-    };
-    pnpmDeps = pkgs.pnpm_9.fetchDeps {
-      pname = "zigbee2mqtt";
-      inherit version src;
-      fetcherVersion = 1;
-      hash = "sha256-dIN3obP//It1GoLfAdEeATWdObf9zfnkD0s1x8iQ8qo=";
     };
   });
 in
