@@ -15,7 +15,7 @@ let
       owner = "Koenkk";
       repo = "zigbee2mqtt";
       rev = version;
-      hash = "sha256-Hqkqx1LCHD56Ir6pH5GuXnWvLRJYRYqFKE6BTKfp4mI=";
+      hash = "sha256-s37nI4dTzyZHQ7SS9CtpysbGpYXbCkprJxzMEXIu9BE=";
     };
   });
 in
