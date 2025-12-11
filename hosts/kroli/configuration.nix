@@ -17,6 +17,7 @@
     flake.modules.nixos.comin
     flake.modules.nixos.olafur
     flake.modules.nixos.katla-udev
+    flake.modules.nixos.yggdrasil
     ./disk-config.nix
   ];
 
