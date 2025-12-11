@@ -105,7 +105,7 @@
   services.zigbee2mqtt = {
     enable = true;
     settings = lib.mkForce {
-      homeassistant = true;
+      homeassistant.enabled = true;
       mqtt.server = "mqtt://localhost:1883";
       serial = {
         port = "/dev/ttyUSB0";
