@@ -1,5 +1,5 @@
 {
-  networking.hostId = "00000000"; # ZFS needs this set
+  networking.hostId = "22b5a985";
   services.zfs.autoScrub.enable = true;
   boot.supportedFilesystems = [ "zfs" ];
 

@@ -21,4 +21,5 @@
 
   system.stateVersion = "23.05";
   facter.reportPath = ./facter.json;
+  boot.initrd.systemd.enable = true;
 }
