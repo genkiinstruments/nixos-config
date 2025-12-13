@@ -1,6 +1,7 @@
 {
   flake,
   inputs,
+  pkgs,
   ...
 }:
 {
@@ -64,6 +65,8 @@
 
   # Fix nixbld group ID issue
   ids.gids.nixbld = 350;
+
+  environment.systemPackages = with pkgs; [ nil ];
 
   # NOTE: Here you can install packages from brew
   homebrew = {
