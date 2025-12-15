@@ -40,6 +40,7 @@
         magic-wormhole-rs
         neofetch
         mediainfo # for mpv / yazi setup
+        television # tv binary for sesh
         perSystem.self.mvim
       ]
       ++ (with perSystem.nix-ai-tools; [

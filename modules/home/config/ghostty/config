@@ -68,6 +68,7 @@ keybind = cmd+shift+g=text:\x00\x47
 keybind = cmd+b=text:\x00\x62
 keybind = cmd+e=text:\x00\x65
 keybind = cmd+s=text:\x00\x73
+keybind = cmd+shift+t=text:\x00\x54
 
 # For claude-code
 keybind = shift+enter=text:\n
