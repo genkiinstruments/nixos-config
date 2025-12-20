@@ -107,6 +107,10 @@
       address = "0.0.0.0";
       settings.allow_anonymous = true;
       acl = [ "topic readwrite #" ];
+      users.foo = {
+        password = "foofoo";
+        acl = [ "readwrite #" ];
+      };
     }];
   };
   services.zigbee2mqtt = {
