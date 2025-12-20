@@ -101,7 +101,14 @@
   # Ensure zigbee2mqtt only starts when the USB device is available
   systemd.services.zigbee2mqtt.unitConfig.ConditionPathExists = "/dev/ttyUSB0";
 
-  services.mosquitto.enable = true;
+  services.mosquitto = {
+    enable = true;
+    listeners = [{
+      address = "0.0.0.0";
+      settings.allow_anonymous = true;
+      acl = [ "topic readwrite #" ];
+    }];
+  };
   services.zigbee2mqtt = {
     enable = true;
     settings = lib.mkForce {
