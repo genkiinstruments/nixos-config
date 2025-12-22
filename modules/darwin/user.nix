@@ -10,7 +10,7 @@ in
 {
   options.genki.user = lib.mkOption {
     type = lib.types.nullOr lib.types.str;
-    default = null;
+    default = "genki";
     description = "Primary user name for this Darwin system";
   };
 
