@@ -96,6 +96,11 @@ in
           maxJobs = 3;
         }
         {
+          hostName = "kk";
+          system = "aarch64-darwin";
+          maxJobs = 11;
+        }
+        {
           hostName = "gkr";
           system = "aarch64-darwin";
           maxJobs = 3;
