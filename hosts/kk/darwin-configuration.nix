@@ -43,4 +43,7 @@
     createHome = true;
   };
   nix.settings.trusted-users = [ "nix-ssh" ]; # genki added by module
+
+  # Determinate Systems installer uses GID 350, nix-darwin expects 30000
+  ids.gids.nixbld = 350;
 }
