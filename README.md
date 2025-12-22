@@ -14,4 +14,5 @@ document it.
 4. Optional: Manually create nix-ssh user on macOS, does not need to be system
 5. Install configuration using nix-darwin:
    `sudo nix run nix-darwin/master#darwin-rebuild -- switch --flake <path to flake>`
-6. Run `tailscale up --ssh`, login and disable key expiry
+6. Run `tailscale up --ssh`, login, disable key expiry and optionally add
+   machine to builders/github-actions tags
