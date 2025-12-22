@@ -68,7 +68,6 @@
 
   environment.systemPackages = with pkgs; [
     nil
-    zed-editor
   ];
 
   # NOTE: Here you can install packages from brew
