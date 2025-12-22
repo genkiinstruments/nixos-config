@@ -66,7 +66,7 @@
   # Fix nixbld group ID issue
   ids.gids.nixbld = 350;
 
-  environment.systemPackages = with pkgs; [ nil ];
+  environment.systemPackages = with pkgs; [ nil zed-editor ];
 
   # NOTE: Here you can install packages from brew
   homebrew = {
@@ -78,7 +78,6 @@
       # guis
       "raycast"
       "arc"
-      "zed"
       "ghostty"
     ];
     brews = [
