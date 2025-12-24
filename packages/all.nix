@@ -29,19 +29,25 @@ pkgs.writeShellApplication {
       echo "Runs <command> on hosts in parallel using mprocs"
       echo ""
       echo "Options:"
-      echo "  --nixos   Only run on NixOS hosts: ${builtins.concatStringsSep ", " nixosHosts}"
-      echo "  --darwin  Only run on Darwin hosts: ${builtins.concatStringsSep ", " darwinHosts}"
-      echo "  (default) Run on all hosts"
+      echo "  -h, --help  Show this help message"
+      echo "  --nixos     Only run on NixOS hosts: ${builtins.concatStringsSep ", " nixosHosts}"
+      echo "  --darwin    Only run on Darwin hosts: ${builtins.concatStringsSep ", " darwinHosts}"
+      echo "  (default)   Run on all hosts"
       echo ""
       echo "Examples:"
       echo "  all 'comin status'"
       echo "  all --nixos 'nixos-rebuild switch --flake github:genkiinstruments/nixos-config'"
       echo "  all uptime"
-      exit 1
     }
 
     if [ $# -eq 0 ]; then
       usage
+      exit 1
+    fi
+
+    if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+      usage
+      exit 0
     fi
 
     REMOTE_PATH="PATH=/run/current-system/sw/bin:\$PATH"
@@ -57,6 +63,7 @@ pkgs.writeShellApplication {
 
     if [ $# -eq 0 ]; then
       usage
+      exit 1
     fi
 
     CMD="$*"
