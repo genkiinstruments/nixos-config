@@ -217,10 +217,7 @@ end, { desc = "which_key_ignore" })
 map("t", "<C-/>", "<cmd>close<CR>", { desc = "Hide Terminal" })
 map("t", "<C-_>", "<cmd>close<CR>", { desc = "which_key_ignore" })
 map("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Enter Normal Mode" })
-map("t", "<C-h>", "<cmd>wincmd h<CR>", { desc = "Go to Left Window" })
-map("t", "<C-j>", "<cmd>wincmd j<CR>", { desc = "Go to Lower Window" })
-map("t", "<C-k>", "<cmd>wincmd k<CR>", { desc = "Go to Upper Window" })
-map("t", "<C-l>", "<cmd>wincmd l<CR>", { desc = "Go to Right Window" })
+-- Terminal navigation handled by vim-tmux-navigator in editor.lua
 
 -- Lazygit
 map("n", "<leader>gg", function()
