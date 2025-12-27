@@ -141,7 +141,7 @@ function sc --description "Bare clone repo to ~/dev/owner/repo"
     git clone --bare $url .bare
 
     # Create .git file pointing to bare repo
-    echo "gitdir: ./.bare" > .git
+    echo "gitdir: ./.bare" >.git
 
     # Configure fetch to get all branches
     git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
