@@ -51,6 +51,12 @@
 
     nix-ai-tools.url = "github:numtide/nix-ai-tools";
     nix-ai-tools.inputs.nixpkgs.follows = "nixpkgs";
+
+    neovim-nightly.url = "github:neovim/neovim";
+    neovim-nightly.flake = false;
+
+    expert.url = "github:elixir-lang/expert";
+    expert.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
