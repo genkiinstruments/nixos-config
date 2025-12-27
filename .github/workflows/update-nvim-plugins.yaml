@@ -27,10 +27,12 @@ jobs:
           # (prevents mvim wrapper from creating read-only symlink to nix store)
           mkdir -p $HOME/.config/mvim
           cp -r home/nvim/* $HOME/.config/mvim/
-          # Run the update
-          nix run .#mvim -- --headless "+Lazy! update" +qa
-          # Copy the updated lock file back
-          cp $HOME/.config/mvim/lazy-lock.json home/nvim/lazy-lock.json
+          # Run the update (vim.pack updates plugins to latest)
+          nix run .#mvim -- --headless "+PackUpdate" "+qa"
+          # Copy any updated files back (nvim-pack-lock.json if it exists)
+          if [ -f "$HOME/.config/mvim/nvim-pack-lock.json" ]; then
+            cp $HOME/.config/mvim/nvim-pack-lock.json home/nvim/nvim-pack-lock.json
+          fi
 
       - uses: actions/create-github-app-token@main
         id: app-token
@@ -41,10 +43,10 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@main
         with:
-          title: "chore: update lazy-lock.json"
-          commit-message: "chore: update lazy-lock.json"
+          title: "chore: update nvim plugins"
+          commit-message: "chore: update nvim plugins"
           token: ${{ steps.app-token.outputs.token }}
-          branch: "update-lazy-plugins"
+          branch: "update-nvim-plugins"
           labels: |
             dependencies
             auto-merge

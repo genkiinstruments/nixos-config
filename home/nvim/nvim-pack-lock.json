@@ -1,5 +1,9 @@
 {
   "plugins": {
+    "LuaSnip": {
+      "rev": "3732756842a2f7e0e76a7b0487e9692072857277",
+      "src": "https://github.com/L3MON4D3/LuaSnip"
+    },
     "alpha-nvim": {
       "rev": "3979b01cb05734331c7873049001d3f2bb8477f4",
       "src": "https://github.com/goolord/alpha-nvim"
@@ -28,6 +32,10 @@
     "flash.nvim": {
       "rev": "fcea7ff883235d9024dc41e638f164a450c14ca2",
       "src": "https://github.com/folke/flash.nvim"
+    },
+    "friendly-snippets": {
+      "rev": "572f5660cf05f8cd8834e096d7b4c921ba18e175",
+      "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
       "rev": "b1d2b0dc146cb9260209da4d7ab754adb0a2653d",

@@ -12,7 +12,7 @@ let
     src = inputs.neovim-nightly;
   };
 
-  configDir = "${flake}/home/mvim-bundle";
+  configDir = "${flake}/hosts/saumavel/users/home/nvim";
 in
 pkgs.wrapNeovimUnstable neovim-nightly {
   luaRcContent = ''
@@ -43,6 +43,13 @@ pkgs.wrapNeovimUnstable neovim-nightly {
       pkgs.ruff
       pkgs.stylua
       perSystem.expert.default
+      # Saumavel-specific tools
+      pkgs.zls # Zig language server
+      pkgs.clang-tools # clangd for C/C++
+      pkgs.nodePackages.svelte-language-server
+      pkgs.sqls # SQL language server
+      pkgs.tailwindcss-language-server
+      pkgs.emmet-ls # Emmet for HTML/CSS expansion
     ]}"
   ];
 }

@@ -42,7 +42,6 @@
         mediainfo # for mpv / yazi setup
         television # tv binary for sesh
         perSystem.self.mvim
-        perSystem.self.mvim-bundle
       ]
       ++ (with perSystem.nix-ai-tools; [
         gemini-cli

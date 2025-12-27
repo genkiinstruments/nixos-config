@@ -42,6 +42,19 @@ return {
 				root_markers = { "mix.exs", ".git" },
 			})
 
+			-- Saumavel: Emmet language server for HTML/CSS expansion
+			vim.lsp.config("emmet_language_server", {
+				filetypes = {
+					"html",
+					"css",
+					"heex",
+					"javascript",
+					"javascriptreact",
+					"typescript",
+					"typescriptreact",
+				},
+			})
+
 			-- Enable LSP servers (uses built-in configs from nvim-lspconfig)
 			vim.lsp.enable("nil_ls") -- Nix
 			vim.lsp.enable("lua_ls") -- Lua
@@ -52,6 +65,14 @@ return {
 			vim.lsp.enable("html") -- HTML
 			vim.lsp.enable("cssls") -- CSS
 			vim.lsp.enable("jsonls") -- JSON
+
+			-- Saumavel: Additional language servers
+			vim.lsp.enable("zls") -- Zig
+			vim.lsp.enable("clangd") -- C/C++
+			vim.lsp.enable("svelte") -- Svelte
+			vim.lsp.enable("sqls") -- SQL
+			vim.lsp.enable("tailwindcss") -- Tailwind CSS
+			vim.lsp.enable("emmet_language_server") -- Emmet
 		end,
 	},
 
@@ -102,6 +123,24 @@ return {
 		},
 	},
 
+	-- Snippets
+	{
+		"LuaSnip",
+		event = "InsertEnter",
+		after = function()
+			local luasnip = require("luasnip")
+			luasnip.setup({})
+
+			-- Load friendly-snippets
+			require("luasnip.loaders.from_vscode").lazy_load()
+
+			-- Load custom snippets from config/snippets directory
+			require("luasnip.loaders.from_vscode").lazy_load({
+				paths = { vim.fn.stdpath("config") .. "/snippets" },
+			})
+		end,
+	},
+
 	-- Blink completion
 	{
 		"blink.cmp",
@@ -113,8 +152,8 @@ return {
 					["<C-space>"] = { "show", "show_documentation", "hide_documentation" },
 					["<C-e>"] = { "hide" },
 					["<CR>"] = { "accept", "fallback" },
-					["<Tab>"] = { "select_next", "fallback" },
-					["<S-Tab>"] = { "select_prev", "fallback" },
+					["<Tab>"] = { "snippet_forward", "select_next", "fallback" },
+					["<S-Tab>"] = { "snippet_backward", "select_prev", "fallback" },
 					["<C-n>"] = { "select_next", "fallback" },
 					["<C-p>"] = { "select_prev", "fallback" },
 					["<Up>"] = { "select_prev", "fallback" },
@@ -127,8 +166,9 @@ return {
 					nerd_font_variant = "mono",
 				},
 				sources = {
-					default = { "lsp", "path", "buffer" },
+					default = { "lsp", "snippets", "path", "buffer" },
 				},
+				snippets = { preset = "luasnip" },
 				fuzzy = {
 					implementation = "lua",
 				},
@@ -164,6 +204,8 @@ return {
 					html = { "prettier" },
 					css = { "prettier" },
 					markdown = { "prettier" },
+					-- Saumavel: Zig formatting
+					zig = { "zigfmt" },
 				},
 				format_on_save = function(bufnr)
 					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
