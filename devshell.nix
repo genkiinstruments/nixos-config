@@ -14,7 +14,8 @@ pkgs.mkShellNoCC {
     perSystem.self.all
     perSystem.self.ni
     nvim.neovim-nightly
-  ] ++ nvim.tools;
+  ]
+  ++ nvim.tools;
 
   env = {
     EDITOR = "nvim";
