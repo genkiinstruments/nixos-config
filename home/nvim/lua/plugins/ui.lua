@@ -66,6 +66,30 @@ return {
 		end,
 	},
 
+	-- Noice (cmdline, messages, notifications UI)
+	{
+		"noice.nvim",
+		lazy = false,
+		after = function()
+			require("noice").setup({
+				lsp = {
+					override = {
+						["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+						["vim.lsp.util.stylize_markdown"] = true,
+						["cmp.entry.get_documentation"] = true,
+					},
+					hover = { silent = true },
+				},
+				presets = {
+					bottom_search = true,
+					command_palette = true,
+					long_message_to_split = true,
+					lsp_doc_border = true,
+				},
+			})
+		end,
+	},
+
 	-- Icons
 	{
 		"nvim-web-devicons",

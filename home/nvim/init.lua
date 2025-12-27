@@ -24,6 +24,8 @@ vim.pack.add({
 	"https://github.com/nvim-lualine/lualine.nvim",
 	"https://github.com/folke/which-key.nvim",
 	"https://github.com/folke/snacks.nvim",
+	"https://github.com/folke/noice.nvim",
+	"https://github.com/MunifTanjim/nui.nvim",
 
 	-- Editor
 	"https://github.com/stevearc/oil.nvim",
@@ -80,6 +82,8 @@ vim.cmd.packadd("snacks.nvim")
 vim.cmd.packadd("fzf-lua")
 vim.cmd.packadd("nvim-treesitter")
 vim.cmd.packadd("nvim-web-devicons")
+vim.cmd.packadd("nui.nvim")
+vim.cmd.packadd("noice.nvim")
 
 -- Load the rest via lz.n lazy loading
 require("lz.n").load("plugins")
