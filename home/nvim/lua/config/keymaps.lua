@@ -288,6 +288,20 @@ end, { desc = "Inspect Tree" })
 -- Plugin manager (using vim.pack instead of lazy.nvim)
 map("n", "<leader>l", "<cmd>PackUpdate<CR>", { desc = "Update Plugins" })
 
+-- Reload config (for development)
+map("n", "<leader>R", function()
+	-- Clear cached config modules (not plugins - they don't like re-setup)
+	for name, _ in pairs(package.loaded) do
+		if name:match("^config%.") then
+			package.loaded[name] = nil
+		end
+	end
+	require("config.options")
+	require("config.keymaps")
+	require("config.autocmds")
+	vim.notify("Config reloaded", vim.log.levels.INFO)
+end, { desc = "Reload Config" })
+
 -- Undo tree
 map("n", "<leader>uu", "<cmd>UndotreeToggle<CR>", { desc = "Toggle Undotree" })
 
