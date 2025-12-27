@@ -68,7 +68,7 @@ keybind = cmd+shift+g=text:\x00\x47
 keybind = cmd+b=text:\x00\x62
 keybind = cmd+e=text:\x00\x65
 keybind = cmd+s=text:\x00\x73
-keybind = cmd+shift+t=text:\x00\x54
+keybind = cmd+shift+k=text:\x00\x4B
 
 # For claude-code multiline input (Shift+Enter)
 # https://github.com/anthropics/claude-code/issues/1282#issuecomment-3185584410
