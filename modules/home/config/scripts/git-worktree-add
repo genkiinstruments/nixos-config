@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Create a git worktree at project root
+# Usage: git-worktree-add <name> [base-branch]
+
+NAME="${1:-}"
+BASE="${2:-origin/main}"
+
+if [[ -z "$NAME" ]]; then
+    echo "Usage: git-worktree-add <name> [base-branch]"
+    exit 1
+fi
+
+# cd to project root (parent of .bare)
+GIT_COMMON_DIR=$(git rev-parse --git-common-dir 2>/dev/null)
+PROJECT_ROOT=$(dirname "$GIT_COMMON_DIR")
+cd "$PROJECT_ROOT"
+
+echo "Creating worktree: $NAME from $BASE in $(pwd)"
+git worktree add "$NAME" -b "$NAME" "$BASE"

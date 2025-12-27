@@ -26,6 +26,14 @@
       source = ./config/scripts/tmux-toggle-app;
       executable = true;
     };
+    file.".local/bin/git-worktree-list" = {
+      source = ./config/scripts/git-worktree-list;
+      executable = true;
+    };
+    file.".local/bin/git-worktree-add" = {
+      source = ./config/scripts/git-worktree-add;
+      executable = true;
+    };
 
     sessionVariables = {
       NVIM_APPNAME = "nvim";
@@ -67,7 +75,7 @@
     sesh = {
       enable = true;
       enableTmuxIntegration = false; # using custom keybind in tmux.conf
-      settings.dir_length = 2;
+      settings.dir_length = 3;
     };
     jq.enable = true;
     yazi.enable = true;
@@ -141,6 +149,7 @@
         disableStartupPopups = true;
         promptToReturnFromSubprocess = false;
         keybinding.files.commitChangesWithEditor = "<disabled>";
+        keybinding.files.commitChangesWithoutHook = "<disabled>";
         # Classhing with tmux keybindngs
         keybinding.commits.moveDownCommit = "<c-J>";
         keybinding.commits.moveUpCommit = "<c-K>";
@@ -247,6 +256,41 @@
             context = "files";
             loadingText = "Committing lazy-lock.json changes...";
           }
+          # Worktree commands (w opens worktrees panel by default)
+          {
+            key = "o";
+            description = "open worktree in sesh";
+            command = "sesh connect '{{.SelectedWorktree.Path}}'";
+            context = "worktrees";
+          }
+          {
+            key = "O";
+            description = "open worktree in sesh (alternate)";
+            command = "sesh connect '{{.SelectedWorktree.Path}}'";
+            context = "worktrees";
+          }
+          {
+            key = "n";
+            description = "new worktree at repo root";
+            context = "worktrees";
+            prompts = [
+              {
+                type = "input";
+                title = "Worktree name";
+                key = "Name";
+              }
+              {
+                type = "menuFromCommand";
+                title = "Base branch";
+                key = "Base";
+                command = "git branch -r --format='%(refname:short)'";
+                filter = "(?P<branch>.*)";
+                valueFormat = "{{ .branch }}";
+                labelFormat = "{{ .branch }}";
+              }
+            ];
+            command = "git-worktree-add '{{.Form.Name}}' '{{.Form.Base}}'";
+          }
         ];
       };
     };
@@ -310,6 +354,14 @@
         cat = "bat";
         n = "nvim";
         nssh = "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
+        # Git worktree aliases
+        gwl = "git-worktree-list"; # list worktrees sorted by recent commit
+        gwa = "git worktree add";
+        gwr = "git worktree remove";
+        gwp = "git worktree prune";
+        # Sesh aliases (override sesh module default)
+        s = lib.mkForce "sesh connect";
+        "s." = "sesh connect .";
       };
       interactiveShellInit = lib.strings.concatStrings (
         lib.strings.intersperse "\n" [
@@ -347,6 +399,12 @@
           lg = "log";
           pl = "pull";
           ps = "push";
+          # Worktree aliases
+          wt = "worktree";
+          wta = "worktree add";
+          wtl = "worktree list";
+          wtr = "worktree remove";
+          wtp = "worktree prune";
         };
       };
       ignores = [
