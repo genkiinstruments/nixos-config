@@ -32,6 +32,8 @@ jobs:
           if [ -f "$HOME/.config/nvim/nvim-pack-lock.json" ]; then
             cp $HOME/.config/nvim/nvim-pack-lock.json home/nvim/nvim-pack-lock.json
           fi
+          # Format any changed files
+          nix fmt
 
       - uses: actions/create-github-app-token@main
         id: app-token
