@@ -65,7 +65,12 @@ return {
 
 			-- Find
 			map("n", "<leader><leader>", "<cmd>FzfLua files<cr>", { desc = "Find Files" })
-			map("n", "<leader>,", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", { desc = "Switch Buffer" })
+			map(
+				"n",
+				"<leader>,",
+				"<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>",
+				{ desc = "Switch Buffer" }
+			)
 			map("n", "<leader>/", "<cmd>FzfLua live_grep<cr>", { desc = "Grep (Root Dir)" })
 			map("n", "<leader>:", "<cmd>FzfLua command_history<cr>", { desc = "Command History" })
 
@@ -105,10 +110,30 @@ return {
 			-- LSP
 			map("n", "<leader>ss", "<cmd>FzfLua lsp_document_symbols<cr>", { desc = "Goto Symbol" })
 			map("n", "<leader>sS", "<cmd>FzfLua lsp_live_workspace_symbols<cr>", { desc = "Goto Symbol (Workspace)" })
-			map("n", "gd", "<cmd>FzfLua lsp_definitions jump1=true ignore_current_line=true<cr>", { desc = "Goto Definition" })
-			map("n", "gr", "<cmd>FzfLua lsp_references jump1=true ignore_current_line=true<cr>", { desc = "References" })
-			map("n", "gI", "<cmd>FzfLua lsp_implementations jump1=true ignore_current_line=true<cr>", { desc = "Goto Implementation" })
-			map("n", "gy", "<cmd>FzfLua lsp_typedefs jump1=true ignore_current_line=true<cr>", { desc = "Goto T[y]pe Definition" })
+			map(
+				"n",
+				"gd",
+				"<cmd>FzfLua lsp_definitions jump1=true ignore_current_line=true<cr>",
+				{ desc = "Goto Definition" }
+			)
+			map(
+				"n",
+				"gr",
+				"<cmd>FzfLua lsp_references jump1=true ignore_current_line=true<cr>",
+				{ desc = "References" }
+			)
+			map(
+				"n",
+				"gI",
+				"<cmd>FzfLua lsp_implementations jump1=true ignore_current_line=true<cr>",
+				{ desc = "Goto Implementation" }
+			)
+			map(
+				"n",
+				"gy",
+				"<cmd>FzfLua lsp_typedefs jump1=true ignore_current_line=true<cr>",
+				{ desc = "Goto T[y]pe Definition" }
+			)
 
 			-- Config files
 			map("n", "<leader>fc", function()

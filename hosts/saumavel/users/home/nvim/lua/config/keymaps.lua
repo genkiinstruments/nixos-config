@@ -283,7 +283,12 @@ map("n", "<leader>gB", function()
 	Snacks.gitbrowse()
 end, { desc = "Git Browse" })
 map({ "n", "x" }, "<leader>gY", function()
-	Snacks.gitbrowse({ open = function(url) vim.fn.setreg("+", url) end, notify = false })
+	Snacks.gitbrowse({
+		open = function(url)
+			vim.fn.setreg("+", url)
+		end,
+		notify = false,
+	})
 end, { desc = "Git Browse (copy)" })
 
 -- Blame line
