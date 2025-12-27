@@ -1,26 +1,91 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
--- Disable swap files
+-- Leader key
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+-- Line numbers
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+-- Cursor
+vim.opt.cursorline = true
+
+-- Undo
+vim.opt.undofile = true
 vim.opt.swapfile = false
 
---  https://old.reddit.com/r/neovim/comments/1ajpdrx/lazyvim_weird_live_grep_root_dir_functionality_in/
--- Type :LazyRoot in the directory you're in and that will show you the root_dir that will be used for the root_dir search commands.
--- The reason you're experiencing this behavior is because your subdirectories contain some kind of root_dir pattern for the LSP server attached to the buffer.
+-- Indentation
+vim.opt.shiftwidth = 2
+vim.opt.tabstop = 2
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+
+-- UI
+vim.opt.signcolumn = "yes"
+vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
+vim.opt.wrap = false
+vim.opt.termguicolors = true
+vim.opt.showtabline = 0
+vim.opt.cmdheight = 0
+vim.opt.laststatus = 3
+
+-- Search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Splits
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+-- Clipboard
+vim.opt.clipboard = "unnamedplus"
+
+-- Mouse
+vim.opt.mouse = "a"
+
+-- Folding (treesitter-based)
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = ""
+vim.opt.foldlevel = 99
+
+-- Grep
+vim.opt.grepprg = "rg --vimgrep --hidden -g '!.git/*'"
+
+-- Completion (Neovim 0.11+ features)
+vim.opt.completeopt = "menu,menuone,noselect,fuzzy,preview"
+
+-- Floating window border (Neovim 0.11+)
+vim.opt.winborder = "rounded"
+
+-- Saumavel: Use cwd as root (LazyVim root_spec equivalent)
 vim.g.root_spec = { "cwd" }
 
+-- Saumavel: Disable spell by default
 vim.opt.spell = false
 
--- Disable syntax highlighting for .fish files
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-    pattern = "*.fish",
-    callback = function()
-        vim.cmd("syntax off")
-    end,
-})
-
--- Don't show tabs
-vim.cmd([[ set showtabline=0 ]])
-
--- Disable animations
+-- Saumavel: Disable snacks animations
 vim.g.snacks_animate = false
+
+-- Diagnostics
+vim.diagnostic.config({
+	virtual_text = {
+		source = true,
+		prefix = "● ",
+	},
+	signs = {
+		text = {
+			[vim.diagnostic.severity.ERROR] = " ",
+			[vim.diagnostic.severity.WARN] = " ",
+			[vim.diagnostic.severity.INFO] = " ",
+			[vim.diagnostic.severity.HINT] = " ",
+		},
+	},
+	float = { source = true },
+	jump = {
+		on_jump = function()
+			vim.diagnostic.open_float()
+		end,
+	},
+	severity_sort = true,
+})

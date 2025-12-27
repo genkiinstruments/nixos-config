@@ -18,19 +18,22 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Update vim plugins
+      - name: Update nvim plugins
         run: |
           # Pull latest main to avoid conflicts
           git fetch origin main
-          git rebase origin/main || git rebase --abort
+          git rebase origin main || git rebase --abort
           # Create writable config directory and copy files
-          # (prevents mvim wrapper from creating read-only symlink to nix store)
-          mkdir -p $HOME/.config/mvim
-          cp -r home/nvim/* $HOME/.config/mvim/
-          # Run the update
-          nix run .#mvim -- --headless "+Lazy! update" +qa
-          # Copy the updated lock file back
-          cp $HOME/.config/mvim/lazy-lock.json home/nvim/lazy-lock.json
+          mkdir -p $HOME/.config/nvim
+          cp -r home/nvim/* $HOME/.config/nvim/
+          # Run the update (vim.pack updates plugins to latest)
+          nix run .#nvim -- --headless "+PackUpdate" "+qa"
+          # Copy any updated files back (nvim-pack-lock.json if it exists)
+          if [ -f "$HOME/.config/nvim/nvim-pack-lock.json" ]; then
+            cp $HOME/.config/nvim/nvim-pack-lock.json home/nvim/nvim-pack-lock.json
+          fi
+          # Format any changed files
+          nix fmt
 
       - uses: actions/create-github-app-token@main
         id: app-token
@@ -41,10 +44,10 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@main
         with:
-          title: "chore: update lazy-lock.json"
-          commit-message: "chore: update lazy-lock.json"
+          title: "chore: update nvim plugins"
+          commit-message: "chore: update nvim plugins"
           token: ${{ steps.app-token.outputs.token }}
-          branch: "update-lazy-plugins"
+          branch: "update-nvim-plugins"
           labels: |
             dependencies
             auto-merge

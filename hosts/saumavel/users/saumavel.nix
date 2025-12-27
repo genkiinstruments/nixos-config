@@ -2,6 +2,7 @@
   flake,
   pkgs,
   lib,
+  perSystem,
   ...
 }:
 {
@@ -11,7 +12,6 @@
 
   home.packages = with pkgs; [
     go
-    neovim
     nixfmt
     nodejs
     mermaid-cli
@@ -23,10 +23,10 @@
     tldr
     ast-grep
     ghostscript
+    perSystem.self.nvim-saumavel
   ];
 
   home.file.".config/karabiner/karabiner.json".source = lib.mkForce ./karabiner.json;
-  home.sessionVariables.MVIM_CONFIG_SOURCE = "/Users/saumavel/genkiinstruments/nixos-config/hosts/saumavel/users/home/nvim";
 
   xdg = {
     enable = true;
@@ -44,12 +44,7 @@
   programs = {
     fish = {
       shellAliases = {
-        n = "mvim";
-        nv = "mvim";
-        nvi = "mvim";
-        nvm = "mvim";
-        vim = "mvim";
-        nvim = "mvim";
+        n = lib.mkForce "nvim";
       };
     };
 

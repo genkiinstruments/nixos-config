@@ -1,4 +1,7 @@
+{ perSystem, ... }:
 {
+  home.packages = [ perSystem.self.nvim ];
+
   programs = {
     git.settings.user.email = "olafur@genkiinstruments.com";
     git.settings.user.name = "multivac61";
