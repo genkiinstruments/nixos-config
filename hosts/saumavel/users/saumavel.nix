@@ -23,7 +23,7 @@
     tldr
     ast-grep
     ghostscript
-    perSystem.self.mvim-saumavel
+    perSystem.self.nvim-saumavel
   ];
 
   home.file.".config/karabiner/karabiner.json".source = lib.mkForce ./karabiner.json;
@@ -44,12 +44,7 @@
   programs = {
     fish = {
       shellAliases = {
-        n = lib.mkForce "mvim-saumavel";
-        nv = "mvim-saumavel";
-        nvi = "mvim-saumavel";
-        nvm = "mvim-saumavel";
-        vim = "mvim-saumavel";
-        nvim = "mvim-saumavel";
+        n = lib.mkForce "nvim";
       };
     };
 

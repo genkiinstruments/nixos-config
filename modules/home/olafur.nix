@@ -1,6 +1,6 @@
 { perSystem, ... }:
 {
-  home.packages = [ perSystem.self.mvim ];
+  home.packages = [ perSystem.self.nvim ];
 
   programs = {
     git.settings.user.email = "olafur@genkiinstruments.com";

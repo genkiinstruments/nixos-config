@@ -28,8 +28,8 @@
     };
 
     sessionVariables = {
-      NVIM_APPNAME = "mvim";
-      EDITOR = "mvim";
+      NVIM_APPNAME = "nvim";
+      EDITOR = "nvim";
     };
 
     packages =
@@ -308,7 +308,7 @@
         c = "clear";
         lg = "lazygit";
         cat = "bat";
-        n = "mvim";
+        n = "nvim";
         nssh = "ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no";
       };
       interactiveShellInit = lib.strings.concatStrings (

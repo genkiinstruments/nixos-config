@@ -7,5 +7,5 @@ pkgs.mkShellNoCC {
     perSystem.self.all
     perSystem.self.ni
   ];
-  env.EDITOR = "mvim";
+  env.EDITOR = "nvim";
 }

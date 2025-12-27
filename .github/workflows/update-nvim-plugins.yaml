@@ -18,20 +18,19 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Update vim plugins
+      - name: Update nvim plugins
         run: |
           # Pull latest main to avoid conflicts
           git fetch origin main
-          git rebase origin/main || git rebase --abort
+          git rebase origin main || git rebase --abort
           # Create writable config directory and copy files
-          # (prevents mvim wrapper from creating read-only symlink to nix store)
-          mkdir -p $HOME/.config/mvim
-          cp -r home/nvim/* $HOME/.config/mvim/
+          mkdir -p $HOME/.config/nvim
+          cp -r home/nvim/* $HOME/.config/nvim/
           # Run the update (vim.pack updates plugins to latest)
-          nix run .#mvim -- --headless "+PackUpdate" "+qa"
+          nix run .#nvim -- --headless "+PackUpdate" "+qa"
           # Copy any updated files back (nvim-pack-lock.json if it exists)
-          if [ -f "$HOME/.config/mvim/nvim-pack-lock.json" ]; then
-            cp $HOME/.config/mvim/nvim-pack-lock.json home/nvim/nvim-pack-lock.json
+          if [ -f "$HOME/.config/nvim/nvim-pack-lock.json" ]; then
+            cp $HOME/.config/nvim/nvim-pack-lock.json home/nvim/nvim-pack-lock.json
           fi
 
       - uses: actions/create-github-app-token@main
