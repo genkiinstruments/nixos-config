@@ -60,8 +60,32 @@ return {
 		"which-key.nvim",
 		event = "DeferredUIEnter",
 		after = function()
-			require("which-key").setup({
+			local wk = require("which-key")
+			wk.setup({
 				delay = 300,
+				icons = {
+					group = "",
+					separator = "→",
+				},
+				spec = {
+					-- Leader groups
+					{ "<leader>b", group = "buffer" },
+					{ "<leader>c", group = "code" },
+					{ "<leader>f", group = "file/find" },
+					{ "<leader>g", group = "git" },
+					{ "<leader>q", group = "quit/session" },
+					{ "<leader>s", group = "search" },
+					{ "<leader>u", group = "ui/toggle" },
+					{ "<leader>w", group = "windows" },
+					{ "<leader>x", group = "diagnostics/quickfix" },
+					-- Navigation groups
+					{ "[", group = "prev" },
+					{ "]", group = "next" },
+					{ "g", group = "goto" },
+					{ "z", group = "fold" },
+					-- Surround (if using mini.surround or similar)
+					{ "gs", group = "surround" },
+				},
 			})
 		end,
 	},

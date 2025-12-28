@@ -14,6 +14,30 @@ return {
 		end,
 	},
 
+	{
+		"nvim-treesitter-textobjects",
+		event = { "BufReadPre", "BufNewFile" },
+		after = function()
+			---@diagnostic disable-next-line: missing-fields
+			require("nvim-treesitter.configs").setup({
+				highlight = { enable = true },
+				indent = { enable = true },
+				textobjects = {
+					move = {
+						enable = true,
+						set_jumps = true,
+						goto_next_start = { ["]f"] = "@function.outer", ["]c"] = "@class.outer", ["]a"] = "@parameter.inner" },
+						goto_next_end = { ["]F"] = "@function.outer", ["]C"] = "@class.outer", ["]A"] = "@parameter.inner" },
+						goto_previous_start = { ["[f"] = "@function.outer", ["[c"] = "@class.outer", ["[a"] = "@parameter.inner" },
+						goto_previous_end = { ["[F"] = "@function.outer", ["[C"] = "@class.outer", ["[A"] = "@parameter.inner" },
+					},
+				},
+			})
+
+			vim.api.nvim_set_hl(0, "TreesitterContextBottom", { underline = false })
+		end,
+	},
+
 	-- Treesitter context (sticky header showing current function/class)
 	{
 		"nvim-treesitter-context",
@@ -32,60 +56,6 @@ return {
 			vim.keymap.set("n", "[C", function()
 				require("treesitter-context").go_to_context()
 			end, { desc = "Go to context" })
-		end,
-	},
-
-	-- Mini.ai for textobjects (works with treesitter, no deprecated API dependency)
-	{
-		"mini.ai",
-		event = { "BufReadPre", "BufNewFile" },
-		after = function()
-			local ai = require("mini.ai")
-			ai.setup({
-				n_lines = 500,
-				custom_textobjects = {
-					-- Function
-					f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
-					-- Class
-					c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
-					-- Block
-					o = ai.gen_spec.treesitter({
-						a = { "@block.outer", "@conditional.outer", "@loop.outer" },
-						i = { "@block.inner", "@conditional.inner", "@loop.inner" },
-					}),
-					-- Argument/parameter
-					a = ai.gen_spec.treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
-					-- Comment
-					x = ai.gen_spec.treesitter({ a = "@comment.outer", i = "@comment.inner" }),
-				},
-			})
-
-			-- Remap keys for next/prev textobject (LazyVim style)
-			local function map_move(key, query, desc)
-				vim.keymap.set({ "n", "x", "o" }, key, function()
-					require("mini.ai").move_cursor("left", "a", query, { search_method = "next" })
-				end, { desc = desc })
-			end
-
-			-- Add goto keymaps
-			vim.keymap.set({ "n", "x", "o" }, "]f", function()
-				require("mini.ai").move_cursor("right", "a", "f", { search_method = "next" })
-			end, { desc = "Next function" })
-			vim.keymap.set({ "n", "x", "o" }, "[f", function()
-				require("mini.ai").move_cursor("left", "a", "f", { search_method = "prev" })
-			end, { desc = "Prev function" })
-			vim.keymap.set({ "n", "x", "o" }, "]c", function()
-				require("mini.ai").move_cursor("right", "a", "c", { search_method = "next" })
-			end, { desc = "Next class" })
-			vim.keymap.set({ "n", "x", "o" }, "[c", function()
-				require("mini.ai").move_cursor("left", "a", "c", { search_method = "prev" })
-			end, { desc = "Prev class" })
-			vim.keymap.set({ "n", "x", "o" }, "]a", function()
-				require("mini.ai").move_cursor("right", "a", "a", { search_method = "next" })
-			end, { desc = "Next argument" })
-			vim.keymap.set({ "n", "x", "o" }, "[a", function()
-				require("mini.ai").move_cursor("left", "a", "a", { search_method = "prev" })
-			end, { desc = "Prev argument" })
 		end,
 	},
 

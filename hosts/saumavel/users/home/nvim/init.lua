@@ -37,6 +37,7 @@ vim.pack.add({
 	"https://github.com/folke/todo-comments.nvim",
 
 	-- Mini plugins (saumavel extras)
+	"https://github.com/echasnovski/mini.ai",
 	"https://github.com/echasnovski/mini.diff",
 	"https://github.com/echasnovski/mini.move",
 	"https://github.com/echasnovski/mini.hipatterns",
@@ -53,9 +54,7 @@ vim.pack.add({
 	-- Treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-context",
-
-	-- Mini.ai for textobjects (alternative to nvim-treesitter-textobjects)
-	"https://github.com/echasnovski/mini.ai",
+	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 
 	-- Formatting & Linting
 	"https://github.com/stevearc/conform.nvim",

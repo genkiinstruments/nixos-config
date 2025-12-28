@@ -28,6 +28,7 @@ vim.pack.add({
 	"https://github.com/MunifTanjim/nui.nvim",
 
 	-- Editor
+	"https://github.com/echasnovski/mini.ai",
 	"https://github.com/stevearc/oil.nvim",
 	"https://github.com/folke/flash.nvim",
 	"https://github.com/kylechui/nvim-surround",
@@ -49,9 +50,7 @@ vim.pack.add({
 	-- Treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-context",
-
-	-- Mini.ai for textobjects (alternative to nvim-treesitter-textobjects)
-	"https://github.com/echasnovski/mini.ai",
+	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
 
 	-- Formatting & Linting
 	"https://github.com/stevearc/conform.nvim",
