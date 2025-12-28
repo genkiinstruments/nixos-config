@@ -90,19 +90,16 @@ vim.cmd.packadd("noice.nvim")
 require("nvim-treesitter.configs").setup({
 	highlight = { enable = true },
 	indent = { enable = true },
-	textobjects = {
-		select = {
-			enable = true,
-			lookahead = true,
-			keymaps = {
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner",
-				["aa"] = "@parameter.outer",
-				["ia"] = "@parameter.inner",
-			},
+	incremental_selection = {
+		enable = true,
+		keymaps = {
+			init_selection = "<C-space>",
+			node_incremental = "<C-space>",
+			scope_incremental = false,
+			node_decremental = "<bs>",
 		},
+	},
+	textobjects = {
 		move = {
 			enable = true,
 			set_jumps = true,
@@ -129,14 +126,6 @@ require("nvim-treesitter.configs").setup({
 		},
 	},
 })
-
--- Incremental selection keymaps
-local ok, inc_sel = pcall(require, "nvim-treesitter.incremental_selection")
-if ok then
-	vim.keymap.set("n", "<C-space>", inc_sel.init_selection, { desc = "Init selection" })
-	vim.keymap.set("x", "<C-space>", inc_sel.node_incremental, { desc = "Increment selection" })
-	vim.keymap.set("x", "<bs>", inc_sel.node_decremental, { desc = "Decrement selection" })
-end
 
 vim.api.nvim_set_hl(0, "TreesitterContextBottom", { underline = false })
 
