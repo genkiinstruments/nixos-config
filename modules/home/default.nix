@@ -386,6 +386,7 @@
         init.defaultBranch = "main";
         core.autocrlf = "input";
         push.default = "current";
+        push.autoSetupRemote = true;
         pull.rebase = true;
         rebase.autoStash = true;
         url."ssh://git@github.com/".pushInsteadOf = "https://github.com/";
