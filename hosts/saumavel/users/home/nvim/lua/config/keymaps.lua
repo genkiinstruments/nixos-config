@@ -1,5 +1,9 @@
 local map = vim.keymap.set
 
+-- Entire buffer textobject (ig/ag)
+map({ "o", "x" }, "ig", ":<C-u>normal! ggVG<CR>", { desc = "entire buffer", silent = true })
+map({ "o", "x" }, "ag", ":<C-u>normal! ggVG<CR>", { desc = "entire buffer", silent = true })
+
 -- Exit commands
 map("n", "<C-c>", "<cmd>q<CR>", { desc = "Quit" })
 map("n", "<C-x>", "<cmd>x<CR>", { desc = "Save and quit" })

@@ -1,4 +1,53 @@
 return {
+	-- mini.ai for better textobjects (arguments, brackets, quotes, etc.)
+	{
+		"mini.ai",
+		lazy = false,
+		after = function()
+			local ai = require("mini.ai")
+			ai.setup({
+				n_lines = 500,
+				-- Disable f, c, a as nvim-treesitter-textobjects handles them (supports #make-range!)
+				custom_textobjects = {
+					f = false,
+					c = false,
+					a = false,
+					o = ai.gen_spec.treesitter({ -- code block
+						a = { "@block.outer", "@conditional.outer", "@loop.outer" },
+						i = { "@block.inner", "@conditional.inner", "@loop.inner" },
+					}),
+					t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
+					d = { "%f[%d]%d+" }, -- digits
+					e = { -- word with case (camelCase, snake_case, etc.)
+						{
+							"%u[%l%d]+%f[^%l%d]",
+							"%f[%S][%l%d]+%f[^%l%d]",
+							"%f[%P][%l%d]+%f[^%l%d]",
+							"^[%l%d]+%f[^%l%d]",
+						},
+						"^().*()$",
+					},
+					g = function(ai_type) -- entire buffer
+						local start_line, end_line = 1, vim.fn.line("$")
+						if ai_type == "i" then
+							-- Skip first and last blank lines for `ig`
+							local first_nonblank = vim.fn.nextnonblank(start_line)
+							local last_nonblank = vim.fn.prevnonblank(end_line)
+							if first_nonblank == 0 or last_nonblank == 0 then
+								return { from = { line = start_line, col = 1 } }
+							end
+							start_line, end_line = first_nonblank, last_nonblank
+						end
+						local to_col = math.max(vim.fn.getline(end_line):len(), 1)
+						return { from = { line = start_line, col = 1 }, to = { line = end_line, col = to_col } }
+					end,
+					u = ai.gen_spec.function_call(), -- function call
+					U = ai.gen_spec.function_call({ name_pattern = "[%w_]" }), -- function call without dot
+				},
+			})
+		end,
+	},
+
 	-- Oil file explorer
 	{
 		"oil.nvim",

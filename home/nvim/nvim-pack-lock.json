@@ -42,7 +42,7 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "3f5ffea8abbb3d58d536abfe65cb7e48caee38f5",
+      "rev": "bf77caa5da671f5bab16e4792711d5aa288e8db0",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "lazydev.nvim": {
@@ -110,7 +110,7 @@
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "756dec855b4811f2d27f067a3aca477f368d99f5",
+      "rev": "bbfa7cba85967dc9dbfe0ca486fd4b17084bf846",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "plenary.nvim": {
@@ -122,7 +122,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "01c45937691914ce985a66f22bab34a1098aa26f",
+      "rev": "3d20d7bf5d2fc6a23be679355f9203915b6862af",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {

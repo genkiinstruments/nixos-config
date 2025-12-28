@@ -5,6 +5,13 @@
 }:
 let
   nvim = perSystem.self.nvim;
+
+  # Dev neovim: uses local config with Nix-provided parsers
+  nvim-dev = pkgs.writeShellScriptBin "nvim" ''
+    exec ${nvim.neovim-nightly}/bin/nvim \
+      --cmd "lua vim.opt.rtp:prepend('${nvim.treesitterGrammars}')" \
+      "$@"
+  '';
 in
 pkgs.mkShellNoCC {
   packages = [
@@ -13,7 +20,7 @@ pkgs.mkShellNoCC {
     pkgs.nh
     perSystem.self.all
     perSystem.self.ni
-    nvim.neovim-nightly
+    nvim-dev
   ]
   ++ nvim.tools;
 
