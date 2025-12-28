@@ -87,8 +87,64 @@ vim.cmd.packadd("plenary.nvim")
 vim.cmd.packadd("snacks.nvim")
 vim.cmd.packadd("fzf-lua")
 vim.cmd.packadd("nvim-treesitter")
+vim.cmd.packadd("nvim-treesitter-textobjects")
 vim.cmd.packadd("nvim-web-devicons")
 vim.cmd.packadd("nui.nvim")
+
+-- Configure treesitter (must happen after packadd)
+---@diagnostic disable-next-line: missing-fields
+require("nvim-treesitter.configs").setup({
+	highlight = { enable = true },
+	indent = { enable = true },
+	textobjects = {
+		select = {
+			enable = true,
+			lookahead = true,
+			keymaps = {
+				["af"] = "@function.outer",
+				["if"] = "@function.inner",
+				["ac"] = "@class.outer",
+				["ic"] = "@class.inner",
+				["aa"] = "@parameter.outer",
+				["ia"] = "@parameter.inner",
+			},
+		},
+		move = {
+			enable = true,
+			set_jumps = true,
+			goto_next_start = {
+				["]f"] = "@function.outer",
+				["]c"] = "@class.outer",
+				["]a"] = "@parameter.inner",
+			},
+			goto_next_end = {
+				["]F"] = "@function.outer",
+				["]C"] = "@class.outer",
+				["]A"] = "@parameter.inner",
+			},
+			goto_previous_start = {
+				["[f"] = "@function.outer",
+				["[c"] = "@class.outer",
+				["[a"] = "@parameter.inner",
+			},
+			goto_previous_end = {
+				["[F"] = "@function.outer",
+				["[C"] = "@class.outer",
+				["[A"] = "@parameter.inner",
+			},
+		},
+	},
+})
+
+-- Incremental selection keymaps
+local ok, inc_sel = pcall(require, "nvim-treesitter.incremental_selection")
+if ok then
+	vim.keymap.set("n", "<C-space>", inc_sel.init_selection, { desc = "Init selection" })
+	vim.keymap.set("x", "<C-space>", inc_sel.node_incremental, { desc = "Increment selection" })
+	vim.keymap.set("x", "<bs>", inc_sel.node_decremental, { desc = "Decrement selection" })
+end
+
+vim.api.nvim_set_hl(0, "TreesitterContextBottom", { underline = false })
 
 -- Load the rest via lz.n lazy loading
 require("lz.n").load("plugins")

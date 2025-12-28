@@ -7,13 +7,15 @@ return {
 			local ai = require("mini.ai")
 			ai.setup({
 				n_lines = 500,
+				-- Disable f, c, a as nvim-treesitter-textobjects handles them (supports #make-range!)
 				custom_textobjects = {
+					f = false,
+					c = false,
+					a = false,
 					o = ai.gen_spec.treesitter({ -- code block
 						a = { "@block.outer", "@conditional.outer", "@loop.outer" },
 						i = { "@block.inner", "@conditional.inner", "@loop.inner" },
 					}),
-					f = ai.gen_spec.treesitter({ a = "@function.outer", i = "@function.inner" }),
-					c = ai.gen_spec.treesitter({ a = "@class.outer", i = "@class.inner" }),
 					t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
 					d = { "%f[%d]%d+" }, -- digits
 					e = { -- word with case (camelCase, snake_case, etc.)
