@@ -67,6 +67,11 @@ in
 wrapped.overrideAttrs {
   passthru = {
     # Expose for devshell to create config-less version
-    inherit neovim-nightly tools wrapperArgs treesitterGrammars;
+    inherit
+      neovim-nightly
+      tools
+      wrapperArgs
+      treesitterGrammars
+      ;
   };
 }

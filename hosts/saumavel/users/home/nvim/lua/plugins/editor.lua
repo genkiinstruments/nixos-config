@@ -17,7 +17,12 @@ return {
 					t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
 					d = { "%f[%d]%d+" }, -- digits
 					e = { -- word with case (camelCase, snake_case, etc.)
-						{ "%u[%l%d]+%f[^%l%d]", "%f[%S][%l%d]+%f[^%l%d]", "%f[%P][%l%d]+%f[^%l%d]", "^[%l%d]+%f[^%l%d]" },
+						{
+							"%u[%l%d]+%f[^%l%d]",
+							"%f[%S][%l%d]+%f[^%l%d]",
+							"%f[%P][%l%d]+%f[^%l%d]",
+							"^[%l%d]+%f[^%l%d]",
+						},
 						"^().*()$",
 					},
 					g = function(ai_type) -- entire buffer
