@@ -135,6 +135,20 @@ require("nvim-treesitter.configs").setup({
 
 vim.api.nvim_set_hl(0, "TreesitterContextBottom", { underline = false })
 
+-- Textobjects move keymaps
+local move = require("nvim-treesitter.textobjects.move")
+local map = function(lhs, fn, query, desc)
+	vim.keymap.set({ "n", "x", "o" }, lhs, function()
+		fn(query)
+	end, { desc = desc })
+end
+map("]f", move.goto_next_start, "@function.outer", "Next function")
+map("[f", move.goto_previous_start, "@function.outer", "Prev function")
+map("]c", move.goto_next_start, "@class.outer", "Next class")
+map("[c", move.goto_previous_start, "@class.outer", "Prev class")
+map("]a", move.goto_next_start, "@parameter.inner", "Next param")
+map("[a", move.goto_previous_start, "@parameter.inner", "Prev param")
+
 -- Load the rest via lz.n lazy loading
 require("lz.n").load("plugins")
 
