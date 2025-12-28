@@ -2,7 +2,6 @@
   inputs,
   pkgs,
   lib,
-  perSystem,
   ...
 }:
 {
@@ -40,21 +39,16 @@
       EDITOR = "nvim";
     };
 
-    packages =
-      with pkgs;
-      [
-        wget
-        zip
-        magic-wormhole-rs
-        neofetch
-        mediainfo # for mpv / yazi setup
-        television # tv binary for sesh
-      ]
-      ++ (with perSystem.nix-ai-tools; [
-        gemini-cli
-        claude-code
-        claude-code-acp
-      ]);
+    packages = with pkgs; [
+      wget
+      zip
+      magic-wormhole-rs
+      neofetch
+      mediainfo # for mpv / yazi setup
+      television # tv binary for sesh
+      claude-code
+      claude-code-acp
+    ];
   };
 
   catppuccin = {
@@ -70,6 +64,11 @@
     mako.enable = false;
     lazygit.enable = false;
   };
+
+  # Disable features that require IFD (Import From Derivation) which breaks CI
+  # with allow-import-from-derivation disabled
+  programs.man.generateCaches = false; # fish.nix sets this to true by default
+  fonts.fontconfig.enable = false; # fontconfig generates config requiring IFD
 
   programs = {
     sesh = {
@@ -337,6 +336,7 @@
     };
     fish = {
       enable = true;
+      generateCompletions = false; # Requires IFD, breaks CI with allow-import-from-derivation disabled
       shellAliases = {
         da = "direnv allow";
         dr = "direnv reload";

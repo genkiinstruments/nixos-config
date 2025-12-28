@@ -52,11 +52,6 @@
     "video=eDP-1:panel_orientation=right_side_up"
   ];
 
-  fonts.fontconfig = {
-    subpixel.rgba = "vbgr";
-    hinting.enable = lib.mkDefault false;
-  };
-
   users.mutableUsers = false;
   users.users.genki = {
     isNormalUser = true;
