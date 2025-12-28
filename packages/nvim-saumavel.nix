@@ -13,9 +13,22 @@ let
   };
 
   configDir = "${flake}/hosts/saumavel/users/home/nvim";
+
+  # All treesitter grammars (parsers + queries) bundled via Nix
+  treesitterGrammars =
+    let
+      ts = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+    in
+    pkgs.symlinkJoin {
+      name = "treesitter-grammars";
+      paths = [ ts ] ++ ts.passthru.dependencies;
+    };
 in
 pkgs.wrapNeovimUnstable neovim-nightly {
   luaRcContent = ''
+    -- Add Nix-bundled treesitter parsers
+    vim.opt.rtp:prepend("${treesitterGrammars}")
+
     vim.opt.rtp:prepend("${configDir}")
     dofile("${configDir}/init.lua")
   '';

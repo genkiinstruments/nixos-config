@@ -14,6 +14,16 @@ let
 
   configDir = "${flake}/home/nvim";
 
+  # All treesitter grammars (parsers + queries) bundled via Nix
+  treesitterGrammars =
+    let
+      ts = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+    in
+    pkgs.symlinkJoin {
+      name = "treesitter-grammars";
+      paths = [ ts ] ++ ts.passthru.dependencies;
+    };
+
   tools = [
     pkgs.git
     pkgs.ripgrep
@@ -43,6 +53,9 @@ let
 
   wrapped = pkgs.wrapNeovimUnstable neovim-nightly {
     luaRcContent = ''
+      -- Add Nix-bundled treesitter parsers
+      vim.opt.rtp:prepend("${treesitterGrammars}")
+
       vim.opt.rtp:prepend("${configDir}")
       dofile("${configDir}/init.lua")
     '';
@@ -54,6 +67,11 @@ in
 wrapped.overrideAttrs {
   passthru = {
     # Expose for devshell to create config-less version
-    inherit neovim-nightly tools wrapperArgs;
+    inherit
+      neovim-nightly
+      tools
+      wrapperArgs
+      treesitterGrammars
+      ;
   };
 }
