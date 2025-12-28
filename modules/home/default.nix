@@ -40,21 +40,16 @@
       EDITOR = "nvim";
     };
 
-    packages =
-      with pkgs;
-      [
-        wget
-        zip
-        magic-wormhole-rs
-        neofetch
-        mediainfo # for mpv / yazi setup
-        television # tv binary for sesh
-      ]
-      ++ (with perSystem.nix-ai-tools; [
-        gemini-cli
-        claude-code
-        claude-code-acp
-      ]);
+    packages = with pkgs; [
+      wget
+      zip
+      magic-wormhole-rs
+      neofetch
+      mediainfo # for mpv / yazi setup
+      television # tv binary for sesh
+      claude-code
+      claude-code-acp
+    ];
   };
 
   catppuccin = {
