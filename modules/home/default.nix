@@ -71,6 +71,10 @@
     lazygit.enable = false;
   };
 
+  # Disable man cache generation - fish.nix sets this to true by default when
+  # generateCompletions is enabled, but it requires IFD which breaks CI
+  programs.man.generateCaches = false;
+
   programs = {
     sesh = {
       enable = true;
