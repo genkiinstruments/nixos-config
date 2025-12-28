@@ -71,9 +71,10 @@
     lazygit.enable = false;
   };
 
-  # Disable man cache generation - fish.nix sets this to true by default when
-  # generateCompletions is enabled, but it requires IFD which breaks CI
-  programs.man.generateCaches = false;
+  # Disable features that require IFD (Import From Derivation) which breaks CI
+  # with allow-import-from-derivation disabled
+  programs.man.generateCaches = false; # fish.nix sets this to true by default
+  fonts.fontconfig.enable = false; # fontconfig generates config requiring IFD
 
   programs = {
     sesh = {
