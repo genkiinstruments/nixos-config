@@ -341,6 +341,7 @@
     };
     fish = {
       enable = true;
+      generateCompletions = false; # Requires IFD, breaks CI with allow-import-from-derivation disabled
       shellAliases = {
         da = "direnv allow";
         dr = "direnv reload";
