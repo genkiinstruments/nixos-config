@@ -22,7 +22,7 @@ jobs:
         run: |
           # Pull latest main to avoid conflicts
           git fetch origin main
-          git rebase origin main || git rebase --abort
+          git rebase origin/main || git rebase --abort
           # Create writable config directory and copy files
           mkdir -p $HOME/.config/nvim
           cp -r home/nvim/* $HOME/.config/nvim/
