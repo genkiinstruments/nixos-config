@@ -198,9 +198,8 @@
         "${mod}+Minus".action = set-column-width "-10%";
         "${mod}+Equal".action = set-column-width "+10%";
 
-        # Screenshots
-        "Print".action = screenshot;
-        "Ctrl+Print".action = screenshot-screen;
+        # Screenshots (use grimblast or similar via spawn if needed)
+        # "Print".action = spawn "grimblast" "copy" "area";
 
         # Media keys (work even when locked)
         "XF86AudioRaiseVolume" = {
