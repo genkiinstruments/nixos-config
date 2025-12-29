@@ -276,6 +276,10 @@
       Ctrl+Alt+Super+Minus { set-column-width "-10%"; }
       Ctrl+Alt+Super+Equal { set-column-width "+10%"; }
 
+      // Hyper + Tab to cycle monitors
+      Ctrl+Alt+Super+Tab { focus-monitor-next; }
+      Ctrl+Alt+Super+Shift+Tab { move-column-to-monitor-next; }
+
       // Hyper + P for screenshot
       Ctrl+Alt+Super+P { screenshot; }
 
