@@ -54,6 +54,7 @@
   catppuccin = {
     enable = true;
     flavor = "mocha";
+    accent = "mauve";
     # See issues with IFD: https://github.com/catppuccin/nix?tab=readme-ov-file#-faq
     fzf.enable = false;
     starship.enable = false;
@@ -63,6 +64,24 @@
     swaylock.enable = false;
     mako.enable = false;
     lazygit.enable = false;
+  };
+
+  # GTK dark theme (catppuccin gtk was archived, using Adwaita dark)
+  gtk = {
+    enable = true;
+    theme = {
+      name = "Adwaita-dark";
+    };
+  };
+
+  # Prefer dark mode for all apps
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+  # Qt dark theme
+  qt = {
+    enable = true;
+    platformTheme.name = "kvantum";
+    style.name = "kvantum";
   };
 
   programs = {

@@ -12,6 +12,7 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
+    inputs.catppuccin.nixosModules.catppuccin
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
@@ -50,9 +51,22 @@
     # GPD Pocket 4 rotated display
     "fbcon=rotate:1"
     "video=eDP-1:panel_orientation=right_side_up"
-    # Disable PSR on AMD to prevent flickering with external displays
-    "amdgpu.dcdebugmask=0x10"
+    # AMD GPU stability fixes for external displays
+    "amdgpu.dcdebugmask=0x10" # Disable PSR
+    "amdgpu.dcfeaturemask=0x8" # Disable PSR in DCN
+    "amdgpu.abmlevel=0" # Disable ABM (adaptive backlight)
+    "amdgpu.ppfeaturemask=0xfffd3fff" # Disable GFXOFF power feature
+    "amdgpu.runpm=0" # Disable runtime power management
+    "amdgpu.bapm=0" # Disable bidirectional APM
   ];
+
+  catppuccin = {
+    enable = true;
+    flavor = "mocha";
+    accent = "mauve";
+    # Disable tty theming - uses IFD which is disabled
+    tty.enable = false;
+  };
 
   users.mutableUsers = false;
   users.users.genki = {
@@ -81,6 +95,8 @@
   home-manager.users.genki.programs.atuin.daemon.enable = true;
 
   environment.systemPackages = with pkgs; [
+    firefox
+    spotify
     gnumake
     killall
     niv
@@ -91,18 +107,19 @@
     alsa-utils
     systemctl-tui
     xwayland-satellite
-    fuzzel # app launcher
-    waybar # status bar
+    walker # app launcher (raycast-like)
+    cliphist # clipboard history for walker
     mako # notifications
     wl-clipboard # clipboard
-    swayidle
     swaylock
     swaybg
     kanshi # display configuration
+    libnotify # for notify-send
     brightnessctl # brightness control
     playerctl # media control
     yubikey-manager # Yubikey management
     libfido2 # FIDO2 support for SSH
+    wev # Wayland event viewer for debugging
   ];
 
   # Networking
@@ -124,6 +141,18 @@
 
   # Electron/Chromium apps use Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  # Prefer dark mode system-wide
+  environment.sessionVariables.GTK_THEME = "Adwaita:dark";
+  programs.dconf.enable = true;
+
+  # Default font size 14
+  fonts.fontconfig.defaultFonts = {
+    monospace = [ "JetBrainsMono Nerd Font Mono" ];
+    sansSerif = [ "Noto Sans" ];
+    serif = [ "Noto Serif" ];
+  };
+  fonts.fontconfig.hinting.style = "slight";
 
   # Niri - scrollable tiling Wayland compositor
   programs.niri.enable = true;
@@ -151,8 +180,8 @@
         main = {
           capslock = "overload(hyper, esc)";
         };
-        # Hyper = Ctrl+Alt+Shift+Super
-        "hyper:C-A-S-M" = { };
+        # Hyper = Ctrl+Alt+Super (no Shift, so Shift can be used for move bindings)
+        "hyper:C-A-M" = { };
       };
     };
   };
@@ -162,7 +191,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --cmd niri-session";
         user = "greeter";
       };
     };

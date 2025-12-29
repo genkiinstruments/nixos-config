@@ -1,5 +1,134 @@
 { ... }:
 {
+  # GTK settings - font size 12
+  gtk = {
+    enable = true;
+    font = {
+      name = "Noto Sans";
+      size = 12;
+    };
+  };
+
+  # dconf settings for GNOME apps
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      font-name = "Noto Sans 12";
+      monospace-font-name = "JetBrainsMono Nerd Font Mono 12";
+    };
+  };
+
+  # Mako notifications - catppuccin mocha
+  xdg.configFile."mako/config".text = ''
+    background-color=#1e1e2e
+    text-color=#cdd6f4
+    border-color=#cba6f7
+    border-radius=4
+    border-size=1
+    padding=10
+    default-timeout=5000
+  '';
+
+  # Walker launcher - catppuccin mocha
+  xdg.configFile."walker/config.toml".text = ''
+    placeholder = "Search..."
+    show_initial_entries = true
+    ssh_host_file = ""
+    terminal = "ghostty"
+    ignore_mouse = false
+
+    [search]
+    delay = 0
+    hide_icons = false
+    margin_spinner = 10
+    hide_spinner = false
+
+    [clipboard]
+    max_entries = 100
+
+    [activation_mode]
+    disabled = false
+    use_f_keys = false
+    use_alt = true
+
+    [modules]
+    applications.enabled = true
+    applications.priority = 1
+    calc.enabled = true
+    calc.priority = 0
+    clipboard.enabled = true
+    clipboard.priority = 2
+    commands.enabled = true
+    commands.priority = 3
+    websearch.enabled = true
+    websearch.priority = 4
+  '';
+
+  xdg.configFile."walker/style.css".text = ''
+    * {
+      font-family: "JetBrainsMono Nerd Font Mono";
+      font-size: 12pt;
+    }
+
+    #window {
+      background: transparent;
+    }
+
+    #box {
+      background: #1e1e2e;
+      border: 1px solid #cba6f7;
+      border-radius: 8px;
+      padding: 8px;
+    }
+
+    #search {
+      background: #313244;
+      color: #cdd6f4;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 12px;
+      margin-bottom: 8px;
+    }
+
+    #search:focus {
+      outline: none;
+    }
+
+    #list {
+      background: transparent;
+    }
+
+    row {
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    row:selected {
+      background: #313244;
+    }
+
+    row:hover {
+      background: #45475a;
+    }
+
+    #icon {
+      margin-right: 8px;
+    }
+
+    #label {
+      color: #cdd6f4;
+    }
+
+    #sub {
+      color: #a6adc8;
+      font-size: 12px;
+    }
+
+    .activationlabel {
+      color: #cba6f7;
+      font-size: 12px;
+    }
+  '';
+
   xdg.configFile."niri/config.kdl".text = ''
     // GPD Pocket 4 display configuration
     output "eDP-1" {
@@ -28,29 +157,35 @@
       focus-follows-mouse max-scroll-amount="0%"
     }
 
-    // Layout configuration
+    // Layout configuration - zero gaps, maximum screen use
     layout {
-      gaps 12
+      gaps 0
       center-focused-column "never"
 
       preset-column-widths {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
+        proportion 1.0
       }
 
       default-column-width { proportion 0.5; }
 
+      // Catppuccin Mocha focus indicator
       focus-ring {
-        width 2
-        active-color "#7fc8ff"
-        inactive-color "#505050"
+        width 1
+        active-color "#cba6f7"  // mauve
+        inactive-color "#1e1e2e"  // base
       }
 
+      // No border for cleaner look
+      border {
+        off
+      }
+
+      // Disable shadows for flat look
       shadow {
-        on
-        softness 30
-        color "#00000070"
+        off
       }
     }
 
@@ -60,8 +195,9 @@
     screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 
     // Programs to start with niri
-    spawn-at-startup "waybar"
     spawn-at-startup "mako"
+    spawn-at-startup "swaybg" "-c" "#000000"  // pure black for contrast
+    spawn-at-startup "wl-paste" "--watch" "cliphist" "store"  // clipboard history
 
     // Window rules
     window-rule {
@@ -76,91 +212,72 @@
     }
 
     binds {
-      // Hyper key bindings (Caps Lock held via keyd = Ctrl+Alt+Shift+Super)
-      Ctrl+Alt+Shift+Super+T { spawn "ghostty"; }
-      Ctrl+Alt+Shift+Super+B { spawn "firefox"; }
-      Ctrl+Alt+Shift+Super+D { spawn "fuzzel"; }
-      Ctrl+Alt+Shift+Super+Q { close-window; }
-      Ctrl+Alt+Shift+Super+F { maximize-column; }
-      Ctrl+Alt+Shift+Super+O { toggle-overview; }
+      // Hyper key bindings (Caps Lock via keyd = Ctrl+Alt+Super)
+      Ctrl+Alt+Super+Return { spawn "ghostty"; }
+      Ctrl+Alt+Super+T { spawn "ghostty"; }
+      Ctrl+Alt+Super+B { spawn "firefox"; }
+      Ctrl+Alt+Super+G { spawn "ghostty" "-e" "lazygit"; }
+      Ctrl+Alt+Super+D { spawn "walker"; }
+      Ctrl+Alt+Super+C { spawn "walker" "-m" "clipboard"; }
+      Ctrl+Alt+Super+Q { close-window; }
+      Ctrl+Alt+Super+F { maximize-column; }
+      Ctrl+Alt+Super+Shift+F { fullscreen-window; }
+      Ctrl+Alt+Super+V { toggle-window-floating; }
+      Ctrl+Alt+Super+O { toggle-overview; }
 
       // Hyper + vim navigation
-      Ctrl+Alt+Shift+Super+H { focus-column-left; }
-      Ctrl+Alt+Shift+Super+J { focus-window-down; }
-      Ctrl+Alt+Shift+Super+K { focus-window-up; }
-      Ctrl+Alt+Shift+Super+L { focus-column-right; }
+      Ctrl+Alt+Super+H { focus-column-left; }
+      Ctrl+Alt+Super+J { focus-window-down; }
+      Ctrl+Alt+Super+K { focus-window-up; }
+      Ctrl+Alt+Super+L { focus-column-right; }
 
-      // Hyper + shift + vim to move windows
-      Ctrl+Alt+Shift+Super+Shift+H { move-column-left; }
-      Ctrl+Alt+Shift+Super+Shift+J { move-window-down; }
-      Ctrl+Alt+Shift+Super+Shift+K { move-window-up; }
-      Ctrl+Alt+Shift+Super+Shift+L { move-column-right; }
+      // Hyper + arrow keys
+      Ctrl+Alt+Super+Left { focus-column-left; }
+      Ctrl+Alt+Super+Down { focus-window-down; }
+      Ctrl+Alt+Super+Up { focus-window-up; }
+      Ctrl+Alt+Super+Right { focus-column-right; }
+
+      // Hyper + Shift + vim to move windows
+      Ctrl+Alt+Super+Shift+H { move-column-left; }
+      Ctrl+Alt+Super+Shift+J { move-window-down; }
+      Ctrl+Alt+Super+Shift+K { move-window-up; }
+      Ctrl+Alt+Super+Shift+L { move-column-right; }
+
+      Ctrl+Alt+Super+Shift+Left { move-column-left; }
+      Ctrl+Alt+Super+Shift+Right { move-column-right; }
 
       // Hyper + number for workspaces
-      Ctrl+Alt+Shift+Super+1 { focus-workspace 1; }
-      Ctrl+Alt+Shift+Super+2 { focus-workspace 2; }
-      Ctrl+Alt+Shift+Super+3 { focus-workspace 3; }
-      Ctrl+Alt+Shift+Super+4 { focus-workspace 4; }
-      Ctrl+Alt+Shift+Super+5 { focus-workspace 5; }
+      Ctrl+Alt+Super+1 { focus-workspace 1; }
+      Ctrl+Alt+Super+2 { focus-workspace 2; }
+      Ctrl+Alt+Super+3 { focus-workspace 3; }
+      Ctrl+Alt+Super+4 { focus-workspace 4; }
+      Ctrl+Alt+Super+5 { focus-workspace 5; }
+      Ctrl+Alt+Super+6 { focus-workspace 6; }
+      Ctrl+Alt+Super+7 { focus-workspace 7; }
+      Ctrl+Alt+Super+8 { focus-workspace 8; }
+      Ctrl+Alt+Super+9 { focus-workspace 9; }
 
-      // Regular Mod (Super) bindings
-      Mod+Return { spawn "ghostty"; }
-      Mod+D { spawn "fuzzel"; }
-      Mod+Shift+Q { close-window; }
-      Mod+F { maximize-column; }
-      Mod+Shift+F { fullscreen-window; }
-      Mod+V { toggle-window-floating; }
-      Mod+O { toggle-overview; }
+      // Hyper + Shift + number to move window to workspace
+      Ctrl+Alt+Super+Shift+1 { move-column-to-workspace 1; }
+      Ctrl+Alt+Super+Shift+2 { move-column-to-workspace 2; }
+      Ctrl+Alt+Super+Shift+3 { move-column-to-workspace 3; }
+      Ctrl+Alt+Super+Shift+4 { move-column-to-workspace 4; }
+      Ctrl+Alt+Super+Shift+5 { move-column-to-workspace 5; }
 
-      // Mod + vim navigation
-      Mod+H { focus-column-left; }
-      Mod+J { focus-window-down; }
-      Mod+K { focus-window-up; }
-      Mod+L { focus-column-right; }
-
-      // Mod + arrow keys
-      Mod+Left { focus-column-left; }
-      Mod+Down { focus-window-down; }
-      Mod+Up { focus-window-up; }
-      Mod+Right { focus-column-right; }
-
-      // Move windows
-      Mod+Shift+H { move-column-left; }
-      Mod+Shift+J { move-window-down; }
-      Mod+Shift+K { move-window-up; }
-      Mod+Shift+L { move-column-right; }
-
-      Mod+Shift+Left { move-column-left; }
-      Mod+Shift+Right { move-column-right; }
-
-      // Workspaces
-      Mod+1 { focus-workspace 1; }
-      Mod+2 { focus-workspace 2; }
-      Mod+3 { focus-workspace 3; }
-      Mod+4 { focus-workspace 4; }
-      Mod+5 { focus-workspace 5; }
-      Mod+6 { focus-workspace 6; }
-      Mod+7 { focus-workspace 7; }
-      Mod+8 { focus-workspace 8; }
-      Mod+9 { focus-workspace 9; }
-
-      Mod+Ctrl+1 { move-column-to-workspace 1; }
-      Mod+Ctrl+2 { move-column-to-workspace 2; }
-      Mod+Ctrl+3 { move-column-to-workspace 3; }
-      Mod+Ctrl+4 { move-column-to-workspace 4; }
-      Mod+Ctrl+5 { move-column-to-workspace 5; }
-
-      Mod+Page_Down { focus-workspace-down; }
-      Mod+Page_Up { focus-workspace-up; }
+      Ctrl+Alt+Super+Page_Down { focus-workspace-down; }
+      Ctrl+Alt+Super+Page_Up { focus-workspace-up; }
 
       // Scroll to switch workspaces
-      Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
-      Mod+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
+      Ctrl+Alt+Super+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }
+      Ctrl+Alt+Super+WheelScrollUp cooldown-ms=150 { focus-workspace-up; }
 
       // Column width
-      Mod+R { switch-preset-column-width; }
-      Mod+Minus { set-column-width "-10%"; }
-      Mod+Equal { set-column-width "+10%"; }
+      Ctrl+Alt+Super+R { switch-preset-column-width; }
+      Ctrl+Alt+Super+Minus { set-column-width "-10%"; }
+      Ctrl+Alt+Super+Equal { set-column-width "+10%"; }
+
+      // Hyper + P for screenshot
+      Ctrl+Alt+Super+P { screenshot; }
 
       // Media keys (work even when locked)
       XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
@@ -175,8 +292,8 @@
       XF86AudioPrev { spawn "playerctl" "previous"; }
 
       // System
-      Mod+Shift+E { quit; }
-      Mod+Shift+P { power-off-monitors; }
+      Ctrl+Alt+Super+Shift+E { quit; }
+      Ctrl+Alt+Super+Shift+P { power-off-monitors; }
     }
   '';
 }
