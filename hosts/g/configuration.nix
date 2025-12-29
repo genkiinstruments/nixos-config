@@ -133,7 +133,12 @@
 
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  # Disable gnome-keyring's ssh-agent component (doesn't support FIDO2)
+  services.gnome.gnome-keyring.components = [ "secrets" "pkcs11" ]; # exclude "ssh"
   security.pam.services.swaylock = { };
+
+  # Use OpenSSH's native agent which supports FIDO2
+  programs.ssh.startAgent = true;
 
   # Logitech wireless support
   hardware.logitech.wireless.enable = true;
