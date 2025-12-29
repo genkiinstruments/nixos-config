@@ -133,16 +133,11 @@
 
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
+  services.gnome.gcr-ssh-agent.enable = false; # Doesn't support FIDO2
   security.pam.services.swaylock = { };
 
-  # Use OpenSSH's native agent which supports FIDO2 (gnome-keyring's doesn't)
+  # Use OpenSSH's native agent which supports FIDO2
   programs.ssh.startAgent = true;
-
-  # Disable gnome-keyring's ssh-agent via XDG autostart override
-  environment.etc."xdg/autostart/gnome-keyring-ssh.desktop".text = ''
-    [Desktop Entry]
-    Hidden=true
-  '';
 
   # Logitech wireless support
   hardware.logitech.wireless.enable = true;
