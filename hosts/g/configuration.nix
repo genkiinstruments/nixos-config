@@ -50,6 +50,8 @@
     # GPD Pocket 4 rotated display
     "fbcon=rotate:1"
     "video=eDP-1:panel_orientation=right_side_up"
+    # Disable PSR on AMD to prevent flickering with external displays
+    "amdgpu.dcdebugmask=0x10"
   ];
 
   users.mutableUsers = false;
@@ -73,16 +75,6 @@
   };
   nix.settings.trusted-users = [ "genki" ];
 
-  security.sudo.wheelNeedsPassword = false;
-
-  services.openssh = {
-    enable = true;
-    extraConfig = ''
-      X11Forwarding yes
-      X11UseLocalhost yes
-    '';
-  };
-
   programs.nix-ld.enable = true;
 
   # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
@@ -92,62 +84,88 @@
     gnumake
     killall
     niv
-    xclip
-    xsel
     magic-wormhole-rs
     git
-    alacritty
-    networkmanagerapplet
-    gnome-tweaks
-    dconf-editor
     ghostty
-    rofi
     rkdeveloptool
     alsa-utils
     systemctl-tui
-    shared-mime-info
-    xdg-utils
-    gtkmm3
+    xwayland-satellite
+    fuzzel # app launcher
+    waybar # status bar
+    mako # notifications
+    wl-clipboard # clipboard
+    swayidle
+    swaylock
+    swaybg
+    kanshi # display configuration
+    brightnessctl # brightness control
+    playerctl # media control
   ];
 
-  services.desktopManager.gnome.enable = true;
+  # Electron/Chromium apps use Wayland
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  services.xserver = {
+  # Niri - scrollable tiling Wayland compositor
+  programs.niri.enable = true;
+
+  # XDG portal for screen sharing, file dialogs
+  xdg.portal.wlr.enable = true;
+
+  security.polkit.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+  security.pam.services.swaylock = { };
+
+  # Logitech wireless support
+  hardware.logitech.wireless.enable = true;
+
+  # Hyperkey via keyd (Caps = Hyper when held, Escape when tapped)
+  services.keyd = {
     enable = true;
-    desktopManager.wallpaper.mode = "fill";
-    dpi = 343; # The display has √(2560² + 1600²) px / 8.8in ≃ 343 dpi
+    keyboards.default = {
+      ids = [ "*" ];
+      settings = {
+        main = {
+          capslock = "overload(hyper, esc)";
+        };
+        # Hyper = Ctrl+Alt+Shift+Super
+        "hyper:C-A-S-M" = { };
+      };
+    };
   };
 
-  environment.gnome.excludePackages = with pkgs; [
-    epiphany
-    totem
-    geary
-    evince
-  ];
+  # greetd for login
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd niri-session";
+        user = "greeter";
+      };
+    };
+  };
 
-  services.desktopManager.gnome.extraGSettingsOverrides = ''
-    [org.gnome.settings-daemon.plugins.power]
-    sleep-inactive-ac-type='nothing'
-    sleep-inactive-battery-type='nothing'
-    sleep-inactive-ac-timeout=0
-    sleep-inactive-battery-timeout=0
-    power-button-action='nothing'
-    idle-dim=false
-
-    [org.gnome.desktop.session]
-    idle-delay=uint32 0
-
-    [org.gnome.desktop.screensaver]
-    idle-activation-enabled=false
-    lock-enabled=false
-  '';
-
+  # Power management
+  powerManagement.enable = true;
   powerManagement.cpuFreqGovernor = "performance";
 
   security.rtkit.enable = true;
 
+  # Disable suspend
   systemd.targets.sleep.enable = lib.mkForce false;
   systemd.targets.suspend.enable = lib.mkForce false;
   systemd.targets.hibernate.enable = lib.mkForce false;
   systemd.targets.hybrid-sleep.enable = lib.mkForce false;
+
+  # udev rules for Rockchip devices (rkdeveloptool)
+  services.udev.extraRules = ''
+    # Rockchip devices in maskrom/loader mode
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", MODE="0666"
+    # Rockchip devices in recovery mode
+    SUBSYSTEMS=="usb", ATTRS{idVendor}=="2207", ATTRS{idProduct}=="*", MODE="0666", GROUP="users"
+
+    # USB device access for katla-frontpanel
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="27dd", MODE="0664", GROUP="users", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="16c0", ATTRS{idProduct}=="20b1", MODE="0664", GROUP="users", TAG+="uaccess"
+  '';
 }
