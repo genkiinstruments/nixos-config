@@ -124,8 +124,6 @@
 
   # Electron/Chromium apps use Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  # FIDO2 SSH helper for Yubikey
-  environment.sessionVariables.SSH_SK_HELPER = "${pkgs.openssh}/libexec/ssh-sk-helper";
 
   # Niri - scrollable tiling Wayland compositor
   programs.niri.enable = true;
