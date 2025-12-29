@@ -14,7 +14,6 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
-    inputs.niri.nixosModules.niri
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.modules.shared.builders
@@ -109,7 +108,6 @@
 
   # Niri - scrollable tiling Wayland compositor
   programs.niri.enable = true;
-  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 
   # XDG portal for screen sharing, file dialogs
   xdg.portal.wlr.enable = true;
