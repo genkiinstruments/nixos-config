@@ -103,6 +103,9 @@
     playerctl # media control
   ];
 
+  # Networking
+  networking.networkmanager.enable = true;
+
   # Electron/Chromium apps use Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
