@@ -106,6 +106,15 @@
   # Networking
   networking.networkmanager.enable = true;
 
+  # SSH with FIDO2/Yubikey support
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
+
   # Electron/Chromium apps use Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
