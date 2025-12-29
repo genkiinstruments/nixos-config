@@ -101,10 +101,25 @@
     kanshi # display configuration
     brightnessctl # brightness control
     playerctl # media control
+    yubikey-manager # Yubikey management
   ];
 
   # Networking
   networking.networkmanager.enable = true;
+
+  # SSH with FIDO2/Yubikey support
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
+
+  # Yubikey/FIDO2 support for SSH authentication from this machine
+  hardware.gpgSmartcards.enable = true;
+  services.pcscd.enable = true;
+  services.udev.packages = [ pkgs.yubikey-personalization ];
 
   # Electron/Chromium apps use Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
