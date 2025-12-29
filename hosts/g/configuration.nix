@@ -74,10 +74,6 @@
   };
   nix.settings.trusted-users = [ "genki" ];
 
-  facter.reportPath = ./facter.json;
-
-  system.stateVersion = "24.11";
-
   programs.nix-ld.enable = true;
 
   # We are using zfs: https://github.com/atuinsh/atuin/issues/952#issuecomment-2199964530
