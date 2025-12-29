@@ -14,6 +14,7 @@
     inputs.disko.nixosModules.disko
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
+    inputs.niri.nixosModules.niri
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.modules.shared.builders
@@ -100,13 +101,42 @@
     swayidle
     swaylock
     swaybg
+    kanshi # display configuration
+    brightnessctl # brightness control
+    playerctl # media control
   ];
+
+  # Electron/Chromium apps use Wayland
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Niri - scrollable tiling Wayland compositor
   programs.niri.enable = true;
+  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+
+  # XDG portal for screen sharing, file dialogs
+  xdg.portal.wlr.enable = true;
+
   security.polkit.enable = true;
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.swaylock = { };
+
+  # Logitech wireless support
+  hardware.logitech.wireless.enable = true;
+
+  # Hyperkey via keyd (Caps = Hyper when held, Escape when tapped)
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings = {
+        main = {
+          capslock = "overload(hyper, esc)";
+        };
+        # Hyper = Ctrl+Alt+Shift+Super
+        "hyper:C-A-S-M" = { };
+      };
+    };
+  };
 
   # greetd for login
   services.greetd = {
