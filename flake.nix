@@ -54,6 +54,9 @@
 
     expert.url = "github:elixir-lang/expert";
     expert.inputs.nixpkgs.follows = "nixpkgs";
+
+    niri.url = "github:sodiboo/niri-flake";
+    niri.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
