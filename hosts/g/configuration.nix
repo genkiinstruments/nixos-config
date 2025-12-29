@@ -102,6 +102,7 @@
     brightnessctl # brightness control
     playerctl # media control
     yubikey-manager # Yubikey management
+    libfido2 # FIDO2 support for SSH
   ];
 
   # Networking
