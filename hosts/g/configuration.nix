@@ -51,8 +51,8 @@
     # GPD Pocket 4 rotated display
     "fbcon=rotate:1"
     "video=eDP-1:panel_orientation=right_side_up"
-    # Disable Panel Self Refresh to prevent flickering with external displays
-    "i915.enable_psr=0"
+    # Disable PSR on AMD to prevent flickering with external displays
+    "amdgpu.dcdebugmask=0x10"
   ];
 
   users.mutableUsers = false;
