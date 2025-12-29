@@ -1,5 +1,13 @@
-{ ... }:
+{ lib, ... }:
 {
+  # Override ghostty for Linux: font size 10 and use super instead of cmd
+  home.file.".config/ghostty/config".text = lib.mkForce (
+    builtins.replaceStrings
+      [ "font-size = 12" "cmd+" ]
+      [ "font-size = 10" "super+" ]
+      (builtins.readFile ./config/ghostty/config)
+  );
+
   # GTK settings - font size 12
   gtk = {
     enable = true;
@@ -42,25 +50,50 @@
     margin_spinner = 10
     hide_spinner = false
 
-    [clipboard]
-    max_entries = 100
+    [keys]
+    close = ["Escape"]
+    next = ["Down", "ctrl j", "ctrl n"]
+    prev = ["Up", "ctrl k", "ctrl p"]
 
     [activation_mode]
     disabled = false
     use_f_keys = false
     use_alt = true
 
-    [modules]
-    applications.enabled = true
-    applications.priority = 1
-    calc.enabled = true
-    calc.priority = 0
-    clipboard.enabled = true
-    clipboard.priority = 2
-    commands.enabled = true
-    commands.priority = 3
-    websearch.enabled = true
-    websearch.priority = 4
+    [providers]
+    default = ["desktopapplications", "commands"]
+    empty = ["desktopapplications"]
+
+    [providers.clipboard]
+    time_format = "%H:%M"
+
+    [[providers.prefixes]]
+    prefix = ":"
+    provider = "clipboard"
+
+    [[providers.prefixes]]
+    prefix = "="
+    provider = "calc"
+
+    [providers.actions]
+    commands = [
+      { action = "run", label = "run", default = true, bind = "Return" }
+    ]
+
+    [[providers.custom]]
+    name = "commands"
+
+    [[providers.custom.entries]]
+    label = "Logout"
+    exec = "niri msg action quit"
+
+    [[providers.custom.entries]]
+    label = "Power Off"
+    exec = "systemctl poweroff"
+
+    [[providers.custom.entries]]
+    label = "Reboot"
+    exec = "systemctl reboot"
   '';
 
   xdg.configFile."walker/style.css".text = ''
@@ -171,14 +204,10 @@
 
       default-column-width { proportion 0.5; }
 
-      // Catppuccin Mocha focus indicator
       focus-ring {
-        width 1
-        active-color "#cba6f7"  // mauve
-        inactive-color "#1e1e2e"  // base
+        off
       }
 
-      // No border for cleaner look
       border {
         off
       }
@@ -200,6 +229,13 @@
     spawn-at-startup "wl-paste" "--watch" "cliphist" "store"  // clipboard history
 
     // Window rules
+
+    // Dim unfocused windows
+    window-rule {
+      match is-focused=false
+      opacity 0.8
+    }
+
     window-rule {
       match app-id=r#"^org\.gnome\."#
       draw-border-with-background false
@@ -216,9 +252,9 @@
       Ctrl+Alt+Super+Return { spawn "ghostty"; }
       Ctrl+Alt+Super+T { spawn "ghostty"; }
       Ctrl+Alt+Super+B { spawn "firefox"; }
-      Ctrl+Alt+Super+G { spawn "ghostty" "-e" "lazygit"; }
+      Ctrl+Alt+Super+S { spawn "signal-desktop"; }
       Ctrl+Alt+Super+D { spawn "walker"; }
-      Ctrl+Alt+Super+C { spawn "walker" "-m" "clipboard"; }
+      Ctrl+Alt+Super+C { spawn "ghostty" "-e" "sh" "-c" "cliphist list | fzf --no-info --reverse | cliphist decode | wl-copy"; }
       Ctrl+Alt+Super+Q { close-window; }
       Ctrl+Alt+Super+F { maximize-column; }
       Ctrl+Alt+Super+Shift+F { fullscreen-window; }
@@ -280,8 +316,12 @@
       Ctrl+Alt+Super+Tab { focus-monitor-next; }
       Ctrl+Alt+Super+Shift+Tab { move-column-to-monitor-next; }
 
-      // Hyper + P for screenshot
-      Ctrl+Alt+Super+P { screenshot; }
+      // Hyper + ? to show keybindings
+      Ctrl+Alt+Super+Shift+Slash { show-hotkey-overlay; }
+
+      // Hyper + P for fullscreen screenshot, Hyper + Shift + P for region
+      Ctrl+Alt+Super+P { screenshot-screen; }
+      Ctrl+Alt+Super+Shift+P { screenshot; }
 
       // Media keys (work even when locked)
       XF86AudioRaiseVolume allow-when-locked=true { spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; }
@@ -297,7 +337,7 @@
 
       // System
       Ctrl+Alt+Super+Shift+E { quit; }
-      Ctrl+Alt+Super+Shift+P { power-off-monitors; }
+      Ctrl+Alt+Super+Shift+O { power-off-monitors; }
     }
   '';
 }

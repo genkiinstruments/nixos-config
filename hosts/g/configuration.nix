@@ -58,6 +58,8 @@
     "amdgpu.ppfeaturemask=0xfffd3fff" # Disable GFXOFF power feature
     "amdgpu.runpm=0" # Disable runtime power management
     "amdgpu.bapm=0" # Disable bidirectional APM
+    "amdgpu.sg_display=0" # Disable scatter-gather display
+    "amdgpu.audio=0" # Disable HDMI/DP audio (can cause link issues)
   ];
 
   catppuccin = {
@@ -103,6 +105,7 @@
     magic-wormhole-rs
     git
     ghostty
+    signal-desktop
     rkdeveloptool
     alsa-utils
     systemctl-tui
