@@ -184,10 +184,8 @@
         "${mod}+Page_Up".action = focus-workspace-up;
 
         # Scroll to switch workspaces
-        "${mod}+WheelScrollDown".action = focus-workspace-down;
-        "${mod}+WheelScrollDown".cooldown-ms = 150;
-        "${mod}+WheelScrollUp".action = focus-workspace-up;
-        "${mod}+WheelScrollUp".cooldown-ms = 150;
+        "${mod}+WheelScrollDown" = { action = focus-workspace-down; cooldown-ms = 150; };
+        "${mod}+WheelScrollUp" = { action = focus-workspace-up; cooldown-ms = 150; };
 
         # Column width
         "${mod}+R".action = switch-preset-column-width;
@@ -200,12 +198,9 @@
         "Alt+Print".action = screenshot-window;
 
         # Media keys (work even when locked)
-        "XF86AudioRaiseVolume".action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+";
-        "XF86AudioRaiseVolume".allow-when-locked = true;
-        "XF86AudioLowerVolume".action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-";
-        "XF86AudioLowerVolume".allow-when-locked = true;
-        "XF86AudioMute".action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";
-        "XF86AudioMute".allow-when-locked = true;
+        "XF86AudioRaiseVolume" = { action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"; allow-when-locked = true; };
+        "XF86AudioLowerVolume" = { action = spawn "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"; allow-when-locked = true; };
+        "XF86AudioMute" = { action = spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"; allow-when-locked = true; };
 
         "XF86MonBrightnessUp".action = spawn "brightnessctl" "set" "+5%";
         "XF86MonBrightnessDown".action = spawn "brightnessctl" "set" "5%-";
