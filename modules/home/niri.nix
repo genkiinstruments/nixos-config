@@ -2,10 +2,9 @@
 {
   # Override ghostty for Linux: font size 10 and use super instead of cmd
   home.file.".config/ghostty/config".text = lib.mkForce (
-    builtins.replaceStrings
-      [ "font-size = 12" "cmd+" ]
-      [ "font-size = 10" "super+" ]
-      (builtins.readFile ./config/ghostty/config)
+    builtins.replaceStrings [ "font-size = 12" "cmd+" ] [ "font-size = 10" "super+" ] (
+      builtins.readFile ./config/ghostty/config
+    )
   );
 
   # GTK settings - font size 12
