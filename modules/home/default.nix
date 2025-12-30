@@ -64,8 +64,6 @@
     swaylock.enable = false;
     mako.enable = false;
     lazygit.enable = false;
-    # catppuccin-papirus-folders is Linux-only (override in Linux hosts)
-    gtk.icon.enable = false;
   };
 
   programs = {

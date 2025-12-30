@@ -1,6 +1,5 @@
 {
   flake,
-  lib,
   ...
 }:
 {
@@ -18,8 +17,6 @@
     theme = {
       name = "Adwaita-dark";
     };
-    # catppuccin-papirus-folders is Linux-only (override in Linux hosts)
-    icon.enable = lib.mkForce false;
   };
 
   # Prefer dark mode for all apps
