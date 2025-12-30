@@ -64,24 +64,8 @@
     swaylock.enable = false;
     mako.enable = false;
     lazygit.enable = false;
-  };
-
-  # GTK dark theme (catppuccin gtk was archived, using Adwaita dark)
-  gtk = {
-    enable = true;
-    theme = {
-      name = "Adwaita-dark";
-    };
-  };
-
-  # Prefer dark mode for all apps
-  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
-
-  # Qt dark theme
-  qt = {
-    enable = true;
-    platformTheme.name = "kvantum";
-    style.name = "kvantum";
+    # catppuccin-papirus-folders is Linux-only (override in Linux hosts)
+    gtk.icon.enable = false;
   };
 
   programs = {
