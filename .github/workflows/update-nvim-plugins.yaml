@@ -23,15 +23,14 @@ jobs:
           # Pull latest main to avoid conflicts
           git fetch origin main
           git rebase origin/main || git rebase --abort
-          # Create writable config directory and copy files
-          mkdir -p $HOME/.config/nvim
-          cp -r home/nvim/* $HOME/.config/nvim/
-          # Run the update (vim.pack updates plugins to latest)
-          nix run .#nvim -- --headless "+PackUpdate" "+qa"
-          # Copy any updated files back (nvim-pack-lock.json if it exists)
-          if [ -f "$HOME/.config/nvim/nvim-pack-lock.json" ]; then
-            cp $HOME/.config/nvim/nvim-pack-lock.json home/nvim/nvim-pack-lock.json
-          fi
+
+          # Setup config directory (symlink like devshell does)
+          ln -sfn "$(realpath ./home/nvim)" ~/.config/nvim-dev
+          export NVIM_APPNAME=nvim-dev
+
+          # Run update using unwrapped neovim-nightly (0.12+ with vim.pack)
+          nix run .#nvim.neovim-nightly -- --headless +"lua vim.pack.update()" +"qa!"
+
           # Format any changed files
           nix fmt
 
