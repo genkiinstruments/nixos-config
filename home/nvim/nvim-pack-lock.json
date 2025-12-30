@@ -18,7 +18,7 @@
       "src": "https://github.com/catppuccin/nvim"
     },
     "conform.nvim": {
-      "rev": "5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25",
+      "rev": "df83eeaab265dacd2eef139a78e502a3f8926618",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "crates.nvim": {
@@ -38,11 +38,11 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "b1d2b0dc146cb9260209da4d7ab754adb0a2653d",
+      "rev": "a899e3e33c6c26ffeda5739fb6e7157cfc21ad6f",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "bf77caa5da671f5bab16e4792711d5aa288e8db0",
+      "rev": "130beacf8a51f00aede9c31064c749136679a321",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "lazydev.nvim": {
@@ -82,7 +82,7 @@
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "d696e36d5792daf828f8c8e8d4b9aa90c1a10c2a",
+      "rev": "41ceb6bba3a40128b7841f5b7f5a9dae7201e823",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
@@ -90,7 +90,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "36fcb4a4238928f0b627e1ab84ade0acc1facc2c",
+      "rev": "7efc1b58a8061d29786860006c7257c90a5196dc",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -110,7 +110,7 @@
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "bbfa7cba85967dc9dbfe0ca486fd4b17084bf846",
+      "rev": "963c8d2c5538c4a896a31f396b8a5a2683e254dc",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "plenary.nvim": {
@@ -122,7 +122,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "3d20d7bf5d2fc6a23be679355f9203915b6862af",
+      "rev": "f074f389e16720aa574b59c33b0c0392ce44449a",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {
@@ -134,7 +134,7 @@
       "src": "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
     },
     "telescope.nvim": {
-      "rev": "4d0f5e0e7f69071e315515c385fab2a4eff07b3d",
+      "rev": "3f8109cd21abe9fdb274a09da1e3c176673254b4",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
     "todo-comments.nvim": {
@@ -142,7 +142,7 @@
       "src": "https://github.com/folke/todo-comments.nvim"
     },
     "undotree": {
-      "rev": "0f1c9816975b5d7f87d5003a19c53c6fd2ff6f7f",
+      "rev": "178d19e00a643f825ea11d581b1684745d0c4eda",
       "src": "https://github.com/mbbill/undotree"
     },
     "vim-tmux-navigator": {
