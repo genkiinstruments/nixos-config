@@ -29,7 +29,8 @@ jobs:
           export NVIM_APPNAME=nvim-dev
 
           # Run update using unwrapped neovim-nightly (0.12+ with vim.pack)
-          nix run .#nvim.neovim-nightly -- --headless +"lua vim.pack.update()" +"qa!"
+          # force=true applies updates immediately without confirmation buffer
+          nix run .#nvim.neovim-nightly -- --headless +"lua vim.pack.update(nil, {force=true})" +"qa!"
 
           # Format any changed files
           nix fmt
