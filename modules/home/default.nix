@@ -14,6 +14,12 @@
 
     stateVersion = "23.05";
 
+    # Ensure SSH control socket directory exists
+    activation.createSshSocketsDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      run mkdir -p $HOME/.ssh/sockets
+      run chmod 700 $HOME/.ssh/sockets
+    '';
+
     file.".config/ghostty/config".source = ./config/ghostty/config;
     file.".hammerspoon/init.lua".source = ./config/hammerspoon/init.lua;
     file.".hushlogin".text = "";
@@ -104,6 +110,11 @@
       enable = true;
       package = pkgs.openssh;
       enableDefaultConfig = false;
+      matchBlocks."*" = {
+        controlMaster = "auto";
+        controlPersist = "30m";
+        controlPath = "~/.ssh/sockets/%r@%h:%p";
+      };
     };
 
     fzf = {
