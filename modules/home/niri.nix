@@ -1,28 +1,9 @@
 { lib, ... }:
 {
-  # Override ghostty for Linux: font size 10 and use super instead of cmd
+  # Override ghostty for Linux:  use super instead of cmd
   home.file.".config/ghostty/config".text = lib.mkForce (
-    builtins.replaceStrings [ "font-size = 12" "cmd+" ] [ "font-size = 10" "super+" ] (
-      builtins.readFile ./config/ghostty/config
-    )
+    builtins.replaceStrings [ "cmd+" ] [ "super+" ] (builtins.readFile ./config/ghostty/config)
   );
-
-  # GTK settings - font size 12
-  gtk = {
-    enable = true;
-    font = {
-      name = "Noto Sans";
-      size = 12;
-    };
-  };
-
-  # dconf settings for GNOME apps
-  dconf.settings = {
-    "org/gnome/desktop/interface" = {
-      font-name = "Noto Sans 12";
-      monospace-font-name = "JetBrainsMono Nerd Font Mono 12";
-    };
-  };
 
   # Mako notifications - catppuccin mocha
   xdg.configFile."mako/config".text = ''
@@ -50,9 +31,11 @@
     hide_spinner = false
 
     [keys]
-    close = ["Escape"]
     next = ["Down", "ctrl j", "ctrl n"]
     prev = ["Up", "ctrl k", "ctrl p"]
+
+    [keybinds]
+    close = ["Escape"]
 
     [activation_mode]
     disabled = false
@@ -84,7 +67,7 @@
 
     [[providers.custom.entries]]
     label = "Logout"
-    exec = "niri msg action quit"
+    exec = "sh -c 'niri msg action quit'"
 
     [[providers.custom.entries]]
     label = "Power Off"
@@ -164,7 +147,11 @@
   xdg.configFile."niri/config.kdl".text = ''
     // GPD Pocket 4 display configuration
     output "eDP-1" {
-      scale 1.5
+      scale 1.0
+    }
+
+    output "DP-1" {
+      scale 1.0
     }
 
     input {
