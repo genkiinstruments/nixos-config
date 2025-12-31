@@ -42,12 +42,7 @@
     };
 
     packages = with pkgs; [
-      wget
-      zip
       magic-wormhole-rs
-      fastfetch
-      mediainfo # for mpv / yazi setup
-      television # tv binary for sesh
       claude-code
       claude-code-acp
     ];
