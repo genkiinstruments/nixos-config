@@ -43,7 +43,7 @@
       wget
       zip
       magic-wormhole-rs
-      neofetch
+      fastfetch
       mediainfo # for mpv / yazi setup
       television # tv binary for sesh
       claude-code
