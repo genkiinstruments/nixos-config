@@ -1,8 +1,14 @@
 { lib, ... }:
 {
-  # Override ghostty for Linux: use super instead of cmd
+  # Override ghostty for Linux: use super instead of cmd, hide window decorations
   home.file.".config/ghostty/config".text = lib.mkForce (
-    builtins.replaceStrings [ "cmd+" ] [ "super+" ] (builtins.readFile ./config/ghostty/config)
+    ''
+      # Linux-specific: hide window decorations (tabs via tmux)
+      window-decoration = false
+      gtk-titlebar = false
+
+    ''
+    + builtins.replaceStrings [ "cmd+" ] [ "super+" ] (builtins.readFile ./config/ghostty/config)
   );
 
   # Disable stylix for ghostty (we manage it manually)

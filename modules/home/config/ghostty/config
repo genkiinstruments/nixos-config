@@ -1,9 +1,5 @@
 theme = Catppuccin Mocha
 
-# No window decorations (title bar) on Linux
-window-decoration = false
-gtk-titlebar = false
-
 macos-option-as-alt = true
 
 font-family = "JetBrainsMono Nerd Font Mono"
