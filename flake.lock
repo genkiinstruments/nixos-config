@@ -78,6 +78,22 @@
         "type": "github"
       }
     },
+    "base16-schemes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1765356580,
+        "narHash": "sha256-sZkRpDXWfAlf9oZWPzYQXuZ10uw48rq0Unwa9KS6DfE=",
+        "owner": "tinted-theming",
+        "repo": "schemes",
+        "rev": "6563443434dd05b006782f6c3ca63026b4249733",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tinted-theming",
+        "repo": "schemes",
+        "type": "github"
+      }
+    },
     "base16-vim": {
       "flake": false,
       "locked": {
@@ -596,6 +612,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "base16-schemes": "base16-schemes",
         "blueprint": "blueprint",
         "buildbot-nix": "buildbot-nix",
         "comin": "comin",

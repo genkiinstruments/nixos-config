@@ -28,6 +28,9 @@
     stylix.url = "github:nix-community/stylix";
     stylix.inputs.nixpkgs.follows = "nixpkgs";
 
+    base16-schemes.url = "github:tinted-theming/schemes";
+    base16-schemes.flake = false;
+
     stripe-webshippy-sync.url = "github:genkiinstruments/stripe-webshippy-sync";
     stripe-webshippy-sync.inputs.nixpkgs.follows = "nixpkgs";
 
