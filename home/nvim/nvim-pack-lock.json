@@ -18,7 +18,7 @@
       "src": "https://github.com/catppuccin/nvim"
     },
     "conform.nvim": {
-      "rev": "df83eeaab265dacd2eef139a78e502a3f8926618",
+      "rev": "4b713b9da0061a54750bfed457e190459be28c7b",
       "src": "https://github.com/stevearc/conform.nvim"
     },
     "crates.nvim": {
@@ -122,7 +122,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "f074f389e16720aa574b59c33b0c0392ce44449a",
+      "rev": "f8bf440870c138bf45bc82c42f55d280569964b8",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {
