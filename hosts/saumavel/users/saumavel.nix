@@ -56,10 +56,7 @@
         copy_on_select = true;
         clipboard_control = "write-clipboard read-clipboard write-primary read-primary";
       };
-      font = {
-        size = 16.0;
-        name = "JetBrainsMono Nerd Font";
-      };
+      font.size = lib.mkForce 16; # override stylix default
       extraConfig = ''
         shell /run/current-system/sw/bin/fish
       '';
