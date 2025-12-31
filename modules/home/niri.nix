@@ -1,22 +1,23 @@
 { lib, ... }:
 {
-  # Override ghostty for Linux:  use super instead of cmd
+  # Override ghostty for Linux: use super instead of cmd
   home.file.".config/ghostty/config".text = lib.mkForce (
     builtins.replaceStrings [ "cmd+" ] [ "super+" ] (builtins.readFile ./config/ghostty/config)
   );
 
-  # Mako notifications - catppuccin mocha
-  xdg.configFile."mako/config".text = ''
-    background-color=#1e1e2e
-    text-color=#cdd6f4
-    border-color=#cba6f7
-    border-radius=4
-    border-size=1
-    padding=10
-    default-timeout=5000
-  '';
+  # Disable stylix for ghostty (we manage it manually)
+  stylix.targets.ghostty.enable = false;
 
-  # Walker launcher - catppuccin mocha
+  # Mako notifications - styled by stylix
+  services.mako = {
+    enable = true;
+    borderRadius = 4;
+    borderSize = 1;
+    padding = "10";
+    defaultTimeout = 5000;
+  };
+
+  # Walker launcher - manual catppuccin mocha (stylix doesn't support walker)
   xdg.configFile."walker/config.toml".text = ''
     placeholder = "Search..."
     show_initial_entries = true

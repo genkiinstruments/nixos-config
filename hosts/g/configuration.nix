@@ -12,7 +12,7 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
-    inputs.catppuccin.nixosModules.catppuccin
+    inputs.stylix.nixosModules.stylix
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     flake.modules.shared.default
@@ -62,12 +62,52 @@
     "amdgpu.audio=0" # Disable HDMI/DP audio (can cause link issues)
   ];
 
-  catppuccin = {
+  # Stylix system-wide theming
+  stylix = {
     enable = true;
-    flavor = "mocha";
-    accent = "mauve";
-    # Disable tty theming - uses IFD which is disabled
-    tty.enable = false;
+    autoEnable = true;
+    # Catppuccin Mocha - inlined to avoid IFD
+    base16Scheme = {
+      base00 = "#1e1e2e"; # base
+      base01 = "#181825"; # mantle
+      base02 = "#313244"; # surface0
+      base03 = "#45475a"; # surface1
+      base04 = "#585b70"; # surface2
+      base05 = "#cdd6f4"; # text
+      base06 = "#f5e0dc"; # rosewater
+      base07 = "#b4befe"; # lavender
+      base08 = "#f38ba8"; # red
+      base09 = "#fab387"; # peach
+      base0A = "#f9e2af"; # yellow
+      base0B = "#a6e3a1"; # green
+      base0C = "#94e2d5"; # teal
+      base0D = "#89b4fa"; # blue
+      base0E = "#cba6f7"; # mauve
+      base0F = "#f2cdcd"; # flamingo
+    };
+    polarity = "dark";
+    # Pure black wallpaper
+    image = pkgs.runCommand "black.png" { nativeBuildInputs = [ pkgs.imagemagick ]; } ''
+      magick -size 1x1 xc:'#000000' $out
+    '';
+    fonts = {
+      monospace = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font Mono";
+      };
+      sansSerif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Sans";
+      };
+      serif = {
+        package = pkgs.noto-fonts;
+        name = "Noto Serif";
+      };
+      sizes = {
+        terminal = 14;
+        applications = 12;
+      };
+    };
   };
 
   users.mutableUsers = false;
@@ -145,8 +185,7 @@
   # Electron/Chromium apps use Wayland
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
-  # Prefer dark mode system-wide
-  environment.sessionVariables.GTK_THEME = "Adwaita:dark";
+  # Prefer dark mode system-wide (catppuccin theme set via home-manager)
   programs.dconf.enable = true;
 
   # Default font size 14

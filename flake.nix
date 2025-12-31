@@ -25,8 +25,8 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    catppuccin.url = "github:catppuccin/nix";
-    catppuccin.inputs.nixpkgs.follows = "nixpkgs";
+    stylix.url = "github:nix-community/stylix";
+    stylix.inputs.nixpkgs.follows = "nixpkgs";
 
     stripe-webshippy-sync.url = "github:genkiinstruments/stripe-webshippy-sync";
     stripe-webshippy-sync.inputs.nixpkgs.follows = "nixpkgs";

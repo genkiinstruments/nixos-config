@@ -1,13 +1,9 @@
 {
-  inputs,
   pkgs,
   lib,
   ...
 }:
 {
-  imports = [
-    inputs.catppuccin.homeModules.catppuccin
-  ];
 
   home = {
     enableNixpkgsReleaseCheck = false;
@@ -55,21 +51,6 @@
       claude-code
       claude-code-acp
     ];
-  };
-
-  catppuccin = {
-    enable = true;
-    flavor = "mocha";
-    accent = "mauve";
-    # See issues with IFD: https://github.com/catppuccin/nix?tab=readme-ov-file#-faq
-    fzf.enable = false;
-    starship.enable = false;
-    cava.enable = false;
-    gh-dash.enable = false;
-    imv.enable = false;
-    swaylock.enable = false;
-    mako.enable = false;
-    lazygit.enable = false;
   };
 
   programs = {
