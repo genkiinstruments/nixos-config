@@ -51,6 +51,7 @@ vim.pack.add({
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-context",
 	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+	"https://github.com/windwp/nvim-ts-autotag",
 
 	-- Formatting & Linting
 	"https://github.com/stevearc/conform.nvim",
@@ -84,6 +85,7 @@ vim.cmd.packadd("nvim-treesitter-textobjects")
 vim.cmd.packadd("nvim-web-devicons")
 vim.cmd.packadd("nui.nvim")
 vim.cmd.packadd("noice.nvim")
+vim.cmd.packadd("friendly-snippets") -- Must load before LuaSnip's lazy_load()
 
 -- Configure treesitter (must happen after packadd)
 ---@diagnostic disable-next-line: missing-fields

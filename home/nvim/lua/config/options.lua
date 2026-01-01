@@ -2,6 +2,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- Filetype detection
+vim.cmd("filetype plugin indent on")
+
 -- Line numbers
 vim.opt.number = true
 vim.opt.relativenumber = true

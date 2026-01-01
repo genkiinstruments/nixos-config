@@ -1,4 +1,26 @@
 return {
+	-- Auto close/rename HTML tags
+	{
+		"nvim-ts-autotag",
+		event = { "BufReadPre", "BufNewFile" },
+		ft = {
+			"html",
+			"javascript",
+			"typescript",
+			"javascriptreact",
+			"typescriptreact",
+			"svelte",
+			"vue",
+			"tsx",
+			"jsx",
+			"xml",
+			"markdown",
+		},
+		after = function()
+			require("nvim-ts-autotag").setup()
+		end,
+	},
+
 	-- Treesitter context (sticky header showing current function/class)
 	{
 		"nvim-treesitter-context",
