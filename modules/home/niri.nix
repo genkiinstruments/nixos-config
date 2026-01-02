@@ -17,10 +17,12 @@
   # Mako notifications - styled by stylix
   services.mako = {
     enable = true;
-    borderRadius = 4;
-    borderSize = 1;
-    padding = "10";
-    defaultTimeout = 5000;
+    settings = {
+      border-radius = 4;
+      border-size = 1;
+      padding = "10";
+      default-timeout = 5000;
+    };
   };
 
   # Walker launcher - manual catppuccin mocha (stylix doesn't support walker)
