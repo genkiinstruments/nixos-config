@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   programs.fish.enable = true; # Otherwise our shell won't be installed correctly
+  programs.fish.useBabelfish = true; # Fish 4.x compatible - avoids fenv which is broken
   programs.fish.shellInit = ''
     # Nix - prefer nix-darwin managed nix, fall back to default profile
     if test -e '/run/current-system/sw/etc/profile.d/nix-daemon.fish'

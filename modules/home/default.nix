@@ -319,7 +319,6 @@
     };
     fish = {
       enable = true;
-      useBabelfish = true; # Fish 4.x compatible - avoids fenv which is broken in 4.3.1
       shellAliases = {
         da = "direnv allow";
         dr = "direnv reload";
