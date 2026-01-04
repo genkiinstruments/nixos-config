@@ -1,4 +1,7 @@
+{ modulesPath, ... }:
 {
+  imports = [ "${modulesPath}/profiles/perlless.nix" ];
+
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
   networking.firewall.allowPing = true;
   services.tailscale.openFirewall = true;
