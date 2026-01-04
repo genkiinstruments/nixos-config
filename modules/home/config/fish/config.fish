@@ -169,18 +169,6 @@ bind -M normal ctrl-l clear
 bind -M insert ctrl-l clear
 
 #-------------------------------------------------------------------------------
-# Atuin manual initialization and keybindings
-#-------------------------------------------------------------------------------
-# Initialize atuin, filtering out deprecated bind -k syntax
-atuin init fish | sed "s/-k up/up/g" | source
-
-# bind to ctrl-p and ctrl-r in normal and insert mode
-bind -M normal ctrl-p _atuin_search
-bind -M insert ctrl-p _atuin_search
-bind -M normal ctrl-r _atuin_search
-bind -M insert ctrl-r _atuin_search
-
-#-------------------------------------------------------------------------------
 # Ghostty Shell Integration
 #-------------------------------------------------------------------------------
 # Ghostty supports auto-injection but Nix-darwin hard overwrites XDG_DATA_DIRS

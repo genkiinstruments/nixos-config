@@ -278,7 +278,7 @@
     };
     atuin = {
       enable = true;
-      enableFishIntegration = false; # Manual keybindings in config.fish
+      enableFishIntegration = true; # Manual keybindings in config.fish
       settings = {
         exit_mode = "return-query";
         keymap_mode = "auto";
@@ -319,6 +319,7 @@
     };
     fish = {
       enable = true;
+      useBabelfish = true; # Fish 4.x compatible - avoids fenv which is broken in 4.3.1
       shellAliases = {
         da = "direnv allow";
         dr = "direnv reload";
@@ -349,6 +350,11 @@
         lib.strings.intersperse "\n" [
           (builtins.readFile ./config/fish/config.fish)
           "set -g SHELL ${pkgs.fish}/bin/fish"
+          # Atuin keybindings - bind to ctrl-p and ctrl-r in normal and insert mode
+          "bind -M normal ctrl-p _atuin_search"
+          "bind -M insert ctrl-p _atuin_search"
+          "bind -M normal ctrl-r _atuin_search"
+          "bind -M insert ctrl-r _atuin_search"
         ]
       );
     };
