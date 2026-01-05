@@ -50,7 +50,7 @@ vim.pack.add({
 	-- Treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
 	"https://github.com/nvim-treesitter/nvim-treesitter-context",
-	"https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
 	"https://github.com/windwp/nvim-ts-autotag",
 
 	-- Formatting & Linting
@@ -81,69 +81,58 @@ vim.cmd.packadd("plenary.nvim")
 vim.cmd.packadd("snacks.nvim")
 vim.cmd.packadd("fzf-lua")
 vim.cmd.packadd("nvim-treesitter")
-vim.cmd.packadd("nvim-treesitter-textobjects")
 vim.cmd.packadd("nvim-web-devicons")
 vim.cmd.packadd("nui.nvim")
 vim.cmd.packadd("noice.nvim")
 vim.cmd.packadd("friendly-snippets") -- Must load before LuaSnip's lazy_load()
 
--- Configure treesitter (must happen after packadd)
----@diagnostic disable-next-line: missing-fields
-require("nvim-treesitter.configs").setup({
+-- Configure treesitter using the new API (nvim-treesitter.configs was removed)
+require("nvim-treesitter").setup({
 	highlight = { enable = true },
 	indent = { enable = true },
-	incremental_selection = {
-		enable = true,
-		keymaps = {
-			init_selection = "<C-space>",
-			node_incremental = "<C-space>",
-			scope_incremental = false,
-			node_decremental = "<bs>",
-		},
-	},
-	textobjects = {
-		move = {
-			enable = true,
-			set_jumps = true,
-			goto_next_start = {
-				["]f"] = "@function.outer",
-				["]c"] = "@class.outer",
-				["]a"] = "@parameter.inner",
-			},
-			goto_next_end = {
-				["]F"] = "@function.outer",
-				["]C"] = "@class.outer",
-				["]A"] = "@parameter.inner",
-			},
-			goto_previous_start = {
-				["[f"] = "@function.outer",
-				["[c"] = "@class.outer",
-				["[a"] = "@parameter.inner",
-			},
-			goto_previous_end = {
-				["[F"] = "@function.outer",
-				["[C"] = "@class.outer",
-				["[A"] = "@parameter.inner",
-			},
-		},
-	},
 })
+
+-- Incremental selection keymaps (replaces incremental_selection config)
+vim.keymap.set("n", "<C-space>", function()
+	require("nvim-treesitter.incremental_selection").init_selection()
+end, { desc = "Init selection" })
+vim.keymap.set("x", "<C-space>", function()
+	require("nvim-treesitter.incremental_selection").node_incremental()
+end, { desc = "Increment selection" })
+vim.keymap.set("x", "<bs>", function()
+	require("nvim-treesitter.incremental_selection").node_decremental()
+end, { desc = "Decrement selection" })
 
 vim.api.nvim_set_hl(0, "TreesitterContextBottom", { underline = false })
 
--- Textobjects move keymaps
-local move = require("nvim-treesitter.textobjects.move")
-local map = function(lhs, fn, query, desc)
-	vim.keymap.set({ "n", "x", "o" }, lhs, function()
-		fn(query)
-	end, { desc = desc })
-end
-map("]f", move.goto_next_start, "@function.outer", "Next function")
-map("[f", move.goto_previous_start, "@function.outer", "Prev function")
-map("]c", move.goto_next_start, "@class.outer", "Next class")
-map("[c", move.goto_previous_start, "@class.outer", "Prev class")
-map("]a", move.goto_next_start, "@parameter.inner", "Next param")
-map("[a", move.goto_previous_start, "@parameter.inner", "Prev param")
+-- Load textobjects after treesitter is configured
+vim.cmd.packadd("nvim-treesitter-textobjects")
+require("nvim-treesitter-textobjects").setup({
+	move = {
+		enable = true,
+		set_jumps = true,
+		goto_next_start = {
+			["]f"] = "@function.outer",
+			["]c"] = "@class.outer",
+			["]a"] = "@parameter.inner",
+		},
+		goto_next_end = {
+			["]F"] = "@function.outer",
+			["]C"] = "@class.outer",
+			["]A"] = "@parameter.inner",
+		},
+		goto_previous_start = {
+			["[f"] = "@function.outer",
+			["[c"] = "@class.outer",
+			["[a"] = "@parameter.inner",
+		},
+		goto_previous_end = {
+			["[F"] = "@function.outer",
+			["[C"] = "@class.outer",
+			["[A"] = "@parameter.inner",
+		},
+	},
+})
 
 -- Load the rest via lz.n lazy loading
 require("lz.n").load("plugins")
