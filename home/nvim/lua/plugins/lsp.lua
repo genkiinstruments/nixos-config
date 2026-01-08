@@ -235,13 +235,14 @@ return {
 					python = { "ruff_format" },
 					rust = { "rustfmt" },
 					go = { "gofmt" },
-					javascript = { "prettier" },
-					typescript = { "prettier" },
-					svelte = { "prettier" },
-					json = { "prettier" },
-					html = { "prettier" },
-					css = { "prettier" },
-					markdown = { "prettier" },
+					javascript = { "oxfmt" },
+					typescript = { "oxfmt" },
+					-- oxfmt only supports JS/TS for now, prettierd for others
+					svelte = { "prettierd" },
+					json = { "prettierd" },
+					html = { "prettierd" },
+					css = { "prettierd" },
+					markdown = { "prettierd" },
 				},
 				format_on_save = function(bufnr)
 					if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then

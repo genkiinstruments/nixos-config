@@ -51,6 +51,8 @@ let
     pyright
     ruff
     stylua
+    oxfmt
+    prettierd
     perSystem.expert.default
   ];
 

@@ -48,6 +48,8 @@ let
     pyright
     ruff
     stylua
+    oxfmt
+    prettierd
     perSystem.expert.default
     # Saumavel-specific tools
     zls # Zig language server
