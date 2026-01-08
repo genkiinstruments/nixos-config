@@ -65,9 +65,11 @@
     brews = [
       # clis and libraries
       "age-plugin-se"
+      "tw93/tap/mole" # https://github.com/tw93/Mole
     ];
     taps = [
       # for things not in the hombrew repo, e.g.,
+      "tw93/tap" # for mole
     ];
     masApps = {
       # `nix run nixpkgs#mas -- search <app name>`
