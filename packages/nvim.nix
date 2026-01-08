@@ -39,7 +39,7 @@ let
     fzf
     nodejs
     tree-sitter
-    nixfmt-rfc-style
+    nixfmt
     nil
     rust-analyzer
     gopls
