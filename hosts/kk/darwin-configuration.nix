@@ -10,7 +10,7 @@
     inputs.srvos.darwinModules.desktop
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
     inputs.agenix.darwinModules.default
-    flake.modules.shared.stylix
+    flake.modules.darwin.stylix
     flake.modules.darwin.default
     flake.modules.darwin.user
     flake.modules.darwin.comin

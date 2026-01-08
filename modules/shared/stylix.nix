@@ -4,14 +4,8 @@
   ...
 }:
 {
-  imports = [
-    (
-      if pkgs.stdenv.isDarwin then
-        inputs.stylix.darwinModules.stylix
-      else
-        inputs.stylix.nixosModules.stylix
-    )
-  ];
+  # Platform-specific stylix module must be imported by the host or a platform module
+  # Use flake.modules.darwin.stylix or flake.modules.nixos.stylix instead of this directly
 
   stylix = {
     enable = true;
@@ -19,7 +13,7 @@
     # Using flake input to avoid IFD
     base16Scheme = "${inputs.base16-schemes}/base16/catppuccin-mocha.yaml";
     polarity = "dark";
-    stylix.targets.fish.enable = false;
+    targets.fish.enable = false;
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
