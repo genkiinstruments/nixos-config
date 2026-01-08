@@ -8,9 +8,8 @@
   imports = [
     inputs.srvos.darwinModules.desktop
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
-    inputs.stylix.darwinModules.stylix
     inputs.agenix.darwinModules.default
-    flake.modules.shared.stylix
+    flake.modules.darwin.stylix
     flake.modules.shared.default
     flake.modules.shared.home-manager
     flake.modules.shared.builders
