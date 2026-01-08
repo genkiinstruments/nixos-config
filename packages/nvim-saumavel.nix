@@ -18,10 +18,17 @@ let
   treesitterGrammars =
     let
       ts = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+      # Query-only languages that parsers inherit from but withAllGrammars doesn't include
+      queryOnlyLangs = pkgs.vimPlugins.nvim-treesitter.passthru.queries;
     in
     pkgs.symlinkJoin {
       name = "treesitter-grammars";
-      paths = [ ts ] ++ ts.passthru.dependencies;
+      paths = [
+        ts
+        queryOnlyLangs.ecma
+        queryOnlyLangs.jsx
+        queryOnlyLangs.html_tags
+      ] ++ ts.passthru.dependencies;
     };
   tools = [
     pkgs.git
