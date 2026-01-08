@@ -12,7 +12,6 @@
     inputs.srvos.nixosModules.mixins-terminfo
     inputs.srvos.nixosModules.mixins-trusted-nix-caches
     inputs.disko.nixosModules.disko
-    inputs.stylix.nixosModules.stylix
     flake.modules.shared.stylix
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter

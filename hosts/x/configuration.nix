@@ -16,6 +16,7 @@
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.buildbot-nix.nixosModules.buildbot-master
     inputs.buildbot-nix.nixosModules.buildbot-worker
+    flake.modules.shared.stylix
     flake.modules.shared.default
     flake.modules.shared.builders
     flake.modules.shared.home-manager

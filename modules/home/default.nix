@@ -4,9 +4,6 @@
   ...
 }:
 {
-  # Disable stylix's fish theming - we use catppuccin/fish colors directly
-  stylix.targets.fish.enable = false;
-
   home = {
     enableNixpkgsReleaseCheck = false;
 

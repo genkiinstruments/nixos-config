@@ -9,7 +9,6 @@
   imports = [
     inputs.srvos.darwinModules.desktop
     inputs.srvos.darwinModules.mixins-trusted-nix-caches
-    inputs.stylix.darwinModules.stylix
     inputs.agenix.darwinModules.default
     flake.modules.shared.stylix
     flake.modules.darwin.default
