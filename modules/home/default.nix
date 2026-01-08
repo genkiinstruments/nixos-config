@@ -265,10 +265,10 @@
           }
           {
             key = "L";
-            description = "auto-commit lazy-lock.json changes";
-            command = "git commit -m \"chore: update lazy-lock.json\"";
+            description = "auto-commit nvim-pack-lock changes";
+            command = "git commit -m \"chore: update nvim plugins \"";
             context = "files";
-            loadingText = "Committing lazy-lock.json changes...";
+            loadingText = "Committing nvim-pack-lock changes...";
           }
           # Worktree commands (w opens worktrees panel by default)
           {
