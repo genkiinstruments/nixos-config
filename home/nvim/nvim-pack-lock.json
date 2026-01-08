@@ -42,7 +42,7 @@
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "gitsigns.nvim": {
-      "rev": "dfac404ac94b0eb1461bd7da32279e16950dfd67",
+      "rev": "30e5c516f03e0a0a4f71300c52abad481ee90337",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "lazydev.nvim": {
@@ -78,11 +78,11 @@
       "src": "https://github.com/windwp/nvim-autopairs"
     },
     "nvim-lint": {
-      "rev": "1e6b2ac034d1a7588d11b0b8e862a7ad89368376",
+      "rev": "ca6ea12daf0a4d92dc24c5c9ae22a1f0418ade37",
       "src": "https://github.com/mfussenegger/nvim-lint"
     },
     "nvim-lspconfig": {
-      "rev": "0b38bc74487e73489624d61396af7805af9cc75f",
+      "rev": "5a82e10b2df0ed31bec642c1c0344baee7c458b6",
       "src": "https://github.com/neovim/nvim-lspconfig"
     },
     "nvim-surround": {
@@ -90,7 +90,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "b033ab331ca0bccbd93c3c2b4f886fdfc09abec0",
+      "rev": "de878155ca66c49b027b1380e4e60a6c665b2630",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -119,11 +119,11 @@
       "src": "https://github.com/nvim-lua/plenary.nvim"
     },
     "render-markdown.nvim": {
-      "rev": "da6a7b25471ab23824f3429225973186eb0b62d2",
+      "rev": "73a6ebc842cf81926eb1d424820b800f6f6a1227",
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "50191da212fb867f8bf25ce5e00f55ffb7a7af8b",
+      "rev": "4e9e40432b21df641f08c4ec058f2d6f89365526",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {
