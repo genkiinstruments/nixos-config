@@ -31,31 +31,31 @@ let
       ]
       ++ ts.passthru.dependencies;
     };
-  tools = [
-    pkgs.git
-    pkgs.ripgrep
-    pkgs.fd
-    pkgs.fzf
-    pkgs.nodejs
-    pkgs.tree-sitter
-    pkgs.nixfmt-rfc-style
-    pkgs.nil
-    pkgs.rust-analyzer
-    pkgs.gopls
-    pkgs.lua-language-server
-    pkgs.nodePackages.typescript-language-server
-    pkgs.nodePackages.vscode-langservers-extracted
-    pkgs.pyright
-    pkgs.ruff
-    pkgs.stylua
+  tools = with pkgs; [
+    git
+    ripgrep
+    fd
+    fzf
+    nodejs
+    tree-sitter
+    nixfmt-rfc-style
+    nil
+    rust-analyzer
+    gopls
+    lua-language-server
+    nodePackages.typescript-language-server
+    nodePackages.vscode-langservers-extracted
+    pyright
+    ruff
+    stylua
     perSystem.expert.default
     # Saumavel-specific tools
-    pkgs.zls # Zig language server
-    pkgs.clang-tools # clangd for C/C++
-    pkgs.nodePackages.svelte-language-server
-    pkgs.sqls # SQL language server
-    pkgs.tailwindcss-language-server
-    pkgs.emmet-ls # Emmet for HTML/CSS expansion
+    zls # Zig language server
+    clang-tools # clangd for C/C++
+    nodePackages.svelte-language-server
+    sqls # SQL language server
+    tailwindcss-language-server
+    emmet-ls # Emmet for HTML/CSS expansion
   ];
 
   wrapperArgs = [
