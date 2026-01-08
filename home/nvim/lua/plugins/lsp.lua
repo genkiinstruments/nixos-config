@@ -26,6 +26,32 @@ return {
 		"nvim-lspconfig",
 		event = { "BufReadPre", "BufNewFile" },
 		after = function()
+			-- Find typescript-svelte-plugin path from svelte-language-server
+			local function get_svelte_plugin_path()
+				local svelteserver = vim.fn.exepath("svelteserver")
+				if svelteserver ~= "" then
+					-- Path: .../bin/svelteserver -> .../lib/node_modules/svelte-language-server/packages/typescript-plugin
+					local base = svelteserver:gsub("/bin/svelteserver$", "")
+					return base .. "/lib/node_modules/svelte-language-server/packages/typescript-plugin"
+				end
+				return nil
+			end
+
+			-- Custom config for ts_ls with Svelte plugin
+			local svelte_plugin_path = get_svelte_plugin_path()
+			if svelte_plugin_path then
+				vim.lsp.config("ts_ls", {
+					init_options = {
+						plugins = {
+							{
+								name = "typescript-svelte-plugin",
+								location = svelte_plugin_path,
+							},
+						},
+					},
+				})
+			end
+
 			-- Custom config for nil_ls (Nix) with nixfmt
 			vim.lsp.config("nil_ls", {
 				settings = {
@@ -42,6 +68,21 @@ return {
 				root_markers = { "mix.exs", ".git" },
 			})
 
+			-- Custom config for emmet_language_server to include Svelte and other frameworks
+			vim.lsp.config("emmet_language_server", {
+				filetypes = {
+					"html",
+					"css",
+					"scss",
+					"less",
+					"javascriptreact",
+					"typescriptreact",
+					"svelte",
+					"vue",
+					"astro",
+				},
+			})
+
 			-- Enable LSP servers (uses built-in configs from nvim-lspconfig)
 			vim.lsp.enable("nil_ls") -- Nix
 			vim.lsp.enable("lua_ls") -- Lua
@@ -52,6 +93,23 @@ return {
 			vim.lsp.enable("html") -- HTML
 			vim.lsp.enable("cssls") -- CSS
 			vim.lsp.enable("jsonls") -- JSON
+			vim.lsp.enable("svelte") -- Svelte
+
+			-- Svelte organize imports keybinding
+			vim.api.nvim_create_autocmd("LspAttach", {
+				callback = function(args)
+					local client = vim.lsp.get_client_by_id(args.data.client_id)
+					if client and client.name == "svelte" then
+						vim.keymap.set("n", "<leader>co", function()
+							vim.lsp.buf.code_action({
+								apply = true,
+								context = { only = { "source.organizeImports" }, diagnostics = {} },
+							})
+						end, { buffer = args.buf, desc = "Organize Imports" })
+					end
+				end,
+			})
+			vim.lsp.enable("emmet_language_server") -- Emmet
 		end,
 	},
 
@@ -179,6 +237,7 @@ return {
 					go = { "gofmt" },
 					javascript = { "prettier" },
 					typescript = { "prettier" },
+					svelte = { "prettier" },
 					json = { "prettier" },
 					html = { "prettier" },
 					css = { "prettier" },

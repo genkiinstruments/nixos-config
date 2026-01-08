@@ -28,7 +28,8 @@ let
         queryOnlyLangs.ecma
         queryOnlyLangs.jsx
         queryOnlyLangs.html_tags
-      ] ++ ts.passthru.dependencies;
+      ]
+      ++ ts.passthru.dependencies;
     };
   tools = [
     pkgs.git

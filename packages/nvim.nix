@@ -28,26 +28,29 @@ let
         queryOnlyLangs.ecma
         queryOnlyLangs.jsx
         queryOnlyLangs.html_tags
-      ] ++ ts.passthru.dependencies;
+      ]
+      ++ ts.passthru.dependencies;
     };
 
-  tools = [
-    pkgs.git
-    pkgs.ripgrep
-    pkgs.fd
-    pkgs.fzf
-    pkgs.nodejs
-    pkgs.tree-sitter
-    pkgs.nixfmt-rfc-style
-    pkgs.nil
-    pkgs.rust-analyzer
-    pkgs.gopls
-    pkgs.lua-language-server
-    pkgs.nodePackages.typescript-language-server
-    pkgs.nodePackages.vscode-langservers-extracted
-    pkgs.pyright
-    pkgs.ruff
-    pkgs.stylua
+  tools = with pkgs; [
+    git
+    ripgrep
+    fd
+    fzf
+    nodejs
+    tree-sitter
+    nixfmt-rfc-style
+    nil
+    rust-analyzer
+    gopls
+    lua-language-server
+    svelte-language-server
+    typescript-language-server
+    vscode-langservers-extracted
+    emmet-language-server
+    pyright
+    ruff
+    stylua
     perSystem.expert.default
   ];
 
