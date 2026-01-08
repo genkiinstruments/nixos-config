@@ -43,6 +43,7 @@ let
     nil
     rust-analyzer
     gopls
+    gofumpt
     lua-language-server
     svelte-language-server
     typescript-language-server

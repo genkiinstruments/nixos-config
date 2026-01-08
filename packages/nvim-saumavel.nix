@@ -42,6 +42,7 @@ let
     nil
     rust-analyzer
     gopls
+    gofumpt
     lua-language-server
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted

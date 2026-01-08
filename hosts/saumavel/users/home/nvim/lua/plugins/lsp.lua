@@ -197,7 +197,7 @@ return {
 					nix = { "nixfmt" },
 					python = { "ruff_format" },
 					rust = { "rustfmt" },
-					go = { "gofmt" },
+					go = { "gofumpt" },
 					javascript = { "oxfmt" },
 					typescript = { "oxfmt" },
 					-- oxfmt only supports JS/TS for now, prettierd for others
