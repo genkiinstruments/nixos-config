@@ -79,6 +79,12 @@ return {
 					["<BS>"] = "actions.parent",
 					["~"] = "actions.open_cwd",
 					["`"] = "actions.cd",
+					-- Disable oil defaults that conflict with global keymaps
+					["<C-h>"] = false,
+					["<C-j>"] = false,
+					["<C-k>"] = false,
+					["<C-l>"] = false,
+					["<C-s>"] = false,
 				},
 			})
 		end,
