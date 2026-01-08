@@ -23,46 +23,60 @@ let
       name = "treesitter-grammars";
       paths = [ ts ] ++ ts.passthru.dependencies;
     };
-in
-pkgs.wrapNeovimUnstable neovim-nightly {
-  luaRcContent = ''
-    -- Add Nix-bundled treesitter parsers
-    vim.opt.rtp:prepend("${treesitterGrammars}")
+  tools = [
+    pkgs.git
+    pkgs.ripgrep
+    pkgs.fd
+    pkgs.fzf
+    pkgs.nodejs
+    pkgs.tree-sitter
+    pkgs.nixfmt-rfc-style
+    pkgs.nil
+    pkgs.rust-analyzer
+    pkgs.gopls
+    pkgs.lua-language-server
+    pkgs.nodePackages.typescript-language-server
+    pkgs.nodePackages.vscode-langservers-extracted
+    pkgs.pyright
+    pkgs.ruff
+    pkgs.stylua
+    perSystem.expert.default
+    # Saumavel-specific tools
+    pkgs.zls # Zig language server
+    pkgs.clang-tools # clangd for C/C++
+    pkgs.nodePackages.svelte-language-server
+    pkgs.sqls # SQL language server
+    pkgs.tailwindcss-language-server
+    pkgs.emmet-ls # Emmet for HTML/CSS expansion
+  ];
 
-    vim.opt.rtp:prepend("${configDir}")
-    dofile("${configDir}/init.lua")
-  '';
-  vimAlias = true;
-  viAlias = false;
   wrapperArgs = [
     "--prefix"
     "PATH"
     ":"
-    "${pkgs.lib.makeBinPath [
-      pkgs.git
-      pkgs.ripgrep
-      pkgs.fd
-      pkgs.fzf
-      pkgs.nodejs
-      pkgs.tree-sitter
-      pkgs.nixfmt-rfc-style
-      pkgs.nil
-      pkgs.rust-analyzer
-      pkgs.gopls
-      pkgs.lua-language-server
-      pkgs.nodePackages.typescript-language-server
-      pkgs.nodePackages.vscode-langservers-extracted
-      pkgs.pyright
-      pkgs.ruff
-      pkgs.stylua
-      perSystem.expert.default
-      # Saumavel-specific tools
-      pkgs.zls # Zig language server
-      pkgs.clang-tools # clangd for C/C++
-      pkgs.nodePackages.svelte-language-server
-      pkgs.sqls # SQL language server
-      pkgs.tailwindcss-language-server
-      pkgs.emmet-ls # Emmet for HTML/CSS expansion
-    ]}"
+    "${pkgs.lib.makeBinPath tools}"
   ];
+
+  wrapped = pkgs.wrapNeovimUnstable neovim-nightly {
+    luaRcContent = ''
+      -- Add Nix-bundled treesitter parsers
+      vim.opt.rtp:prepend("${treesitterGrammars}")
+
+      vim.opt.rtp:prepend("${configDir}")
+      dofile("${configDir}/init.lua")
+    '';
+    vimAlias = true;
+    viAlias = false;
+    inherit wrapperArgs;
+  };
+in
+wrapped.overrideAttrs {
+  passthru = {
+    inherit
+      neovim-nightly
+      tools
+      wrapperArgs
+      treesitterGrammars
+      ;
+  };
 }
