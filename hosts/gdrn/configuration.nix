@@ -18,7 +18,7 @@
     inputs.stripe-webshippy-sync.nixosModules.default
     flake.modules.nixos.comin
     flake.modules.shared.default
-    flake.modules.shared.stylix
+    flake.modules.nixos.stylix
     flake.modules.shared.home-manager
     flake.modules.nixos.default
     flake.modules.nixos.zram-swap

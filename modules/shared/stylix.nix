@@ -13,7 +13,6 @@
     # Using flake input to avoid IFD
     base16Scheme = "${inputs.base16-schemes}/base16/catppuccin-mocha.yaml";
     polarity = "dark";
-    targets.fish.enable = false;
     fonts = {
       monospace = {
         package = pkgs.nerd-fonts.jetbrains-mono;
