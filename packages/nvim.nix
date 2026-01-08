@@ -48,11 +48,12 @@ let
     typescript-language-server
     vscode-langservers-extracted
     emmet-language-server
-    pyright
     ruff
     stylua
     oxfmt
+    oxlint
     prettierd
+    ty
     perSystem.expert.default
   ];
 

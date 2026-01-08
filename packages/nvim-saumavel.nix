@@ -45,11 +45,12 @@ let
     lua-language-server
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
-    pyright
     ruff
     stylua
     oxfmt
+    oxlint
     prettierd
+    ty
     perSystem.expert.default
     # Saumavel-specific tools
     zls # Zig language server

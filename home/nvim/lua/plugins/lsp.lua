@@ -87,7 +87,7 @@ return {
 			vim.lsp.enable("nil_ls") -- Nix
 			vim.lsp.enable("lua_ls") -- Lua
 			vim.lsp.enable("ts_ls") -- TypeScript/JavaScript
-			vim.lsp.enable("pyright") -- Python
+			vim.lsp.enable("ty") -- Python
 			vim.lsp.enable("gopls") -- Go
 			vim.lsp.enable("expert") -- Elixir
 			vim.lsp.enable("html") -- HTML
@@ -280,6 +280,9 @@ return {
 			local lint = require("lint")
 			lint.linters_by_ft = {
 				python = { "ruff" },
+				javascript = { "oxlint" },
+				typescript = { "oxlint" },
+				svelte = { "oxlint" },
 			}
 			vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
 				callback = function()
