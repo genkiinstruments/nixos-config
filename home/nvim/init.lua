@@ -40,6 +40,7 @@ vim.pack.add({
 
 	-- Fuzzy finding (fzf-lua like LazyVim)
 	"https://github.com/ibhagwan/fzf-lua",
+	"https://github.com/elanmed/fzf-lua-frecency.nvim",
 
 	-- LSP & Completion
 	"https://github.com/neovim/nvim-lspconfig",
@@ -80,6 +81,7 @@ vim.cmd.packadd("lz.n")
 vim.cmd.packadd("plenary.nvim")
 vim.cmd.packadd("snacks.nvim")
 vim.cmd.packadd("fzf-lua")
+vim.cmd.packadd("fzf-lua-frecency.nvim")
 vim.cmd.packadd("nvim-treesitter")
 vim.cmd.packadd("nvim-web-devicons")
 vim.cmd.packadd("nui.nvim")

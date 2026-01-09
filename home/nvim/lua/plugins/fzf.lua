@@ -60,11 +60,16 @@ return {
 			-- Register for vim.ui.select
 			fzf.register_ui_select()
 
+			-- Setup frecency (file ranking by frequency + recency)
+			require("fzf-lua-frecency").setup()
+
 			-- Set up keymaps directly (LazyVim style)
 			local map = vim.keymap.set
 
 			-- Find
-			map("n", "<leader><leader>", "<cmd>FzfLua files<cr>", { desc = "Find Files" })
+			map("n", "<leader><leader>", function()
+				require("fzf-lua-frecency").frecency({ cwd_only = true, display_score = false })
+			end, { desc = "Find Files (frecency)" })
 			map(
 				"n",
 				"<leader>,",
@@ -76,8 +81,10 @@ return {
 
 			-- find
 			map("n", "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", { desc = "Buffers" })
-			map("n", "<leader>ff", "<cmd>FzfLua files<cr>", { desc = "Find Files (Root Dir)" })
-			map("n", "<leader>fF", "<cmd>FzfLua files cwd=%:p:h<cr>", { desc = "Find Files (cwd)" })
+			map("n", "<leader>ff", function()
+				require("fzf-lua-frecency").frecency({ cwd_only = true, display_score = false })
+			end, { desc = "Find Files (frecency)" })
+			map("n", "<leader>fF", "<cmd>FzfLua files<cr>", { desc = "Find Files (all)" })
 			map("n", "<leader>fg", "<cmd>FzfLua git_files<cr>", { desc = "Find Files (git-files)" })
 			map("n", "<leader>fr", "<cmd>FzfLua oldfiles<cr>", { desc = "Recent" })
 
