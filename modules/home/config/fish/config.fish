@@ -164,9 +164,11 @@ set fish_cursor_visual block
 # Ctrl-f to complete a suggestion
 bind -M insert ctrl-f accept-autosuggestion
 
-# Ctrl-l to clear screen
-bind -M normal ctrl-l clear
-bind -M insert ctrl-l clear
+for mode in normal insert
+    bind -M $mode ctrl-l clear
+    bind -M $mode ctrl-p _atuin_search
+    bind -M $mode ctrl-r _atuin_search
+end
 
 #-------------------------------------------------------------------------------
 # Ghostty Shell Integration

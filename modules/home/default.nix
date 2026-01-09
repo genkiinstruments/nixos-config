@@ -78,6 +78,8 @@
       claude-code
       claude-code-acp
     ];
+
+    shell.enableFishIntegration = true;
   };
 
   programs = {
@@ -381,17 +383,7 @@
         s = lib.mkForce "sesh connect";
         "s." = "sesh connect .";
       };
-      interactiveShellInit = lib.strings.concatStrings (
-        lib.strings.intersperse "\n" [
-          (builtins.readFile ./config/fish/config.fish)
-          "set -g SHELL ${pkgs.fish}/bin/fish"
-          # Atuin keybindings - bind to ctrl-p and ctrl-r in normal and insert mode
-          "bind -M normal ctrl-p _atuin_search"
-          "bind -M insert ctrl-p _atuin_search"
-          "bind -M normal ctrl-r _atuin_search"
-          "bind -M insert ctrl-r _atuin_search"
-        ]
-      );
+      interactiveShellInit = builtins.readFile ./config/fish/config.fish;
     };
     bat.enable = true;
     ripgrep.enable = true;
