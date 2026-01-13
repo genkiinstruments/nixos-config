@@ -402,13 +402,15 @@
       interactiveShellInit = builtins.readFile ./config/fish/config.fish;
     };
     bat.enable = true;
-    ripgrep.enable = true;
-    ripgrep.arguments = [
-      "--follow"
-      "--pretty"
-      "--hidden"
-      "--smart-case"
-    ];
+    ripgrep = {
+      enable = true;
+      arguments = [
+        "--follow"
+        "--pretty"
+        "--hidden"
+        "--smart-case"
+      ];
+    };
     fd.enable = true;
     git = {
       enable = true;
@@ -477,12 +479,14 @@
         ]
       );
     };
-    starship.enable = true;
-    starship.enableFishIntegration = true;
-    starship.settings = {
-      add_newline = false;
-      scan_timeout = 200;
-      command_timeout = 1000;
+    starship = {
+      enable = true;
+      enableFishIntegration = true;
+      settings = {
+        add_newline = false;
+        scan_timeout = 200;
+        command_timeout = 1000;
+      };
     };
   };
 }
