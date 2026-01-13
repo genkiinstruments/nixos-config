@@ -55,6 +55,9 @@
     neovim-nightly.url = "github:neovim/neovim";
     neovim-nightly.flake = false;
 
+    yazi-flavors.url = "github:yazi-rs/flavors";
+    yazi-flavors.flake = false;
+
     expert.url = "github:elixir-lang/expert";
     expert.inputs.nixpkgs.follows = "nixpkgs";
   };

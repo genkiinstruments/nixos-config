@@ -1,11 +1,16 @@
 {
   pkgs,
   lib,
+  inputs,
   ...
 }:
 {
   # Disable stylix's fish theming - we use catppuccin/fish colors directly
   stylix.targets.fish.enable = false;
+
+  # Disable stylix's yazi theming - broken after yazi v25.12.29
+  # See: https://github.com/nix-community/stylix/issues/2121
+  stylix.targets.yazi.enable = false;
 
   home = {
     enableNixpkgsReleaseCheck = false;
@@ -89,8 +94,19 @@
       settings.dir_length = 3;
     };
     jq.enable = true;
-    yazi.enable = true;
-    yazi.enableFishIntegration = true;
+    yazi = {
+      enable = true;
+      enableFishIntegration = true;
+      flavors = {
+        catppuccin-mocha = "${inputs.yazi-flavors}/catppuccin-mocha.yazi";
+      };
+      theme = {
+        flavor = {
+          dark = "catppuccin-mocha";
+          light = "catppuccin-mocha";
+        };
+      };
+    };
     mpv.enable = true;
     gh-dash = {
       enable = true;

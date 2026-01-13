@@ -628,7 +628,8 @@
         "srvos": "srvos",
         "stripe-webshippy-sync": "stripe-webshippy-sync",
         "stylix": "stylix",
-        "treefmt-nix": "treefmt-nix_3"
+        "treefmt-nix": "treefmt-nix_3",
+        "yazi-flavors": "yazi-flavors"
       }
     },
     "secrets": {
@@ -935,6 +936,22 @@
       "original": {
         "owner": "pyproject-nix",
         "repo": "uv2nix",
+        "type": "github"
+      }
+    },
+    "yazi-flavors": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1767573407,
+        "narHash": "sha256-RrF97Lg9v0LV+XseJw4RrdbXlv+LJzfooOgqHD+LGcw=",
+        "owner": "yazi-rs",
+        "repo": "flavors",
+        "rev": "4a1802a5add0f867b08d5890780c10dd1f051c36",
+        "type": "github"
+      },
+      "original": {
+        "owner": "yazi-rs",
+        "repo": "flavors",
         "type": "github"
       }
     }
