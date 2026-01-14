@@ -32,9 +32,6 @@ jobs:
           # force=true applies updates immediately without confirmation buffer
           nix run .#nvim.neovim-nightly -- --headless +"lua vim.pack.update(nil, {force=true})" +"qa!"
 
-          # Format any changed files
-          nix fmt
-
       - uses: actions/create-github-app-token@main
         id: app-token
         with:
