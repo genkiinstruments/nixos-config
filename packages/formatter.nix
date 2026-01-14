@@ -56,6 +56,7 @@ let
       "hosts/pbt/firmware/kernelcache.release.mac14g"
       "modules/home/config/ghostty/config"
       "modules/home/config/tmux/tmux.conf"
+      "home/nvim/nvim-pack-lock.json"
     ];
   };
   formatter = treefmtEval.config.build.wrapper;
