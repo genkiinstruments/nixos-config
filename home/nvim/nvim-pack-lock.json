@@ -26,7 +26,7 @@
       "src": "https://github.com/saecki/crates.nvim"
     },
     "fidget.nvim": {
-      "rev": "64463022a1f2ff1318ab22a2ea4125ed9313a483",
+      "rev": "7fa433a83118a70fe24c1ce88d5f0bd3453c0970",
       "src": "https://github.com/j-hui/fidget.nvim"
     },
     "flash.nvim": {
@@ -38,7 +38,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "e7773d0c863a31bfc8ab72dd1adbec4611a35409",
+      "rev": "578a11f9f7c5f4436b833731ccceeda9479562f0",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "fzf-lua-frecency.nvim": {
@@ -102,7 +102,7 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-context"
     },
     "nvim-treesitter-textobjects": {
-      "rev": "d0d12338230c1ce4ce27373f5b8d50a8c691794b",
+      "rev": "baa6b4ec28c8be5e4a96f9b1b6ae9db85ec422f8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
       "version": "'main'"
     },
@@ -115,7 +115,7 @@
       "src": "https://github.com/nvim-tree/nvim-web-devicons"
     },
     "oil.nvim": {
-      "rev": "fbbb2a98721da86f46b06994fd3b4833b04c6e9b",
+      "rev": "6b59a6cf623fa2245c7454ddb458df5bdb6615d3",
       "src": "https://github.com/stevearc/oil.nvim"
     },
     "plenary.nvim": {
