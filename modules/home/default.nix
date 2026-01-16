@@ -275,6 +275,13 @@
             loadingText = "Opening GitHub repo in browser...";
           }
           {
+            key = "O";
+            description = "open PR in browser (or create if none exists)";
+            command = "gh pr view --web || gh pr create --web";
+            context = "localBranches";
+            loadingText = "Opening PR in browser...";
+          }
+          {
             key = "F";
             description = "auto-commit nix fmt changes";
             command = "git commit -m \"chore: nix fmt\"";
