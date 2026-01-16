@@ -50,6 +50,7 @@ vim.pack.add({
 
 	-- Treesitter
 	"https://github.com/nvim-treesitter/nvim-treesitter",
+	"https://github.com/andymass/vim-matchup",
 	"https://github.com/nvim-treesitter/nvim-treesitter-context",
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects", version = "main" },
 	"https://github.com/windwp/nvim-ts-autotag",
@@ -83,6 +84,7 @@ vim.cmd.packadd("snacks.nvim")
 vim.cmd.packadd("fzf-lua")
 vim.cmd.packadd("fzf-lua-frecency.nvim")
 vim.cmd.packadd("nvim-treesitter")
+vim.cmd.packadd("vim-matchup")
 vim.cmd.packadd("nvim-web-devicons")
 vim.cmd.packadd("nui.nvim")
 vim.cmd.packadd("noice.nvim")
@@ -92,6 +94,7 @@ vim.cmd.packadd("friendly-snippets") -- Must load before LuaSnip's lazy_load()
 require("nvim-treesitter").setup({
 	highlight = { enable = true },
 	indent = { enable = true },
+	matchup = { enable = true },
 })
 
 -- Incremental selection keymaps (replaces incremental_selection config)

@@ -150,6 +150,10 @@
       "rev": "178d19e00a643f825ea11d581b1684745d0c4eda",
       "src": "https://github.com/mbbill/undotree"
     },
+    "vim-matchup": {
+      "rev": "0fb1e6b7cea34e931a2af50b8ad565c5c4fd8f4d",
+      "src": "https://github.com/andymass/vim-matchup"
+    },
     "vim-tmux-navigator": {
       "rev": "c45243dc1f32ac6bcf6068e5300f3b2b237e576a",
       "src": "https://github.com/christoomey/vim-tmux-navigator"
