@@ -275,7 +275,7 @@
             loadingText = "Opening GitHub repo in browser...";
           }
           {
-            key = "O";
+            key = "o";
             description = "open PR in browser (or create if none exists)";
             command = "gh pr view --web || gh pr create --web";
             context = "localBranches";
