@@ -15,6 +15,9 @@ return {
 			"jsx",
 			"xml",
 			"markdown",
+			"heex",
+			"elixir",
+			"eelixir",
 		},
 		after = function()
 			require("nvim-ts-autotag").setup()

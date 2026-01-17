@@ -49,6 +49,7 @@ let
     typescript-language-server
     vscode-langservers-extracted
     emmet-language-server
+    tailwindcss-language-server
     ruff
     stylua
     oxfmt

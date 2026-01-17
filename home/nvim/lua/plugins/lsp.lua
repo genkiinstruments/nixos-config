@@ -8,6 +8,64 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
+-- Tailwind CSS: manual start since vim.lsp.enable has issues with workspace_required
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = {
+		"html",
+		"css",
+		"scss",
+		"javascript",
+		"javascriptreact",
+		"typescript",
+		"typescriptreact",
+		"svelte",
+		"vue",
+		"astro",
+		"heex",
+		"elixir",
+		"eelixir",
+	},
+	callback = function(args)
+		-- Check if tailwindcss is already attached
+		for _, client in ipairs(vim.lsp.get_clients({ bufnr = args.buf })) do
+			if client.name == "tailwindcss" then
+				return
+			end
+		end
+		-- Find root directory (tailwind v3 configs, or package.json/mix.exs for v4)
+		local root = vim.fs.root(args.buf, {
+			"tailwind.config.js",
+			"tailwind.config.cjs",
+			"tailwind.config.mjs",
+			"tailwind.config.ts",
+			"package.json",
+			"mix.exs",
+		})
+		if root then
+			vim.lsp.start({
+				name = "tailwindcss",
+				cmd = { "tailwindcss-language-server", "--stdio" },
+				root_dir = root,
+				settings = {
+					tailwindCSS = {
+						includeLanguages = {
+							elixir = "html-eex",
+							eelixir = "html-eex",
+							heex = "html-eex",
+						},
+						experimental = {
+							classRegex = {
+								{ 'class\\s*[=:]\\s*"', '"([^"]*)"' },
+								{ '~H"""', 'class="([^"]*)"' },
+							},
+						},
+					},
+				},
+			})
+		end
+	end,
+})
+
 vim.api.nvim_create_autocmd("LspAttach", {
 	callback = function(args)
 		local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -80,6 +138,9 @@ return {
 					"svelte",
 					"vue",
 					"astro",
+					"heex",
+					"elixir",
+					"eelixir",
 				},
 			})
 
@@ -94,6 +155,7 @@ return {
 			vim.lsp.enable("cssls") -- CSS
 			vim.lsp.enable("jsonls") -- JSON
 			vim.lsp.enable("svelte") -- Svelte
+			-- Note: tailwindcss is started via FileType autocmd at top of file
 
 			-- Svelte organize imports keybinding
 			vim.api.nvim_create_autocmd("LspAttach", {
