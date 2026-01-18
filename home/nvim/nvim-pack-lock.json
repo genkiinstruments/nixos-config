@@ -38,7 +38,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "578a11f9f7c5f4436b833731ccceeda9479562f0",
+      "rev": "abe5ecafebb4e24feb162384d5f492431036e791",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "fzf-lua-frecency.nvim": {
@@ -62,11 +62,11 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "lz.n": {
-      "rev": "b36c73e1a9d1cb2c05b354b390da0d141c9fa09d",
+      "rev": "5d362d1fa6aaf251a91e3fad95d2bcd094dfbac0",
       "src": "https://github.com/lumen-oss/lz.n"
     },
     "mini.ai": {
-      "rev": "bfb26d9072670c3aaefab0f53024b2f3729c8083",
+      "rev": "9eae720f2b20f6ad28cbfa0ddc524e10dc2c3201",
       "src": "https://github.com/echasnovski/mini.ai"
     },
     "noice.nvim": {
@@ -94,7 +94,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "7c14161403275550f94e1b218510f3ecbbb3c58e",
+      "rev": "d19def46c112c26c17adeef88dd1253cc6d623a1",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -127,7 +127,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "63c744d92f1d7428bc9acc26054331f85891d822",
+      "rev": "58d16c1d069970bade5dcadd857bc97f597437a9",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {
