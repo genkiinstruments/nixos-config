@@ -34,6 +34,11 @@
       defaults write -g InitialKeyRepeat -int 8
       defaults write -g KeyRepeat -int 1
       sudo chsh -s ${pkgs.fish}/bin/fish $USER
+
+      # Ensure Tailscale daemon is loaded after darwin-rebuild
+      if ! /bin/launchctl list | grep -q com.tailscale.tailscaled; then
+        /bin/launchctl bootstrap system /Library/LaunchDaemons/com.tailscale.tailscaled.plist 2>/dev/null || true
+      fi
     '';
   };
 }
