@@ -38,7 +38,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "fzf-lua": {
-      "rev": "518ab7a64ca65899a218f364f0fb9e38ff7bdcc8",
+      "rev": "9b47ff6f6299ec8b141add23533adca95a03b8c0",
       "src": "https://github.com/ibhagwan/fzf-lua"
     },
     "fzf-lua-frecency.nvim": {
@@ -94,7 +94,7 @@
       "src": "https://github.com/kylechui/nvim-surround"
     },
     "nvim-treesitter": {
-      "rev": "b9933f0e1386c7b63fe131d9979d9c2613da551a",
+      "rev": "e75c007f2747050c2c620dc862c77b8f242551a8",
       "src": "https://github.com/nvim-treesitter/nvim-treesitter"
     },
     "nvim-treesitter-context": {
@@ -139,7 +139,7 @@
       "src": "https://github.com/nvim-telescope/telescope-fzf-native.nvim"
     },
     "telescope.nvim": {
-      "rev": "a8c2223ea6b185701090ccb1ebc7f4e41c4c9784",
+      "rev": "0d8b6eaa0b5ae6bb3d9785f7a3ba4a4c6c1b1af2",
       "src": "https://github.com/nvim-telescope/telescope.nvim"
     },
     "todo-comments.nvim": {
