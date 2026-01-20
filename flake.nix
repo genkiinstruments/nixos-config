@@ -60,9 +60,6 @@
 
     expert.url = "github:elixir-lang/expert?shallow=1";
     expert.inputs.nixpkgs.follows = "nixpkgs";
-
-    llm-agents.url = "github:numtide/llm-agents.nix";
-    llm-agents.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs =
