@@ -45,7 +45,7 @@
     buildbot-nix.url = "github:nix-community/buildbot-nix?shallow=1";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    comin.url = "github:nlewo/comin?shallow=1";
+    comin.url = "github:multivac61/comin/fix-darwin-status-v2?shallow=1";
     comin.inputs.nixpkgs.follows = "nixpkgs";
 
     # Apple Silicon support for m2
