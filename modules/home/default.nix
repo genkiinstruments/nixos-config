@@ -5,6 +5,7 @@
   ...
 }:
 {
+  imports = [ ./llm-agents.nix ];
   # Disable stylix's fish theming - we use catppuccin/fish colors directly
   stylix.targets.fish.enable = false;
 
@@ -80,8 +81,6 @@
 
     packages = with pkgs; [
       magic-wormhole-rs
-      claude-code
-      claude-code-acp
     ];
 
     shell.enableFishIntegration = true;
