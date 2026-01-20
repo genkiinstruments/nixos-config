@@ -391,7 +391,8 @@
         gp = "git push";
         gs = "git status";
         gt = "git tag";
-        c = "clear";
+        c = "claude --dangerously-skip-permissions";
+        cl = "clear";
         lg = "lazygit";
         cat = "bat";
         n = "nvim";
