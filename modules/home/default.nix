@@ -45,7 +45,7 @@
     };
 
     # Catppuccin Mocha fish theme - https://github.com/catppuccin/fish
-    file.".config/fish/themes/catppuccin-mocha.theme".text = ''
+    file.".config/fish/themes/catppuccin-mocha.theme".text = /* fish */ ''
       fish_color_normal cdd6f4
       fish_color_command 89b4fa
       fish_color_param f2cdcd
@@ -82,7 +82,7 @@
     packages = with pkgs; [
       magic-wormhole-rs
       perSystem.llm-agents.claude-code
-      perSystem.llm-agents.claude-code-acp
+      claude-code-acp # TODO: broken build - https://github.com/numtide/llm-agents.nix
     ];
 
     shell.enableFishIntegration = true;
@@ -360,24 +360,23 @@
       silent = true;
       nix-direnv.enable = true; # Adds FishIntegration automatically
       config.warn_timeout = "30m";
-      stdlib = # bash
-        ''
-          # Avoid cluttering project directories which often conflicts with tooling, e.g., `mix`
-          # https://github.com/direnv/direnv/wiki/Customizing-cache-location
-          # Centralize direnv layouts in $HOME/.cache/direnv/layouts
-          : ''${XDG_CACHE_HOME:=$HOME/.cache}
-          declare -A direnv_layout_dirs
-          direnv_layout_dir() {
-            echo "''${direnv_layout_dirs[$PWD]:=$(
-              echo -n "$XDG_CACHE_HOME"/direnv/layouts/
-              echo -n "$PWD" | shasum | cut -d ' ' -f 1
-            )}"
-          }
-        '';
+      stdlib = /* bash */ ''
+        # Avoid cluttering project directories which often conflicts with tooling, e.g., `mix`
+        # https://github.com/direnv/direnv/wiki/Customizing-cache-location
+        # Centralize direnv layouts in $HOME/.cache/direnv/layouts
+        : ''${XDG_CACHE_HOME:=$HOME/.cache}
+        declare -A direnv_layout_dirs
+        direnv_layout_dir() {
+          echo "''${direnv_layout_dirs[$PWD]:=$(
+            echo -n "$XDG_CACHE_HOME"/direnv/layouts/
+            echo -n "$PWD" | shasum | cut -d ' ' -f 1
+          )}"
+        }
+      '';
     };
     fish = {
       enable = true;
-      shellInit = ''
+      shellInit = /* fish */ ''
         # Apply catppuccin-mocha theme to fish's universal variables
         yes | fish_config theme save "catppuccin-mocha" >/dev/null 2>&1
       '';

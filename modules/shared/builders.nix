@@ -28,7 +28,7 @@ let
 
   mkSshConfig =
     { hostName }:
-    ''
+    /* sshconfig */ ''
       Host ${hostName} ${hostName}.${cfg.tailnetDomain}
         User ${cfg.sshUser}
         HostName ${hostName}.${cfg.tailnetDomain}

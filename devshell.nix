@@ -7,7 +7,7 @@ let
   nvim = perSystem.self.nvim;
 
   # Dev neovim: uses local config with Nix-provided parsers
-  nvim-dev = pkgs.writeShellScriptBin "nvim" ''
+  nvim-dev = pkgs.writeShellScriptBin "nvim" /* bash */ ''
     exec ${nvim.neovim-nightly}/bin/nvim \
       --cmd "lua vim.opt.rtp:prepend('${nvim.treesitterGrammars}')" \
       "$@"
@@ -29,7 +29,7 @@ pkgs.mkShellNoCC {
     NVIM_APPNAME = "nvim-dev";
   };
 
-  shellHook = ''
+  shellHook = /* bash */ ''
     ln -sfn "$(realpath ./home/nvim)" ~/.config/nvim-dev
   '';
 }

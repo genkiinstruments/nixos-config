@@ -30,7 +30,7 @@
       };
     };
 
-    activationScripts.postActivation.text = ''
+    activationScripts.postActivation.text = /* bash */ ''
       defaults write -g InitialKeyRepeat -int 8
       defaults write -g KeyRepeat -int 1
       sudo chsh -s ${pkgs.fish}/bin/fish $USER

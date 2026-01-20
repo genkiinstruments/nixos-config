@@ -64,7 +64,7 @@
       magicmouse.MouseButtonMode = "TwoButton";
     };
 
-    activationScripts.postActivation.text = ''
+    activationScripts.postActivation.text = /* bash */ ''
       # normal minimum is 15 (225 ms)\ defaults write -g KeyRepeat -int 1 # normal minimum is 2 (30 ms)
       defaults write -g InitialKeyRepeat -int 10
       defaults write -g KeyRepeat -int 1

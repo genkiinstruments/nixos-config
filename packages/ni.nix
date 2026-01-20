@@ -6,5 +6,5 @@ pkgs.writeShellApplication {
     nix-search-tv
   ];
   # prevent IFD, thanks @Michael-C-Buckley
-  text = ''exec "${pkgs.nix-search-tv.src}/nixpkgs.sh" "$@"'';
+  text = /* bash */ ''exec "${pkgs.nix-search-tv.src}/nixpkgs.sh" "$@"'';
 }

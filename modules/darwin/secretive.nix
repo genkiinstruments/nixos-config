@@ -3,7 +3,7 @@ let
   user = config.system.primaryUser;
 in
 {
-  environment.etc."ssh/ssh_config.d/secretive.conf".text = ''
+  environment.etc."ssh/ssh_config.d/secretive.conf".text = /* sshconfig */ ''
     Host *
       IdentityAgent ~/Library/Containers/com.maxgoedjen.Secretive.SecretAgent/Data/socket.ssh
       ControlMaster auto
@@ -11,7 +11,7 @@ in
       ControlPath ~/.ssh/sockets/%r@%h:%p
   '';
 
-  system.activationScripts.postActivation.text = ''
+  system.activationScripts.postActivation.text = /* bash */ ''
     install -d -o ${user} -m 700 /Users/${user}/.ssh/sockets
   '';
 

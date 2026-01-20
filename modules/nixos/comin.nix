@@ -12,7 +12,7 @@
 
   systemd.services.comin.serviceConfig.ExecCondition =
     let
-      checkScript = pkgs.writeShellScript "check-buildbot" ''
+      checkScript = pkgs.writeShellScript "check-buildbot" /* bash */ ''
         # Query buildbot for running builds via Tailscale
         RUNNING=$(${pkgs.curl}/bin/curl -sf "http://x.tail01dbd.ts.net:8010/api/v2/builds?complete=false" | \
           ${pkgs.jq}/bin/jq '.builds | length' 2>/dev/null || echo "0")

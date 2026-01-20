@@ -68,7 +68,7 @@
       hash = "sha256-dnhEjopeA0UiI+XVYHYpsjcEI6Y1Hacbi28hVKYQURg=";
     };
 
-    virtualHosts."uptime-kuma.genki.is".extraConfig = ''
+    virtualHosts."uptime-kuma.genki.is".extraConfig = /* caddy */ ''
       tls {
           dns cloudflare {env.CLOUDFLARE_API_TOKEN}
       }

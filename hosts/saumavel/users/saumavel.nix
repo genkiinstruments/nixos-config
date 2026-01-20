@@ -57,7 +57,7 @@
         clipboard_control = "write-clipboard read-clipboard write-primary read-primary";
       };
       font.size = lib.mkForce 16; # override stylix default
-      extraConfig = ''
+      extraConfig = /* kitty */ ''
         shell /run/current-system/sw/bin/fish
       '';
     };
