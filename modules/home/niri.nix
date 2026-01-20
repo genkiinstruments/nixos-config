@@ -26,7 +26,7 @@
   };
 
   # Walker launcher - manual catppuccin mocha (stylix doesn't support walker)
-  xdg.configFile."walker/config.toml".text = ''
+  xdg.configFile."walker/config.toml".text = /* toml */ ''
     placeholder = "Search..."
     show_initial_entries = true
     ssh_host_file = ""
@@ -87,7 +87,7 @@
     exec = "systemctl reboot"
   '';
 
-  xdg.configFile."walker/style.css".text = ''
+  xdg.configFile."walker/style.css".text = /* css */ ''
     * {
       font-family: "JetBrainsMono Nerd Font Mono";
       font-size: 12pt;
@@ -153,7 +153,7 @@
     }
   '';
 
-  xdg.configFile."niri/config.kdl".text = ''
+  xdg.configFile."niri/config.kdl".text = /* kdl */ ''
     // GPD Pocket 4 display configuration
     output "eDP-1" {
       scale 1.0
