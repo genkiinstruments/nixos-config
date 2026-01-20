@@ -1,5 +1,6 @@
 {
   pkgs,
+  perSystem,
   lib,
   inputs,
   ...
@@ -80,8 +81,8 @@
 
     packages = with pkgs; [
       magic-wormhole-rs
-      claude-code
-      claude-code-acp
+      perSystem.llm-agents.claude-code
+      perSystem.llm-agents.claude-code-acp
     ];
 
     shell.enableFishIntegration = true;
