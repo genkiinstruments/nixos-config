@@ -41,6 +41,11 @@
     {
       hostName = "gkr";
       system = "aarch64-darwin";
+      maxJobs = 3;
+    }
+    {
+      hostName = "kk";
+      system = "aarch64-darwin";
       maxJobs = 11;
     }
   ];
