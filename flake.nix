@@ -105,7 +105,6 @@
               in
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
-                secretsMap.ssh = "deploy-ssh";
                 effectScript = ''
                   writeSSHKey ssh
                   mkdir -p ~/.ssh
