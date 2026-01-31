@@ -700,11 +700,10 @@
       "locked": {
         "lastModified": 1769872417,
         "narHash": "sha256-K2tDY0iuCQfbCvuGT3E7Trq+t5aW0ocnccOOZtPbB9k=",
-        "ref": "refs/heads/main",
+        "owner": "genkiinstruments",
+        "repo": "nix-secrets",
         "rev": "7f702557e29fc88131af76d2c0b8b7c492c34e7f",
-        "revCount": 75,
-        "type": "git",
-        "url": "ssh://git@github.com/genkiinstruments/nix-secrets"
+        "type": "github"
       },
       "original": {
         "owner": "genkiinstruments",
