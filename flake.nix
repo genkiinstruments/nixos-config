@@ -82,56 +82,70 @@
         onPush.default.outputs.effects =
           let
             pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
-            effects = inputs.hercules-ci-effects.lib.withPkgs pkgs;
+            hci-effects = inputs.hercules-ci-effects.lib.withPkgs pkgs;
+
+            # SSH known hosts for all deployment targets
+            knownHosts = ''
+              gdrn.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRXFsRbLcgKBiszr7aZoJ9SkwWVz0TMMmH/DKvrHyg6
+              joip.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICi0oBVUyokeykTB8O221FTA0zl5bKVEttR/GgJ68A0Q
+              kroli.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPdXqvprgwgaZLdzE1mK2au74pG/OpyQOgcEsnsrvIaG
+              m2.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIeLtQzCCCvpihz5d55/42RcfbCuyvmyz8a2m19c5I4M
+              pbt.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDFr5kBziO5LGitZX6A2Dj4cP3JH/wRG0uTw8xt0vdb
+              x.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBtnJ1eS+mI4EASAWk7NXin5Hln0ylYUPHe2ovQAa8G
+              gkr.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDjZskQnQNJl5ndUTXFmc8c05/RaOHb/grNOgfnDap6+
+              kk.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdj4iMvaB2/pElSeEP1bKvaDq6nFzVW6olk+W6fP5kr
+            '';
+
+            # Create a deployment effect for a host
+            mkEffect =
+              hostname: isNixOS:
+              let
+                rebuildCmd = if isNixOS then "nixos-rebuild" else "darwin-rebuild";
+                flakeRef = "github:genkiinstruments/nixos-config/${herculesCI.rev}#${hostname}";
+              in
+              hci-effects.mkEffect {
+                name = "deploy-${hostname}";
+                secretsMap.ssh = "deploy-ssh";
+                effectScript = ''
+                  writeSSHKey ssh
+                  mkdir -p ~/.ssh
+                  cat >>~/.ssh/known_hosts <<'HOSTKEYS'
+                  ${knownHosts}
+                  HOSTKEYS
+
+                  echo "Deploying ${hostname} from ${flakeRef}..."
+                  ssh -i ~/.ssh/ssh nix-ssh@${hostname}.tail01dbd.ts.net \
+                    "sudo ${rebuildCmd} switch --flake ${flakeRef}"
+                '';
+              };
 
             nixosHosts = [
-              # "g" # TODO: add back when online, need to get host key
+              # "g" # TODO: add back when online
               "gdrn"
               "joip"
               "kroli"
               "m2"
               "pbt"
-              "x"
+              # "x" # buildbot master - deploy manually
             ];
             darwinHosts = [
               "gkr"
               "kk"
             ];
-
-            mkEffect =
-              hostname: isNixOS:
-              effects.runIf (herculesCI.branch == "main") (
-                (if isNixOS then effects.runNixOS else effects.runNixDarwin) {
-                  configuration =
-                    blueprintOutputs.${if isNixOS then "nixosConfigurations" else "darwinConfigurations"}.${hostname};
-                  ssh.destination = "nix-ssh@${hostname}.tail01dbd.ts.net";
-                  secretsMap.ssh = "deploy-ssh";
-                  userSetupScript = ''
-                    writeSSHKey ssh
-                    cat >>~/.ssh/known_hosts <<'EOF'
-                    gdrn.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRXFsRbLcgKBiszr7aZoJ9SkwWVz0TMMmH/DKvrHyg6
-                    joip.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICi0oBVUyokeykTB8O221FTA0zl5bKVEttR/GgJ68A0Q
-                    kroli.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPdXqvprgwgaZLdzE1mK2au74pG/OpyQOgcEsnsrvIaG
-                    m2.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIeLtQzCCCvpihz5d55/42RcfbCuyvmyz8a2m19c5I4M
-                    pbt.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDFr5kBziO5LGitZX6A2Dj4cP3JH/wRG0uTw8xt0vdb
-                    x.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBtnJ1eS+mI4EASAWk7NXin5Hln0ylYUPHe2ovQAa8G
-                    gkr.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDjZskQnQNJl5ndUTXFmc8c05/RaOHb/grNOgfnDap6+
-                    kk.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdj4iMvaB2/pElSeEP1bKvaDq6nFzVW6olk+W6fP5kr
-                    EOF
-                  '';
-                }
-              );
           in
-          builtins.listToAttrs (
-            (map (h: {
-              name = "deploy-${h}";
-              value = mkEffect h true;
-            }) nixosHosts)
-            ++ (map (h: {
-              name = "deploy-${h}";
-              value = mkEffect h false;
-            }) darwinHosts)
-          );
+          if herculesCI.branch == "main" then
+            builtins.listToAttrs (
+              (map (h: {
+                name = "deploy-${h}";
+                value = mkEffect h true;
+              }) nixosHosts)
+              ++ (map (h: {
+                name = "deploy-${h}";
+                value = mkEffect h false;
+              }) darwinHosts)
+            )
+          else
+            { };
       };
     };
 }
