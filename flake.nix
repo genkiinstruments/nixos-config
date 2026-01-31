@@ -106,7 +106,10 @@
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
                 secretsMap.ssh = "ssh";
-                inputs = [ pkgs.openssh pkgs.jq ];
+                inputs = [
+                  pkgs.openssh
+                  pkgs.jq
+                ];
                 effectScript = ''
                   set -euo pipefail
 
