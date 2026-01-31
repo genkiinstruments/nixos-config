@@ -105,18 +105,22 @@
               in
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
+                secretsMap.ssh = "ssh";
                 inputs = [ pkgs.openssh ];
                 effectScript = ''
                   set -euo pipefail
 
                   mkdir -p ~/.ssh
                   chmod 700 ~/.ssh
+                  readSecretString ssh .privateKey > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+
                   cat >>~/.ssh/known_hosts <<'HOSTKEYS'
                   ${knownHosts}
                   HOSTKEYS
 
                   echo "Deploying ${hostname} from ${flakeRef}..."
-                  ssh -o StrictHostKeyChecking=accept-new root@${hostname}.tail01dbd.ts.net \
+                  ssh -i ~/.ssh/deploy_key root@${hostname}.tail01dbd.ts.net \
                     "${rebuildCmd} switch --flake ${flakeRef}"
                 '';
               };
