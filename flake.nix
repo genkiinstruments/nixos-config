@@ -109,8 +109,8 @@
                   mkdir -p ~/.ssh
                   chmod 700 ~/.ssh
 
-                  # Extract SSH key from secrets JSON
-                  cat "$SECRETS_FILE" | ${pkgs.jq}/bin/jq -r '.ssh.privateKey' > ~/.ssh/deploy_key
+                  # Extract SSH key from secrets JSON (passed via --secrets ../secrets.json)
+                  ${pkgs.jq}/bin/jq -r '.ssh.privateKey' < "$PWD/../secrets.json" > ~/.ssh/deploy_key
                   chmod 600 ~/.ssh/deploy_key
 
                   cat >>~/.ssh/known_hosts <<'HOSTKEYS'
