@@ -84,7 +84,7 @@
             pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
             hci-effects = inputs.hercules-ci-effects.lib.withPkgs pkgs;
 
-            # SSH known hosts for all deployment targets
+            # SSH known hosts for all deployment targets (both DNS and IP for Darwin)
             knownHosts = ''
               gdrn.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRXFsRbLcgKBiszr7aZoJ9SkwWVz0TMMmH/DKvrHyg6
               joip.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICi0oBVUyokeykTB8O221FTA0zl5bKVEttR/GgJ68A0Q
@@ -98,9 +98,8 @@
 
             # Create a deployment effect for a host
             mkEffect =
-              hostname: isNixOS:
+              hostname:
               let
-                rebuildCmd = if isNixOS then "nixos-rebuild" else "darwin-rebuild";
                 flakeRef = "github:genkiinstruments/nixos-config/${herculesCI.rev}#${hostname}";
               in
               hci-effects.mkEffect {
@@ -121,7 +120,7 @@
 
                   echo "Deploying ${hostname} from ${flakeRef}..."
                   ssh -i ~/.ssh/deploy_key root@${hostname}.tail01dbd.ts.net \
-                    "${rebuildCmd} switch --flake ${flakeRef}"
+                    "nixos-rebuild switch --flake ${flakeRef}"
                 '';
               };
 
@@ -134,21 +133,14 @@
               "pbt"
               # "x" # buildbot master - deploy manually
             ];
-            darwinHosts = [
-              "gkr"
-              "kk"
-            ];
+            # Darwin hosts (gkr, kk) excluded - tailscaled breaks after darwin-rebuild
           in
           if herculesCI.branch == "main" then
             builtins.listToAttrs (
-              (map (h: {
+              map (h: {
                 name = "deploy-${h}";
-                value = mkEffect h true;
-              }) nixosHosts)
-              ++ (map (h: {
-                name = "deploy-${h}";
-                value = mkEffect h false;
-              }) darwinHosts)
+                value = mkEffect h;
+              }) nixosHosts
             )
           else
             { };

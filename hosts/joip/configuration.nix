@@ -24,6 +24,8 @@
   system.stateVersion = "23.05";
   facter.reportPath = ./facter.json;
 
+  environment.systemPackages = [ pkgs.cmatrix ];
+
   services.home-assistant = {
     enable = true;
     openFirewall = true;
