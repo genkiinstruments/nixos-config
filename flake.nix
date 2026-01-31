@@ -106,6 +106,7 @@
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
                 secretsMap.ssh = "ssh";
+                inputs = [ pkgs.openssh ];
                 effectScript = ''
                   writeSSHKey ssh
                   cat >>~/.ssh/known_hosts <<'HOSTKEYS'
