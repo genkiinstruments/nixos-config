@@ -105,33 +105,19 @@
               in
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
-                secretsMap.ssh = "ssh";
-                inputs = [
-                  pkgs.openssh
-                  pkgs.jq
-                ];
+                inputs = [ pkgs.openssh ];
                 effectScript = ''
                   set -euo pipefail
 
-                  # Manually write SSH key since writeSSHKey doesn't work with buildbot-effects
-                  echo "DEBUG: Creating .ssh directory..."
                   mkdir -p ~/.ssh
                   chmod 700 ~/.ssh
-                  echo "DEBUG: Writing SSH key..."
-                  readSecretString ssh .privateKey > ~/.ssh/deploy_key
-                  chmod 600 ~/.ssh/deploy_key
-                  echo "DEBUG: SSH key written, checking file..."
-                  ls -la ~/.ssh/deploy_key
-
-                  echo "DEBUG: Adding known hosts..."
                   cat >>~/.ssh/known_hosts <<'HOSTKEYS'
                   ${knownHosts}
                   HOSTKEYS
 
-                  echo "DEBUG: About to SSH to ${hostname}..."
                   echo "Deploying ${hostname} from ${flakeRef}..."
-                  ssh -v -i ~/.ssh/deploy_key nix-ssh@${hostname}.tail01dbd.ts.net \
-                    "sudo ${rebuildCmd} switch --flake ${flakeRef}"
+                  ssh -o StrictHostKeyChecking=accept-new root@${hostname}.tail01dbd.ts.net \
+                    "${rebuildCmd} switch --flake ${flakeRef}"
                 '';
               };
 
