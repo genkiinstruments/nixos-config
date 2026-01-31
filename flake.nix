@@ -106,15 +106,20 @@
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
                 effectScript = ''
-                  # Debug: show available env vars and paths
-                  echo "=== DEBUG ==="
-                  echo "PWD: $PWD"
-                  echo "HOME: $HOME"
-                  env | grep -i secret || true
-                  ls -la / || true
-                  ls -la /secrets || true
-                  echo "=== END DEBUG ==="
-                  exit 1
+                  mkdir -p ~/.ssh
+                  chmod 700 ~/.ssh
+
+                  # Use readSecretJSON to get the SSH private key
+                  readSecretJSON ssh .privateKey > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+
+                  cat >>~/.ssh/known_hosts <<'HOSTKEYS'
+                  ${knownHosts}
+                  HOSTKEYS
+
+                  echo "Deploying ${hostname} from ${flakeRef}..."
+                  ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new nix-ssh@${hostname}.tail01dbd.ts.net \
+                    "sudo ${rebuildCmd} switch --flake ${flakeRef}"
                 '';
               };
 
