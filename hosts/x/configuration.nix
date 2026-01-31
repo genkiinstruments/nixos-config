@@ -21,7 +21,7 @@
     flake.modules.shared.builders
     flake.modules.shared.home-manager
     flake.modules.nixos.default
-    flake.modules.nixos.comin
+    flake.modules.nixos.deploy-user
     flake.modules.nixos.zram-swap
     flake.modules.nixos.olafur
     flake.modules.nixos.ssh-serve
@@ -164,6 +164,8 @@
       buildbot-gh-token-for-private-repos.mode = "0440";
       buildbot-gh-token-for-private-repos.owner = "buildbot-worker";
 
+      buildbot-effects-secrets = mkBuildbotSecret "${inputs.secrets}/buildbot-effects-secrets.age";
+
       x-github-runner-key.file = "${inputs.secrets}/x-github-runner-key.age";
       x-cloudflare-tunnel-secret.file = "${inputs.secrets}/x-cloudflare-tunnel-secret.age";
       x-harmonia-secret.file = "${inputs.secrets}/x-harmonia-secret.age";
@@ -210,6 +212,9 @@
         cookieSecretFile = config.age.secrets.buildbot-github-cookie-secret.path;
         clientSecretFile = config.age.secrets.buildbot-client-secret.path;
         clientId = "Iv23lioyXvbIN5gVi6KN";
+      };
+      effects.perRepoSecretFiles = {
+        "github:genkiinstruments/nixos-config" = config.age.secrets.buildbot-effects-secrets.path;
       };
     };
 

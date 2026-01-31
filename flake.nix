@@ -45,8 +45,8 @@
     buildbot-nix.url = "github:nix-community/buildbot-nix?shallow=1";
     buildbot-nix.inputs.nixpkgs.follows = "nixpkgs";
 
-    comin.url = "github:multivac61/comin/fix-darwin-status-v2?shallow=1";
-    comin.inputs.nixpkgs.follows = "nixpkgs";
+    hercules-ci-effects.url = "github:hercules-ci/hercules-ci-effects?shallow=1";
+    hercules-ci-effects.inputs.nixpkgs.follows = "nixpkgs";
 
     # Apple Silicon support for m2
     nixos-apple-silicon.url = "github:tpwrules/nixos-apple-silicon?shallow=1";
@@ -66,12 +66,72 @@
 
   outputs =
     inputs:
-    inputs.blueprint {
-      inherit inputs;
-      systems = [
-        "aarch64-darwin"
-        "aarch64-linux"
-        "x86_64-linux"
-      ];
+    let
+      blueprintOutputs = inputs.blueprint {
+        inherit inputs;
+        systems = [
+          "aarch64-darwin"
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
+      };
+    in
+    blueprintOutputs
+    // {
+      herculesCI = herculesCI: {
+        onPush.default.outputs.effects =
+          let
+            pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux;
+            effects = inputs.hercules-ci-effects.lib.withPkgs pkgs;
+
+            nixosHosts = [
+              # "g" # TODO: add back when online, need to get host key
+              "gdrn"
+              "joip"
+              "kroli"
+              "m2"
+              "pbt"
+              "x"
+            ];
+            darwinHosts = [
+              "gkr"
+              "kk"
+            ];
+
+            mkEffect =
+              hostname: isNixOS:
+              effects.runIf (herculesCI.config.repo.branch == "main") (
+                (if isNixOS then effects.runNixOS else effects.runNixDarwin) {
+                  configuration =
+                    blueprintOutputs.${if isNixOS then "nixosConfigurations" else "darwinConfigurations"}.${hostname};
+                  ssh.destination = "nix-ssh@${hostname}.tail01dbd.ts.net";
+                  secretsMap.ssh = "deploy-ssh";
+                  userSetupScript = ''
+                    writeSSHKey ssh
+                    cat >>~/.ssh/known_hosts <<'EOF'
+                    gdrn.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHRXFsRbLcgKBiszr7aZoJ9SkwWVz0TMMmH/DKvrHyg6
+                    joip.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICi0oBVUyokeykTB8O221FTA0zl5bKVEttR/GgJ68A0Q
+                    kroli.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPdXqvprgwgaZLdzE1mK2au74pG/OpyQOgcEsnsrvIaG
+                    m2.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIeLtQzCCCvpihz5d55/42RcfbCuyvmyz8a2m19c5I4M
+                    pbt.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPDFr5kBziO5LGitZX6A2Dj4cP3JH/wRG0uTw8xt0vdb
+                    x.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBBtnJ1eS+mI4EASAWk7NXin5Hln0ylYUPHe2ovQAa8G
+                    gkr.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDjZskQnQNJl5ndUTXFmc8c05/RaOHb/grNOgfnDap6+
+                    kk.tail01dbd.ts.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINdj4iMvaB2/pElSeEP1bKvaDq6nFzVW6olk+W6fP5kr
+                    EOF
+                  '';
+                }
+              );
+          in
+          builtins.listToAttrs (
+            (map (h: {
+              name = "deploy-${h}";
+              value = mkEffect h true;
+            }) nixosHosts)
+            ++ (map (h: {
+              name = "deploy-${h}";
+              value = mkEffect h false;
+            }) darwinHosts)
+          );
+      };
     };
 }

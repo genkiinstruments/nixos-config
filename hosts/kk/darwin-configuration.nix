@@ -13,7 +13,7 @@
     flake.modules.darwin.stylix
     flake.modules.darwin.default
     flake.modules.darwin.user
-    flake.modules.darwin.comin
+    flake.modules.darwin.deploy-user
     flake.modules.shared.default
     flake.modules.shared.home-manager
   ];

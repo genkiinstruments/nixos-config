@@ -16,7 +16,7 @@
     inputs.agenix.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.stripe-webshippy-sync.nixosModules.default
-    flake.modules.nixos.comin
+    flake.modules.nixos.deploy-user
     flake.modules.shared.default
     flake.modules.nixos.stylix
     flake.modules.shared.home-manager

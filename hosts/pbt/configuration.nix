@@ -13,7 +13,7 @@
     inputs.agenix.nixosModules.default
     flake.modules.shared.default
     flake.modules.nixos.default
-    flake.modules.nixos.comin
+    flake.modules.nixos.deploy-user
     flake.modules.nixos.zram-swap
     flake.modules.nixos.ssh-serve
     ./apple-silicon-support

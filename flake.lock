@@ -202,28 +202,6 @@
         "type": "github"
       }
     },
-    "comin": {
-      "inputs": {
-        "flake-compat": "flake-compat",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1768917899,
-        "narHash": "sha256-YazKLrjG4j2jsnH5YrL++QDpRAaGGt3RL2xcREkPhGM=",
-        "owner": "multivac61",
-        "repo": "comin",
-        "rev": "5e5f50280aaaf4b33c205d6225348865e1742b84",
-        "type": "github"
-      },
-      "original": {
-        "owner": "multivac61",
-        "ref": "fix-darwin-status-v2",
-        "repo": "comin",
-        "type": "github"
-      }
-    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -283,22 +261,6 @@
       }
     },
     "flake-compat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1765121682,
-        "narHash": "sha256-4VBOP18BFeiPkyhy9o4ssBNQEvfvv1kXkasAYd0+rrA=",
-        "owner": "NixOS",
-        "repo": "flake-compat",
-        "rev": "65f23138d8d09a92e30f1e5c87611b23ef451bf3",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
-    "flake-compat_2": {
       "locked": {
         "lastModified": 1761640442,
         "narHash": "sha256-AtrEP6Jmdvrqiv4x2xa5mrtaIp3OEe8uBYCDZDS+hu8=",
@@ -353,6 +315,26 @@
       }
     },
     "flake-parts_3": {
+      "inputs": {
+        "nixpkgs-lib": [
+          "hercules-ci-effects",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768135262,
+        "narHash": "sha256-PVvu7OqHBGWN16zSi6tEmPwwHQ4rLPU9Plvs8/1TUBY=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "80daad04eddbbf5a4d883996a73f3f542fa437ac",
+        "type": "github"
+      },
+      "original": {
+        "id": "flake-parts",
+        "type": "indirect"
+      }
+    },
+    "flake-parts_4": {
       "inputs": {
         "nixpkgs-lib": [
           "stylix",
@@ -416,6 +398,27 @@
         ],
         "nixpkgs": [
           "buildbot-nix",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1768476106,
+        "narHash": "sha256-V0YOJRum50gtKgwavsAfwXc9+XAsJCC7386YZx1sWGQ=",
+        "owner": "hercules-ci",
+        "repo": "hercules-ci-effects",
+        "rev": "c19e263e6e22ec7379d972f19e6a322f943c73fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "hercules-ci-effects",
+        "type": "github"
+      }
+    },
+    "hercules-ci-effects_2": {
+      "inputs": {
+        "flake-parts": "flake-parts_3",
+        "nixpkgs": [
           "nixpkgs"
         ]
       },
@@ -512,7 +515,7 @@
     },
     "nixos-apple-silicon": {
       "inputs": {
-        "flake-compat": "flake-compat_2",
+        "flake-compat": "flake-compat",
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -674,9 +677,9 @@
         "base16-schemes": "base16-schemes",
         "blueprint": "blueprint",
         "buildbot-nix": "buildbot-nix",
-        "comin": "comin",
         "disko": "disko",
         "expert": "expert",
+        "hercules-ci-effects": "hercules-ci-effects_2",
         "home-manager": "home-manager",
         "llm-agents": "llm-agents",
         "neovim-nightly": "neovim-nightly",
@@ -695,11 +698,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1764670228,
-        "narHash": "sha256-gf4m0wVbc5P6ZKdoOB4c2HZ8e9JapJ0BWrMrIJuxjqE=",
+        "lastModified": 1769869469,
+        "narHash": "sha256-vfDECzqY9MtsV6667lqPfFEmtnC2V2iDm1MSemy2rPo=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "c44ee3ad21955ea5f8af61c5355964c1dc07239a",
+        "rev": "2e1b5a7938a376ef7f5dda35bc261c43e9670533",
         "type": "github"
       },
       "original": {
@@ -759,7 +762,7 @@
         "base16-helix": "base16-helix",
         "base16-vim": "base16-vim",
         "firefox-gnome-theme": "firefox-gnome-theme",
-        "flake-parts": "flake-parts_3",
+        "flake-parts": "flake-parts_4",
         "gnome-shell": "gnome-shell",
         "nixpkgs": [
           "nixpkgs"
