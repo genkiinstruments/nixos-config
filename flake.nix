@@ -106,15 +106,22 @@
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
                 secretsMap.ssh = "ssh";
-                inputs = [ pkgs.openssh ];
+                inputs = [ pkgs.openssh pkgs.jq ];
                 effectScript = ''
-                  writeSSHKey ssh
+                  set -euo pipefail
+
+                  # Manually write SSH key since writeSSHKey doesn't work with buildbot-effects
+                  mkdir -p ~/.ssh
+                  chmod 700 ~/.ssh
+                  readSecretString ssh .privateKey > ~/.ssh/deploy_key
+                  chmod 600 ~/.ssh/deploy_key
+
                   cat >>~/.ssh/known_hosts <<'HOSTKEYS'
                   ${knownHosts}
                   HOSTKEYS
 
                   echo "Deploying ${hostname} from ${flakeRef}..."
-                  ssh -i ~/.ssh/ssh nix-ssh@${hostname}.tail01dbd.ts.net \
+                  ssh -i ~/.ssh/deploy_key nix-ssh@${hostname}.tail01dbd.ts.net \
                     "sudo ${rebuildCmd} switch --flake ${flakeRef}"
                 '';
               };
