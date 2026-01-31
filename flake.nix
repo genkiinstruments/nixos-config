@@ -100,7 +100,7 @@
 
             mkEffect =
               hostname: isNixOS:
-              effects.runIf (herculesCI.config.repo.branch == "main") (
+              effects.runIf (herculesCI.branch == "main") (
                 (if isNixOS then effects.runNixOS else effects.runNixDarwin) {
                   configuration =
                     blueprintOutputs.${if isNixOS then "nixosConfigurations" else "darwinConfigurations"}.${hostname};
