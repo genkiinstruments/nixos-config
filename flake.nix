@@ -105,20 +105,15 @@
               in
               hci-effects.mkEffect {
                 name = "deploy-${hostname}";
+                secretsMap.ssh = "ssh";
                 effectScript = ''
-                  mkdir -p ~/.ssh
-                  chmod 700 ~/.ssh
-
-                  # Use readSecretJSON to get the SSH private key
-                  readSecretJSON ssh .privateKey > ~/.ssh/deploy_key
-                  chmod 600 ~/.ssh/deploy_key
-
+                  writeSSHKey ssh
                   cat >>~/.ssh/known_hosts <<'HOSTKEYS'
                   ${knownHosts}
                   HOSTKEYS
 
                   echo "Deploying ${hostname} from ${flakeRef}..."
-                  ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new nix-ssh@${hostname}.tail01dbd.ts.net \
+                  ssh -i ~/.ssh/ssh nix-ssh@${hostname}.tail01dbd.ts.net \
                     "sudo ${rebuildCmd} switch --flake ${flakeRef}"
                 '';
               };

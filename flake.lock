@@ -698,11 +698,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1769870683,
-        "narHash": "sha256-f5Bn0QvE0ViTq2POTZXLYpOQnLfFFNaF2+omvYT01/Y=",
+        "lastModified": 1769871469,
+        "narHash": "sha256-vkg7GaBgqOK8iTMHVOpOsNfIwZnPaQKhLOtaQyUHXKM=",
         "owner": "genkiinstruments",
         "repo": "nix-secrets",
-        "rev": "ec9d2eb09e7e6f6b9215c115ddae0b1fe22feb15",
+        "rev": "2c2e433679d8caba435ee08bf4e26a7bcbb5ccf8",
         "type": "github"
       },
       "original": {
