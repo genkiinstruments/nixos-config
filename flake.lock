@@ -698,12 +698,13 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1769871469,
-        "narHash": "sha256-vkg7GaBgqOK8iTMHVOpOsNfIwZnPaQKhLOtaQyUHXKM=",
-        "owner": "genkiinstruments",
-        "repo": "nix-secrets",
-        "rev": "2c2e433679d8caba435ee08bf4e26a7bcbb5ccf8",
-        "type": "github"
+        "lastModified": 1769872417,
+        "narHash": "sha256-K2tDY0iuCQfbCvuGT3E7Trq+t5aW0ocnccOOZtPbB9k=",
+        "ref": "refs/heads/main",
+        "rev": "7f702557e29fc88131af76d2c0b8b7c492c34e7f",
+        "revCount": 75,
+        "type": "git",
+        "url": "ssh://git@github.com/genkiinstruments/nix-secrets"
       },
       "original": {
         "owner": "genkiinstruments",
