@@ -62,7 +62,7 @@
       "src": "https://github.com/nvim-lualine/lualine.nvim"
     },
     "lz.n": {
-      "rev": "f13ffc487fc83769228f88affd2cb36da99d3bc6",
+      "rev": "24b3d6e0b10d4f3d5d805b730ba03646b437b6d7",
       "src": "https://github.com/lumen-oss/lz.n"
     },
     "mini.ai": {
@@ -127,7 +127,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "f920b7171e339e2dc263bacf083e934612c22959",
+      "rev": "c5c388bdf64e03868fdd553d275f70e33ab4a169",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "snacks.nvim": {
